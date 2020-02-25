@@ -23,52 +23,47 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import createAppContainer from './src/navigation/app_navigation'
+import authContainer from './src/navigation/auth_navigation'
+
+import {createStackNavigator} from '@react-navigation/stack'
+import DesignTimeComponent from './design_time_component'
+import {UserStore, AuthState} from './src/data/repository/user_store';
+import {RootStore} from './src/data/repository/root_store'
+
+
+
+const Stack = createStackNavigator();
+const userStore = new UserStore('design_time');
+const rootStore = new RootStore(userStore);
+const RootContext = React.createContext(
+  rootStore
+);
 
 const App = () => {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <RootContext.Provider value={rootStore}>
+      <NavigationContainer>
+      <Stack.Navigator headerMode='none'>
+        {
+          rootStore.userStore.authState == 'not_auth' ? 
+          (
+            <Stack.Screen name="auth" component={authContainer} />
+          ) : 
+          (
+            rootStore.userStore.authState == 'auth' ? (
+              <Stack.Screen name="main" component={mainContainer} />
+            ) : 
+            (
+              <Stack.Screen name="design_time" component={DesignTimeComponent} />
+            )
+          )
+        }
+      </Stack.Navigator>
+    </NavigationContainer>
+    </RootContext.Provider>
   );
 };
 
