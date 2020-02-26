@@ -34,7 +34,17 @@ export default class LogInComponent extends Component {
     this.setState(value);
   }
 
-  handleLogin = () => {};
+  handleLogin = () => {
+    let value: RootStore = this.context;
+    value.userStore.storeUserInfo(
+      new UserInfo({
+        name: 'Đặng Ngọc Đức',
+        uid: '121212',
+        accessToken: '121212',
+        refreshToken: '343434',
+      }),
+    );
+  };
 
   handleLoginWithFacebook = () => {};
 
@@ -42,7 +52,6 @@ export default class LogInComponent extends Component {
 
   render() {
     const { pass, loginName } = this.state;
-    let value: RootStore = this.context;
     return (
       <View cls="bg-purple fullView aic jcc">
         <View cls="pa3 pb5">
@@ -92,17 +101,7 @@ export default class LogInComponent extends Component {
           cls="fullWidth"
           source={require('../../assets/icons/wave.png')}>
           <View cls="fullWidth pa3 pb0 aic">
-            <TouchableOpacity
-              onPress={() => {
-                value.userStore.storeUserInfo(
-                  new UserInfo({
-                    name: 'Đặng Ngọc Đức',
-                    uid: '121212',
-                    accessToken: '121212',
-                    refreshToken: '343434',
-                  }),
-                );
-              }}>
+            <TouchableOpacity onPress={this.handleLogin}>
               <LinearGradient
                 cls="ba br5 b--#321A54"
                 colors={['#4A3278', '#8B659D', '#DDA5CB']}
