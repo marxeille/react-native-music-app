@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text, SafeAreaView, Button } from 'react-native';
+import { navigate } from '../../navigation/navigation_service'
 import { wrap } from '../../themes';
 @wrap
 export default class HomeComponent extends Component {
@@ -12,7 +13,12 @@ export default class HomeComponent extends Component {
     return (
       <SafeAreaView>
         <View cls="bg-white fullView aic jcc">
-          <Text> home_component </Text>
+          <Button
+            title="Open Player"
+            onPress={() => {
+              navigate('player');
+            }}
+          />
         </View>
       </SafeAreaView>
     );
