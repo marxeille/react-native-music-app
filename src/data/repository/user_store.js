@@ -22,7 +22,6 @@ export class UserStore {
   storeUserInfo = async (userInfo: UserInfo) => {
     console.log('DEBUG => user_store storeUserInfo', userInfo);
     try {
-      console.log('DEBUG => user_store ', userInfo.toJsonString());
       await AsyncStorage.setItem(
         AsyncStorageKey.USERINFO,
         userInfo.toJsonString(),
@@ -52,7 +51,7 @@ export class UserStore {
         'DEBUG => user_store checkAuthStateAndConfig userInfoString',
         userInfoString,
       );
-      if (userInfoString !== undefined) {
+      if (userInfoString) {
         this.authState = AuthState.AUTHED;
       } else {
         this.authState = AuthState.NOT_AUTH;
