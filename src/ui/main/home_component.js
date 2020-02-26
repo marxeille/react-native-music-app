@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
-import {wrap} from '../../themes';
+import React, { Component } from 'react';
+import { View, Text, SafeAreaView } from 'react-native';
+import { wrap } from '../../themes';
 @wrap
 export default class HomeComponent extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class HomeComponent extends Component {
   render() {
     return (
       <SafeAreaView>
-        <View cls="bg-blue aic jcc">
+        <View cls="bg-white fullView aic jcc">
           <Text> home_component </Text>
         </View>
       </SafeAreaView>
