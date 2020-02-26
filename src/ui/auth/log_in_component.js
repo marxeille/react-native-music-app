@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { wrap } from '../../themes';
+import { RootStore } from '../../data/repository/root_store';
+import { RootContext } from '../../data/context/root_context';
+import UserInfo from '../../data/model/user_info';
 
 @wrap
 export default class LogInComponent extends Component {
@@ -21,6 +24,8 @@ export default class LogInComponent extends Component {
       pass: '',
     };
   }
+
+  static contextType = RootContext;
 
   onChangeText(event, name) {
     let value = {};
@@ -37,6 +42,7 @@ export default class LogInComponent extends Component {
 
   render() {
     const { pass, loginName } = this.state;
+    let value: RootStore = this.context;
     return (
       <View cls="bg-purple fullView aic jcc">
         <View cls="pa3 pb5">
@@ -86,7 +92,17 @@ export default class LogInComponent extends Component {
           cls="fullWidth"
           source={require('../../assets/icons/wave.png')}>
           <View cls="fullWidth pa3 pb0 aic">
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                value.userStore.storeUserInfo(
+                  new UserInfo({
+                    name: 'Đặng Ngọc Đức',
+                    uid: '121212',
+                    accessToken: '121212',
+                    refreshToken: '343434',
+                  }),
+                );
+              }}>
               <LinearGradient
                 cls="ba br5 b--#321A54"
                 colors={['#4A3278', '#8B659D', '#DDA5CB']}
