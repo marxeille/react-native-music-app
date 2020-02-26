@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PlayerProject</string>
+    <string name="facebook_app_id">653991105405601</string>
+    <string name="fb_login_protocol_scheme">fb653991105405601</string>
 </resources>
