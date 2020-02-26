@@ -1,21 +1,143 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { wrap } from '../../themes';
 
 @wrap
 export default class LogInComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loginName: '',
+      pass: '',
+    };
   }
 
+  onChangeText(event, name) {
+    let value = {};
+    value[name] = event.nativeEvent.text;
+
+    this.setState(value);
+  }
+
+  handleLogin = () => {};
+
+  handleLoginWithFacebook = () => {};
+
+  handleLoginWithGoogle = () => {};
+
   render() {
+    const { pass, loginName } = this.state;
     return (
-      <SafeAreaView>
-        <View cls="bg-white fullView aic jcc">
-          <Text> login_component </Text>
+      <View cls="bg-purple fullView aic jcc">
+        <View cls="pa3 pb5">
+          <Image
+            style={styles.icon}
+            source={require('../../assets/icons/logo.png')}
+          />
         </View>
-      </SafeAreaView>
+        {/* Text Input group */}
+        <View cls="fullWidth pa4">
+          <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
+            <TextInput
+              secureTextEntry={false}
+              placeholderTextColor="#fff"
+              placeholder={'Tên Đăng Nhập'}
+              style={[styles.inputText]}
+              value={loginName}
+              onChange={event => this.onChangeText(event, 'loginName')}
+              autoCorrect={false}
+            />
+            <Image
+              style={{ width: 20, height: 25 }}
+              source={require('../../assets/icons/login.png')}
+            />
+          </View>
+          <View cls="pt3">
+            <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
+              <TextInput
+                secureTextEntry={true}
+                placeholderTextColor="#fff"
+                placeholder={'Mật Khẩu'}
+                style={[styles.inputText]}
+                value={pass}
+                onChange={event => this.onChangeText(event, 'pass')}
+                autoCorrect={false}
+              />
+              <Image
+                style={{ width: 20, height: 25 }}
+                source={require('../../assets/icons/pass.png')}
+              />
+            </View>
+          </View>
+        </View>
+
+        {/* Button Group */}
+        <ImageBackground
+          cls="fullWidth"
+          source={require('../../assets/icons/wave.png')}>
+          <View cls="fullWidth pa3 pb0 aic">
+            <TouchableOpacity>
+              <LinearGradient
+                cls="ba br5 b--#321A54"
+                colors={['#4A3278', '#8B659D', '#DDA5CB']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}>
+                <Text cls="white f6 fw5 pa3 pl5 pr5">Đăng nhập</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+
+        <View cls="fullWidth pa5 pt3 aic">
+          <View cls="pt3">
+            <TouchableOpacity>
+              <View
+                cls="aic ba b--#321A54 pt3 bg-#323277 br5"
+                style={{ width: 220, height: 50 }}>
+                <Text cls="white">Đăng nhập bằng Facebook</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View cls="pt3">
+            <TouchableOpacity>
+              <View
+                cls="aic ba b--#321A54 pt3 bg-#A52222 br5"
+                style={{ width: 220, height: 50 }}>
+                <Text cls="white">Đăng nhập bằng Google</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  icon: { width: 160, height: 100 },
+  inputGroup: {
+    borderWidth: 1,
+    borderColor: '#4B3277',
+    borderRadius: 10,
+    flexDirection: 'row',
+    height: 55,
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  inputText: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
+    color: '#fff',
+  },
+});
