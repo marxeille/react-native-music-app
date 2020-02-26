@@ -34,6 +34,16 @@ export class UserStore {
     }
   };
 
+  removeUserInfo = async () => {
+    try {
+      await AsyncStorage.removeItem(AsyncStorageKey.USERINFO);
+      this.authState = AuthState.NOT_AUTH;
+    } catch (e) {
+      console.log('DEBUG => user_store removeUserInfo error', e);
+      //TODO: Handle Error
+    }
+  };
+
   //Gọi trong splash screen để biết nên vào màn nào.
   checkAuthStateAndConfig = async () => {
     try {

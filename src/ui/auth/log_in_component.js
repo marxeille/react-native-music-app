@@ -36,7 +36,6 @@ export default class LogInComponent extends Component {
 
   handleLogin = () => {
     let value: RootStore = this.context;
-    console.log('value', value);
     value.userStore.storeUserInfo(
       new UserInfo({
         name: 'Đặng Ngọc Đức',
