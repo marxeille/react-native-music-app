@@ -72,16 +72,15 @@ export default class LogInComponent extends Component {
             />
             <Image style={{ width: 20, height: 25 }} source={Images.login} />
           </View>
-          {/* Text Input group */}
-          <View cls="fullWidth pa4">
+          <View cls="pt3">
             <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
               <TextInput
-                secureTextEntry={false}
+                secureTextEntry={true}
                 placeholderTextColor="#fff"
-                placeholder={'Tên Đăng Nhập'}
+                placeholder={'Mật Khẩu'}
                 style={[styles.inputText]}
-                value={loginName}
-                onChange={event => this.onChangeText(event, 'loginName')}
+                value={pass}
+                onChange={event => this.onChangeText(event, 'pass')}
                 autoCorrect={false}
               />
               <Image
@@ -89,61 +88,44 @@ export default class LogInComponent extends Component {
                 source={Images.ic_pass}
               />
             </View>
-            <View cls="pt3">
-              <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
-                <TextInput
-                  secureTextEntry={true}
-                  placeholderTextColor="#fff"
-                  placeholder={'Mật Khẩu'}
-                  style={[styles.inputText]}
-                  value={pass}
-                  onChange={event => this.onChangeText(event, 'pass')}
-                  autoCorrect={false}
-                />
-                <Image
-                  style={{ width: 20, height: 27 }}
-                  source={require('../../assets/icons/pass.png')}
-                />
-              </View>
-            </View>
           </View>
+        </View>
 
-          {/* Button Group */}
-          <ImageBackground cls="fullWidth" source={Images.wave}>
-            <View cls="fullWidth pa3 pb0 aic">
-              <TouchableOpacity onPress={this.handleLogin}>
-                <LinearGradient
-                  cls="ba br5 b--#321A54"
-                  colors={['#4A3278', '#8B659D', '#DDA5CB']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}>
-                  <Text cls="white f6 fw5 pa3 pl5 pr5">Đăng nhập</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </View>
-          </ImageBackground>
-
-          <View cls="fullWidth pa5 pt0 aic">
-            <View cls="pt3">
-              <TouchableOpacity>
-                <View
-                  cls="aic ba b--#321A54 pt3 bg-#323277 br5"
-                  style={{ width: 220, height: 50 }}>
-                  <Text cls="white">Đăng nhập bằng Facebook</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-            <View cls="pt3">
-              <TouchableOpacity>
-                <View
-                  cls="aic ba b--#321A54 pt3 bg-#A52222 br5"
-                  style={{ width: 220, height: 50 }}>
-                  <Text cls="white">Đăng nhập bằng Google</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+        {/* Button Group */}
+        <ImageBackground cls="fullWidth" source={Images.wave}>
+          <View cls="fullWidth pa3 pb0 aic">
+            <TouchableOpacity onPress={this.handleLogin}>
+              <LinearGradient
+                cls="ba br5 b--#321A54"
+                colors={['#4A3278', '#8B659D', '#DDA5CB']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}>
+                <Text cls="white f6 fw5 pa3 pl5 pr5">Đăng nhập</Text>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
+
+        <View cls="fullWidth pa5 pt3 aic">
+          <View cls="pt3">
+            <TouchableOpacity>
+              <View
+                cls="aic ba b--#321A54 pt3 bg-#323277 br5"
+                style={{ width: 220, height: 50 }}>
+                <Text cls="white">Đăng nhập bằng Facebook</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View cls="pt3">
+            <TouchableOpacity>
+              <View
+                cls="aic ba b--#321A54 pt3 bg-#A52222 br5"
+                style={{ width: 220, height: 50 }}>
+                <Text cls="white">Đăng nhập bằng Google</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   }
