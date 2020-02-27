@@ -11,7 +11,7 @@ export default class SearchComponent extends Component {
 
   render() {
     return (
-      <SafeAreaView>
+      <SafeAreaView cls="bg-#4b3562">
         <View cls="bg-white fullView aic jcc">
           <Text> search_component </Text>
         </View>

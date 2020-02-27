@@ -16,7 +16,7 @@ export default class LibraryComponent extends Component {
   render() {
     let value = this.context;
     return (
-      <SafeAreaView>
+      <SafeAreaView cls="bg-#4b3562">
         <View cls="bg-white fullView aic jcc">
           <Text> lib_component </Text>
           <TouchableOpacity
