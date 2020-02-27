@@ -46,9 +46,9 @@ export default class LogInComponent extends Component {
     );
   };
 
-  handleLoginWithFacebook = () => {};
+  handleLoginWithFacebook = () => { };
 
-  handleLoginWithGoogle = () => {};
+  handleLoginWithGoogle = () => { };
 
   render() {
     const { pass, loginName } = this.state;
