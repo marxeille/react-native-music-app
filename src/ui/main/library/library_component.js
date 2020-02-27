@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
-import { wrap } from '../../themes';
-import { RootStore } from '../../data/repository/root_store';
-import { RootContext } from '../../data/context/root_context';
+import { wrap } from '../../../themes';
+import { RootStore } from '../../../data/repository/root_store';
+import { RootContext } from '../../../data/context/root_context';
 
 @wrap
 export default class LibraryComponent extends Component {

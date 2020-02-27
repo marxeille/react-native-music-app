@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
-import { wrap } from '../../themes';
+import { wrap } from '../../../themes';
 
 @wrap
 export default class SearchComponent extends Component {
