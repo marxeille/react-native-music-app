@@ -15,6 +15,7 @@ import SearchComponent from '../ui/main/search_component';
 import LibraryComponent from '../ui/main/library_component';
 import PlayerComponent from '../ui/player/player_component';
 import { Styles } from '../styles/stylesheets';
+import Images from '../assets/icons/icons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -45,7 +46,7 @@ function getBottomTabNavigator() {
           tabBarIcon: (props) => (
             <Image
               style={[Styles.icon, { tintColor: props.color }]}
-              source={require('../assets/icons/tabs/logo.png')}
+              source={Images.logo}
             />
           ),
           backgroundColor: '#00FFFFFFF'
@@ -59,7 +60,7 @@ function getBottomTabNavigator() {
           tabBarIcon: (props) => (
             <Image
               style={[Styles.icon, { tintColor: props.color }]}
-              source={require('../assets/icons/tabs/ic_search.png')}
+              source={Images.ic_search}
             />
           )
         }}
@@ -72,7 +73,7 @@ function getBottomTabNavigator() {
           tabBarIcon: (props) => (
             <Image
               style={[Styles.icon, { tintColor: props.color }]}
-              source={require('../assets/icons/tabs/ic_library.png')}
+              source={Images.ic_library}
             />
           )
         }}

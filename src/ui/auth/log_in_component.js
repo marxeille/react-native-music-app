@@ -14,6 +14,7 @@ import { wrap } from '../../themes';
 import { RootStore } from '../../data/repository/root_store';
 import { RootContext } from '../../data/context/root_context';
 import UserInfo from '../../data/model/user_info';
+import Images from '../../assets/icons/icons';
 
 @wrap
 export default class LogInComponent extends Component {
@@ -57,7 +58,7 @@ export default class LogInComponent extends Component {
         <View cls="pa3 pb5">
           <Image
             style={styles.icon}
-            source={require('../../assets/icons/logo.png')}
+            source={Images.logo_signin}
           />
         </View>
         {/* Text Input group */}
@@ -74,7 +75,7 @@ export default class LogInComponent extends Component {
             />
             <Image
               style={{ width: 20, height: 25 }}
-              source={require('../../assets/icons/login.png')}
+              source={Images.login}
             />
           </View>
           <View cls="pt3">
@@ -90,7 +91,7 @@ export default class LogInComponent extends Component {
               />
               <Image
                 style={{ width: 20, height: 25 }}
-                source={require('../../assets/icons/pass.png')}
+                source={Images.ic_pass}
               />
             </View>
           </View>
@@ -99,7 +100,7 @@ export default class LogInComponent extends Component {
         {/* Button Group */}
         <ImageBackground
           cls="fullWidth"
-          source={require('../../assets/icons/wave.png')}>
+          source={Images.wave}>
           <View cls="fullWidth pa3 pb0 aic">
             <TouchableOpacity onPress={this.handleLogin}>
               <LinearGradient
