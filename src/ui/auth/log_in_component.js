@@ -54,7 +54,7 @@ export default class LogInComponent extends Component {
   render() {
     const { pass, loginName } = this.state;
     return (
-      <View cls="bg-purple fullView aic jcc">
+      <ImageBackground cls="fullView aic jcc" source={Images.bg}>
         <View cls="pa3 pb5">
           <Image style={styles.icon} source={Images.logo_signin} />
         </View>
@@ -126,7 +126,7 @@ export default class LogInComponent extends Component {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </ImageBackground>
     );
   }
 }

@@ -1,8 +1,8 @@
-import {StyleSheet, Dimensions, Platform} from 'react-native';
-import {options, build, styles} from './themes';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
+import { options, build, styles } from './themes';
 
-import {heights, minHeights, maxHeights} from './styles/heights';
-import {widths, minWidths, maxWidths} from './styles/widths';
+import { heights, minHeights, maxHeights } from './styles/heights';
+import { widths, minWidths, maxWidths } from './styles/widths';
 import * as borders from './styles/borders';
 import flexbox from './styles/flexbox';
 import spacing from './styles/spacing';
@@ -11,7 +11,7 @@ import text from './styles/text';
 import images from './styles/images';
 import fontWeights from './styles/fontWeights';
 import opacity from './styles/opacity';
-import {tops, rights, bottoms, lefts} from './styles/absolute';
+import { tops, rights, bottoms, lefts } from './styles/absolute';
 import lineHeight from './styles/lineHeight';
 import tracked from './styles/tracked';
 
@@ -72,6 +72,7 @@ export const colors = {
   purple: '#6754A3',
   textInput: '#7e7e7e',
   lightGreen: '#6cfeb5',
+  primaryPurple: '#835db8',
 };
 
 const DEFAULT_OPTIONS = {
@@ -154,7 +155,7 @@ const DEFAULT_OPTIONS = {
         backgroundColor: 'white',
         ...Platform.select({
           ios: {
-            shadowOffset: {width: 0, height: 0},
+            shadowOffset: { width: 0, height: 0 },
             shadowOpacity: 0.1,
             shadowRadius: 10,
             shadowColor: '#000',

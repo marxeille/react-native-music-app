@@ -10,6 +10,8 @@ import {
 import { navigate } from '../../../navigation/navigation_service';
 import { wrap } from '../../../themes';
 import { ScrollView } from 'react-native-gesture-handler';
+
+import HomeListComponent from './components/home_list_component';
 @wrap
 export default class HomeComponent extends Component {
   constructor(props) {
@@ -23,22 +25,22 @@ export default class HomeComponent extends Component {
         cls="fullView aic"
         source={require('../../../assets/icons/bg.png')}>
         <ScrollView>
-          <View cls="fullWidth pt2 pb3 bb b--#4B3277">
-            <View cls="flx-row pa3 pb3 aic jcsb">
-              <Text cls="white fw5 f4">Mới phát gần đây</Text>
-              <Image
-                cls="widthFn-20 heightFn-20"
-                source={require('../../../assets/icons/setting.png')}
-              />
-            </View>
-            <View cls="fullWidth">
-              <FlatList
-                horizontal
-                data={[1, 2, 3, 4]}
-                renderItem={this.renderItem}
-              />
-            </View>
-          </View>
+          <HomeListComponent
+            data={[1, 2, 3, 4]}
+            type={'small'}
+            rightIcon
+            title="Mới phát gần đây"
+          />
+          <HomeListComponent
+            data={[1, 2, 3, 4]}
+            type={'large'}
+            title="Playlist phổ biến"
+          />
+          <HomeListComponent
+            data={[1, 2, 3, 4]}
+            type={'large'}
+            title="Dành cho bạn"
+          />
         </ScrollView>
       </ImageBackground>
     );
