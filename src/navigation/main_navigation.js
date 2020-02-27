@@ -28,7 +28,10 @@ function getBottomTabNavigator() {
           borderWidth: 0,
           borderTopWidth: 0,
           elevation: 4,
-          shadowOffset: 4,
+          shadowOffset: {
+            width: 4,
+            height: 4,
+          },
           backgroundColor: '#1e0239',
         },
       }}
