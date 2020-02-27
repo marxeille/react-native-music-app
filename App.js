@@ -18,11 +18,10 @@ import mainContainer from './src/navigation/main_navigation';
 import SplashComponent from './src/ui/splash_component';
 import { RootContext, rootStore } from './src/data/context/root_context';
 import { AuthState } from './src/data/repository/user_store';
-import { observer } from 'mobx-react';
+import { observer, autorun } from 'mobx-react';
 import { navigationRef } from './src/navigation/navigation_service'
 
 const Stack = createStackNavigator();
-
 
 @observer
 export default class App extends Component {
@@ -32,8 +31,9 @@ export default class App extends Component {
   }
 
   render() {
+    console.log('DEBUG => App render', rootStore.userStore.authState);
     switch (rootStore.userStore.authState) {
-      case AuthState.AUTHED:
+      case 'authed':
         return (
           <RootContext.Provider value={rootStore}>
             <NavigationContainer ref={navigationRef}>
@@ -43,7 +43,7 @@ export default class App extends Component {
             </NavigationContainer>
           </RootContext.Provider>
         );
-      case AuthState.NONE:
+      case 'none':
         return (
           <RootContext.Provider value={rootStore}>
             <NavigationContainer ref={navigationRef}>
@@ -53,7 +53,7 @@ export default class App extends Component {
             </NavigationContainer>
           </RootContext.Provider>
         );
-      case AuthState.NOT_AUTH:
+      case 'not_auth':
         return (
           <RootContext.Provider value={rootStore}>
             <NavigationContainer ref={navigationRef}>
@@ -64,7 +64,6 @@ export default class App extends Component {
           </RootContext.Provider>
         );
       default:
-      case AuthState.NONE:
         return (
           <RootContext.Provider value={rootStore}>
             <NavigationContainer ref={navigationRef}>

@@ -3,6 +3,7 @@ const Images = {
   ic_favorited: require('./ic_favorited.png'),
   ic_library: require('./ic_library.png'),
   ic_pass: require('./ic_pass.png'),
+  ic_pause: require('./ic_pause.png'),
   ic_play: require('./ic_play.png'),
   ic_search: require('./ic_search.png'),
   login: require('./login.png'),

@@ -1,13 +1,8 @@
 import { UserStore } from "./user_store";
+import { PlayerStore } from "./player_store"
+import { types } from "mobx-state-tree"
 
-export class RootStore {
-
-  userStore: UserStore = () => {
-    return this.userStore;
-  }
-  constructor(userStore) {
-    this.userStore = userStore;
-  }
-
-
-}
+export const RootStore = types.model("RootStore", {
+  userStore: UserStore,
+  playerStore: PlayerStore
+});
