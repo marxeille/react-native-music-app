@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, SafeAreaView } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  createBottomTabNavigator,
+  BottomTabView,
+} from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeComponent from '../ui/main/home';
@@ -9,8 +12,9 @@ import LibraryComponent from '../ui/main/library';
 import PlayerComponent from '../ui/player/player_component';
 import { Styles } from '../styles/stylesheets';
 import Images from '../assets/icons/icons';
+import createBottomTabNavigationMusic from './createBottomTabNavigationMusic';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigationMusic();
 const Stack = createStackNavigator();
 
 function getBottomTabNavigator() {
