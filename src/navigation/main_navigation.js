@@ -8,8 +8,6 @@ import {
 } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-
-
 import HomeComponent from '../ui/main/home_component';
 import SearchComponent from '../ui/main/search_component';
 import LibraryComponent from '../ui/main/library_component';
@@ -32,9 +30,8 @@ function getBottomTabNavigator() {
           elevation: 4,
           shadowOffset: 4,
           backgroundColor: '#1e0239',
-        }
+        },
       }}
-
 
     >
       <Tab.Screen
@@ -86,16 +83,11 @@ function getBottomTabNavigator() {
 
 export default function mainContainer() {
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: '#4b3562',
-    }}>
-      <Stack.Navigator
-        headerMode='none'
-      >
-        <Stack.Screen name="bottomtab" component={getBottomTabNavigator} />
-        <Stack.Screen name='player' component={PlayerComponent} />
-      </Stack.Navigator>
-    </SafeAreaView>
+    <Stack.Navigator
+      headerMode='none'
+    >
+      <Stack.Screen name="bottomtab" component={getBottomTabNavigator} />
+      <Stack.Screen name='player' component={PlayerComponent} />
+    </Stack.Navigator>
   );
 }
