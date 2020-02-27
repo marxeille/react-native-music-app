@@ -14,6 +14,7 @@ import { wrap } from '../../themes';
 import { RootStore } from '../../data/repository/root_store';
 import { RootContext } from '../../data/context/root_context';
 import UserInfo from '../../data/model/user_info';
+import Images from '../../assets/icons/icons';
 
 @wrap
 export default class LogInComponent extends Component {
@@ -46,22 +47,30 @@ export default class LogInComponent extends Component {
     );
   };
 
-  handleLoginWithFacebook = () => { };
+  handleLoginWithFacebook = () => {};
 
-  handleLoginWithGoogle = () => { };
+  handleLoginWithGoogle = () => {};
 
   render() {
     const { pass, loginName } = this.state;
     return (
-      <View>
-        <ImageBackground
-          cls="fullView aic jcc"
-          source={require('../../assets/icons/bg.png')}>
-          <View cls="pa3 pb5">
-            <Image
-              style={styles.icon}
-              source={require('../../assets/icons/logo.png')}
+      <View cls="bg-purple fullView aic jcc">
+        <View cls="pa3 pb5">
+          <Image style={styles.icon} source={Images.logo_signin} />
+        </View>
+        {/* Text Input group */}
+        <View cls="fullWidth pa4">
+          <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
+            <TextInput
+              secureTextEntry={false}
+              placeholderTextColor="#fff"
+              placeholder={'Tên Đăng Nhập'}
+              style={[styles.inputText]}
+              value={loginName}
+              onChange={event => this.onChangeText(event, 'loginName')}
+              autoCorrect={false}
             />
+            <Image style={{ width: 20, height: 25 }} source={Images.login} />
           </View>
           {/* Text Input group */}
           <View cls="fullWidth pa4">
@@ -77,7 +86,7 @@ export default class LogInComponent extends Component {
               />
               <Image
                 style={{ width: 20, height: 25 }}
-                source={require('../../assets/icons/login.png')}
+                source={Images.ic_pass}
               />
             </View>
             <View cls="pt3">
@@ -100,9 +109,7 @@ export default class LogInComponent extends Component {
           </View>
 
           {/* Button Group */}
-          <ImageBackground
-            cls="fullWidth pb0"
-            source={require('../../assets/icons/wave.png')}>
+          <ImageBackground cls="fullWidth" source={Images.wave}>
             <View cls="fullWidth pa3 pb0 aic">
               <TouchableOpacity onPress={this.handleLogin}>
                 <LinearGradient

@@ -7,38 +7,39 @@ import HomeComponent from '../ui/main/home';
 import SearchComponent from '../ui/main/search';
 import LibraryComponent from '../ui/main/library';
 import PlayerComponent from '../ui/player/player_component';
+import { Styles } from '../styles/stylesheets';
+import Images from '../assets/icons/icons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
-const stylesIcons = StyleSheet.create({
-  stretch: {
-    width: 24,
-    height: 24,
-    resizeMode: 'stretch',
-  },
-});
 
 function getBottomTabNavigator() {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeBackgroundColor: '#4b3562',
-        inactiveBackgroundColor: '#4b3562',
         inactiveTintColor: '#835db8',
         activeTintColor: '#FFF',
+        style: {
+          borderWidth: 0,
+          borderTopWidth: 0,
+          elevation: 4,
+          shadowOffset: 4,
+          backgroundColor: '#1e0239',
+        },
       }}>
       <Tab.Screen
         name="home"
         component={HomeComponent}
         options={{
           tabBarLabel: 'Trang chủ',
+
           tabBarIcon: props => (
             <Image
-              style={[stylesIcons.stretch, { tintColor: props.color }]}
-              source={require('../assets/icons/tabs/logo.png')}
+              style={[Styles.icon, { tintColor: props.color }]}
+              source={Images.logo}
             />
           ),
+          backgroundColor: '#00FFFFFFF',
         }}
       />
       <Tab.Screen
@@ -48,8 +49,8 @@ function getBottomTabNavigator() {
           tabBarLabel: 'Tìm kiếm',
           tabBarIcon: props => (
             <Image
-              style={[stylesIcons.stretch, { tintColor: props.color }]}
-              source={require('../assets/icons/tabs/ic_search.png')}
+              style={[Styles.icon, { tintColor: props.color }]}
+              source={Images.ic_search}
             />
           ),
         }}
@@ -61,8 +62,8 @@ function getBottomTabNavigator() {
           tabBarLabel: 'Thư viện',
           tabBarIcon: props => (
             <Image
-              style={[stylesIcons.stretch, { tintColor: props.color }]}
-              source={require('../assets/icons/tabs/ic_library.png')}
+              style={[Styles.icon, { tintColor: props.color }]}
+              source={Images.ic_library}
             />
           ),
         }}
