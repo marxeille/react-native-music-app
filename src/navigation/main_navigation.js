@@ -6,7 +6,7 @@ import {
   StyleSheet,
   SafeAreaView
 } from 'react-native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, BottomTabView } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeComponent from '../ui/main/home_component';
 import SearchComponent from '../ui/main/search_component';
@@ -14,8 +14,9 @@ import LibraryComponent from '../ui/main/library_component';
 import PlayerComponent from '../ui/player/player_component';
 import { Styles } from '../styles/stylesheets';
 import Images from '../assets/icons/icons';
+import createBottomTabNavigationMusic from './createBottomTabNavigationMusic';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigationMusic();
 const Stack = createStackNavigator();
 
 function getBottomTabNavigator() {
@@ -35,7 +36,6 @@ function getBottomTabNavigator() {
           backgroundColor: '#1e0239',
         },
       }}
-
     >
       <Tab.Screen
         name="home"
@@ -79,7 +79,6 @@ function getBottomTabNavigator() {
         }}
       />
     </Tab.Navigator>
-
   );
 }
 
