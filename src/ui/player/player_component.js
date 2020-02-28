@@ -16,7 +16,6 @@ export default class PlayerComponent extends Component {
   }
   render() {
     console.log('DEBUG => player_component render');
-    trace(true) // enter the debugger whenever an observable value causes this component to re-run
     return (
       <View style={{
         height: 56,

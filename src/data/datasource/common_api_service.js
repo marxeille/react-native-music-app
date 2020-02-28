@@ -1,26 +1,73 @@
+import { PlayList } from '../model/playlist';
 //Hanle data từ Api Services
-class CommonApiService {
-  //Lấy danh sách album gần đ
-  async getRecentlyPlaylist() {
-    return [
-      PlayList(),
-      PlayList(),
-    ]
-
+export default class CommonApiService {
+  //Lấy danh sách album gần đây
+  getRecentlyPlaylist() {
+    return new Promise(resolve => {
+      resolve([
+        {
+          name: 'Daily Mix 1',
+          artist: '',
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        },
+        {
+          name: 'Daily Mix 1',
+          artist: '',
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        },
+        {
+          name: 'Daily Mix 1',
+          artist: '',
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        }
+      ]);
+    })
   }
   //Lấy danh sách PlayList phổ biến
-  async getPopularPlayList() {
-    return [
-      PlayList(),
-      PlayList(),
-    ]
-  }
+  getPopularPlayList() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve([
+          {
+            name: 'Daily Mix 1',
+            artist: '',
+            thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          },
+          {
+            name: 'Daily Mix 1',
+            artist: '',
+            thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          },
+          {
+            name: 'Daily Mix 1',
+            artist: '',
+            thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          }
+        ]);
+      }, 2000);
+    })
+  };
 
   //Lấy danh sách PlayList dành cho user
-  async getSuggestPlayList() {
-    return [
-      PlayList(),
-      PlayList(),
-    ]
-  }
+  getSuggestPlayList() {
+    return new Promise(resolve => {
+      resolve([
+        {
+          name: 'Daily Mix 1',
+          artist: '',
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        },
+        {
+          name: 'Daily Mix 1',
+          artist: '',
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        },
+        {
+          name: 'Daily Mix 1',
+          artist: '',
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        }
+      ]);
+    })
+  };
 }
