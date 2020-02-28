@@ -4,7 +4,10 @@ import { wrap } from '../../../../themes';
 import Images from '../../../../assets/icons/icons';
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
+import { rootStore } from '../../../../data/context/root_context';
+import { observer } from 'mobx-react';
 
+@observer
 @wrap
 export default class HomeListComponent extends Component {
   constructor(props) {
@@ -24,7 +27,7 @@ export default class HomeListComponent extends Component {
             cls="heightFn-111 widthFn-111"
             source={require('../../../../assets/images/cover3.png')}
           />
-          <Text cls="white pt2 fw6">Daily mix {item.item}</Text>
+          <Text cls="white pt2 fw6">Daily mix {item.item.title()}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -38,7 +41,7 @@ export default class HomeListComponent extends Component {
             cls="heightFn-150 widthFn-150"
             source={require('../../../../assets/images/cover2.png')}
           />
-          <Text cls="white pt2 fw6">GENE {item.item}</Text>
+          <Text cls="white pt2 fw6">GENE </Text>
           <Text cls="primaryPurple pt1">
             {this.subLongStr(`Today's top hit`)}
           </Text>
@@ -48,11 +51,11 @@ export default class HomeListComponent extends Component {
   });
 
   render() {
-    const { type, title, data, rightIcon } = this.props;
+    const { type, title, cate, rightIcon } = this.props;
+
     return (
       <View cls={`fullWidth pb3 bb b--#4B3277 ${rightIcon ? 'pt4' : ''}`}>
         <View cls="flx-row pa3 pb3 aic jcsb">
-          {/* <Text cls="white fw5 f4">{title}</Text> */}
           <MaskedView
             maskElement={
               <Text style={{ fontWeight: '700', fontSize: 22 }}>{title}</Text>
@@ -78,7 +81,7 @@ export default class HomeListComponent extends Component {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={data}
+            data={rootStore.homeStore.suggesst}
             keyExtractor={(item, index) => index.toString()}
             renderItem={
               type == 'large' ? this.renderLargeItem : this.renderSmallItem

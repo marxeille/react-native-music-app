@@ -5,13 +5,12 @@ import { View, Text } from 'react-native';
 export default class PlaylistSquareComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   onClick = () => {
     //Thực hiện khi user click playlist
-  }
+  };
 
   render() {
     return (

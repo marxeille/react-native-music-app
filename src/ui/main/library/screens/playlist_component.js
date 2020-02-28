@@ -14,7 +14,7 @@ export default class playlistComponent extends Component {
   renderPlaylist = item => {
     return (
       <>
-        <PlaylistItem title={'DSK'} img owner={'Lại Hoàng Anh Sơn'} />
+        <PlaylistItem title={'Vinahey'} img owner={'anH bẢnH'} />
       </>
     );
   };

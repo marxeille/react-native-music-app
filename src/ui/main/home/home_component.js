@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { ImageBackground } from 'react-native';
+import { ImageBackground, ActivityIndicator, Text, View } from 'react-native';
 import { navigate } from '../../../navigation/navigation_service';
 import { wrap } from '../../../themes';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import HomeListComponent from './components/home_list_component';
+import { rootStore } from '../../../data/context/root_context';
+import { observer } from 'mobx-react';
+
+@observer
 @wrap
 export default class HomeComponent extends Component {
   constructor(props) {
@@ -12,28 +16,34 @@ export default class HomeComponent extends Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    rootStore.homeStore.fetchData();
+  }
+
   render() {
-    return (
+    return rootStore.homeStore.state === 'loading' ? (
+      <ImageBackground
+        cls="fullView aic jcc"
+        source={require('../../../assets/icons/bg.png')}>
+        <ActivityIndicator />
+      </ImageBackground>
+    ) : (
       <ImageBackground
         cls="fullView aic"
         source={require('../../../assets/icons/bg.png')}>
         <ScrollView>
           <HomeListComponent
-            data={[1, 2, 3, 4]}
+            cate="1"
             type={'small'}
             rightIcon
             title="Mới phát gần đây"
           />
           <HomeListComponent
-            data={[1, 2, 3, 4]}
             type={'large'}
             title="Playlist phổ biến"
+            cate="2"
           />
-          <HomeListComponent
-            data={[1, 2, 3, 4]}
-            type={'large'}
-            title="Dành cho bạn"
-          />
+          <HomeListComponent type={'large'} title="Dành cho bạn" cate="3" />
         </ScrollView>
       </ImageBackground>
     );
