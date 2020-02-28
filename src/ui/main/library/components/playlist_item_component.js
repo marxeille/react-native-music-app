@@ -13,24 +13,27 @@ export default class PlaylistItem extends Component {
     const { title, img, owner } = this.props;
     return (
       <>
-        <TouchableOpacity>
-          <View cls="flx-row aic pb3">
+        <View cls="flx-row aic pb3">
+          <TouchableOpacity>
             <Image
               cls="widthFn-90 heightFn-82"
               source={
                 img
-                  ? require('../../../../assets/images/cover1.png')
+                  ? require('../../../../assets/images/khabanh.png')
                   : require('../../../../assets/images/add_playlist.png')
               }
             />
-            <View>
+          </TouchableOpacity>
+
+          <View>
+            <TouchableOpacity>
               <Text cls="white fw7 f6 pl2">{title ?? 'Tạo playlist'}</Text>
-              {owner ? (
-                <Text cls="primaryPurple f6 pl2 pt1">của {owner}</Text>
-              ) : null}
-            </View>
+            </TouchableOpacity>
+            {owner ? (
+              <Text cls="primaryPurple f6 pl2 pt1">của {owner}</Text>
+            ) : null}
           </View>
-        </TouchableOpacity>
+        </View>
       </>
     );
   }
