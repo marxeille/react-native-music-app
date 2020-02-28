@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree';
 
 export const PlayList = types.model("PlayList", {
+  id: types.identifier,
   name: types.string,
   thumb: types.string,
   artist: types.string
