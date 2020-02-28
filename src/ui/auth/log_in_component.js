@@ -15,7 +15,9 @@ import { RootStore } from '../../data/repository/root_store';
 import { RootContext } from '../../data/context/root_context';
 import UserInfo from '../../data/model/user_info';
 import Images from '../../assets/icons/icons';
+import { observer } from 'mobx-react';
 
+@observer
 @wrap
 export default class LogInComponent extends Component {
   constructor(props) {
@@ -36,7 +38,8 @@ export default class LogInComponent extends Component {
   }
 
   handleLogin = () => {
-    let value: RootStore = this.context;
+    let value = this.context;
+    console.log('DEBUG => log_in_component handleLogin value', value);
     value.userStore.storeUserInfo(
       new UserInfo({
         name: 'Đặng Ngọc Đức',

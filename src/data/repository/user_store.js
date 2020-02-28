@@ -1,66 +1,64 @@
+import { types, flow } from 'mobx-state-tree';
+
 import { observable, autorun } from 'mobx';
 import AsyncStorage from '@react-native-community/async-storage';
 import UserInfo from '../model/user_info';
 
-export const AuthState = {
-  AUTHED: 'authed',
-  NONE: 'none',
-  NOT_AUTH: 'not_auth',
-  DESIGN: 'design',
-};
+export const AuthState = types.enumeration('AuthState', [
+  'authed',
+  'none',
+  'not_auth',
+]);
 
 const AsyncStorageKey = {
   USERINFO: '@userinfo',
 };
 
-export class UserStore {
-  @observable authState = AuthState.DESIGN;
+export const UserStore = types
+  .model('UserStore', {
+    authState: AuthState,
+  })
+  .actions(self => {
+    return {
+      // gọi khi user login thành công.
+      storeUserInfo(userInfo: UserInfo) {
+        AsyncStorage.setItem(
+          AsyncStorageKey.USERINFO,
+          userInfo.toJsonString(),
+        ).then(self.saveSuccess, self.saveError);
+      },
+      saveError(error) {
+        console.log('user_Store saveError', error);
+      },
+      saveSuccess(value) {
+        self.authState = 'authed';
+        console.log('user_Store saveSuccess');
+      },
+      removeUserInfo() {
+        AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(value => {
+          self.authState = 'not_auth';
+        });
+      },
+      checkAuthStateAndConfig2() {
+        AsyncStorage.getItem(AsyncStorageKey.USERINFO).then(userInfoString => {
+          if (userInfoString !== undefined) {
+            self.authState = 'authed';
+          } else {
+            self.authState = 'not_auth';
+          }
+        });
+        self.authState = 'not_auth';
+      },
 
-  constructor(authState) {
-    this.authState = authState;
-  }
-  // gọi khi user login thành công.
-  storeUserInfo = async (userInfo: UserInfo) => {
-    console.log('DEBUG => user_store storeUserInfo', userInfo);
-    try {
-      await AsyncStorage.setItem(
-        AsyncStorageKey.USERINFO,
-        userInfo.toJsonString(),
-      );
-      this.authState = AuthState.AUTHED;
-    } catch (e) {
-      console.log('DEBUG => user_store storeUserInfo error', e);
-      //TODO: Handle Error
-    }
-  };
-
-  removeUserInfo = async () => {
-    try {
-      await AsyncStorage.removeItem(AsyncStorageKey.USERINFO);
-      this.authState = AuthState.NOT_AUTH;
-    } catch (e) {
-      console.log('DEBUG => user_store removeUserInfo error', e);
-      //TODO: Handle Error
-    }
-  };
-
-  //Gọi trong splash screen để biết nên vào màn nào.
-  checkAuthStateAndConfig = async () => {
-    try {
-      userInfoString = await AsyncStorage.getItem(AsyncStorageKey.USERINFO);
-      console.log(
-        'DEBUG => user_store checkAuthStateAndConfig userInfoString',
-        userInfoString,
-      );
-      if (userInfoString) {
-        this.authState = AuthState.AUTHED;
-      } else {
-        this.authState = AuthState.NOT_AUTH;
-      }
-    } catch (e) {
-      //TODO: Handle Error
-      this.authState = AuthState.NOT_AUTH;
-      console.log('DEBUG => user_store checkAuthStateAndConfig errror', e);
-    }
-  };
-}
+      checkAuthStateAndConfig: flow(function* checkAuthStateAndConfig() {
+        var userInfoString = yield AsyncStorage.getItem(
+          AsyncStorageKey.USERINFO,
+        );
+        if (userInfoString !== undefined) {
+          self.authState = 'authed';
+        } else {
+          self.authState = 'not_auth';
+        }
+      }),
+    };
+  });

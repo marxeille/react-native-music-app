@@ -12,11 +12,12 @@ export default class SplashComponent extends Component {
 
   componentDidMount() {
     let value = this.context;
-    var userStore: UserStore = value.userStore;
-    userStore.checkAuthStateAndConfig().then(value => {});
+    var userStore = value.userStore;
+    userStore.checkAuthStateAndConfig();
   }
 
   render() {
+    console.log('DEBUG => splash_component ');
     return (
       <RootContext.Consumer>
         {value => (
