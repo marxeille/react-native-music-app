@@ -15,7 +15,7 @@ export const rootStore = RootStore.create({
   userStore: UserStore.create({
     authState: 'none'
   }),
-
+  playlist: {},
   playerStore: PlayerStore.create(
     {
       currentSong: {

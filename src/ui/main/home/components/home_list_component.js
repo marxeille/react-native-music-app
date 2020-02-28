@@ -6,6 +6,7 @@ import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import { rootStore } from '../../../../data/context/root_context';
 import { observer } from 'mobx-react';
+import ItemHome from '../../../components/item_home_component';
 
 @observer
 @wrap
@@ -22,13 +23,14 @@ export default class HomeListComponent extends Component {
   renderSmallItem = wrap(item => {
     return (
       <TouchableOpacity>
-        <View cls="widthFn-111 pl3 mr2">
+        <ItemHome id={item.item.id} />
+        {/* <View cls="widthFn-111 pl3 mr2">
           <Image
             cls="heightFn-111 widthFn-111"
             source={require('../../../../assets/images/cover3.png')}
           />
           <Text cls="white pt2 fw6">Daily mix {item.item.title()}</Text>
-        </View>
+        </View> */}
       </TouchableOpacity>
     );
   });
@@ -52,6 +54,7 @@ export default class HomeListComponent extends Component {
 
   render() {
     const { type, title, cate, rightIcon } = this.props;
+    console.log('rootStore.homeStore.popular', rootStore.homeStore.popular);
 
     return (
       <View cls={`fullWidth pb3 bb b--#4B3277 ${rightIcon ? 'pt4' : ''}`}>
@@ -81,7 +84,7 @@ export default class HomeListComponent extends Component {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={rootStore.homeStore.suggesst}
+            data={rootStore.homeStore.popular}
             keyExtractor={(item, index) => index.toString()}
             renderItem={
               type == 'large' ? this.renderLargeItem : this.renderSmallItem

@@ -17,7 +17,7 @@ export default class HomeComponent extends Component {
   }
 
   componentDidMount() {
-    rootStore.homeStore.fetchData();
+    rootStore.fetchData();
   }
 
   render() {
