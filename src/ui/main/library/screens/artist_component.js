@@ -58,7 +58,8 @@ export default class ArtistComponent extends Component {
         <Text
           cls="fw6"
           style={[
-            { color: active === index ? '#fff' : '#a57aae', padding: 3 },
+            // { color: active === index ? '#fff' : '#a57aae', padding: 3 },
+            { color: '#a57aae', padding: 3 },
           ]}>
           {title}
         </Text>

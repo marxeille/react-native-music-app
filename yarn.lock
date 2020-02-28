@@ -5362,10 +5362,9 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-alphabet-sectionlist@^0.0.4:
+"react-native-alphabet-sectionlist@https://github.com/marxeille/react-native-atoz-list":
   version "0.0.4"
-  resolved "https://registry.yarnpkg.com/react-native-alphabet-sectionlist/-/react-native-alphabet-sectionlist-0.0.4.tgz#6d8aa46acdbc1e76b20ee6ca90cbfd0ad2c154a9"
-  integrity sha512-iX6ZVVvCBcaz2FyMxXQkjpgrg0VBuSaFax8FArmXOzQRVYeVrw20NAAxo2Mloia6heQeMS2cyhR8JHQAntRYow==
+  resolved "https://github.com/marxeille/react-native-atoz-list#cf08916bacf86e25e22df341d5805e8cdf94dff4"
   dependencies:
     merge "^1.2.1"
     prop-types "^15.7.2"
@@ -5418,6 +5417,11 @@ react-native-screens@^2.0.0-beta.13:
   integrity sha512-u2ajGWVv9QoQnFzRFHD2Oe0v+jRqWzGNXJm31B9b03x21oFDv6NRTCMF3UqntQcg1SRJh6PdlQQc2M0qymDIww==
   dependencies:
     debounce "^1.2.0"
+
+react-native-swipe-gestures@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.4.tgz#6a9c6613bfe06cd9014a36a2c4a09f719ff62451"
+  integrity sha512-C/vz0KPHNyqHk3uF4Cz/jzd/0N8z34ZgsjAZUh/RsXPH2FtJJf3Fw73pQDWJSoCMtvVadlztb8xQ+/aEQrll7w==
 
 react-native-tab-view@^2.11.0, react-native-tab-view@^2.13.0:
   version "2.13.0"
