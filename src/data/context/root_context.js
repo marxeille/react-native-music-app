@@ -9,6 +9,9 @@ import makeInspectable from 'mobx-devtools-mst';
 import CommonApiService from '../datasource/common_api_service';
 import ApiService from '../datasource/api_service';
 import { HomeStore } from '../repository/home_store';
+import * as Reactotron from "reactotron-react-native"
+import { mst } from "reactotron-mst"
+import { reactotron } from '../../../ReactotronConfig';
 
 export const rootStore = RootStore.create({
 
@@ -37,3 +40,6 @@ makeInspectable(rootStore)
 export const RootContext = React.createContext(
   rootStore
 );
+// Reactotron.trackMstNode(rootStore)
+
+reactotron.trackMstNode(rootStore);
