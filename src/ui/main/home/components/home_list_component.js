@@ -77,6 +77,7 @@ export default class HomeListComponent extends Component {
         <View cls="fullWidth">
           <FlatList
             horizontal
+            showsHorizontalScrollIndicator={false}
             data={data}
             keyExtractor={(item, index) => index.toString()}
             renderItem={

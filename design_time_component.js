@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import Login from './src/ui/auth/log_in_component';
+// import Login from './src/ui/auth/log_in_component';
+import LibraryComponent from './src/ui/main/library';
 
 export default class DesignTimeComponent extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ export default class DesignTimeComponent extends Component {
   render() {
     return (
       <View>
-        <Login />
+        <LibraryComponent />
       </View>
     );
   }

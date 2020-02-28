@@ -6,6 +6,7 @@ export const AuthState = {
   AUTHED: 'authed',
   NONE: 'none',
   NOT_AUTH: 'not_auth',
+  DESIGN: 'design',
 };
 
 const AsyncStorageKey = {
@@ -13,7 +14,7 @@ const AsyncStorageKey = {
 };
 
 export class UserStore {
-  @observable authState = AuthState.NOT_AUTH;
+  @observable authState = AuthState.DESIGN;
 
   constructor(authState) {
     this.authState = authState;

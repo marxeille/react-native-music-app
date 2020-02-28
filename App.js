@@ -62,7 +62,7 @@ export default class App extends Component {
           </RootContext.Provider>
         );
       default:
-      case AuthState.NONE:
+      case AuthState.DESIGN:
         return (
           <RootContext.Provider value={rootStore}>
             <NavigationContainer ref={navigationRef}>

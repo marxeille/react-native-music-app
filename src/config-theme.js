@@ -138,8 +138,17 @@ const DEFAULT_OPTIONS = {
       deviceWidth: {
         width: device.width,
       },
+      latoFont: {
+        fontFamily: 'lato-regular',
+      },
+      latoHeavyFont: {
+        fontFamily: 'lato-regular',
+      },
+      avertaFont: {
+        fontFamily: 'Averta-ExtraBold_4',
+      },
       lightFont: {
-        fontFamily: 'Roboto-Light',
+        fontFamily: 'lato-heavy',
       },
       boldFont: {
         fontFamily: 'Roboto-Bold',

@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Image,
-  ImageBackground,
-  FlatList,
-} from 'react-native';
+import { ImageBackground } from 'react-native';
 import { navigate } from '../../../navigation/navigation_service';
 import { wrap } from '../../../themes';
 import { ScrollView } from 'react-native-gesture-handler';

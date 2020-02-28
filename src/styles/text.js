@@ -1,20 +1,20 @@
 export default {
   i: {
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   tl: {
-    textAlign: 'left'
+    textAlign: 'left',
   },
   tc: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   tr: {
-    textAlign: 'right'
+    textAlign: 'right',
   },
   tj: {
-    textAlign: 'justify'
+    textAlign: 'justify',
   },
   tavt: {
-    textAlignVertical: 'top'
-  }
+    textAlignVertical: 'top',
+  },
 };

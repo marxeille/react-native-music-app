@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import { wrap } from '../../../themes';
 import { RootStore } from '../../../data/repository/root_store';
 import { RootContext } from '../../../data/context/root_context';
+
+import LibraryTopBar from './screens/lib_topbar_component';
+import LinearGradientText from './components/LinearGradientText';
 
 @wrap
 export default class LibraryComponent extends Component {
@@ -16,17 +25,19 @@ export default class LibraryComponent extends Component {
   render() {
     let value = this.context;
     return (
-      <SafeAreaView cls="bg-#4b3562">
-        <View cls="bg-white fullView aic jcc">
-          <Text> lib_component </Text>
-          <TouchableOpacity
-            onPress={() => {
-              value.userStore.removeUserInfo();
-            }}>
-            <Text> logout </Text>
-          </TouchableOpacity>
+      <ImageBackground
+        cls="fullView pa3"
+        source={require('../../../assets/icons/bg.png')}>
+        <View cls="pt4">
+          <LinearGradientText
+            text={'MYJAM'}
+            styles={{ fontWeight: '700', fontSize: 28 }}
+          />
         </View>
-      </SafeAreaView>
+        <View cls="flx-i pt3">
+          <LibraryTopBar />
+        </View>
+      </ImageBackground>
     );
   }
 }

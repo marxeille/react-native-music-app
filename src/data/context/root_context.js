@@ -1,11 +1,8 @@
-
 import React from 'react';
 import { UserStore, AuthState } from '../repository/user_store';
-import { RootStore } from '../repository/root_store'
+import { RootStore } from '../repository/root_store';
 import { AppState } from 'react-native';
 
-const userStore = new UserStore(AuthState.AUTHED);
+const userStore = new UserStore(AuthState.DESIGN);
 export const rootStore = new RootStore(userStore);
-export const RootContext = React.createContext(
-  rootStore
-);
+export const RootContext = React.createContext(rootStore);
