@@ -29,16 +29,16 @@ export const RootStore = types
           playlist.length,
         );
         var populars = [];
+
         playlist.forEach(data => {
-          self.playlist.put(
-            PlayList.create({
-              id: data.id,
-              name: data.name,
-              thumb: data.thumb,
-              artist: data.artist,
-            }),
-          );
-          populars.push(data.id);
+          var teamp = PlayList.create({
+            id: data.id,
+            name: data.name,
+            thumb: data.thumb,
+            artist: data.artist,
+          });
+          self.playlist.put(teamp);
+          populars.push(teamp.id);
         });
         self.homeStore.popular = populars;
 

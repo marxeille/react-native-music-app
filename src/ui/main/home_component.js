@@ -20,7 +20,7 @@ export default class HomeComponent extends Component {
   }
 
   render() {
-    console.log('DEBUG => home_component render');
+    console.log('DEBUG => home_component render', rootStore.homeStore.popular);
     return (
       <SafeAreaView>
         <View cls="bg-white fullView aic jcc">
@@ -31,7 +31,7 @@ export default class HomeComponent extends Component {
             }}
           />
           <Button
-            title={`${rootStore.homeStore.popular.length}`}
+            title={`${rootStore.homeStore.popular.length > 0 ? rootStore.homeStore.popular[0].title() : 'no item'}`}
             onPress={() => {
               navigate('player');
             }}
