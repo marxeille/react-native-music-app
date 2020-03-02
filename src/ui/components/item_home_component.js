@@ -19,7 +19,7 @@ export default class ItemHome extends Component {
     );
 
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => this.props.navigate('player')}>
         <View cls="widthFn-150 pl3 mr2">
           <Image
             cls="heightFn-150 widthFn-150"

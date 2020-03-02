@@ -13,6 +13,7 @@ import PlayerComponent from '../ui/player/player_component';
 import { Styles } from '../styles/stylesheets';
 import Images from '../assets/icons/icons';
 import createBottomTabNavigationMusic from './createBottomTabNavigationMusic';
+import PlayerFullComponent from '../ui/player/player_full_component';
 
 const Tab = createBottomTabNavigationMusic();
 const Stack = createStackNavigator();
@@ -83,7 +84,14 @@ export default function mainContainer() {
   return (
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="bottomtab" component={getBottomTabNavigator} />
-      <Stack.Screen name="player" component={PlayerComponent} />
+      <Stack.Screen
+        name="player"
+        component={PlayerFullComponent}
+        options={{
+          headerTransparent: true,
+          gestureEnabled: false,
+        }}
+      />
     </Stack.Navigator>
   );
 }

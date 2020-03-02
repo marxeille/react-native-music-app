@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { rootStore } from '../../../../data/context/root_context';
 import { observer } from 'mobx-react';
 import ItemHome from '../../../components/item_home_component';
+import { navigate } from '../../../../navigation/navigation_service';
 
 @observer
 @wrap
@@ -23,7 +24,7 @@ export default class HomeListComponent extends Component {
   renderSmallItem = wrap(item => {
     return (
       <TouchableOpacity>
-        <ItemHome id={item.item.id} />
+        <ItemHome id={item.item.id} navigate={navigate} />
         {/* <View cls="widthFn-111 pl3 mr2">
           <Image
             cls="heightFn-111 widthFn-111"
