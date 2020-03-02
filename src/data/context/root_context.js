@@ -35,11 +35,8 @@ export const rootStore = RootStore.create({
   })
 })
 
-makeInspectable(rootStore)
 
 export const RootContext = React.createContext(
   rootStore
 );
-// Reactotron.trackMstNode(rootStore)
-
-reactotron.trackMstNode(rootStore);
+reactotron.trackMstNode(rootStore)

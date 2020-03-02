@@ -25,18 +25,20 @@ export const RootStore = types.model("RootStore", {
         var playlist: Array = yield apiService.commonApiService.getPopularPlayList();
         console.log('DEBUG => root_store fetchPopularPlayList playlist', playlist.length);
         var populars = [];
+
         playlist.forEach(data => {
-          self.playlist.put(
-            PlayList.create(
-              {
-                id: data.id,
-                name: data.name,
-                thumb: data.thumb,
-                artist: data.artist
-              }
-            )
+          var teamp = PlayList.create(
+            {
+              id: data.id,
+              name: data.name,
+              thumb: data.thumb,
+              artist: data.artist
+            }
           );
-          populars.push(data.id);
+          self.playlist.put(
+            teamp
+          );
+          populars.push(teamp.id);
         })
         self.homeStore.popular = populars;
 
