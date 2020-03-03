@@ -1,4 +1,4 @@
-import {Dimensions, Platform} from 'react-native';
+import { Dimensions, Platform, StatusBar } from 'react-native';
 import unorm from 'unorm';
 
 export const mapValue = (object, iteratee) => {
@@ -174,3 +174,22 @@ export const unnormText = text => {
     : '';
   return normalizedText.split('').join('');
 };
+
+export function ifIphoneX(iphoneXStyle, regularStyle) {
+  if (isIphoneX()) {
+    return iphoneXStyle;
+  }
+  return regularStyle;
+}
+
+export function getStatusBarHeight(safe) {
+  return Platform.select({
+    ios: ifIphoneX(safe ? 44 : 30, 20),
+    android: StatusBar.currentHeight,
+    default: 0,
+  });
+}
+
+export function getBottomSpace() {
+  return isIphoneX() ? 34 : 0;
+}

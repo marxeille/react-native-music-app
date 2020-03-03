@@ -90,6 +90,15 @@ export default function mainContainer() {
         options={{
           headerTransparent: true,
           gestureEnabled: false,
+          animationEnabled: true,
+          animationTypeForReplace: 'pop',
+          transitionConfig: () => ({
+            transitionSpec: {
+              duration: 0,
+              timing: Animated.timing,
+              easing: Easing.step0,
+            },
+          }),
         }}
       />
     </Stack.Navigator>

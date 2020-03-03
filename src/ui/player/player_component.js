@@ -3,9 +3,8 @@ import {
   View,
   Text,
   Image,
-  ImageBackground,
-  TouchableWithoutFeedback,
   TouchableNativeFeedback,
+  StyleSheet,
   TouchableHighlight,
 } from 'react-native';
 import Images from '../../assets/icons/icons';
@@ -17,8 +16,10 @@ import { trace } from 'mobx';
 import GestureRecognizer, {
   swipeDirections,
 } from 'react-native-swipe-gestures';
+import { wrap } from '../../themes';
 
 @observer
+@wrap
 export default class PlayerComponent extends Component {
   constructor(props) {
     super(props);
@@ -74,44 +75,19 @@ export default class PlayerComponent extends Component {
           onSwipeLeft={this.onSwipeLeft}
           onSwipeRight={this.onSwipeRight}
           config={config}>
-          <View
-            style={{
-              height: 56,
-              backgroundColor: '#110027',
-            }}>
-            <View style={{ height: 2, backgroundColor: 'white' }}></View>
-            <View style={{ flex: 1, width: '100%', flexDirection: 'row' }}>
+          <View style={styles.container}>
+            <View cls="bg-white heightFn-2"></View>
+            <View cls="flx-row fullWidth">
               <Image
                 source={{ uri: rootStore.playerStore.currentSong.getThumb() }}
-                style={{
-                  width: 54,
-                  height: 54,
-                }}
+                cls="widthFn-54 heightFn-54"
               />
 
-              <View
-                style={{
-                  height: 54,
-                  flex: 1,
-                  paddingVertical: 8,
-                  paddingHorizontal: 16,
-                }}>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontSize: 16,
-                    fontStyle: 'normal',
-                    fontWeight: '600',
-                  }}>
+              <View style={styles.infoSection}>
+                <Text cls="white fw7">
                   {rootStore.playerStore.currentSong.getName()}
                 </Text>
-                <Text
-                  style={{
-                    color: '#835db8',
-                    fontSize: 12,
-                    fontStyle: 'normal',
-                    fontWeight: '400',
-                  }}>
+                <Text cls="primaryPurple f10 fw4">
                   {rootStore.playerStore.currentSong.getSubTitlte()}
                 </Text>
               </View>
@@ -120,33 +96,21 @@ export default class PlayerComponent extends Component {
                   rootStore.playerStore.toggleStatus();
                 }}
                 background={TouchableNativeFeedback.SelectableBackground()}>
-                <View
-                  style={{
-                    padding: 12,
-                  }}>
+                <View cls="pa3">
                   <Image
                     source={
                       rootStore.playerStore.statusPlayer == 'pause'
                         ? Images.ic_play
                         : Images.ic_pause
                     }
-                    style={{
-                      width: 24,
-                      height: 24,
-                    }}
+                    cls
                   />
                 </View>
               </TouchableHighlight>
-              <View
-                style={{
-                  padding: 12,
-                }}>
+              <View cls="pa3">
                 <Image
                   source={Images.ic_favorited}
-                  style={{
-                    width: 24,
-                    height: 24,
-                  }}
+                  cls="widthFn-24 heightFn-24"
                 />
               </View>
             </View>
@@ -156,3 +120,15 @@ export default class PlayerComponent extends Component {
     );
   }
 }
+const styles = StyleSheet.create({
+  container: {
+    height: 56,
+    backgroundColor: '#110027',
+  },
+  infoSection: {
+    height: 54,
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+});
