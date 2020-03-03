@@ -9,9 +9,11 @@ import {
 import { wrap } from '../../themes';
 import { observer } from 'mobx-react';
 import { pop } from '../../navigation/navigation_service';
-import { getStatusBarHeight } from '../../utils';
+import { getStatusBarHeight, subLongStr } from '../../utils';
 import Images from '../../assets/icons/icons';
 import Slider from '@react-native-community/slider';
+
+import LinearGradientText from '../main/library/components/LinearGradientText';
 
 @observer
 @wrap
@@ -46,8 +48,16 @@ export default class PlayerFullComponent extends Component {
           <TouchableOpacity onPress={() => pop()}>
             <Image source={Images.ic_like} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => pop()}>
-            <Text cls="white fw8 f4 primaryPurple">Vnahey hey hey</Text>
+          <TouchableOpacity>
+            <LinearGradientText
+              text={subLongStr('Vinahey hey hey hey', 20)}
+              end={{ x: 0.7, y: 0 }}
+              styles={{
+                justifyContent: 'center',
+                fontSize: 23,
+                fontWeight: '800',
+              }}
+            />
           </TouchableOpacity>
           <TouchableOpacity>
             <Image source={Images.ic_share} />
@@ -68,7 +78,7 @@ export default class PlayerFullComponent extends Component {
           <TouchableOpacity onPress={() => {}}>
             <Image cls="widthFn-32 heightFn-32" source={Images.ic_prev} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {}}>
             <Image source={Images.ic_play_large} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}}>
@@ -104,6 +114,10 @@ export default class PlayerFullComponent extends Component {
                 maximumTrackTintColor="#4b3277"
                 thumbImage={Images.ic_circle}
               />
+              <View cls="flx-row jcsb">
+                <Text cls="white f11">2:00</Text>
+                <Text cls="white f11">-3:00</Text>
+              </View>
             </View>
             {this.renderPlaySection()}
           </View>

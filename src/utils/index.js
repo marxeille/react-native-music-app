@@ -193,3 +193,7 @@ export function getStatusBarHeight(safe) {
 export function getBottomSpace() {
   return isIphoneX() ? 34 : 0;
 }
+
+export function subLongStr(str, length) {
+  return str.length > length ? str.substring(0, length) + '...' : str;
+}
