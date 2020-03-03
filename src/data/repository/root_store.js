@@ -5,6 +5,7 @@ import { HomeStore } from './home_store';
 import { types, flow } from 'mobx-state-tree';
 import { PlayList } from '../model/playlist';
 import { apiService } from '../context/api_context';
+import { Song } from '../model/song';
 
 export const RootStore = types
   .model('RootStore', {
@@ -12,6 +13,7 @@ export const RootStore = types
     playerStore: PlayerStore,
     homeStore: HomeStore,
     playlist: types.maybeNull(types.map(PlayList)),
+    songs: types.maybeNull(types.map(Song)),
   })
   .actions(self => {
     return {
@@ -63,6 +65,17 @@ export const RootStore = types
         self.userStore.playlists = playlistOfUser;
       }),
 
+      updateSongs(values: Array) {
+        values.forEach(data => {
+          self.songs.put(Song.create({
+            id: data.id,
+            name: data.name,
+            artist: data.artist,
+            thumb: data.thumb,
+            favorite: data.favorite,
+          }))
+        })
+      }
 
     };
   });

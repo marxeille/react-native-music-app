@@ -5,8 +5,35 @@ import { instanceAxios } from './api_config';
 export default class CommonApiService {
 
   testAxios() {
-    console.log('DEBUG => common_api_service instanceAxios', instanceAxios);
     return instanceAxios.get('/list_music');
+  }
+
+  getSongsOfAlBum(index) {
+    return new Promise(resolve => {
+      resolve([
+        {
+          id: '1',
+          name: 'Quên',
+          artist: 'Chi Dân',
+          favorite: false,
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        },
+        {
+          id: '2',
+          name: 'Khi phải xa nhau',
+          artist: 'Hồ Quang Hiếu',
+          favorite: true,
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        },
+        {
+          id: '3',
+          name: 'Đường một chiều',
+          artist: 'Tim',
+          favorite: true,
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        }
+      ]);
+    })
   }
 
   //Lấy danh sách album gần đây

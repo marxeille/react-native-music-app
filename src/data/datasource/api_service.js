@@ -7,4 +7,5 @@ export default class ApiService {
   constructor(commonApiService) {
     this.commonApiService = commonApiService;
   }
+
 }

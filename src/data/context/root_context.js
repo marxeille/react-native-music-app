@@ -22,6 +22,7 @@ export const rootStore = RootStore.create({
   playerStore: PlayerStore.create(
     {
       currentSong: {
+        id: '1',
         name: "Chiều Hôm Ấy",
         thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
         artist: 'Dang Ngoc Duc'
@@ -31,8 +32,8 @@ export const rootStore = RootStore.create({
   ),
   homeStore: HomeStore.create({
     state: 'loading',
-
-  })
+  }),
+  songs: {}
 })
 
 

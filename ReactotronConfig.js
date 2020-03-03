@@ -9,3 +9,12 @@ export const reactotron = Reactotron
   .useReactNative() // add all built-in react native plugins
   .use(mst())
   .connect() // let's connect!
+
+// console.log = (...args) => {
+//   Reactotron.display({
+//     name: 'CONSOLE.LOG',
+//     important: true,
+//     value: args,
+//     preview: args.length ? JSON.stringify(args) : args[0]
+//   });
+// }

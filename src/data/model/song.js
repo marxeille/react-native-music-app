@@ -3,6 +3,7 @@ import { types } from "mobx-state-tree"
 import { values } from "mobx";
 
 export const Song = types.model("Song", {
+  id: types.identifier,
   name: types.string,
   thumb: types.string,
   artist: types.string,

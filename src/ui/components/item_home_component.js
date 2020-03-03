@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../themes';
 import { rootStore } from '../../data/context/root_context';
+import { useNavigation } from '@react-navigation/native';
+import { navigate } from '../../navigation/navigation_service';
 
 @observer
 @wrap
@@ -19,7 +21,10 @@ export default class ItemHome extends Component {
     );
 
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigate('playlist_detail', { id: this.props.id })
+        }}>
         <View cls="widthFn-150 pl3 mr2">
           <Image
             cls="heightFn-150 widthFn-150"
