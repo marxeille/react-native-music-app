@@ -44,5 +44,25 @@ export const RootStore = types
 
         self.homeStore.state = 'success';
       }),
+
+      fetchPlayListOfUser: flow(function* fetchPlayListOfUser() {
+        var playlist: Array = yield apiService.commonApiService.getPlaylistOfUser();
+
+        var playlistOfUser = [];
+
+        playlist.forEach(data => {
+          var teamp = PlayList.create({
+            id: data.id,
+            name: data.name,
+            thumb: data.thumb,
+            artist: data.artist,
+          });
+          self.playlist.put(teamp);
+          playlistOfUser.push(teamp.id);
+        });
+        self.userStore.playlists = playlistOfUser;
+      }),
+
+
     };
   });

@@ -137,18 +137,24 @@ export default class PlayerComponent extends Component {
                   />
                 </View>
               </TouchableHighlight>
-              <View
-                style={{
-                  padding: 12,
+              <TouchableHighlight
+                onPress={() => {
+                  rootStore.playerStore.currentSong.toggleFavorite();
                 }}>
-                <Image
-                  source={Images.ic_favorited}
+
+                <View
                   style={{
-                    width: 24,
-                    height: 24,
-                  }}
-                />
-              </View>
+                    padding: 12,
+                  }}>
+                  <Image
+                    source={rootStore.playerStore.currentSong.isFavorite() ? Images.ic_favorited : Images.ic_favorite}
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                  />
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         </GestureRecognizer>

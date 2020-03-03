@@ -15,6 +15,10 @@ export const PlayerStore = types.model("PlayerStore", {
       } else {
         self.statusPlayer = 'pause';
       }
+    },
+    playSong(song) {
+      self.currentSong = song;
+      self.statusPlayer = 'playing';
     }
   }
 })

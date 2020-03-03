@@ -79,4 +79,30 @@ export default class CommonApiService {
       ]);
     })
   };
+
+  //Lấy danh sách album gần đây
+  getPlaylistOfUser() {
+    return new Promise(resolve => {
+      resolve([
+        {
+          id: '1',
+          name: 'Daily Mix 1',
+          artist: '',
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        },
+        {
+          id: '2',
+          name: 'Daily Mix 2',
+          artist: '',
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        },
+        {
+          id: '3',
+          name: 'Daily Mix 3',
+          artist: '',
+          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+        }
+      ]);
+    })
+  }
 }

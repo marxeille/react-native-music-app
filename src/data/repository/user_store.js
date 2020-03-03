@@ -3,6 +3,10 @@ import { types, flow } from 'mobx-state-tree';
 import { observable, autorun } from 'mobx';
 import AsyncStorage from '@react-native-community/async-storage';
 import UserInfo from '../model/user_info';
+import { PlayList } from '../model/playlist';
+import { Artist } from '../model/artist';
+import { Album } from '../model/album';
+
 
 export const AuthState = types.enumeration('AuthState', [
   'authed',
@@ -17,6 +21,9 @@ const AsyncStorageKey = {
 export const UserStore = types
   .model('UserStore', {
     authState: AuthState,
+    playlists: types.maybeNull(types.array(types.reference(PlayList))),
+    artists: types.maybeNull(types.array(types.reference(Artist))),
+    albums: types.maybeNull(types.array(types.reference(Album))),
   })
   .actions(self => {
     return {

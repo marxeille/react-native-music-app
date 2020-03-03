@@ -16,7 +16,7 @@ import { reactotron } from '../../../ReactotronConfig';
 export const rootStore = RootStore.create({
 
   userStore: UserStore.create({
-    authState: 'none'
+    authState: 'none',
   }),
   playlist: {},
   playerStore: PlayerStore.create(

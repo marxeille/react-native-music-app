@@ -1,6 +1,8 @@
 const Images = {
   bc_tabbottom: require('./bc_tabbottom.png'),
   bg: require('./bg.png'),
+  bg_wave: require('./bg_wave.png'),
+  ic_favorite: require('./ic_favorite.png'),
   ic_favorited: require('./ic_favorited.png'),
   ic_filter: require('./ic_filter.png'),
   ic_library: require('./ic_library.png'),
