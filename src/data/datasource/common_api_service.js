@@ -1,6 +1,14 @@
 import { PlayList } from '../model/playlist';
+import Axios from 'axios'
+import { instanceAxios } from './api_config';
 //Hanle data từ Api Services
 export default class CommonApiService {
+
+  testAxios() {
+    console.log('DEBUG => common_api_service instanceAxios', instanceAxios);
+    return instanceAxios.get('/list_music');
+  }
+
   //Lấy danh sách album gần đây
   getRecentlyPlaylist() {
     return new Promise(resolve => {
