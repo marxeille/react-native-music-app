@@ -16,7 +16,7 @@ export default class playlistComponent extends Component {
 
   componentDidMount() {
     if (rootStore.userStore.playlists == undefined || rootStore.userStore.playlists.length == 0) {
-      rootStore.fetchPlayListOfUser();
+      rootStore.userStore.fetchPlayListOfUser();
     }
   }
 

@@ -1,11 +1,12 @@
-import { types, flow } from 'mobx-state-tree';
+import { types, flow, getParent } from 'mobx-state-tree';
 
 import { observable, autorun } from 'mobx';
 import AsyncStorage from '@react-native-community/async-storage';
 import UserInfo from '../model/user_info';
-import { PlayList } from '../model/playlist';
+import { PlayList, createPlaylistFromJson } from '../model/playlist';
 import { Artist } from '../model/artist';
 import { Album } from '../model/album';
+import { apiService } from '../context/api_context';
 
 
 export const AuthState = types.enumeration('AuthState', [
@@ -66,6 +67,18 @@ export const UserStore = types
         } else {
           self.authState = 'not_auth';
         }
+      }),
+
+      fetchPlayListOfUser: flow(function* fetchPlayListOfUser() {
+        var playlist: Array = yield apiService.commonApiService.getPlaylistOfUser();
+        var playlistOfUser = [];
+        playlist.forEach(data => {
+          console.log("fetchPlayListOfUser:flow -> data", data)
+          var teamp = createPlaylistFromJson(data)
+          getParent(self).updatePlayList(teamp);//For RootStore
+          playlistOfUser.push(teamp.id);
+        });
+        self.playlists = playlistOfUser;
       }),
     };
   });

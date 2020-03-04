@@ -11,12 +11,6 @@ const SongOfAlPlaylistStore = types.model('SongOfAlPlaylistStore',
 
   }).actions(self => {
     return {
-      fetchData() {
-
-      }
-    }
-  }).actions(self => {
-    return {
       addList(ids) {
         self.songs.push(...ids);
       }

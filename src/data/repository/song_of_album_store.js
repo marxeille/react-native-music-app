@@ -5,14 +5,14 @@ import { Album } from '../model/album';
 
 const SongOfAlBumStore = types.model(
   {
-    album: types.reference(Album),
+    id: types.string,
     state: Result,
-    songs: types.array(types.reference(Song))
+    songs: types.array(types.string)
   }
 ).actions(self => {
   return {
-    fetchData() {
-
+    addList(ids) {
+      self.songs.push(...ids);
     }
   }
 });

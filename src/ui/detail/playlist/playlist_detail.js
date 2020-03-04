@@ -7,33 +7,30 @@ import { resolveIdentifier } from 'mobx-state-tree';
 import { PlayList } from '../../../data/model/playlist';
 import { apiService } from '../../../data/context/api_context';
 import { Song } from '../../../data/model/song';
+import { makeCancelable } from '../../../utils/index'
 
 @observer
 export default class PlaylistDetail extends Component {
 
   constructor(props) {
     super(props);
-    console.log("PlaylistDetail -> constructor -> props", props)
     this.model = SongOfAlPlaylistStore.create({
       id: props.route.params.id,
       state: 'loading',
       songs: []
     })
-
-    apiService.commonApiService.getSongsOfAlBum(1).then((values: Array) => {
-      rootStore.updateSongs(values);
-      this.model.addList(values.map(data => data.id));
-    })
-
   }
 
   componentDidMount() {
-
-    console.log("PlaylistDetail -> componentDidMount -> rootStore.playlist.get(this.model.id).title()", rootStore.playlist.get(this.model.id).title())
+    this.cancelablePromise = makeCancelable(
+      apiService.commonApiService.getSongsOfAlBum(1).then((values: Array) => {
+        rootStore.updateSongs(values);
+        this.model.addList(values.map(data => data.id));
+      }));
   }
 
   componentWillUnmount() {
-
+    this.cancelablePromise.cancel();
   }
 
   render() {

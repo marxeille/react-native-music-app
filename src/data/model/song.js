@@ -31,3 +31,14 @@ export const Song = types.model("Song", {
   }
 })
 
+
+export const createSongFromJson = (data) => {
+  return Song.create({
+    id: data.id,
+    name: data.name,
+    artist: data.artist,
+    thumb: data.thumb,
+    favorite: data.favorite,
+  })
+}
+

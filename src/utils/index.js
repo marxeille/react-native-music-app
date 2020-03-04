@@ -1,4 +1,4 @@
-import {Dimensions, Platform} from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import unorm from 'unorm';
 
 export const mapValue = (object, iteratee) => {
@@ -166,11 +166,30 @@ export const unnormText = text => {
 
   normalizedText = text
     ? unorm
-        .nfd(text)
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/đ/g, 'd')
-        .replace(/Đ/g, 'D')
-        .replace(/\u00a0/g, '\u0020')
+      .nfd(text)
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D')
+      .replace(/\u00a0/g, '\u0020')
     : '';
   return normalizedText.split('').join('');
+};
+
+
+export const makeCancelable = (promise) => {
+  let hasCanceled_ = false;
+
+  const wrappedPromise = new Promise((resolve, reject) => {
+    promise.then(
+      val => hasCanceled_ ? reject({ isCanceled: true }) : resolve(val),
+      error => hasCanceled_ ? reject({ isCanceled: true }) : reject(error)
+    );
+  });
+
+  return {
+    promise: wrappedPromise,
+    cancel() {
+      hasCanceled_ = true;
+    },
+  };
 };
