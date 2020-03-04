@@ -1,128 +1,149 @@
-import React, { Component } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
-  View,
-  Text,
-  ImageBackground,
   Image,
+  Text,
   TouchableOpacity,
+  View,
+  ViewPropTypes,
+  ImageBackground,
 } from 'react-native';
 import { wrap } from '../../themes';
+import { RootContext, rootStore } from '../../data/context/root_context';
 import { observer } from 'mobx-react';
-import { pop } from '../../navigation/navigation_service';
-import { getStatusBarHeight, subLongStr } from '../../utils';
 import Images from '../../assets/icons/icons';
-import Slider from '@react-native-community/slider';
+import TrackPlayer, { usePlaybackState } from 'react-native-track-player';
+import Player from './components/player';
+import playlistData from './data/playlist.json';
+import { pop } from '../../navigation/navigation_service';
+import { getStatusBarHeight, isSmallDevice } from '../../utils';
+const react_native_1 = require('react-native');
+const TrackPlayerState = react_native_1.NativeModules.TrackPlayerModule;
 
-import LinearGradientText from '../main/library/components/LinearGradientText';
+const PlayerFull = observer(
+  wrap(props => {
+    console.log('rootStore', rootStore);
 
-@observer
-@wrap
-export default class PlayerFullComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+    const playbackState = usePlaybackState();
 
-  renderHeader = wrap(() => {
-    return (
-      <>
-        <View cls="flx-row jcsa aic">
-          <TouchableOpacity onPress={() => pop()}>
-            <Image source={Images.ic_down} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => pop()}>
-            <Text cls="white fw8 f5"> Today's Top Hits </Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Image source={Images.ic_menu} />
-          </TouchableOpacity>
-        </View>
-      </>
+    useEffect(() => {
+      TrackPlayer.setupPlayer();
+      TrackPlayer.updateOptions({
+        stopWithApp: true,
+        capabilities: [
+          TrackPlayerState.CAPABILITY_PLAY,
+          TrackPlayerState.CAPABILITY_PAUSE,
+          TrackPlayerState.CAPABILITY_SKIP_TO_NEXT,
+          TrackPlayerState.CAPABILITY_SKIP_TO_PREVIOUS,
+          TrackPlayerState.CAPABILITY_STOP,
+        ],
+        compactCapabilities: [
+          TrackPlayerState.CAPABILITY_PLAY,
+          TrackPlayerState.CAPABILITY_PAUSE,
+        ],
+      });
+    }, []);
+
+    useEffect(() => {
+      togglePlayback();
+    }, []);
+
+    async function togglePlayback() {
+      const currentTrack = await TrackPlayer.getCurrentTrack();
+
+      if (currentTrack == null) {
+        await TrackPlayer.reset();
+        await TrackPlayer.add(playlistData);
+        // await TrackPlayer.add({
+        //   id: 'local-track',
+        //   url: localTrack,
+        //   title: 'Pure (Demo)',
+        //   artist: 'David Chavez',
+        //   artwork: 'https://picsum.photos/200',
+        // });
+        await TrackPlayer.play();
+      } else {
+        if (playbackState === TrackPlayerState.STATE_PAUSED) {
+          await TrackPlayer.play();
+        } else {
+          await TrackPlayer.pause();
+        }
+      }
+    }
+
+    async function onSeek(value) {
+      await TrackPlayer.seekTo(value);
+    }
+
+    const renderHeader = useCallback(
+      wrap(() => {
+        return (
+          <>
+            <View cls="flx-row jcsa aic">
+              <TouchableOpacity onPress={() => pop()}>
+                <Image source={Images.ic_down} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => pop()}>
+                <Text cls="white fw8 f5"> Today's Top Hits </Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image source={Images.ic_menu} />
+              </TouchableOpacity>
+            </View>
+          </>
+        );
+      }),
     );
-  });
 
-  renderInfo = wrap(() => {
+    console.log('isSmallDevice', isSmallDevice());
+
     return (
-      <View>
-        <View cls="flx-row jcsa aic pt5">
-          <TouchableOpacity onPress={() => pop()}>
-            <Image source={Images.ic_like} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <LinearGradientText
-              text={subLongStr('Vinahey hey hey hey', 20)}
-              end={{ x: 0.7, y: 0 }}
-              styles={{
-                justifyContent: 'center',
-                fontSize: 23,
-                fontWeight: '800',
-              }}
+      <ImageBackground source={Images.bg} cls="fullView">
+        <View cls="pa2" style={{ marginTop: getStatusBarHeight() }}>
+          {renderHeader()}
+          <View cls={`aic pt${isSmallDevice() ? 4 : 5} fullWidth`}>
+            <Image
+              cls="widthFn-327 heightFn-327"
+              source={require('../../assets/images/khabanh.png')}
             />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Image source={Images.ic_share} />
-          </TouchableOpacity>
-        </View>
-        <Text cls="white pt2 asc f7">Idol khÁ bẢnH</Text>
-      </View>
-    );
-  });
-
-  renderPlaySection = wrap(() => {
-    return (
-      <View>
-        <View cls="flx-row jcsa aic pt2">
-          <TouchableOpacity onPress={() => {}}>
-            <Image cls="widthFn-20 heightFn-20" source={Images.ic_shuffe} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
-            <Image cls="widthFn-32 heightFn-32" source={Images.ic_prev} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
-            <Image source={Images.ic_play_large} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
-            <Image cls="widthFn-32 heightFn-32" source={Images.ic_next} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
-            <Image cls="widthFn-18 heightFn-18" source={Images.ic_repeat} />
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  });
-
-  render() {
-    return (
-      <View>
-        <ImageBackground source={Images.bg} cls="fullView">
-          <View cls="pa2" style={{ marginTop: getStatusBarHeight() }}>
-            {this.renderHeader()}
-            <View cls="aic pt5 fullWidth">
-              <Image
-                cls="widthFn-327 heightFn-327"
-                source={require('../../assets/images/khabanh.png')}
-              />
-            </View>
-            {this.renderInfo()}
-            <View cls="pa3">
-              <Slider
-                cls="fullWidth"
-                minimumValue={0}
-                maximumValue={1}
-                minimumTrackTintColor="#d59fc7"
-                maximumTrackTintColor="#4b3277"
-                thumbImage={Images.ic_circle}
-              />
-              <View cls="flx-row jcsb">
-                <Text cls="white f11">2:00</Text>
-                <Text cls="white f11">-3:00</Text>
-              </View>
-            </View>
-            {this.renderPlaySection()}
           </View>
-        </ImageBackground>
-      </View>
+          <Player
+            onNext={skipToNext}
+            onSeek={onSeek}
+            onPrevious={skipToPrevious}
+            onTogglePlayback={togglePlayback}
+          />
+          <Text cls="white asc">Now {getStateName(playbackState)}</Text>
+        </View>
+      </ImageBackground>
     );
+  }),
+);
+
+export default PlayerFull;
+
+function getStateName(state) {
+  switch (state) {
+    case TrackPlayerState.STATE_NONE:
+      return 'None';
+    case TrackPlayerState.STATE_PLAYING:
+      return 'Playing';
+    case TrackPlayerState.STATE_PAUSED:
+      return 'Paused';
+    case TrackPlayerState.STATE_STOPPED:
+      return 'Stopped';
+    case TrackPlayerState.STATE_BUFFERING:
+      return 'Buffering';
   }
+}
+
+async function skipToNext() {
+  try {
+    await TrackPlayer.skipToNext();
+  } catch (_) {}
+}
+
+async function skipToPrevious() {
+  try {
+    await TrackPlayer.skipToPrevious();
+  } catch (_) {}
 }

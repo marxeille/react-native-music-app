@@ -16,13 +16,14 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* PlayerProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PlayerProjectTests.m */; };
+		4E9ED5D9240E447200A7DE8B /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9ED5D8240E447200A7DE8B /* dummy.swift */; };
 		53F72AD62039ABF6F962CC44 /* libPods-PlayerProject-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37EF6AB135BF0FAE4E631B86 /* libPods-PlayerProject-tvOS.a */; };
 		5824023DA419A4AE2C9DBC2F /* libPods-PlayerProjectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4358BE5B9D79A23D08714D56 /* libPods-PlayerProjectTests.a */; };
 		7ED2D0B7CE66797960656355 /* libPods-PlayerProject-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C66D95A8F5FC5850AD0B9D48 /* libPods-PlayerProject-tvOSTests.a */; };
-		C19D0B45BE6957E0B0F7AE0E /* libPods-PlayerProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69AF9387D8805AF85911D75B /* libPods-PlayerProject.a */; };
 		B00135B6C88B44A9979A0828 /* Averta-ExtraBold_4.otf in Resources */ = {isa = PBXBuildFile; fileRef = 67AA5F1C90E34C7C94BA4357 /* Averta-ExtraBold_4.otf */; };
-		F2DE30217EEE44738ABF9623 /* lato-heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BDE93C5E90E4CE3BB8C9573 /* lato-heavy.ttf */; };
 		B23D7F05FD7F44C2B7E7240E /* lato-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0B10B3B93C64D8F8CC3509E /* lato-regular.ttf */; };
+		C19D0B45BE6957E0B0F7AE0E /* libPods-PlayerProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69AF9387D8805AF85911D75B /* libPods-PlayerProject.a */; };
+		F2DE30217EEE44738ABF9623 /* lato-heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BDE93C5E90E4CE3BB8C9573 /* lato-heavy.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +61,12 @@
 		37AA3FB03798E56381927901 /* Pods-PlayerProject-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlayerProject-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-PlayerProject-tvOSTests/Pods-PlayerProject-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		37EF6AB135BF0FAE4E631B86 /* libPods-PlayerProject-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlayerProject-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4358BE5B9D79A23D08714D56 /* libPods-PlayerProjectTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlayerProjectTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E9ED5D7240E447200A7DE8B /* PlayerProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerProject-Bridging-Header.h"; sourceTree = "<group>"; };
+		4E9ED5D8240E447200A7DE8B /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
+		67AA5F1C90E34C7C94BA4357 /* Averta-ExtraBold_4.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Averta-ExtraBold_4.otf"; path = "../src/assets/fonts/Averta-ExtraBold_4.otf"; sourceTree = "<group>"; };
 		69AF9387D8805AF85911D75B /* libPods-PlayerProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlayerProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BDE93C5E90E4CE3BB8C9573 /* lato-heavy.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "lato-heavy.ttf"; path = "../src/assets/fonts/lato-heavy.ttf"; sourceTree = "<group>"; };
+		A0B10B3B93C64D8F8CC3509E /* lato-regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "lato-regular.ttf"; path = "../src/assets/fonts/lato-regular.ttf"; sourceTree = "<group>"; };
 		BF3843411E9D3A7F263AFD33 /* Pods-PlayerProject-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlayerProject-tvOS.release.xcconfig"; path = "Target Support Files/Pods-PlayerProject-tvOS/Pods-PlayerProject-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		C66D95A8F5FC5850AD0B9D48 /* libPods-PlayerProject-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlayerProject-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D69FAF451ACAC201C7496565 /* Pods-PlayerProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlayerProject.debug.xcconfig"; path = "Target Support Files/Pods-PlayerProject/Pods-PlayerProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -70,9 +76,6 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F309105E4235771991C29ADF /* Pods-PlayerProject-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlayerProject-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-PlayerProject-tvOS/Pods-PlayerProject-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		67AA5F1C90E34C7C94BA4357 /* Averta-ExtraBold_4.otf */ = {isa = PBXFileReference; name = "Averta-ExtraBold_4.otf"; path = "../src/assets/fonts/Averta-ExtraBold_4.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6BDE93C5E90E4CE3BB8C9573 /* lato-heavy.ttf */ = {isa = PBXFileReference; name = "lato-heavy.ttf"; path = "../src/assets/fonts/lato-heavy.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A0B10B3B93C64D8F8CC3509E /* lato-regular.ttf */ = {isa = PBXFileReference; name = "lato-regular.ttf"; path = "../src/assets/fonts/lato-regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +168,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				4E9ED5D8240E447200A7DE8B /* dummy.swift */,
 				13B07FAE1A68108700A75B9A /* PlayerProject */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PlayerProjectTests */,
@@ -172,6 +176,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				AC5FA30784CFFB22FEEF7C78 /* Pods */,
 				AF3C2DA9315C4F079C100746 /* Resources */,
+				4E9ED5D7240E447200A7DE8B /* PlayerProject-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -201,12 +206,11 @@
 				E321825C834C2748A0D8FE71 /* Pods-PlayerProjectTests.debug.xcconfig */,
 				DF40EC0DE9EEEACB157B0FDD /* Pods-PlayerProjectTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		AF3C2DA9315C4F079C100746 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				67AA5F1C90E34C7C94BA4357 /* Averta-ExtraBold_4.otf */,
 				6BDE93C5E90E4CE3BB8C9573 /* lato-heavy.ttf */,
@@ -214,7 +218,6 @@
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -311,6 +314,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						LastSwiftMigration = 1130;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -327,6 +333,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -569,6 +576,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				4E9ED5D9240E447200A7DE8B /* dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -622,6 +630,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E321825C834C2748A0D8FE71 /* Pods-PlayerProjectTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -645,6 +654,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DF40EC0DE9EEEACB157B0FDD /* Pods-PlayerProjectTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = PlayerProjectTests/Info.plist;
@@ -666,6 +676,7 @@
 			baseConfigurationReference = D69FAF451ACAC201C7496565 /* Pods-PlayerProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				INFOPLIST_FILE = PlayerProject/Info.plist;
@@ -677,6 +688,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = PlayerProject;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerProject-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -686,6 +700,7 @@
 			baseConfigurationReference = EB673E7F0B53DF566A2758AB /* Pods-PlayerProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = PlayerProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -696,6 +711,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = PlayerProject;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerProject-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

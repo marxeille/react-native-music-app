@@ -1,6 +1,8 @@
 import { Dimensions, Platform, StatusBar } from 'react-native';
 import unorm from 'unorm';
 
+const { height: D_HEIGHT, width: D_WIDTH } = Dimensions.get('window');
+
 export const mapValue = (object, iteratee) => {
   object = Object(object);
   const result = {};
@@ -197,3 +199,11 @@ export function getBottomSpace() {
 export function subLongStr(str, length) {
   return str.length > length ? str.substring(0, length) + '...' : str;
 }
+
+export const isSmallDevice = () => {
+  return D_HEIGHT <= 600;
+};
+
+export const isMeidumDevice = () => {
+  return D_HEIGHT <= 700;
+};
