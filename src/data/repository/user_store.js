@@ -35,18 +35,22 @@ export const UserStore = types
           userInfo.toJsonString(),
         ).then(self.saveSuccess, self.saveError);
       },
+
       saveError(error) {
         console.log('user_Store saveError', error);
       },
+
       saveSuccess(value) {
         self.authState = 'authed';
         console.log('user_Store saveSuccess');
       },
+
       removeUserInfo() {
         AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(value => {
           self.authState = 'not_auth';
         });
       },
+
       checkAuthStateAndConfig2() {
         AsyncStorage.getItem(AsyncStorageKey.USERINFO).then(userInfoString => {
           if (userInfoString !== undefined) {
@@ -73,7 +77,6 @@ export const UserStore = types
         var playlist: Array = yield apiService.commonApiService.getPlaylistOfUser();
         var playlistOfUser = [];
         playlist.forEach(data => {
-          console.log("fetchPlayListOfUser:flow -> data", data)
           var teamp = createPlaylistFromJson(data)
           getParent(self).updatePlayList(teamp);//For RootStore
           playlistOfUser.push(teamp.id);
