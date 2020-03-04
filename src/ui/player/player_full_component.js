@@ -19,6 +19,7 @@ import { getStatusBarHeight, isSmallDevice } from '../../utils';
 const react_native_1 = require('react-native');
 const TrackPlayerState = react_native_1.NativeModules.TrackPlayerModule;
 
+
 const PlayerFull = observer(
   wrap(props => {
     console.log('rootStore', rootStore);
@@ -26,25 +27,26 @@ const PlayerFull = observer(
     const playbackState = usePlaybackState();
 
     useEffect(() => {
-      TrackPlayer.setupPlayer();
-      TrackPlayer.updateOptions({
-        stopWithApp: true,
-        capabilities: [
-          TrackPlayerState.CAPABILITY_PLAY,
-          TrackPlayerState.CAPABILITY_PAUSE,
-          TrackPlayerState.CAPABILITY_SKIP_TO_NEXT,
-          TrackPlayerState.CAPABILITY_SKIP_TO_PREVIOUS,
-          TrackPlayerState.CAPABILITY_STOP,
-        ],
-        compactCapabilities: [
-          TrackPlayerState.CAPABILITY_PLAY,
-          TrackPlayerState.CAPABILITY_PAUSE,
-        ],
-      });
-    }, []);
+      TrackPlayer.getCurrentTrack().then(value => {
+        if (value == undefined) {
+          TrackPlayer.setupPlayer();
+          TrackPlayer.updateOptions({
+            stopWithApp: true,
+            capabilities: [
+              TrackPlayerState.CAPABILITY_PLAY,
+              TrackPlayerState.CAPABILITY_PAUSE,
+              TrackPlayerState.CAPABILITY_SKIP_TO_NEXT,
+              TrackPlayerState.CAPABILITY_SKIP_TO_PREVIOUS,
+              TrackPlayerState.CAPABILITY_STOP,
+            ],
+            compactCapabilities: [
+              TrackPlayerState.CAPABILITY_PLAY,
+              TrackPlayerState.CAPABILITY_PAUSE,
+            ],
+          });
+        }
+      })
 
-    useEffect(() => {
-      togglePlayback();
     }, []);
 
     async function togglePlayback() {
@@ -139,11 +141,11 @@ function getStateName(state) {
 async function skipToNext() {
   try {
     await TrackPlayer.skipToNext();
-  } catch (_) {}
+  } catch (_) { }
 }
 
 async function skipToPrevious() {
   try {
     await TrackPlayer.skipToPrevious();
-  } catch (_) {}
+  } catch (_) { }
 }

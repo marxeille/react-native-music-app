@@ -66,58 +66,64 @@ export default class PlayerComponent extends Component {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,
     };
-    return (
-      <>
-        <GestureRecognizer
-          onSwipe={this.onSwipe}
-          onSwipeUp={this.onSwipeUp}
-          onSwipeDown={this.onSwipeDown}
-          onSwipeLeft={this.onSwipeLeft}
-          onSwipeRight={this.onSwipeRight}
-          config={config}>
-          <View style={styles.container}>
-            <View cls="bg-white heightFn-2"></View>
-            <View cls="flx-row fullWidth">
-              <Image
-                source={{ uri: rootStore.playerStore.currentSong.getThumb() }}
-                cls="widthFn-54 heightFn-54"
-              />
+    if (rootStore.playerStore.currentSong) {
+      return (
+        <>
+          <GestureRecognizer
+            onSwipe={this.onSwipe}
+            onSwipeUp={this.onSwipeUp}
+            onSwipeDown={this.onSwipeDown}
+            onSwipeLeft={this.onSwipeLeft}
+            onSwipeRight={this.onSwipeRight}
+            config={config}>
+            <View style={styles.container}>
+              <View cls="bg-white heightFn-2"></View>
+              <View cls="flx-row fullWidth">
+                <Image
+                  source={{ uri: rootStore.playerStore.currentSong?.getThumb() }}
+                  cls="widthFn-54 heightFn-54"
+                />
 
-              <View style={styles.infoSection}>
-                <Text cls="white fw7">
-                  {rootStore.playerStore.currentSong.getName()}
-                </Text>
-                <Text cls="primaryPurple f10 fw4">
-                  {rootStore.playerStore.currentSong.getSubTitlte()}
-                </Text>
-              </View>
-              <TouchableHighlight
-                onPress={() => {
-                  rootStore.playerStore.toggleStatus();
-                }}
-                background={TouchableNativeFeedback.SelectableBackground()}>
+                <View style={styles.infoSection}>
+                  <Text cls="white fw7">
+                    {rootStore.playerStore.currentSong?.getName()}
+                  </Text>
+                  <Text cls="primaryPurple f10 fw4">
+                    {rootStore.playerStore.currentSong?.getSubTitlte()}
+                  </Text>
+                </View>
+                <TouchableHighlight
+                  onPress={() => {
+                    rootStore.playerStore.toggleStatus();
+                  }}
+                  background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View cls="pa3">
+                    <Image
+                      source={
+                        rootStore.playerStore.statusPlayer == 'pause'
+                          ? Images.ic_play
+                          : Images.ic_pause
+                      }
+                      cls
+                    />
+                  </View>
+                </TouchableHighlight>
                 <View cls="pa3">
                   <Image
-                    source={
-                      rootStore.playerStore.statusPlayer == 'pause'
-                        ? Images.ic_play
-                        : Images.ic_pause
-                    }
-                    cls
+                    source={Images.ic_favorited}
+                    cls="widthFn-24 heightFn-24"
                   />
                 </View>
-              </TouchableHighlight>
-              <View cls="pa3">
-                <Image
-                  source={Images.ic_favorited}
-                  cls="widthFn-24 heightFn-24"
-                />
               </View>
             </View>
-          </View>
-        </GestureRecognizer>
-      </>
-    );
+          </GestureRecognizer>
+        </>
+      );
+    } else {
+      return null;
+    }
+
+
   }
 }
 const styles = StyleSheet.create({

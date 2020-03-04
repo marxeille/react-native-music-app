@@ -12,28 +12,32 @@ import { HomeStore } from '../repository/home_store';
 import * as Reactotron from "reactotron-react-native"
 import { mst } from "reactotron-mst"
 import { reactotron } from '../../../ReactotronConfig';
+import TrackPlayer, { Event } from 'react-native-track-player';
+import { unprotect } from 'mobx-state-tree';
 
 export const rootStore = RootStore.create({
-
   userStore: UserStore.create({
     authState: 'none'
   }),
   playlist: {},
   playerStore: PlayerStore.create(
     {
-      currentSong: {
-        name: "Chiều Hôm Ấy",
-        thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
-        artist: 'Dang Ngoc Duc'
-      },
+      currentSong: null,
       statusPlayer: 'pause'
     }
   ),
   homeStore: HomeStore.create({
     state: 'loading',
+  }),
 
-  })
+});
+
+TrackPlayer.addEventListener(Event.PlaybackTrackChanged, (data) => {
+  console.log("PlaybackTrackChanged data", data);
+  unprotect(rootStore.playerStore);
+  rootStore.playerStore.currentSong = data.nextTrack;
 })
+
 
 
 export const RootContext = React.createContext(
