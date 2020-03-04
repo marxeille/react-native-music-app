@@ -40,10 +40,10 @@ export default class TabViewExample extends React.Component {
                     }}
                   />
                 ) : (
-                  <Text cls="white fw7 pr1" style={{ fontSize: 19 }}>
-                    {route.title}
-                  </Text>
-                )}
+                    <Text cls="white fw7 pr1" style={{ fontSize: 19 }}>
+                      {route.title}
+                    </Text>
+                  )}
               </View>
             </TouchableOpacity>
           );

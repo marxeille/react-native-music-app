@@ -1,8 +1,13 @@
-import { types, flow } from 'mobx-state-tree';
+import { types, flow, getParent } from 'mobx-state-tree';
 
 import { observable, autorun } from 'mobx';
 import AsyncStorage from '@react-native-community/async-storage';
 import UserInfo from '../model/user_info';
+import { PlayList, createPlaylistFromJson } from '../model/playlist';
+import { Artist } from '../model/artist';
+import { Album } from '../model/album';
+import { apiService } from '../context/api_context';
+
 
 export const AuthState = types.enumeration('AuthState', [
   'authed',
@@ -17,6 +22,9 @@ const AsyncStorageKey = {
 export const UserStore = types
   .model('UserStore', {
     authState: AuthState,
+    playlists: types.maybeNull(types.array(types.reference(PlayList))),
+    artists: types.maybeNull(types.array(types.reference(Artist))),
+    albums: types.maybeNull(types.array(types.reference(Album))),
   })
   .actions(self => {
     return {
@@ -27,18 +35,22 @@ export const UserStore = types
           userInfo.toJsonString(),
         ).then(self.saveSuccess, self.saveError);
       },
+
       saveError(error) {
         console.log('user_Store saveError', error);
       },
+
       saveSuccess(value) {
         self.authState = 'authed';
         console.log('user_Store saveSuccess');
       },
+
       removeUserInfo() {
         AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(value => {
           self.authState = 'not_auth';
         });
       },
+
       checkAuthStateAndConfig2() {
         AsyncStorage.getItem(AsyncStorageKey.USERINFO).then(userInfoString => {
           if (userInfoString !== undefined) {
@@ -59,6 +71,17 @@ export const UserStore = types
         } else {
           self.authState = 'not_auth';
         }
+      }),
+
+      fetchPlayListOfUser: flow(function* fetchPlayListOfUser() {
+        var playlist: Array = yield apiService.commonApiService.getPlaylistOfUser();
+        var playlistOfUser = [];
+        playlist.forEach(data => {
+          var teamp = createPlaylistFromJson(data)
+          getParent(self).updatePlayList(teamp);//For RootStore
+          playlistOfUser.push(teamp.id);
+        });
+        self.playlists = playlistOfUser;
       }),
     };
   });

@@ -3,6 +3,8 @@ const Images = {
   bg: require('./bg.png'),
   ic_circle: require('./ic_circle.png'),
   ic_down: require('./ic_down.png'),
+  bg_wave: require('./bg_wave.png'),
+  ic_favorite: require('./ic_favorite.png'),
   ic_favorited: require('./ic_favorited.png'),
   ic_filter: require('./ic_filter.png'),
   ic_library: require('./ic_library.png'),

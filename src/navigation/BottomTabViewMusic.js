@@ -90,11 +90,13 @@ export default class BottomTabViewMusic extends React.Component {
     } = this.state;
     return React.createElement(
       SafeAreaProviderCompat,
-      null,
+      {
+
+      },
       React.createElement(
         View,
         {
-          style: styles.container
+          style: styles.container2
         },
         React.createElement(
           View,
@@ -127,12 +129,13 @@ export default class BottomTabViewMusic extends React.Component {
                 {
                   key: route.key,
                   style: StyleSheet.absoluteFill,
-                  isVisible: isFocused
+                  isVisible: isFocused,
                 },
                 React.createElement(
                   SceneContent,
                   {
                     isFocused: isFocused,
+
                   },
                   descriptor.render())
               );
@@ -160,6 +163,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     overflow: 'hidden'
+  },
+  container2: {
+    flex: 1,
+    overflow: 'hidden',
   },
   pages: {
     flex: 1,

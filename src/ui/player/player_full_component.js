@@ -54,6 +54,7 @@ const PlayerFull = observer(
 
       if (currentTrack == null) {
         await TrackPlayer.reset();
+        rootStore.updateSongs(playlistData)
         await TrackPlayer.add(playlistData);
         // await TrackPlayer.add({
         //   id: 'local-track',

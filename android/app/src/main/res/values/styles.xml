@@ -6,6 +6,7 @@
         <item name="android:textColor">#000</item>
         <item name="colorPrimary">#4b3562</item>
         <item name="colorPrimaryDark">#352347</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:navigationBarColor">#352347</item>
     </style>
 

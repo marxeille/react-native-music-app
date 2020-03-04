@@ -14,6 +14,7 @@ import { Styles } from '../styles/stylesheets';
 import Images from '../assets/icons/icons';
 import createBottomTabNavigationMusic from './createBottomTabNavigationMusic';
 import PlayerFullComponent from '../ui/player/player_full_component';
+import homeContainer from './home_stack';
 
 const Tab = createBottomTabNavigationMusic();
 const Stack = createStackNavigator();
@@ -36,8 +37,8 @@ function getBottomTabNavigator() {
         },
       }}>
       <Tab.Screen
-        name="home"
-        component={HomeComponent}
+        name="home_stack"
+        component={homeContainer}
         options={{
           tabBarLabel: 'Trang chủ',
 

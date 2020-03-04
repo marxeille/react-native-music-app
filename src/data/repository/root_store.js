@@ -5,6 +5,8 @@ import { HomeStore } from './home_store';
 import { types, flow } from 'mobx-state-tree';
 import { PlayList } from '../model/playlist';
 import { apiService } from '../context/api_context';
+import { Song, createSongFromJson } from '../model/song';
+import { Album } from '../model/album';
 
 export const RootStore = types
   .model('RootStore', {
@@ -12,37 +14,28 @@ export const RootStore = types
     playerStore: PlayerStore,
     homeStore: HomeStore,
     playlist: types.maybeNull(types.map(PlayList)),
+    songs: types.maybeNull(types.map(Song)),
+    albums: types.maybeNull(types.map(Album)),
   })
   .actions(self => {
     return {
-      //Fetch Data Home
-      fetchData() {
-        self.homeStore.state = 'loading';
-        self.fetchPopularPlayList();
+
+      updatePlayList(playlist) {
+        self.playlist.put(playlist)
       },
 
-      //Handle Fect Popular Success
-      fetchPopularPlayList: flow(function* fetchPopularPlayList() {
-        var playlist: Array = yield apiService.commonApiService.getPopularPlayList();
-        console.log(
-          'DEBUG => root_store fetchPopularPlayList playlist',
-          playlist.length,
-        );
-        var populars = [];
+      updateSongs(values: Array) {
+        console.log('DEBUG => root_store values updateSongs', values);
+        values.forEach(data => {
+          self.songs.put(createSongFromJson(data))
+        })
+      },
 
-        playlist.forEach(data => {
-          var teamp = PlayList.create({
-            id: data.id,
-            name: data.name,
-            thumb: data.thumb,
-            artist: data.artist,
-          });
-          self.playlist.put(teamp);
-          populars.push(teamp.id);
-        });
-        self.homeStore.popular = populars;
+      updateAlbums(values: Array) {
+        values.forEach(data => {
+          self.songs.put(data)
+        })
+      }
 
-        self.homeStore.state = 'success';
-      }),
     };
   });

@@ -12,12 +12,12 @@ import { HomeStore } from '../repository/home_store';
 import * as Reactotron from "reactotron-react-native"
 import { mst } from "reactotron-mst"
 import { reactotron } from '../../../ReactotronConfig';
-import TrackPlayer, { Event } from 'react-native-track-player';
+import TrackPlayer, { Event, State } from 'react-native-track-player';
 import { unprotect } from 'mobx-state-tree';
 
 export const rootStore = RootStore.create({
   userStore: UserStore.create({
-    authState: 'none'
+    authState: 'none',
   }),
   playlist: {},
   playerStore: PlayerStore.create(
@@ -29,14 +29,23 @@ export const rootStore = RootStore.create({
   homeStore: HomeStore.create({
     state: 'loading',
   }),
+  songs: {}
 
 });
 
 TrackPlayer.addEventListener(Event.PlaybackTrackChanged, (data) => {
-  console.log("PlaybackTrackChanged data", data);
-  unprotect(rootStore.playerStore);
-  rootStore.playerStore.currentSong = data.nextTrack;
-})
+  console.log("PlaybackTrackChanged data", data.nextTrack);
+  rootStore.playerStore.playSong(data.nextTrack);
+});
+
+
+TrackPlayer.addEventListener(Event.PlaybackState, (data) => {
+  if (data.state == State.Playing || data.state == State.Connecting || data.state == State.Buffering || data.state == State.Connecting) {
+    rootStore.playerStore.setState('playing');
+  } else {
+    rootStore.playerStore.setState('pause');
+  }
+});
 
 
 

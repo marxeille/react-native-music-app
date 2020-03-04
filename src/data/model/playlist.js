@@ -18,3 +18,12 @@ export const PlayList = types.model("PlayList", {
     }
   }
 });
+
+export const createPlaylistFromJson = (data) => {
+  return PlayList.create({
+    id: data.id,
+    name: data.name,
+    thumb: data.thumb,
+    artist: data.artist,
+  })
+}

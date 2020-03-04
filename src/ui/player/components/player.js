@@ -17,6 +17,9 @@ import TrackPlayer, {
 } from 'react-native-track-player';
 import { subLongStr, isSmallDevice } from '../../../utils';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
+import { rootStore } from '../../../data/context/root_context';
+import { observer } from 'mobx-react';
+import PlayerInfo from './player_info';
 
 const react_native_1 = require('react-native');
 const TrackPlayerState = react_native_1.NativeModules.TrackPlayerModule;
@@ -104,18 +107,18 @@ const Player = wrap(props => {
   const handleTogglePlay = useCallback(() => {
     onTogglePlayback();
   });
-
+  /*
   const renderInfo = useCallback(
     wrap(() => {
       return (
         <View>
           <View cls={`flx-row jcsa aic pt${isSmallDevice() ? 4 : 5}`}>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => { }}>
               <Image source={Images.ic_like} />
             </TouchableOpacity>
             <TouchableOpacity>
               <LinearGradientText
-                text={subLongStr(`${trackTitle} hey hey hey`, 20)}
+                text={rootStore.playerStore.currentSong?.getName()}
                 end={{ x: 0.7, y: 0 }}
                 styles={{
                   justifyContent: 'center',
@@ -131,15 +134,16 @@ const Player = wrap(props => {
           <Text cls="white pt2 asc f7">Idol {trackArtist} bẢnH</Text>
         </View>
       );
-    }),
-  );
+    })
+  ),
+  */
 
   const renderPlaySection = useCallback(
     wrap(() => {
       return (
         <View>
           <View cls="flx-row jcsa aic pt2">
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => { }}>
               <Image cls="widthFn-20 heightFn-20" source={Images.ic_shuffe} />
             </TouchableOpacity>
             <TouchableOpacity onPress={onPrevious}>
@@ -157,7 +161,7 @@ const Player = wrap(props => {
             <TouchableOpacity onPress={onNext}>
               <Image cls="widthFn-32 heightFn-32" source={Images.ic_next} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => { }}>
               <Image cls="widthFn-18 heightFn-18" source={Images.ic_repeat} />
             </TouchableOpacity>
           </View>
@@ -168,7 +172,7 @@ const Player = wrap(props => {
 
   return (
     <View>
-      {renderInfo()}
+      <PlayerInfo />
       <ProgressBar seekTo={onSeek} />
       {renderPlaySection()}
     </View>

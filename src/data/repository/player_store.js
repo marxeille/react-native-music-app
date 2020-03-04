@@ -1,6 +1,7 @@
 import { observable } from "mobx";
-import { types, onSnapshot } from "mobx-state-tree"
+import { types, onSnapshot, flow } from "mobx-state-tree"
 import { Song } from '../model/song'
+import TrackPlayer from "react-native-track-player";
 
 export const PlayerState = types.enumeration("PlayerState", ['pause', 'playing'])
 
@@ -11,10 +12,33 @@ export const PlayerStore = types.model("PlayerStore", {
   return {
     toggleStatus() {
       if (self.statusPlayer == 'pause') {
-        self.statusPlayer = 'playing';
+        self.play();
       } else {
-        self.statusPlayer = 'pause';
+        self.pause();
       }
+    },
+
+    play: flow(function* play() {
+      yield TrackPlayer.play();
+      self.statusPlayer = 'playing';
+    }),
+
+    pause: flow(function* pause() {
+      yield TrackPlayer.pause();
+      self.statusPlayer = 'pause';
+    }),
+
+    setState(state) {
+      if (state == 'pause') {
+        self.statusPlayer = 'pause';
+      } else {
+        self.statusPlayer = 'playing';
+      }
+    },
+
+    playSong(song) {
+      console.log('DEBUG => player_store playSong song ', song);
+      self.currentSong = song;
     }
   }
 })
