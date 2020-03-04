@@ -27,6 +27,7 @@
     "mobx-react-devtools": "^6.1.1",
     "mobx-remotedev": "^0.3.6",
     "mobx-state-tree": "^3.15.0",
+    "prop-types": "^15.7.2",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-alphabet-sectionlist": "https://github.com/marxeille/react-native-atoz-list",
