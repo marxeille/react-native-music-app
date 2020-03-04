@@ -1,5 +1,8 @@
 package com.playerproject;
 
+import android.os.Bundle;
+import android.view.View;
+
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -12,4 +15,10 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "PlayerProject";
   }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 }

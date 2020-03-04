@@ -17,7 +17,7 @@ export const Song = types.model("Song", {
       return self.artist;
     },
     isFavorite() {
-      return self.favorite == true; // for cace undefine
+      return self.favorite == true; // for case undefine
     },
     getThumb() {
       return self.thumb;
@@ -30,7 +30,6 @@ export const Song = types.model("Song", {
     }
   }
 })
-
 
 export const createSongFromJson = (data) => {
   return Song.create({
