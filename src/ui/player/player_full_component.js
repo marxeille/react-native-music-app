@@ -16,14 +16,12 @@ import Player from './components/player';
 import playlistData from './data/playlist.json';
 import { pop } from '../../navigation/navigation_service';
 import { getStatusBarHeight, isSmallDevice } from '../../utils';
+import { skipToNext, skipToPrevious } from './service/play_service';
 const react_native_1 = require('react-native');
 const TrackPlayerState = react_native_1.NativeModules.TrackPlayerModule;
 
-
 const PlayerFull = observer(
   wrap(props => {
-    console.log('rootStore', rootStore);
-
     const playbackState = usePlaybackState();
 
     useEffect(() => {
@@ -45,16 +43,19 @@ const PlayerFull = observer(
             ],
           });
         }
-      })
-
+      });
     }, []);
 
-    async function togglePlayback() {
+    useEffect(() => {
+      togglePlayback(false);
+    }, []);
+
+    async function togglePlayback(togglePlayback = true) {
       const currentTrack = await TrackPlayer.getCurrentTrack();
 
       if (currentTrack == null) {
         await TrackPlayer.reset();
-        rootStore.updateSongs(playlistData)
+        rootStore.updateSongs(playlistData);
         await TrackPlayer.add(playlistData);
         // await TrackPlayer.add({
         //   id: 'local-track',
@@ -65,10 +66,12 @@ const PlayerFull = observer(
         // });
         await TrackPlayer.play();
       } else {
-        if (playbackState === TrackPlayerState.STATE_PAUSED) {
-          await TrackPlayer.play();
-        } else {
-          await TrackPlayer.pause();
+        if (togglePlayback) {
+          if (playbackState === TrackPlayerState.STATE_PAUSED) {
+            await TrackPlayer.play();
+          } else {
+            await TrackPlayer.pause();
+          }
         }
       }
     }
@@ -81,6 +84,10 @@ const PlayerFull = observer(
       wrap(() => {
         return (
           <>
+            <View cls="aic jcc flx-row">
+              <Image cls="mr2" source={Images.ic_down} />
+              <Image source={Images.ic_menu} />
+            </View>
             <View cls="flx-row jcsa aic">
               <TouchableOpacity onPress={() => pop()}>
                 <Image source={Images.ic_down} />
@@ -96,8 +103,6 @@ const PlayerFull = observer(
         );
       }),
     );
-
-    console.log('isSmallDevice', isSmallDevice());
 
     return (
       <ImageBackground source={Images.bg} cls="fullView">
@@ -137,16 +142,4 @@ function getStateName(state) {
     case TrackPlayerState.STATE_BUFFERING:
       return 'Buffering';
   }
-}
-
-async function skipToNext() {
-  try {
-    await TrackPlayer.skipToNext();
-  } catch (_) { }
-}
-
-async function skipToPrevious() {
-  try {
-    await TrackPlayer.skipToPrevious();
-  } catch (_) { }
 }

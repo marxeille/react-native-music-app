@@ -36,10 +36,10 @@ target 'PlayerProject' do
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
-  target 'PlayerProjectTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+  # target 'PlayerProjectTests' do
+  #   inherit! :search_paths
+  #   # Pods for testing
+  # end
 
   use_native_modules!
 end

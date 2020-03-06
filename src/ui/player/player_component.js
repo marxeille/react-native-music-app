@@ -16,7 +16,11 @@ import { trace } from 'mobx';
 import GestureRecognizer, {
   swipeDirections,
 } from 'react-native-swipe-gestures';
+import { skipToNext, skipToPrevious } from './service/play_service';
 import { wrap } from '../../themes';
+import { navigate } from '../../navigation/navigation_service';
+import ProgressBar from './components/progessbar';
+import TrackPlayer from 'react-native-track-player';
 
 @observer
 @wrap
@@ -36,10 +40,12 @@ export default class PlayerComponent extends Component {
 
   onSwipeLeft(gestureState) {
     console.log('you swipe left', gestureState);
+    skipToPrevious();
   }
 
   onSwipeRight(gestureState) {
     console.log('you swipe right', gestureState);
+    skipToNext();
   }
 
   onSwipe(gestureName, gestureState) {
@@ -76,54 +82,57 @@ export default class PlayerComponent extends Component {
             onSwipeLeft={this.onSwipeLeft}
             onSwipeRight={this.onSwipeRight}
             config={config}>
-            <View style={styles.container}>
-              <View cls="bg-white heightFn-2"></View>
-              <View cls="flx-row fullWidth">
-                <Image
-                  source={{ uri: rootStore.playerStore.currentSong?.getThumb() }}
-                  cls="widthFn-54 heightFn-54"
-                />
+            <TouchableHighlight onPress={() => navigate('player')}>
+              <View style={styles.container}>
+                {/* <View cls="bg-white heightFn-2"></View> */}
+                <ProgressBar slider={false} />
+                <View cls="flx-row fullWidth">
+                  <Image
+                    source={{
+                      uri: rootStore.playerStore.currentSong?.getThumb(),
+                    }}
+                    cls="widthFn-54 heightFn-54"
+                  />
 
-                <View style={styles.infoSection}>
-                  <Text cls="white fw7">
-                    {rootStore.playerStore.currentSong?.getName()}
-                  </Text>
-                  <Text cls="primaryPurple f10 fw4">
-                    {rootStore.playerStore.currentSong?.getSubTitlte()}
-                  </Text>
-                </View>
-                <TouchableHighlight
-                  onPress={() => {
-                    rootStore.playerStore.toggleStatus();
-                  }}
-                  background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={styles.infoSection}>
+                    <Text cls="white fw7">
+                      {rootStore.playerStore.currentSong?.getName()}
+                    </Text>
+                    <Text cls="primaryPurple f10 fw4">
+                      {rootStore.playerStore.currentSong?.getSubTitlte()}
+                    </Text>
+                  </View>
+                  <TouchableHighlight
+                    onPress={() => {
+                      rootStore.playerStore.toggleStatus();
+                    }}
+                    background={TouchableNativeFeedback.SelectableBackground()}>
+                    <View cls="pa3">
+                      <Image
+                        source={
+                          rootStore.playerStore.statusPlayer == 'pause'
+                            ? Images.ic_play
+                            : Images.ic_pause
+                        }
+                        cls
+                      />
+                    </View>
+                  </TouchableHighlight>
                   <View cls="pa3">
                     <Image
-                      source={
-                        rootStore.playerStore.statusPlayer == 'pause'
-                          ? Images.ic_play
-                          : Images.ic_pause
-                      }
-                      cls
+                      source={Images.ic_favorited}
+                      cls="widthFn-24 heightFn-24"
                     />
                   </View>
-                </TouchableHighlight>
-                <View cls="pa3">
-                  <Image
-                    source={Images.ic_favorited}
-                    cls="widthFn-24 heightFn-24"
-                  />
                 </View>
               </View>
-            </View>
+            </TouchableHighlight>
           </GestureRecognizer>
         </>
       );
     } else {
       return null;
     }
-
-
   }
 }
 const styles = StyleSheet.create({

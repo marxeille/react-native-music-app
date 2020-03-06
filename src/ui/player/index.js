@@ -1,26 +1,22 @@
 import * as React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import { wrap } from '../../../../themes';
-import LinearGradientText from '../components/LinearGradientText';
-import Playlist from './playlist_component';
-import Artist from './artist_component';
-import Album from './album_component';
+import PlayerFullComponent from './player_full_component';
+import Queue from './queue_component';
+import { wrap } from '../../themes';
+import Images from '../../assets/icons/icons';
 
 @wrap
-export default class LibraryTabView extends React.Component {
+export default class PlayerTabView extends React.Component {
   state = {
     index: 0,
-    routes: [
-      { key: 'playlist', title: 'Playlist' },
-      { key: 'artist', title: 'Nghệ sĩ' },
-      { key: 'album', title: 'Album' },
-    ],
+    routes: [{ key: 'player' }, { key: 'queue' }],
   };
 
   _handleIndexChange = index => this.setState({ index });
 
   _renderTabBar = wrap(props => {
+    return null;
     return (
       <View style={styles.tabBar}>
         {props.navigationState.routes.map((route, i) => {
@@ -30,19 +26,9 @@ export default class LibraryTabView extends React.Component {
               onPress={() => this.setState({ index: i })}>
               <View cls="pr5">
                 {i == this.state.index ? (
-                  <LinearGradientText
-                    text={route.title}
-                    end={{ x: 0.8, y: 0 }}
-                    borderBottom
-                    styles={{
-                      fontWeight: '700',
-                      fontSize: 19,
-                    }}
-                  />
+                  <Image source={Images.ic_circle} />
                 ) : (
-                  <Text cls="white fw7 pr1" style={{ fontSize: 19 }}>
-                    {route.title}
-                  </Text>
+                  <Image source={Images.ic_favorite} />
                 )}
               </View>
             </TouchableOpacity>
@@ -53,9 +39,8 @@ export default class LibraryTabView extends React.Component {
   });
 
   _renderScene = SceneMap({
-    playlist: Playlist,
-    artist: Artist,
-    album: Album,
+    player: PlayerFullComponent,
+    queue: Queue,
   });
 
   render() {
