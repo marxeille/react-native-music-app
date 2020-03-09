@@ -12,12 +12,6 @@ const ProgressBar = observer(
   wrap(props => {
     const progress = useProgress();
 
-    console.log(
-      'rootStore.playerStore',
-      rootStore.playerStore.position,
-      rootStore.playerStore.duration,
-    );
-
     const secondsToMinutes = seconds =>
       Math.floor(seconds / 60) +
       ':' +

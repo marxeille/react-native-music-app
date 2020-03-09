@@ -40,7 +40,7 @@ class Queue extends Component {
             />
             <View>
               <Text cls="white fw7 f7">
-                {currentSong?.getName()
+                {currentSong !== null
                   ? subLongStr(currentSong?.getName(), 25)
                   : 'Dèfault Title'}
               </Text>
@@ -97,9 +97,9 @@ class Queue extends Component {
               </View>
             </View>
             {this.renderQueuePlayer()}
-            <QueueList data={[1, 2, 3]} title="Danh sách chờ" />
+            <QueueList data={rootStore.songs} title="Danh sách chờ" />
             <QueueList
-              data={[1, 2, 3, 4]}
+              data={rootStore.songs}
               title="Playlist :"
               subTitle="Break Point"
             />
