@@ -1,10 +1,17 @@
 import * as React from 'react';
-import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ImageBackground,
+} from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import PlayerFullComponent from './player_full_component';
 import Queue from './queue_component';
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
+import { getStatusBarHeight } from '../../utils';
 
 @wrap
 export default class PlayerTabView extends React.Component {
@@ -16,19 +23,24 @@ export default class PlayerTabView extends React.Component {
   _handleIndexChange = index => this.setState({ index });
 
   _renderTabBar = wrap(props => {
-    return null;
     return (
-      <View style={styles.tabBar}>
+      <View style={styles.tabBar} cls="aic jcc">
         {props.navigationState.routes.map((route, i) => {
           return (
             <TouchableOpacity
-              style={styles.tabItem}
+              style={[styles.tabItem, { paddingTop: getStatusBarHeight() }]}
               onPress={() => this.setState({ index: i })}>
-              <View cls="pr5">
+              <View cls="aic jcc">
                 {i == this.state.index ? (
-                  <Image source={Images.ic_circle} />
+                  <Image
+                    cls="ma1 widthFn-8 heightFn-8"
+                    source={Images.ic_circle}
+                  />
                 ) : (
-                  <Image source={Images.ic_favorite} />
+                  <Image
+                    cls="widthFn-8 heightFn-8"
+                    source={Images.ic_uncheck_circle}
+                  />
                 )}
               </View>
             </TouchableOpacity>
@@ -45,12 +57,14 @@ export default class PlayerTabView extends React.Component {
 
   render() {
     return (
-      <TabView
-        navigationState={this.state}
-        renderScene={this._renderScene}
-        renderTabBar={this._renderTabBar}
-        onIndexChange={this._handleIndexChange}
-      />
+      <ImageBackground cls="fullView" source={Images.bg}>
+        <TabView
+          navigationState={this.state}
+          renderScene={this._renderScene}
+          renderTabBar={this._renderTabBar}
+          onIndexChange={this._handleIndexChange}
+        />
+      </ImageBackground>
     );
   }
 }

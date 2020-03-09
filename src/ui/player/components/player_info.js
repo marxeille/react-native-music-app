@@ -18,7 +18,7 @@ export default class PlayerInfo extends Component {
   render() {
     return (
       <View>
-        <View cls={`flx-row jcsa aic pt${isSmallDevice() ? 4 : 5}`}>
+        <View cls={`flx-row jcsa aic pt${isSmallDevice() ? 3 : 4}`}>
           <TouchableOpacity onPress={() => {}}>
             <Image source={Images.ic_like} />
           </TouchableOpacity>

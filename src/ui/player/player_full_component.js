@@ -84,10 +84,6 @@ const PlayerFull = observer(
       wrap(() => {
         return (
           <>
-            <View cls="aic jcc flx-row">
-              <Image cls="mr2" source={Images.ic_down} />
-              <Image source={Images.ic_menu} />
-            </View>
             <View cls="flx-row jcsa aic">
               <TouchableOpacity onPress={() => pop()}>
                 <Image source={Images.ic_down} />
@@ -105,10 +101,11 @@ const PlayerFull = observer(
     );
 
     return (
-      <ImageBackground source={Images.bg} cls="fullView">
-        <View cls="pa2" style={{ marginTop: getStatusBarHeight() }}>
+      <View cls="fullView">
+        {/* <ImageBackground source={Images.bg} cls="fullView"> */}
+        <View cls="pa2">
           {renderHeader()}
-          <View cls={`aic pt${isSmallDevice() ? 4 : 5} fullWidth`}>
+          <View cls={`aic pt${isSmallDevice() ? 3 : 4} fullWidth`}>
             <Image
               cls="widthFn-327 heightFn-327"
               source={require('../../assets/images/khabanh.png')}
@@ -122,7 +119,8 @@ const PlayerFull = observer(
           />
           <Text cls="white asc">Now {getStateName(playbackState)}</Text>
         </View>
-      </ImageBackground>
+        {/* </ImageBackground> */}
+      </View>
     );
   }),
 );
