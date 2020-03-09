@@ -24,7 +24,7 @@ export default class PlayerInfo extends Component {
           </TouchableOpacity>
           <TouchableOpacity>
             <LinearGradientText
-              text={rootStore.playerStore.currentSong?.getName()}
+              text={rootStore.playerStore?.currentSong?.getName()}
               end={{ x: 0.7, y: 0 }}
               styles={{
                 justifyContent: 'center',
@@ -38,7 +38,7 @@ export default class PlayerInfo extends Component {
           </TouchableOpacity>
         </View>
         <Text cls="white pt2 asc f7">
-          Idol {rootStore.playerStore.currentSong?.getSubTitlte()} bẢnH
+          Idol {rootStore.playerStore?.currentSong?.getSubTitlte()} bẢnH
         </Text>
       </View>
     );
