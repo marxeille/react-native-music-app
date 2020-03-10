@@ -8,7 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "images": "node src/assets/icons/images.js"
+    "images": "node src/assets/icons/images.js",
+    "player": "node scripts/fixTrackPlayer.js"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.8.0",
@@ -42,7 +43,7 @@
     "react-native-swift": "^1.2.2",
     "react-native-swipe-gestures": "^1.0.4",
     "react-native-tab-view": "^2.13.0",
-    "react-native-track-player": "^2.0.0-rc13",
+    "react-native-track-player": "^2.0.0-rc9",
     "react-navigation-tabs": "^2.8.2",
     "reactotron-mst": "^3.1.3",
     "unorm": "^1.6.0"

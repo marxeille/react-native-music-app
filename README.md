@@ -1,6 +1,15 @@
 ### Run
 
+## Android
+yarn
+npm run player
 npm android
+
+## Ios
+yarn 
+npm run player
+cd ios -> pod install
+npm ios
 
 ### RootContext
 
