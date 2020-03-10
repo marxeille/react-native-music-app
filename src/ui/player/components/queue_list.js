@@ -18,7 +18,7 @@ const QueueList = wrap(props => {
         item={item}
         drag={drag}
         isActive={isActive}
-        key={index.toString()}
+        // key={index.toString()}
       />
     );
   });
