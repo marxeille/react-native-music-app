@@ -5443,12 +5443,17 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-native-alphabet-sectionlist@https://github.com/marxeille/react-native-atoz-list":
+"react-native-alphabet-sectionlist@https://github.com/marxeille/react-native-atoz-list.git":
   version "0.0.4"
-  resolved "https://github.com/marxeille/react-native-atoz-list#cf08916bacf86e25e22df341d5805e8cdf94dff4"
+  resolved "https://github.com/marxeille/react-native-atoz-list.git#cf08916bacf86e25e22df341d5805e8cdf94dff4"
   dependencies:
     merge "^1.2.1"
     prop-types "^15.7.2"
+
+react-native-draggable-flatlist@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-draggable-flatlist/-/react-native-draggable-flatlist-2.3.1.tgz#a9fccefbd01afcc0bb953972f90a928d9ce625de"
+  integrity sha512-2ZFi2HyXTeVwOf24bw1KVGICwRBAgFSjU7FpL0BTPP2ZSHTCgD++50+CLDg751ZUbJzVGx/J80R8ScFe53vnoQ==
 
 react-native-fbsdk@^1.1.2:
   version "1.1.2"
@@ -5517,7 +5522,7 @@ react-native-tab-view@^2.11.0, react-native-tab-view@^2.13.0:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.13.0.tgz#23037aa43b0f8f682ddc20415a4baaaf6f82ae8f"
   integrity sha512-AeYbp/u91+D/C9+PmVEPBmFb3ixv8IkLMC3Sc5MajJ/fg0Zl3Of+BcEknBvTnKoe7Fj2y8+Qf9zorBbh5xzh4A==
 
-react-native-track-player@^2.0.0-rc9:
+react-native-track-player@^2.0.0-rc13:
   version "2.0.0-rc9"
   resolved "https://registry.yarnpkg.com/react-native-track-player/-/react-native-track-player-2.0.0-rc9.tgz#ac2036bcb8844d1e05b9367849abd0c90c6e11ea"
   integrity sha512-NAQyvAuU86VGPR45VFZLpsigNaxWZOAyigs7BxJfO8gknX22o/4408o2KDi+BbewsjL09g/Z52yg90KIhsj0PQ==
