@@ -90,6 +90,7 @@ class Queue extends Component {
         <View>
           <ScrollView
             showsVerticalScrollIndicator={false}
+            nestedScrollEnabled={true}
             contentContainerStyle={{ paddingBottom: 56 }}>
             <View cls="pa3 pb2 bb" style={{ borderBottomColor: '#7351a1' }}>
               <View cls="pl1">
@@ -97,7 +98,10 @@ class Queue extends Component {
               </View>
             </View>
             {this.renderQueuePlayer()}
-            <QueueList data={rootStore.songs} title="Danh sách chờ" />
+            <QueueList
+              data={rootStore.queueStore.songs}
+              title="Danh sách chờ"
+            />
             <QueueList
               data={rootStore.songs}
               title="Playlist :"

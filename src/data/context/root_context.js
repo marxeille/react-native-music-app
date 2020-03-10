@@ -13,6 +13,7 @@ import { mst } from 'reactotron-mst';
 import { reactotron } from '../../../ReactotronConfig';
 import TrackPlayer, { Event, State } from 'react-native-track-player';
 import { unprotect } from 'mobx-state-tree';
+import SongOfQueueStore from '../repository/song_of_queue_store';
 
 export const rootStore = RootStore.create({
   userStore: UserStore.create({
@@ -26,6 +27,7 @@ export const rootStore = RootStore.create({
   homeStore: HomeStore.create({
     state: 'loading',
   }),
+  queueStore: SongOfQueueStore.create({ songs: [] }),
   songs: {},
 });
 
