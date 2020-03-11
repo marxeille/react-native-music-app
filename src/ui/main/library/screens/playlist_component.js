@@ -15,13 +15,16 @@ export default class playlistComponent extends Component {
   }
 
   componentDidMount() {
-    if (rootStore.userStore.playlists == undefined || rootStore.userStore.playlists.length == 0) {
+    if (
+      rootStore.userStore.playlists == undefined ||
+      rootStore.userStore.playlists.length == 0
+    ) {
       rootStore.userStore.fetchPlayListOfUser();
     }
   }
 
   renderPlaylist = item => {
-    console.log("TCL: playlistComponent -> renderPlaylist item", item)
+    console.log('TCL: playlistComponent -> renderPlaylist item', item);
     return (
       <>
         <PlaylistItem index={item.index} />
@@ -35,7 +38,7 @@ export default class playlistComponent extends Component {
         <View cls="pt3">
           <SearchComponent />
         </View>
-        <View cls="pt3">
+        <View cls="pt3 fullHeight" style={{ marginBottom: 95 }}>
           <FlatList
             ListHeaderComponent={<PlaylistItem />}
             data={rootStore.userStore.playlists}

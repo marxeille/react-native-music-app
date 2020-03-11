@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../library/components/LinearGradientText';
 import { getStatusBarHeight } from '../../../utils';
 import LinearGradient from 'react-native-linear-gradient';
 import SearchBar from './components/search_bar';
+import SearchItem from './components/search_item';
 
 @wrap
 export default class SearchComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showHistory: true,
+    };
   }
 
   renderSearchSection = () => {
@@ -33,7 +43,9 @@ export default class SearchComponent extends Component {
                 }}
               />
               <SearchBar />
-              <Text cls="white fw6 f10">Duyệt tìm tất cả</Text>
+              <Text cls="white fw6 f10">
+                {this.state.showHistory ? 'Tìm gần đây' : 'Duyệt tìm tất cả'}
+              </Text>
             </View>
           </View>
         </LinearGradient>
@@ -57,16 +69,45 @@ export default class SearchComponent extends Component {
     );
   });
 
+  renderSearchItem = wrap(item => {
+    return (
+      <>
+        <SearchItem />
+      </>
+    );
+  });
+
   render() {
+    const { showHistory } = this.state;
     return (
       <ImageBackground cls="fullView" source={Images.bg}>
         {this.renderSearchSection()}
-        <ScrollView contentContainerCls="pa3 pt1">
-          <View>{this.renderResultSection('Nghệ sĩ', [1, 2, 3])}</View>
-          <View>
-            {this.renderResultSection('Bài hát hey hey', [1, 2, 3, 4])}
+        {showHistory ? (
+          <View cls="pa3 pt0" style={{ marginBottom: 185 }}>
+            <FlatList
+              data={[1, 2, 3, 4, 5, 6, 8, 9]}
+              showsVerticalScrollIndicator={false}
+              renderItem={this.renderSearchItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
+            <View style={{ position: 'absolute', right: 12, bottom: 25 }}>
+              <TouchableOpacity>
+                <View
+                  cls="ba pa2 pt1 pb1 br5"
+                  style={{ borderColor: '#d8a1c8' }}>
+                  <Text cls="white">Xoá tất cả</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
-        </ScrollView>
+        ) : (
+          <ScrollView contentContainerCls="pa3 pt1">
+            <View>{this.renderResultSection('Nghệ sĩ', [1, 2, 3])}</View>
+            <View>
+              {this.renderResultSection('Bài hát hey hey', [1, 2, 3, 4])}
+            </View>
+          </ScrollView>
+        )}
       </ImageBackground>
     );
   }

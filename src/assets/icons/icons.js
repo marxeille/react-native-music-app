@@ -6,6 +6,7 @@ const Images = {
   ic_add_song: require('./ic_add_song.png'),
   ic_checked: require('./ic_checked.png'),
   ic_circle: require('./ic_circle.png'),
+  ic_delete: require('./ic_delete.png'),
   ic_down: require('./ic_down.png'),
   ic_favorite: require('./ic_favorite.png'),
   ic_favorited: require('./ic_favorited.png'),

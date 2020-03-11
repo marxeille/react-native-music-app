@@ -29,6 +29,7 @@ export default class SearchBar extends Component {
             placeholder={'Nghệ sĩ, bài hát hoặc popcast'}
             style={[styles.inputText]}
             value={''}
+            onFocus={() => console.log('on focus')}
             onChange={event => this.onChangeText(event, 'loginName')}
             autoCorrect={false}
           />
