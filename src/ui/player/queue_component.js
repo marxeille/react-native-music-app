@@ -85,10 +85,7 @@ class Queue extends Component {
   });
 
   shuffeData = queue => {
-    console.log('queue', queue);
-
     rootStore.queueStore.addNewQue(queue);
-    // rootStore.queueStore.addList(queue);
   };
 
   render() {

@@ -33,13 +33,6 @@ export const rootStore = RootStore.create({
 });
 
 TrackPlayer.addEventListener(Event.PlaybackTrackChanged, async data => {
-  console.log('data', rootStore.queueStore.songs);
-
-  console.log(
-    'compare',
-    _.isEqual([...rootStore.songs.values()], rootStore.queueStore.songs),
-  );
-
   const playlistShuffled = !_.isEqual(
     [...rootStore.songs.values()],
     rootStore.queueStore.songs,
@@ -48,16 +41,8 @@ TrackPlayer.addEventListener(Event.PlaybackTrackChanged, async data => {
   if ((data.nextTrack !== null && !playlistShuffled) || data.track == null) {
     rootStore.playerStore.playSong(data.nextTrack);
   } else {
-    console.log('in here');
     await TrackPlayer.reset();
-    const queue = await TrackPlayer.getQueue();
-    console.log('in here 2', queue);
-    console.log(
-      'rootStore.queueStore.getSongs()',
-      rootStore.queueStore.getSongs(),
-    );
     await TrackPlayer.add(rootStore.queueStore.getSongs());
-    console.log('in here 3');
     await TrackPlayer.play();
   }
 });
