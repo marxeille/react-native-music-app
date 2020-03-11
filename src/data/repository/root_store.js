@@ -29,6 +29,7 @@ export const RootStore = types
         values.forEach(data => {
           self.songs.put(createSongFromJson(data));
         });
+        console.log('self.songs', [...self.songs.values()]);
       },
 
       updateAlbums(values: Array) {

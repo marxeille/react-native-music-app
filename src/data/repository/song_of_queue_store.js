@@ -12,7 +12,27 @@ const SongOfQueueStore = types
     return {
       addSongs(songs) {
         songs.map(song => {
-          self.songs.push(song.id);
+          self.addSong(song);
+        });
+      },
+
+      addSong(song) {
+        self.songs.push(song.id);
+      },
+
+      addNewQue(songs) {
+        self.songs = [];
+        songs.map(song => {
+          self.addSong(song);
+        });
+      },
+    };
+  })
+  .views(self => {
+    return {
+      getSongs() {
+        return self.songs.map(data => {
+          return data.getDataJson();
         });
       },
     };

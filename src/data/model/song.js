@@ -1,45 +1,60 @@
+import { types } from 'mobx-state-tree';
+import { values } from 'mobx';
 
-import { types } from "mobx-state-tree"
-import { values } from "mobx";
+export const Song = types
+  .model('Song', {
+    id: types.identifier,
+    title: types.string,
+    artwork: types.string,
+    artist: types.string,
+    url: types.string,
+    favorite: types.maybeNull(types.boolean),
+  })
+  .views(self => {
+    return {
+      getName() {
+        return self.title;
+      },
+      getSubTitlte() {
+        return self.artist;
+      },
+      isFavorite() {
+        return self.favorite == true; // for case undefine
+      },
+      getThumb() {
+        return self.artwork;
+      },
 
-export const Song = types.model("Song", {
-  id: types.identifier,
-  name: types.string,
-  thumb: types.string,
-  artist: types.string,
-  favorite: types.maybeNull(types.boolean)
-}).views(self => {
-  return {
-    getName() {
-      return self.name
-    },
-    getSubTitlte() {
-      return self.artist;
-    },
-    isFavorite() {
-      return self.favorite == true; // for case undefine
-    },
-    getThumb() {
-      return self.thumb;
-    }
-  }
-}).actions(self => {
-  return {
-    toggleFavorite() {
-      self.favorite = !(self.favorite == true);
-    }
-  }
-})
+      getDataJson() {
+        return {
+          id: self.id,
+          title: self.title,
+          artist: self.artist,
+          artwork: self.artwork,
+          url: self.url,
+          favorite: false,
+        };
+      },
+    };
+  })
+  .actions(self => {
+    return {
+      toggleFavorite() {
+        self.favorite = !(self.favorite == true);
+      },
+    };
+  });
 
-export const createSongFromJson = (data) => {
+export const createSongFromJson = data => {
   return Song.create({
     id: data.id,
-    name: data.title,
+    title: data.title,
     artist: data.artist,
-    thumb: data.artwork,
+    artwork: data.artwork,
+    url: data.url,
     favorite: false,
-  })
-}
+  });
+};
 
 /*
 {
@@ -50,4 +65,3 @@ export const createSongFromJson = (data) => {
     "artwork": "https://picsum.photos/200"
   },
 */
-

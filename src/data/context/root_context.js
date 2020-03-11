@@ -14,6 +14,7 @@ import { reactotron } from '../../../ReactotronConfig';
 import TrackPlayer, { Event, State } from 'react-native-track-player';
 import { unprotect } from 'mobx-state-tree';
 import SongOfQueueStore from '../repository/song_of_queue_store';
+import * as _ from 'lodash';
 
 export const rootStore = RootStore.create({
   userStore: UserStore.create({
@@ -31,9 +32,33 @@ export const rootStore = RootStore.create({
   songs: {},
 });
 
-TrackPlayer.addEventListener('playback-track-changed', data => {
-  if (data.nextTrack !== null) {
+TrackPlayer.addEventListener(Event.PlaybackTrackChanged, async data => {
+  console.log('data', rootStore.queueStore.songs);
+
+  console.log(
+    'compare',
+    _.isEqual([...rootStore.songs.values()], rootStore.queueStore.songs),
+  );
+
+  const playlistShuffled = !_.isEqual(
+    [...rootStore.songs.values()],
+    rootStore.queueStore.songs,
+  );
+
+  if ((data.nextTrack !== null && !playlistShuffled) || data.track == null) {
     rootStore.playerStore.playSong(data.nextTrack);
+  } else {
+    console.log('in here');
+    await TrackPlayer.reset();
+    const queue = await TrackPlayer.getQueue();
+    console.log('in here 2', queue);
+    console.log(
+      'rootStore.queueStore.getSongs()',
+      rootStore.queueStore.getSongs(),
+    );
+    await TrackPlayer.add(rootStore.queueStore.getSongs());
+    console.log('in here 3');
+    await TrackPlayer.play();
   }
 });
 
@@ -41,7 +66,7 @@ TrackPlayer.addEventListener('playback-state', data => {
   if (
     data.state == State.Playing ||
     data.state == State.Connecting ||
-    data.state == State.Buffering ||
+    // data.state == State.Buffering ||
     data.state == State.Connecting
   ) {
     rootStore.playerStore.setState('playing');

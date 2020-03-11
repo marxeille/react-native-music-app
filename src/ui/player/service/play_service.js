@@ -1,4 +1,7 @@
-import TrackPlayer, { usePlaybackState } from 'react-native-track-player';
+import TrackPlayer, {
+  usePlaybackState,
+  Event,
+} from 'react-native-track-player';
 
 export async function skipToNext() {
   try {

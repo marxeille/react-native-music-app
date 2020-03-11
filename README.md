@@ -3,13 +3,13 @@
 ## Android
 yarn
 npm run player
-npm android
+npm run android
 
 ## Ios
 yarn 
 npm run player
 cd ios -> pod install
-npm ios
+npm run ios
 
 ### RootContext
 

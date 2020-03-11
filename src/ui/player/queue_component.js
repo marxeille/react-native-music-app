@@ -84,6 +84,13 @@ class Queue extends Component {
     );
   });
 
+  shuffeData = queue => {
+    console.log('queue', queue);
+
+    rootStore.queueStore.addNewQue(queue);
+    // rootStore.queueStore.addList(queue);
+  };
+
   render() {
     return (
       <View cls="jcsb fullView">
@@ -101,11 +108,14 @@ class Queue extends Component {
             <QueueList
               data={rootStore.queueStore.songs}
               title="Danh sách chờ"
+              type="queue"
+              shuffeData={this.shuffeData}
             />
             <QueueList
               data={rootStore.songs}
               title="Playlist :"
               subTitle="Break Point"
+              type="playlist"
             />
           </ScrollView>
         </View>
