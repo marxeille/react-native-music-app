@@ -16,9 +16,8 @@ export default class SearchBar extends Component {
     this.state = {};
   }
 
-  onChangeText = text => {};
-
   render() {
+    const { keyword, onChangeKeyword } = this.props;
     return (
       <View cls="fullWidth pt3 pb3 flx-row aic">
         <View cls="pa3 bg-#4B3277 flx-i" style={[styles.inputGroup]}>
@@ -28,9 +27,9 @@ export default class SearchBar extends Component {
             placeholderTextColor="#fff"
             placeholder={'Nghệ sĩ, bài hát hoặc popcast'}
             style={[styles.inputText]}
-            value={''}
+            value={keyword}
             onFocus={() => console.log('on focus')}
-            onChange={event => this.onChangeText(event, 'loginName')}
+            onChangeText={value => onChangeKeyword(value)}
             autoCorrect={false}
           />
         </View>

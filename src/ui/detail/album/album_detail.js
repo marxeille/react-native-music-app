@@ -39,6 +39,8 @@ export default class AlbumDetail extends Component {
         this.model.addList(values.map(data => data?.id));
       }),
     );
+
+    this.model.getSongs();
   }
 
   componentWillUnmount() {

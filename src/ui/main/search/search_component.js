@@ -14,15 +14,28 @@ import { getStatusBarHeight } from '../../../utils';
 import LinearGradient from 'react-native-linear-gradient';
 import SearchBar from './components/search_bar';
 import SearchItem from './components/search_item';
-
+import { SearchModel } from './view_model';
+import Loading from '../../components/loading';
+import { observer } from 'mobx-react';
+@observer
 @wrap
 export default class SearchComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showHistory: true,
+      keyword: null,
     };
+    this.viewmodel = SearchModel.create({ state: 'loading' });
   }
+
+  componentDidMount() {
+    this.viewmodel.getRecentlySong();
+  }
+
+  onChangeKeyword = keyword => {
+    this.setState({ keyword: keyword });
+  };
 
   renderSearchSection = () => {
     return (
@@ -42,9 +55,14 @@ export default class SearchComponent extends Component {
                   fontWeight: '800',
                 }}
               />
-              <SearchBar />
+              <SearchBar
+                keyword={this.state.keyword}
+                onChangeKeyword={this.onChangeKeyword}
+              />
               <Text cls="white fw6 f10">
-                {this.state.showHistory ? 'Tìm gần đây' : 'Duyệt tìm tất cả'}
+                {this.state.keyword || this.state.showHistory
+                  ? 'Tìm gần đây'
+                  : 'Duyệt tìm tất cả'}
               </Text>
             </View>
           </View>
@@ -78,19 +96,32 @@ export default class SearchComponent extends Component {
   });
 
   render() {
-    const { showHistory } = this.state;
+    const { showHistory, keyword } = this.state;
+    console.log('this.view', this.viewmodel.recentlySong);
+
+    if (this.viewmodel.state == 'loading')
+      return (
+        <ImageBackground cls="fullView aic jcc" source={Images.bg}>
+          <Loading />
+        </ImageBackground>
+      );
+    console.log(
+      'SearchComponent -> render -> this.viewmodel.recentlySong[0]',
+      this.viewmodel.recentlySong,
+    );
+
     return (
       <ImageBackground cls="fullView" source={Images.bg}>
         {this.renderSearchSection()}
-        {showHistory ? (
-          <View cls="pa3 pt0" style={{ marginBottom: 185 }}>
+        {keyword || showHistory ? (
+          <View cls="pa3 pt0 fullView">
             <FlatList
-              data={[1, 2, 3, 4, 5, 6, 8, 9]}
+              data={this.viewmodel.recentlySong}
               showsVerticalScrollIndicator={false}
               renderItem={this.renderSearchItem}
               keyExtractor={(item, index) => index.toString()}
             />
-            <View style={{ position: 'absolute', right: 12, bottom: 25 }}>
+            <View style={{ position: 'absolute', right: 12, bottom: 225 }}>
               <TouchableOpacity>
                 <View
                   cls="ba pa2 pt1 pb1 br5"
