@@ -1,9 +1,8 @@
 import { PlayList } from '../model/playlist';
-import Axios from 'axios'
+import Axios from 'axios';
 import { instanceAxios } from './api_config';
 //Hanle data từ Api Services
 export default class CommonApiService {
-
   testAxios() {
     return instanceAxios.get('/list_music');
   }
@@ -12,28 +11,37 @@ export default class CommonApiService {
     return new Promise(resolve => {
       resolve([
         {
-          id: '1',
-          name: 'Quên',
+          id: '5',
+          title: 'Quên',
           artist: 'Chi Dân',
           favorite: false,
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          url:
+            'https://drive.google.com/uc?export=download&id=1AjPwylDJgR8DOnmJWeRgZzjsohi-7ekj',
+          artwork:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
         {
-          id: '2',
-          name: 'Khi phải xa nhau',
-          artist: 'Hồ Quang Hiếu',
-          favorite: true,
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          id: '6',
+          title: 'Quên',
+          artist: 'Chi Dân',
+          favorite: false,
+          url:
+            'https://drive.google.com/uc?export=download&id=1AjPwylDJgR8DOnmJWeRgZzjsohi-7ekj',
+          artwork:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
         {
-          id: '3',
-          name: 'Đường một chiều',
-          artist: 'Tim',
-          favorite: true,
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
-        }
+          id: '7',
+          title: 'Quên',
+          artist: 'Chi Dân',
+          favorite: false,
+          url:
+            'https://drive.google.com/uc?export=download&id=1AjPwylDJgR8DOnmJWeRgZzjsohi-7ekj',
+          artwork:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
+        },
       ]);
-    })
+    });
   }
 
   getHomeAlbums() {
@@ -42,20 +50,23 @@ export default class CommonApiService {
         {
           id: '1',
           name: 'Album 1',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
         {
           id: '2',
           name: 'Album 2',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
         {
           id: '3',
           name: 'Album 3',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
-        }
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
+        },
       ]);
-    })
+    });
   }
 
   //Lấy danh sách album gần đây
@@ -66,22 +77,25 @@ export default class CommonApiService {
           id: '1',
           name: 'Daily Mix 1',
           artist: '',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
         {
           id: '2',
           name: 'Daily Mix 1',
           artist: '',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
         {
           id: '3',
           name: 'Daily Mix 1',
           artist: '',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
-        }
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
+        },
       ]);
-    })
+    });
   }
   //Lấy danh sách PlayList phổ biến
   getPopularPlayList() {
@@ -92,24 +106,27 @@ export default class CommonApiService {
             id: '1',
             name: 'Daily Mix 1',
             artist: '',
-            thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+            thumb:
+              'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
           },
           {
             id: '2',
             name: 'Daily Mix 1',
             artist: '',
-            thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+            thumb:
+              'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
           },
           {
             id: '3',
             name: 'Daily Mix 1',
             artist: '',
-            thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
-          }
+            thumb:
+              'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
+          },
         ]);
       }, 2000);
-    })
-  };
+    });
+  }
 
   //Lấy danh sách PlayList dành cho user
   getSuggestPlayList() {
@@ -119,23 +136,26 @@ export default class CommonApiService {
           id: '1',
           name: 'Daily Mix 1',
           artist: '',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
         {
           id: '2',
           name: 'Daily Mix 1',
           artist: '',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
         {
           id: '3',
           name: 'Daily Mix 1',
           artist: '',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
-        }
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
+        },
       ]);
-    })
-  };
+    });
+  }
 
   //Lấy danh sách album gần đây
   getPlaylistOfUser() {
@@ -145,21 +165,24 @@ export default class CommonApiService {
           id: '1',
           name: 'Daily Mix 1',
           artist: 'Tim',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
         {
           id: '4',
           name: 'Daily Mix 2',
           artist: 'Hồ Ngọc Hà',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
         {
           id: '5',
           name: 'Daily Mix 3',
           artist: 'Vũ',
-          thumb: "https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg",
-        }
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
+        },
       ]);
-    })
+    });
   }
 }

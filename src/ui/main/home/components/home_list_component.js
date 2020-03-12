@@ -8,6 +8,7 @@ import { rootStore } from '../../../../data/context/root_context';
 import { observer } from 'mobx-react';
 import ItemHome from '../../../components/item_home_component';
 import { navigate } from '../../../../navigation/navigation_service';
+import ItemHomeSmall from '../../../components/item_home_small';
 
 @observer
 @wrap
@@ -24,31 +25,15 @@ export default class HomeListComponent extends Component {
   renderSmallItem = wrap(item => {
     return (
       <TouchableOpacity>
-        <ItemHome id={item.item.id} navigate={navigate} />
-        {/* <View cls="widthFn-111 pl3 mr2">
-          <Image
-            cls="heightFn-111 widthFn-111"
-            source={require('../../../../assets/images/cover3.png')}
-          />
-          <Text cls="white pt2 fw6">Daily mix {item.item.title()}</Text>
-        </View> */}
+        <ItemHomeSmall id={item.item.id} navigate={navigate} />
       </TouchableOpacity>
     );
   });
 
   renderLargeItem = wrap(item => {
     return (
-      <TouchableOpacity>
-        <View cls="widthFn-150 pl3 mr2">
-          <Image
-            cls="heightFn-150 widthFn-150"
-            source={require('../../../../assets/images/cover2.png')}
-          />
-          <Text cls="white pt2 fw6">GENE </Text>
-          <Text cls="primaryPurple pt1">
-            {this.subLongStr(`Today's top hit`)}
-          </Text>
-        </View>
+      <TouchableOpacity onPress={() => navigate('album_detail', { id: '1' })}>
+        <ItemHome id={item.item.id} navigate={navigate} />
       </TouchableOpacity>
     );
   });

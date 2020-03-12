@@ -21,20 +21,20 @@ export default class ItemHome extends Component {
     );
 
     return (
-      <TouchableOpacity onPress={() => this.props.navigate('player')}>
-        <View cls="widthFn-150 pl3 mr2">
-          <Image
-            cls="heightFn-150 widthFn-150"
-            source={{ uri: rootStore.playlist.get(this.props.id).getThumb() }}
-          />
-          <Text cls="white pt2 fw6">
-            {rootStore.playlist.get(this.props.id).title()}
-          </Text>
-          <Text cls="primaryPurple pt1">
-            {rootStore.playlist.get(this.props.id).subTitle()}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      // <TouchableOpacity onPress={() => this.props.navigate('player')}>
+      <View cls="widthFn-150 pl3 mr2">
+        <Image
+          cls="heightFn-150 widthFn-150"
+          source={{ uri: rootStore.playlist.get(this.props.id).getThumb() }}
+        />
+        <Text cls="white pt2 fw6">
+          {rootStore.playlist.get(this.props.id).title()}
+        </Text>
+        <Text cls="primaryPurple pt1">
+          {rootStore.playlist.get(this.props.id).subTitle()}
+        </Text>
+      </View>
+      // </TouchableOpacity>
     );
   }
 }
