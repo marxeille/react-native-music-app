@@ -9,9 +9,9 @@ export const SearchModel = types
   .model('SearchModel', {
     state: Result,
     recentlyKeyWord: types.maybeNull(types.array(types.string)),
-    recentlySong: types.array(Song, []),
-    recentlyAlbum: types.maybeNull(types.array(Album)),
-    recentlyArtist: types.maybeNull(types.array(Artist)),
+    recentlySong: types.map(Song),
+    recentlyAlbum: types.maybeNull(types.map(Album)),
+    recentlyArtist: types.maybeNull(types.map(Artist)),
     keyword: types.maybeNull(types.string),
     // results: types.maybeNull(types.map(types.frozen({}))),
   })
@@ -19,21 +19,33 @@ export const SearchModel = types
     return {
       getRecentlySong: flow(function* getRecently() {
         const recently: Array = yield apiService.commonApiService.getSongsOfAlBum();
-        console.log('getRecentlySong:flow -> recently', recently);
         recently.forEach(data => {
-          console.log('data getRecentlySong', data);
           let song = createSongFromJson(data);
-          console.log('getRecentlySong:flow -> song', song);
-          self.recentlySong.push(song);
+          self.recentlySong.put(song);
         });
+
         self.state = 'success';
       }),
 
-      search(keyword) {
+      removeRecentlySong(id) {
+        self.recentlySong.delete(id);
+      },
+
+      removeAllRecently() {
+        self.recentlySong.clear();
+      },
+
+      searchByKeyword: flow(function* searchByKeyword(keyword) {
         self.keyword = keyword;
         self.state = 'loading';
-        //Start Search.
-      },
+        const recently: Array = yield apiService.commonApiService.getSongsOfAlBum();
+        recently.forEach(data => {
+          let song = createSongFromJson(data);
+          self.recentlySong.put(song);
+        });
+
+        self.state = 'success';
+      }),
     };
   })
   .views(self => {

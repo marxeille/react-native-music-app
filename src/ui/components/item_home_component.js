@@ -15,13 +15,7 @@ export default class ItemHome extends Component {
   }
 
   render() {
-    console.log(
-      'rootStore.playlist[this.props.id]',
-      rootStore.playlist.get(this.props.id),
-    );
-
     return (
-      // <TouchableOpacity onPress={() => this.props.navigate('player')}>
       <View cls="widthFn-150 pl3 mr2">
         <Image
           cls="heightFn-150 widthFn-150"
@@ -34,7 +28,6 @@ export default class ItemHome extends Component {
           {rootStore.playlist.get(this.props.id).subTitle()}
         </Text>
       </View>
-      // </TouchableOpacity>
     );
   }
 }

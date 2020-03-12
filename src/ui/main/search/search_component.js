@@ -23,10 +23,11 @@ export default class SearchComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showHistory: true,
+      showHistory: false,
       keyword: null,
     };
     this.viewmodel = SearchModel.create({ state: 'loading' });
+    this.timeout = 0;
   }
 
   componentDidMount() {
@@ -35,6 +36,15 @@ export default class SearchComponent extends Component {
 
   onChangeKeyword = keyword => {
     this.setState({ keyword: keyword });
+    if (this.timeout) clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      //search function
+      this.viewmodel.searchByKeyword(keyword);
+    }, 800);
+  };
+
+  onFocus = () => {
+    this.setState({ showHistory: true });
   };
 
   renderSearchSection = () => {
@@ -58,6 +68,7 @@ export default class SearchComponent extends Component {
               <SearchBar
                 keyword={this.state.keyword}
                 onChangeKeyword={this.onChangeKeyword}
+                onFocus={this.onFocus}
               />
               <Text cls="white fw6 f10">
                 {this.state.keyword || this.state.showHistory
@@ -90,14 +101,13 @@ export default class SearchComponent extends Component {
   renderSearchItem = wrap(item => {
     return (
       <>
-        <SearchItem />
+        <SearchItem item={item.item} model={this.viewmodel} />
       </>
     );
   });
 
   render() {
     const { showHistory, keyword } = this.state;
-    console.log('this.view', this.viewmodel.recentlySong);
 
     if (this.viewmodel.state == 'loading')
       return (
@@ -105,10 +115,6 @@ export default class SearchComponent extends Component {
           <Loading />
         </ImageBackground>
       );
-    console.log(
-      'SearchComponent -> render -> this.viewmodel.recentlySong[0]',
-      this.viewmodel.recentlySong,
-    );
 
     return (
       <ImageBackground cls="fullView" source={Images.bg}>
@@ -116,13 +122,13 @@ export default class SearchComponent extends Component {
         {keyword || showHistory ? (
           <View cls="pa3 pt0 fullView">
             <FlatList
-              data={this.viewmodel.recentlySong}
+              data={[...this.viewmodel.recentlySong.values()]}
               showsVerticalScrollIndicator={false}
               renderItem={this.renderSearchItem}
               keyExtractor={(item, index) => index.toString()}
             />
             <View style={{ position: 'absolute', right: 12, bottom: 225 }}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.viewmodel.removeAllRecently}>
                 <View
                   cls="ba pa2 pt1 pb1 br5"
                   style={{ borderColor: '#d8a1c8' }}>

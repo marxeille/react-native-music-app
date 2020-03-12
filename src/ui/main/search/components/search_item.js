@@ -14,21 +14,22 @@ export default class SearchItem extends Component {
   }
 
   render() {
+    const { item, model } = this.props;
     return (
       <View cls="flx-row aic pt4 jcsb">
         <TouchableOpacity>
           <View cls="flx-row aic">
             <Image
               cls="widthFn-90 heightFn-82"
-              source={require('../../../../assets/images/cover1.png')}
+              source={{ uri: item?.getThumb() }}
             />
             <View>
-              <Text cls="white fw7 f6 pl2">{'Tạo playlist'}</Text>
-              <Text cls="primaryPurple f6 pl2 pt1">của</Text>
+              <Text cls="white fw7 f6 pl2">{item?.getName()}</Text>
+              <Text cls="primaryPurple f6 pl2 pt1">{item?.artist}</Text>
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => model.removeRecentlySong(item?.id)}>
           <Image source={Images.ic_delete} />
         </TouchableOpacity>
       </View>

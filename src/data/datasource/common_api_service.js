@@ -12,8 +12,8 @@ export default class CommonApiService {
       resolve([
         {
           id: '5',
-          title: 'Quên',
-          artist: 'Chi Dân',
+          title: 'Vinahey',
+          artist: 'hey hey',
           favorite: false,
           url:
             'https://drive.google.com/uc?export=download&id=1AjPwylDJgR8DOnmJWeRgZzjsohi-7ekj',
@@ -22,8 +22,8 @@ export default class CommonApiService {
         },
         {
           id: '6',
-          title: 'Quên',
-          artist: 'Chi Dân',
+          title: '999 đoá hồng',
+          artist: 'hey hey hey',
           favorite: false,
           url:
             'https://drive.google.com/uc?export=download&id=1AjPwylDJgR8DOnmJWeRgZzjsohi-7ekj',
@@ -32,8 +32,8 @@ export default class CommonApiService {
         },
         {
           id: '7',
-          title: 'Quên',
-          artist: 'Chi Dân',
+          title: 'Cục xì lầu ông bê lắp',
+          artist: 'hey',
           favorite: false,
           url:
             'https://drive.google.com/uc?export=download&id=1AjPwylDJgR8DOnmJWeRgZzjsohi-7ekj',
