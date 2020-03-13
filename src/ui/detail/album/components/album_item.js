@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import Images from '../../../../assets/icons/icons';
 
 const AlbumItem = observer(
-  wrap(({ params }) => (
+  wrap(props => (
     <View cls="jcsb flx-row aic pr3" style={{ backgroundColor: '#321a54' }}>
       <TouchableOpacity>
         <View cls="flx-row pa3 pb2 pt2">
@@ -20,7 +20,7 @@ const AlbumItem = observer(
           </View>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={props.openModal}>
         <Image source={Images.ic_menu} />
       </TouchableOpacity>
     </View>

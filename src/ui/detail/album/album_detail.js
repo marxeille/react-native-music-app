@@ -19,7 +19,8 @@ import { rootStore } from '../../../data/context/root_context';
 import LinearGradient from 'react-native-linear-gradient';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import AlbumItem from './components/album_item';
-import AlbumModel from './view_model';
+import SongMenu from '../../player/components/song_menu';
+import BottomModal from '../../components/modal/BottomModal';
 
 @observer
 @wrap
@@ -31,6 +32,10 @@ export default class AlbumDetail extends Component {
       state: 'loading',
       songs: [],
     });
+    this.modalSong = React.createRef();
+    this.state = {
+      download: false,
+    };
   }
 
   componentDidMount() {
@@ -47,6 +52,18 @@ export default class AlbumDetail extends Component {
   componentWillUnmount() {
     this.cancelablePromise.cancel();
   }
+
+  _showModal = () => {
+    if (this.modalSong && this.modalSong.current) {
+      this.modalSong.current._showModal();
+    }
+  };
+
+  _hideModal = () => {
+    if (this.modalSong && this.modalSong.current) {
+      this.modalSong.current._hideModal();
+    }
+  };
 
   renderHeaderSection = wrap(() => {
     return (
@@ -75,7 +92,7 @@ export default class AlbumDetail extends Component {
             <Text cls="white f8">
               {'Idol khÁ bẢnH is on top of the Vinahey hey hey!'}
             </Text>
-            <Text cls="f9 primaryPurple">{'1.000.000.000 Người theo dõi'}</Text>
+            <Text cls="f9 primaryPurple">{'7.000.000.000 Người theo dõi'}</Text>
           </View>
         </ImageBackground>
       </>
@@ -131,10 +148,10 @@ export default class AlbumDetail extends Component {
               }}
             />
             <Switch
-              value={true}
+              value={this.state.download}
               style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
               onValueChange={value => {
-                console.log('value', value);
+                this.setState({ download: value });
               }}
             />
           </View>
@@ -156,7 +173,7 @@ export default class AlbumDetail extends Component {
   _renderItem = wrap(item => {
     return (
       <View cls="pa3 pt0">
-        <AlbumItem />
+        <AlbumItem openModal={this._showModal} />
       </View>
     );
   });
@@ -171,6 +188,9 @@ export default class AlbumDetail extends Component {
           renderItem={this._renderItem}
           keyExtractor={(item, index) => index.toString()}
         />
+        <BottomModal ref={this.modalSong} headerNone>
+          <SongMenu />
+        </BottomModal>
       </ImageBackground>
     );
   }
