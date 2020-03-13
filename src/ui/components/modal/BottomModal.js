@@ -5,10 +5,14 @@ import {
   TouchableOpacity,
   Platform,
   Dimensions,
+  ImageBackground,
+  Image,
 } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import Modal from './WrapperModal';
 import { wrap } from '../../../themes';
+import Images from '../../../assets/icons/icons';
+import LinearGradientText from '../../main/library/components/LinearGradientText';
 
 @wrap
 export default class BottomModal extends React.Component {
@@ -85,19 +89,26 @@ export default class BottomModal extends React.Component {
         <SafeAreaView
           forceInset={{ top: 'always', bottom: forceInsetBottom }}
           cls="jcfe">
-          <View cls="bg-white br3" style={[style]}>
+          {/* <View cls="bg-white fullView" style={[style]}> */}
+          <ImageBackground cls="fullView" style={[style]} source={Images.bg}>
             <View cls="pv2 flx-row aic">
               <View cls="aifs jcc flx-i">
                 <TouchableOpacity
                   onPress={this._hideModal}
                   cls="jcc pv1 ph3 aic">
-                  {/* left icon here */}
+                  <Image source={Images.ic_delete} />
                 </TouchableOpacity>
               </View>
-              <View cls="aic jcc flexFn-5">
-                <Text numberOfLines={1} cls="strongTextTitle mediumFont f6 mv1">
-                  {`${title}`}
-                </Text>
+              <View cls="aic jcc flexFn-5 pt2">
+                <LinearGradientText
+                  text={`${title}`}
+                  end={{ x: 0.7, y: 0 }}
+                  styles={{
+                    justifyContent: 'center',
+                    fontSize: 21,
+                    fontWeight: '800',
+                  }}
+                />
               </View>
               <View cls="flx-i" />
               {rightComponent ? (
@@ -105,7 +116,8 @@ export default class BottomModal extends React.Component {
               ) : null}
             </View>
             <View style={[containerStyle]}>{children}</View>
-          </View>
+          </ImageBackground>
+          {/* </View> */}
         </SafeAreaView>
       </Modal>
     );
