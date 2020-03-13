@@ -14,6 +14,7 @@ import { Styles } from '../styles/stylesheets';
 import Images from '../assets/icons/icons';
 import createBottomTabNavigationMusic from './createBottomTabNavigationMusic';
 import homeContainer from './home_stack';
+import libContainer from './library_stack';
 import PlayerTabView from '../ui/player';
 
 const Tab = createBottomTabNavigationMusic();
@@ -66,7 +67,7 @@ function getBottomTabNavigator() {
       />
       <Tab.Screen
         name="library"
-        component={LibraryComponent}
+        component={libContainer}
         options={{
           tabBarLabel: 'Thư viện',
           tabBarIcon: props => (
