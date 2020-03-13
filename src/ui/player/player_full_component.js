@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
   Image,
   Text,
@@ -17,12 +17,28 @@ import playlistData from './data/playlist.json';
 import { pop } from '../../navigation/navigation_service';
 import { getStatusBarHeight, isSmallDevice } from '../../utils';
 import { skipToNext, skipToPrevious } from './service/play_service';
+import BottomModal from '../components/modal/BottomModal';
+import SongMenu from './components/song_menu';
 const react_native_1 = require('react-native');
 const TrackPlayerState = react_native_1.NativeModules.TrackPlayerModule;
 
 const PlayerFull = observer(
   wrap(props => {
     const playbackState = usePlaybackState();
+
+    const modalMenu = useRef();
+
+    const _showModal = useCallback(() => {
+      if (modalMenu && modalMenu.current) {
+        modalMenu.current._showModal();
+      }
+    });
+
+    const _hideModal = useCallback(() => {
+      if (modalMenu && modalMenu.current) {
+        modalMenu.current._hideModal();
+      }
+    });
 
     useEffect(() => {
       TrackPlayer.getCurrentTrack().then(value => {
@@ -92,7 +108,7 @@ const PlayerFull = observer(
               <TouchableOpacity onPress={() => pop()}>
                 <Text cls="white fw8 f5"> Today's Top Hits </Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={_showModal}>
                 <Image source={Images.ic_menu} />
               </TouchableOpacity>
             </View>
@@ -120,6 +136,9 @@ const PlayerFull = observer(
           />
           <Text cls="white asc">Now {getStateName(playbackState)}</Text>
         </View>
+        <BottomModal ref={modalMenu} headerNone>
+          <SongMenu />
+        </BottomModal>
         {/* </ImageBackground> */}
       </View>
     );

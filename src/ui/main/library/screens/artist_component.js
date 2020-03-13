@@ -87,6 +87,7 @@ export default class ArtistComponent extends Component {
               data={this.data}
               renderItem={this.renderItem}
               renderHeader={this.renderHeader}
+              showsVerticalScrollIndicator={false}
               // custom section header
               renderSectionHeader={this.renderSectionHeader}
               // default section header styles

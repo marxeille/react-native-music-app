@@ -66,6 +66,7 @@ export default class BottomModal extends React.Component {
       rightComponent,
       avoidKeyboard = false,
       justifyCenterModal = false,
+      headerNone = false,
     } = this.props;
 
     return (
@@ -91,31 +92,48 @@ export default class BottomModal extends React.Component {
           cls="jcfe">
           {/* <View cls="bg-white fullView" style={[style]}> */}
           <ImageBackground cls="fullView" style={[style]} source={Images.bg}>
-            <View cls="pv2 flx-row aic">
-              <View cls="aifs jcc flx-i">
+            {headerNone ? null : (
+              <View cls="pv2 flx-row aic">
+                <View cls="aifs jcc flx-i">
+                  <TouchableOpacity
+                    onPress={this._hideModal}
+                    cls="jcc pv1 ph3 aic">
+                    <Image source={Images.ic_delete} />
+                  </TouchableOpacity>
+                </View>
+                <View cls="aic jcc flexFn-5 pt2">
+                  <LinearGradientText
+                    text={`${title}`}
+                    end={{ x: 0.7, y: 0 }}
+                    styles={{
+                      justifyContent: 'center',
+                      fontSize: 21,
+                      fontWeight: '800',
+                    }}
+                  />
+                </View>
+                <View cls="flx-i" />
+                {rightComponent ? (
+                  <View cls="absolute right-0">{rightComponent}</View>
+                ) : null}
+              </View>
+            )}
+
+            <View style={[containerStyle]}>{children}</View>
+
+            {headerNone ? (
+              <View cls="aic jcc pt4">
                 <TouchableOpacity
                   onPress={this._hideModal}
                   cls="jcc pv1 ph3 aic">
-                  <Image source={Images.ic_delete} />
+                  <View
+                    cls="br5 ba pa1 pl4 pr4"
+                    style={{ borderColor: '#d29dc5' }}>
+                    <Text cls="white fw6 f9">Đóng</Text>
+                  </View>
                 </TouchableOpacity>
               </View>
-              <View cls="aic jcc flexFn-5 pt2">
-                <LinearGradientText
-                  text={`${title}`}
-                  end={{ x: 0.7, y: 0 }}
-                  styles={{
-                    justifyContent: 'center',
-                    fontSize: 21,
-                    fontWeight: '800',
-                  }}
-                />
-              </View>
-              <View cls="flx-i" />
-              {rightComponent ? (
-                <View cls="absolute right-0">{rightComponent}</View>
-              ) : null}
-            </View>
-            <View style={[containerStyle]}>{children}</View>
+            ) : null}
           </ImageBackground>
           {/* </View> */}
         </SafeAreaView>

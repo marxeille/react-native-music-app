@@ -36,19 +36,20 @@ export default class playlistComponent extends Component {
     console.log('rootStore.userStore.playlists', rootStore.userStore.playlists);
 
     return (
-      <>
+      <View style={{ marginBottom: 195 }}>
         <View cls="pt3">
           <SearchComponent />
         </View>
-        <View cls="pt3 fullHeight" style={{ marginBottom: 95 }}>
+        <View cls="pt3 fullHeight">
           <FlatList
             ListHeaderComponent={<PlaylistItem />}
+            showsVerticalScrollIndicator={false}
             data={rootStore.userStore.playlists}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderPlaylist}
           />
         </View>
-      </>
+      </View>
     );
   }
 }
