@@ -47,7 +47,7 @@ export const Song = types
 
 export const createSongFromJson = data => {
   return Song.create({
-    id: data.id,
+    id: data.id.toString(),
     title: data.title,
     artist: data.artist,
     artwork: data.artwork,

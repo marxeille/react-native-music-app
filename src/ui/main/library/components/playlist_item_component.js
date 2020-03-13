@@ -15,7 +15,10 @@ export default class PlaylistItem extends Component {
   render() {
     const { index } = this.props;
     if (index != undefined) {
-      console.log("TCL: PlaylistItem -> render -> rootStore.userStore.playlists[index].title()", rootStore.userStore.playlists[index].title())
+      console.log(
+        'TCL: PlaylistItem -> render -> rootStore.userStore.playlists[index].title()',
+        rootStore.userStore.playlists[index].title(),
+      );
     }
     return (
       <View cls="flx-row aic pb3">
@@ -32,14 +35,19 @@ export default class PlaylistItem extends Component {
 
         <View>
           <TouchableOpacity>
-            <Text cls="white fw7 f6 pl2">{index != undefined ? rootStore.userStore.playlists[index].title() : 'Tạo playlist'}</Text>
+            <Text cls="white fw7 f6 pl2">
+              {index != undefined
+                ? rootStore.userStore.playlists[index].title()
+                : 'Tạo playlist'}
+            </Text>
           </TouchableOpacity>
           {index != undefined ? (
-            <Text cls="primaryPurple f6 pl2 pt1">của {rootStore.userStore.playlists[index].subTitle()}</Text>
+            <Text cls="primaryPurple f6 pl2 pt1">
+              của {rootStore.userStore.playlists[index].subTitle()}
+            </Text>
           ) : null}
         </View>
       </View>
-
     );
   }
 }

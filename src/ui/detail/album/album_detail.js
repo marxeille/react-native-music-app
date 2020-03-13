@@ -19,6 +19,7 @@ import { rootStore } from '../../../data/context/root_context';
 import LinearGradient from 'react-native-linear-gradient';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import AlbumItem from './components/album_item';
+import AlbumModel from './view_model';
 
 @observer
 @wrap
@@ -57,7 +58,7 @@ export default class AlbumDetail extends Component {
           <View
             cls="flx-row aic jcsb"
             style={{ paddingTop: getStatusBarHeight() }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
               <Image
                 cls="widthFn-10 heightFn-20"
                 source={Images.ic_back_white}

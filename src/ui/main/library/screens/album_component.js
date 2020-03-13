@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { wrap } from '../../../../themes';
 import SearchComponent from '../components/search_component';
+import AlbumItem from '../components/album_item_component';
+import { rootStore } from '../../../../data/context/root_context';
+import { observer } from 'mobx-react';
 
+@observer
 @wrap
 export default class playlistComponent extends Component {
   constructor(props) {
@@ -10,12 +14,42 @@ export default class playlistComponent extends Component {
     this.state = {};
   }
 
-  render() {
+  componentDidMount() {
+    if (
+      rootStore.userStore.playlists == undefined ||
+      rootStore.userStore.playlists.length == 0
+    ) {
+      rootStore.userStore.fetchPlayListOfUser();
+    }
+  }
+
+  renderPlaylist = item => {
+    console.log('TCL: playlistComponent -> renderPlaylist item', item.index);
     return (
-      <View cls="pt3">
-        <Text cls="white"> album </Text>
-        <SearchComponent />
-      </View>
+      <>
+        <AlbumItem index={item.index} />
+      </>
+    );
+  };
+
+  render() {
+    let newArr = [...rootStore.userStore.playlists];
+
+    return (
+      <>
+        <View cls="pt3">
+          <SearchComponent />
+        </View>
+        <View cls="pt3 fullHeight" style={{ marginBottom: 95 }}>
+          <FlatList
+            data={newArr}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={this.renderPlaylist}
+            numColumns={3}
+            horizontal={false}
+          />
+        </View>
+      </>
     );
   }
 }

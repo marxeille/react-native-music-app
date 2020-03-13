@@ -182,6 +182,20 @@ export default class CommonApiService {
           thumb:
             'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
+        {
+          id: '6',
+          name: 'Daily Mix 6',
+          artist: 'Vũ',
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
+        },
+        {
+          id: '6',
+          name: 'Daily Mix 6',
+          artist: 'Vũ',
+          thumb:
+            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
+        },
       ]);
     });
   }

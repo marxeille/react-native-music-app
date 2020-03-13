@@ -24,7 +24,7 @@ export default class playlistComponent extends Component {
   }
 
   renderPlaylist = item => {
-    console.log('TCL: playlistComponent -> renderPlaylist item', item);
+    console.log('TCL: playlistComponent -> renderPlaylist item', item.index);
     return (
       <>
         <PlaylistItem index={item.index} />
@@ -33,6 +33,8 @@ export default class playlistComponent extends Component {
   };
 
   render() {
+    console.log('rootStore.userStore.playlists', rootStore.userStore.playlists);
+
     return (
       <>
         <View cls="pt3">
