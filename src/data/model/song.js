@@ -55,13 +55,3 @@ export const createSongFromJson = data => {
     favorite: false,
   });
 };
-
-/*
-{
-    "id": "2",
-    "url": "https://drive.google.com/uc?export=download&id=1VM9_umeyzJn0v1pRzR1BSm9y3IhZ3c0E",
-    "title": "Soul Searching (Demo)",
-    "artist": "David Chavez",
-    "artwork": "https://picsum.photos/200"
-  },
-*/

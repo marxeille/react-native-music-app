@@ -73,7 +73,7 @@ export default class LogInComponent extends Component {
               onChange={event => this.onChangeText(event, 'loginName')}
               autoCorrect={false}
             />
-            <Image style={{ width: 20, height: 25 }} source={Images.login} />
+            <Image style={{ width: 20, height: 25 }} source={Images.ic_pass} />
           </View>
           <View cls="pt3">
             <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
@@ -86,10 +86,7 @@ export default class LogInComponent extends Component {
                 onChange={event => this.onChangeText(event, 'pass')}
                 autoCorrect={false}
               />
-              <Image
-                style={{ width: 20, height: 25 }}
-                source={Images.ic_pass}
-              />
+              <Image style={{ width: 20, height: 25 }} source={Images.pass} />
             </View>
           </View>
         </View>
@@ -103,7 +100,11 @@ export default class LogInComponent extends Component {
                 colors={['#4A3278', '#8B659D', '#DDA5CB']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}>
-                <Text cls="white f6 fw5 pa3 pl5 pr5">Đăng nhập</Text>
+                <Text
+                  cls="white f6 fw5 pl5 pr5"
+                  style={{ paddingTop: 12, paddingBottom: 12 }}>
+                  Đăng nhập
+                </Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>

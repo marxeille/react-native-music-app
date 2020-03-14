@@ -8,7 +8,6 @@ import { Artist } from '../model/artist';
 import { Album } from '../model/album';
 import { apiService } from '../context/api_context';
 
-
 export const AuthState = types.enumeration('AuthState', [
   'authed',
   'none',
@@ -66,7 +65,11 @@ export const UserStore = types
         var userInfoString = yield AsyncStorage.getItem(
           AsyncStorageKey.USERINFO,
         );
-        if (userInfoString !== undefined) {
+        if (
+          userInfoString !== undefined &&
+          userInfoString !== '' &&
+          userInfoString !== null
+        ) {
           self.authState = 'authed';
         } else {
           self.authState = 'not_auth';
@@ -77,8 +80,8 @@ export const UserStore = types
         var playlist: Array = yield apiService.commonApiService.getPlaylistOfUser();
         var playlistOfUser = [];
         playlist.forEach(data => {
-          var teamp = createPlaylistFromJson(data)
-          getParent(self).updatePlayList(teamp);//For RootStore
+          var teamp = createPlaylistFromJson(data);
+          getParent(self).updatePlayList(teamp); //For RootStore
           playlistOfUser.push(teamp.id);
         });
         self.playlists = playlistOfUser;
