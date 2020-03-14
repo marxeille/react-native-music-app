@@ -91,7 +91,9 @@ export default class SearchComponent extends Component {
         </View>
         <View>
           {data.map(item => (
-            <Text cls="primaryPurple pt3 fw6 f6">Hey hey hey ${item}</Text>
+            <TouchableOpacity>
+              <Text cls="primaryPurple pt3 fw6 f6">Hey hey hey ${item}</Text>
+            </TouchableOpacity>
           ))}
         </View>
       </View>

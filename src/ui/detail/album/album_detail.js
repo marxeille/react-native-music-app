@@ -149,7 +149,7 @@ export default class AlbumDetail extends Component {
             />
             <Switch
               value={this.state.download}
-              style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
+              style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
               onValueChange={value => {
                 this.setState({ download: value });
               }}
@@ -189,7 +189,13 @@ export default class AlbumDetail extends Component {
           keyExtractor={(item, index) => index.toString()}
         />
         <BottomModal ref={this.modalSong} headerNone>
-          <SongMenu />
+          <SongMenu
+            song={{
+              title: 'hey hey hey',
+              artist: 'idol giới trẻ khÁ bẢnH',
+              artwork: '',
+            }}
+          />
         </BottomModal>
       </ImageBackground>
     );

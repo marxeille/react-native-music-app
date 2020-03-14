@@ -21,33 +21,33 @@ export default class PlaylistItem extends Component {
       );
     }
     return (
-      <View cls="flx-row aic pb3">
+      <>
         <TouchableOpacity>
-          <Image
-            cls="widthFn-90 heightFn-82"
-            source={
-              index != undefined
-                ? { uri: rootStore.userStore.playlists[index].getThumb() }
-                : require('../../../../assets/images/add_playlist.png')
-            }
-          />
-        </TouchableOpacity>
+          <View cls="flx-row aic pb3">
+            <Image
+              cls="widthFn-90 heightFn-82"
+              source={
+                index != undefined
+                  ? { uri: rootStore.userStore.playlists[index].getThumb() }
+                  : require('../../../../assets/images/add_playlist.png')
+              }
+            />
 
-        <View>
-          <TouchableOpacity>
-            <Text cls="white fw7 f6 pl2">
-              {index != undefined
-                ? rootStore.userStore.playlists[index].title()
-                : 'Tạo playlist'}
-            </Text>
-          </TouchableOpacity>
-          {index != undefined ? (
-            <Text cls="primaryPurple f6 pl2 pt1">
-              của {rootStore.userStore.playlists[index].subTitle()}
-            </Text>
-          ) : null}
-        </View>
-      </View>
+            <View>
+              <Text cls="white fw7 f6 pl2">
+                {index != undefined
+                  ? rootStore.userStore.playlists[index].title()
+                  : 'Tạo playlist'}
+              </Text>
+              {index != undefined ? (
+                <Text cls="primaryPurple f6 pl2 pt1">
+                  của {rootStore.userStore.playlists[index].subTitle()}
+                </Text>
+              ) : null}
+            </View>
+          </View>
+        </TouchableOpacity>
+      </>
     );
   }
 }

@@ -21,6 +21,7 @@ export default class SongMenu extends Component {
   }
 
   render() {
+    const { song } = this.props;
     return (
       <>
         <View cls="aic jcc pt3 pb2">
@@ -28,13 +29,19 @@ export default class SongMenu extends Component {
             cls="widthFn-283 heightFn-283 aic jcc"
             source={Images.ic_barcode}>
             <Image
-              source={{ uri: rootStore.playerStore?.currentSong?.getThumb() }}
+              source={{
+                uri:
+                  song?.artwork ??
+                  rootStore.playerStore?.currentSong?.getThumb(),
+              }}
               cls="circleFn-185"
             />
           </ImageBackground>
           <View cls="aic jcc pt3">
             <LinearGradientText
-              text={`${rootStore.playerStore?.currentSong?.getName()}`}
+              text={
+                song?.title ?? rootStore.playerStore?.currentSong?.getName()
+              }
               end={{ x: 0.7, y: 0 }}
               styles={{
                 justifyContent: 'center',
@@ -43,7 +50,8 @@ export default class SongMenu extends Component {
               }}
             />
             <Text cls="white fw5 f7 pt1">
-              {rootStore.playerStore?.currentSong?.getSubTitlte()}
+              {song?.artist ??
+                rootStore.playerStore?.currentSong?.getSubTitlte()}
             </Text>
           </View>
         </View>
