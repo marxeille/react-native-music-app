@@ -19,7 +19,9 @@ import SplashComponent from './src/ui/splash_component';
 import { RootContext, rootStore } from './src/data/context/root_context';
 import { AuthState } from './src/data/repository/user_store';
 import { observer, autorun } from 'mobx-react';
-import { navigationRef } from './src/navigation/navigation_service'
+import { navigationRef } from './src/navigation/navigation_service';
+import PlayerAudio from './src/ui/components/player/playerAudio';
+import PlayerContextProvider from './src/data/context/player_context';
 
 const Stack = createStackNavigator();
 
@@ -36,11 +38,14 @@ export default class App extends Component {
       case 'authed':
         return (
           <RootContext.Provider value={rootStore}>
-            <NavigationContainer ref={navigationRef}>
-              <Stack.Navigator headerMode="none">
-                <Stack.Screen name="main" component={mainContainer} />
-              </Stack.Navigator>
-            </NavigationContainer>
+            <PlayerContextProvider>
+              <NavigationContainer ref={navigationRef}>
+                <Stack.Navigator headerMode="none">
+                  <Stack.Screen name="main" component={mainContainer} />
+                </Stack.Navigator>
+              </NavigationContainer>
+              <PlayerAudio />
+            </PlayerContextProvider>
           </RootContext.Provider>
         );
       case 'none':

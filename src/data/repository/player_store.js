@@ -10,6 +10,7 @@ export const PlayerState = types.enumeration('PlayerState', [
 
 export const PlayerStore = types
   .model('PlayerStore', {
+    selectedId: types.maybeNull(types.string),
     currentSong: types.maybeNull(types.reference(Song)),
     statusPlayer: types.maybeNull(PlayerState),
     duration: types.maybeNull(types.number),
@@ -49,9 +50,10 @@ export const PlayerStore = types
       setDuration(duration) {
         self.duration = duration;
       },
-
+      setSelectedId(id) {
+        self.selectedId = id;
+      },
       playSong(song) {
-        console.log('DEBUG => player_store playSong song ', song);
         self.currentSong = song;
       },
     };

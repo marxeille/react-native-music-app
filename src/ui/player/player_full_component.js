@@ -60,6 +60,10 @@ const PlayerFull = observer(
           });
         }
       });
+
+      return () => {
+        console.log('unmounted');
+      };
     }, []);
 
     useEffect(() => {

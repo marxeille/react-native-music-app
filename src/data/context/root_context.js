@@ -32,33 +32,33 @@ export const rootStore = RootStore.create({
   songs: {},
 });
 
-TrackPlayer.addEventListener(Event.PlaybackTrackChanged, async data => {
-  const playlistShuffled = !_.isEqual(
-    [...rootStore.songs.values()],
-    rootStore.queueStore.songs,
-  );
+// TrackPlayer.addEventListener(Event.PlaybackTrackChanged, async data => {
+//   const playlistShuffled = !_.isEqual(
+//     [...rootStore.songs.values()],
+//     rootStore.queueStore.songs,
+//   );
 
-  if ((data.nextTrack !== null && !playlistShuffled) || data.track == null) {
-    rootStore.playerStore.playSong(data.nextTrack);
-  } else {
-    await TrackPlayer.reset();
-    await TrackPlayer.add(rootStore.queueStore.getSongs());
-    await TrackPlayer.play();
-  }
-});
+//   if ((data.nextTrack !== null && !playlistShuffled) || data.track == null) {
+//     rootStore.playerStore.playSong(data.nextTrack);
+//   } else {
+//     await TrackPlayer.reset();
+//     await TrackPlayer.add(rootStore.queueStore.getSongs());
+//     await TrackPlayer.play();
+//   }
+// });
 
-TrackPlayer.addEventListener('playback-state', data => {
-  if (
-    data.state == State.Playing ||
-    data.state == State.Connecting ||
-    // data.state == State.Buffering ||
-    data.state == State.Connecting
-  ) {
-    rootStore.playerStore.setState('playing');
-  } else {
-    rootStore.playerStore.setState('pause');
-  }
-});
+// TrackPlayer.addEventListener('playback-state', data => {
+//   if (
+//     data.state == State.Playing ||
+//     data.state == State.Connecting ||
+//     // data.state == State.Buffering ||
+//     data.state == State.Connecting
+//   ) {
+//     rootStore.playerStore.setState('playing');
+//   } else {
+//     rootStore.playerStore.setState('pause');
+//   }
+// });
 
 export const RootContext = React.createContext(rootStore);
 reactotron.trackMstNode(rootStore);

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import PlayerFullComponent from './player_full_component';
+import Player2 from './new_player/App';
 import Queue from './queue_component';
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
@@ -51,7 +52,7 @@ export default class PlayerTabView extends React.Component {
   });
 
   _renderScene = SceneMap({
-    player: PlayerFullComponent,
+    player: Player2,
     queue: Queue,
   });
 
