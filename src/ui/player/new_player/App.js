@@ -40,6 +40,6 @@ export default class App extends Component {
     rootStore.queueStore.addSongs(TRACKS);
   }
   render() {
-    return <Player />;
+    return <Player {...this.props} />;
   }
 }

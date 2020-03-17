@@ -41,40 +41,54 @@ export const PlayerStore = types
       }),
 
       getSongs() {
-        return [...getParent(self).songs];
+        return [...getParent(self).songs.values()];
       },
 
       getQueueSize() {
         return getParent(self).songs.size;
       },
 
-      prepareSong(trackStatus) {
+      prepareSong(id) {
         const songs = self.getSongs();
         let track;
 
-        if (self.selectedId == null) {
-          // Case 1: no song in queue, start new song
-          track = songs[self.trackIndex][1];
-          self.startNewSong(track.id);
-        } else {
-          if (trackStatus == 'next') {
-            //Case 2: next track (with shuffle or not)
-            self.setTrackIndex(
-              !self.shuffle
-                ? self.trackIndex + 1
-                : Math.floor(Math.random() * Math.floor(self.getQueueSize())),
-            );
-            track = songs[self.trackIndex][1];
-            self.startNewSong(track.id);
-          } else if (trackStatus == 'back') {
-            //Case 3: back track(no shuffle)
-            self.setTrackIndex(self.trackIndex - 1);
-            track = songs[self.trackIndex][1];
+        if (self.selectedId == null || id !== null) {
+          // Case 0: User choose a new song from list
+          if (!id) {
+            // Case 1: no song in queue, start new song with no ID
+            track = songs[self.trackIndex];
             self.startNewSong(track.id);
           } else {
-            //Case 4: Continue current track(in case user from another screen get into player screen)
-            track = getParent(self).songs.get(self.selectedId);
+            //Case 5: no song in queue, start new song WITH ID
+            track = getParent(self).songs.get(id);
+            // Set track index by track id
+            self.setTrackIndex(_.findIndex(self.getSongs(), ['id', track.id]));
+            self.startNewSong(track.id);
           }
+        } else {
+          //Case 4: Continue current track(in case user from another screen get into player screen)
+          track = getParent(self).songs.get(self.selectedId);
+        }
+        self.playSong(track.id);
+      },
+
+      changeSong(trackStatus) {
+        const songs = self.getSongs();
+        let track;
+        if (trackStatus == 'next') {
+          //Case 2: next track (with shuffle or not)
+          self.setTrackIndex(
+            !self.shuffle
+              ? self.trackIndex + 1
+              : Math.floor(Math.random() * Math.floor(self.getQueueSize())),
+          );
+          track = songs[self.trackIndex];
+          self.startNewSong(track.id);
+        } else {
+          //Case 3: back track(no shuffle)
+          self.setTrackIndex(self.trackIndex - 1);
+          track = songs[self.trackIndex];
+          self.startNewSong(track.id);
         }
         self.playSong(track.id);
       },

@@ -30,7 +30,7 @@ class PlayerAudio extends React.Component {
         rootStore.playerStore?.getQueueSize() - 1 &&
       !rootStore?.playerStore?.repeat
     ) {
-      rootStore.playerStore?.prepareSong('next');
+      rootStore.playerStore?.changeSong('next');
     }
   };
 

@@ -51,10 +51,21 @@ export default class PlayerTabView extends React.Component {
     );
   });
 
-  _renderScene = SceneMap({
-    player: Player2,
-    queue: Queue,
-  });
+  // _renderScene = SceneMap({
+  //   player: Player2,
+  //   queue: Queue,
+  // });
+
+  _renderScene = ({ route }) => {
+    switch (route.key) {
+      case 'player':
+        return <Player2 {...this.props} />;
+      case 'queue':
+        return <Queue {...this.props} />;
+      default:
+        return null;
+    }
+  };
 
   render() {
     return (

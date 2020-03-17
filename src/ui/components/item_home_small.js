@@ -16,7 +16,10 @@ export default class ItemHomeSmall extends Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={() => this.props.navigate('player')}>
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigate('player', { trackId: this.props.id })
+        }>
         <View cls="widthFn-110 pl3 mr2">
           <Image
             cls="heightFn-110 widthFn-110"

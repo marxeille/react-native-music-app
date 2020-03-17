@@ -23,17 +23,12 @@ export default class HomeListComponent extends Component {
   };
 
   renderSmallItem = wrap(item => {
-    return (
-      <TouchableOpacity>
-        <ItemHomeSmall id={item.item.id} navigate={navigate} />
-      </TouchableOpacity>
-    );
+    return <ItemHomeSmall id={item.item.id} navigate={navigate} />;
   });
 
   renderLargeItem = wrap(item => {
     return (
-      <TouchableOpacity
-        onPress={() => navigate('album_detail', { id: '1' })}>
+      <TouchableOpacity onPress={() => navigate('album_detail', { id: '1' })}>
         <ItemHome id={item.item.id} navigate={navigate} />
       </TouchableOpacity>
     );

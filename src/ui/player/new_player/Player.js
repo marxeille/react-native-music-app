@@ -22,8 +22,10 @@ export default class Player extends Component {
   }
 
   componentDidMount() {
-    console.log('why it get here 1?');
-    rootStore.playerStore?.prepareSong();
+    const trackId = this.props.route?.params?.trackId;
+    console.log('trackId', trackId);
+
+    rootStore.playerStore?.prepareSong(trackId ?? null);
     // if (rootStore.playerStore?.selectedId == null) {
     //   const track = this.props.tracks[this.state.selectedTrack];
     //   rootStore.playerStore?.setSelectedId(track.id);
@@ -49,7 +51,7 @@ export default class Player extends Component {
 
   onBack() {
     if (rootStore.playerStore?.trackIndex > 0) {
-      rootStore.playerStore?.prepareSong('back');
+      rootStore.playerStore?.changeSong('back');
       // const prevTrack = this.props.tracks[this.state.selectedTrack - 1];
       // rootStore.playerStore?.setSelectedId(prevTrack.id);
       // this.playingTrack(prevTrack.id);
@@ -71,7 +73,7 @@ export default class Player extends Component {
       rootStore.playerStore?.trackIndex <
       rootStore.playerStore?.getQueueSize() - 1
     ) {
-      rootStore.playerStore?.prepareSong('next');
+      rootStore.playerStore?.changeSong('next');
       //   const nextTrack = this.props.tracks[this.state.selectedTrack + 1];
       //   rootStore.playerStore?.setSelectedId(nextTrack.id);
       //   this.playingTrack(nextTrack.id);
