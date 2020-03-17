@@ -3,6 +3,7 @@ import Video from 'react-native-video';
 import { observer } from 'mobx-react';
 import { rootStore } from '../../../data/context/root_context';
 import { PlayerContext } from '../../../data/context/player_context';
+import { Alert } from 'react-native';
 
 @observer
 class PlayerAudio extends React.Component {
@@ -23,6 +24,19 @@ class PlayerAudio extends React.Component {
     rootStore?.playerStore?.setDuration(Math.floor(data.duration));
   }
 
+  onEnd = () => {
+    if (
+      rootStore.playerStore?.trackIndex <
+      rootStore.playerStore?.getQueueSize() - 1
+    ) {
+      rootStore.playerStore?.prepareSong('next');
+    }
+  };
+
+  videoError = () => {
+    Alert.alert('Có lỗi xảy ra khi load bài hát, vui lòng thử lại');
+  };
+
   render() {
     const { currentSong } = rootStore?.playerStore;
 
@@ -36,12 +50,12 @@ class PlayerAudio extends React.Component {
         }}
         paused={rootStore?.playerStore?.statusPlayer == 'pause'} // Pauses playback entirely.
         resizeMode="cover" // Fill the whole screen at aspect ratio.
-        repeat={false} // Repeat forever.
+        repeat={rootStore?.playerStore?.repeat} // Repeat forever.
         //   onLoadStart={this.loadStart} // Callback when video starts to load
         onLoad={this.setDuration.bind(this)} // Callback when video loads
         onProgress={this.setTime.bind(this)} // Callback every ~250ms with currentTime
-        //   onEnd={this.onEnd} // Callback when playback finishes
-        //   onError={this.videoError} // Callback when video cannot be loaded
+        onEnd={this.onEnd} // Callback when playback finishes
+        onError={this.videoError} // Callback when video cannot be loaded
         //   style={styles.audioElement}
         ignoreSilentSwitch={'ignore'}
         playWhenInactive={true}

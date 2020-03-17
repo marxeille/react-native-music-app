@@ -18,29 +18,29 @@ export default class Player extends Component {
 
     this.state = {
       selectedTrack: 0,
-      repeatOn: false,
-      shuffleOn: false,
     };
   }
 
   componentDidMount() {
-    if (rootStore.playerStore?.selectedId == null) {
-      const track = this.props.tracks[this.state.selectedTrack];
-      rootStore.playerStore?.setSelectedId(track.id);
-      this.playingTrack(track.id);
-    } else {
-      this.setState({
-        selectedTrack: _.findIndex(this.props.tracks, [
-          'id',
-          rootStore.playerStore?.selectedId,
-        ]),
-      });
-    }
+    console.log('why it get here 1?');
+    rootStore.playerStore?.prepareSong();
+    // if (rootStore.playerStore?.selectedId == null) {
+    //   const track = this.props.tracks[this.state.selectedTrack];
+    //   rootStore.playerStore?.setSelectedId(track.id);
+    //   this.playingTrack(track.id);
+    // } else {
+    //   this.setState({
+    //     selectedTrack: _.findIndex(this.props.tracks, [
+    //       'id',
+    //       rootStore.playerStore?.selectedId,
+    //     ]),
+    //   });
+    // }
   }
 
-  playingTrack = id => {
-    rootStore?.playerStore?.playSong(id);
-  };
+  // playingTrack = id => {
+  //   rootStore?.playerStore?.playSong(id);
+  // };
 
   seek(time) {
     time = Math.round(time);
@@ -48,50 +48,49 @@ export default class Player extends Component {
   }
 
   onBack() {
-    if (this.state.selectedTrack > 0) {
-      const prevTrack = this.props.tracks[this.state.selectedTrack - 1];
-      rootStore.playerStore?.setSelectedId(prevTrack.id);
-      this.playingTrack(prevTrack.id);
-      rootStore?.playerStore?.setPosition(0);
-      this.setState({ isChanging: true });
-      setTimeout(
-        () =>
-          this.setState({
-            isChanging: false,
-            selectedTrack: this.state.selectedTrack - 1,
-          }),
-        0,
-      );
+    if (rootStore.playerStore?.trackIndex > 0) {
+      rootStore.playerStore?.prepareSong('back');
+      // const prevTrack = this.props.tracks[this.state.selectedTrack - 1];
+      // rootStore.playerStore?.setSelectedId(prevTrack.id);
+      // this.playingTrack(prevTrack.id);
+      // rootStore?.playerStore?.setPosition(0);
+      // setTimeout(
+      //   () =>
+      //     this.setState({
+      //       selectedTrack: this.state.selectedTrack - 1,
+      //     }),
+      //   0,
+      // );
     } else {
       this.context.playerRef?.seek(0);
     }
   }
 
   onForward() {
-    if (this.state.selectedTrack < this.props.tracks.length - 1) {
-      const nextTrack = this.props.tracks[this.state.selectedTrack + 1];
-      rootStore.playerStore?.setSelectedId(nextTrack.id);
-      this.playingTrack(nextTrack.id);
-      rootStore?.playerStore?.setPosition(0);
-      this.setState({ isChanging: true });
-      setTimeout(
-        () =>
-          this.setState({
-            isChanging: false,
-            selectedTrack: this.state.selectedTrack + 1,
-          }),
-        0,
-      );
+    if (
+      rootStore.playerStore?.trackIndex <
+      rootStore.playerStore?.getQueueSize() - 1
+    ) {
+      rootStore.playerStore?.prepareSong('next');
+      //   const nextTrack = this.props.tracks[this.state.selectedTrack + 1];
+      //   rootStore.playerStore?.setSelectedId(nextTrack.id);
+      //   this.playingTrack(nextTrack.id);
+      //   rootStore?.playerStore?.setPosition(0);
+      //   setTimeout(
+      //     () =>
+      //       this.setState({
+      //         selectedTrack: this.state.selectedTrack + 1,
+      //       }),
+      //     0,
+      //   );
+      // }
     }
   }
-
-  onEnd = () => {
-    this.onForward.bind(this);
-  };
 
   render() {
     const track = this.props.tracks[this.state.selectedTrack];
     const { currentSong } = rootStore?.playerStore;
+
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
@@ -109,15 +108,16 @@ export default class Player extends Component {
         />
         <Controls
           onPressRepeat={() =>
-            this.setState({ repeatOn: !this.state.repeatOn })
+            rootStore?.playerStore?.setRepeat(!rootStore?.playerStore?.repeat)
           }
-          repeatOn={this.state.repeatOn}
-          shuffleOn={this.state.shuffleOn}
+          repeatOn={rootStore?.playerStore?.repeat}
+          shuffleOn={rootStore?.playerStore?.shuffle}
           forwardDisabled={
-            this.state.selectedTrack === this.props.tracks.length - 1
+            rootStore.playerStore?.trackIndex ===
+            rootStore.playerStore?.getQueueSize() - 1
           }
           onPressShuffle={() =>
-            this.setState({ shuffleOn: !this.state.shuffleOn })
+            rootStore?.playerStore?.setShuffle(!rootStore?.playerStore?.shuffle)
           }
           onPressPlay={() => rootStore?.playerStore?.setState('playing')}
           onPressPause={() => rootStore?.playerStore?.setState('pause')}

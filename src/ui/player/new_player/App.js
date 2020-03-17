@@ -17,8 +17,7 @@ export const TRACKS = [
     id: '2',
     title: 'Love Yourself',
     artist: 'Justin Bieber',
-    artwork:
-      'http://arrestedmotion.com/wp-content/uploads/2015/10/JB_Purpose-digital-deluxe-album-cover_lr.jpg',
+    artwork: 'https://picsum.photos/200',
     url:
       'https://drive.google.com/uc?export=download&id=1VM9_umeyzJn0v1pRzR1BSm9y3IhZ3c0E',
   },
@@ -38,6 +37,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     rootStore.updateSongs(TRACKS);
+    rootStore.queueStore.addSongs(TRACKS);
   }
   render() {
     return <Player tracks={TRACKS} />;
