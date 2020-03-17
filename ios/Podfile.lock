@@ -212,7 +212,7 @@ PODS:
   - react-native-fbsdk/Share (1.1.2):
     - FBSDKShareKit (= 5.8)
     - React
-  - react-native-music-control (0.11.0):
+  - react-native-music-control (0.10.8):
     - React
   - react-native-safe-area-context (0.7.3):
     - React
@@ -418,7 +418,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-fbsdk: c35d42169e64aaf66f01713c1e18d0674f7f6519
-  react-native-music-control: a73cc4c0af6ed9b3204649756a33078a87ed2f03
+  react-native-music-control: dcfe5b61e56a15898c4618579cb8ce612c9d21a8
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-slider: 3a1cfd00c9c31068251b536822f7192e8d1d6b6f
   react-native-track-player: 36e250a77705e5edc34b12020fd526511070971f

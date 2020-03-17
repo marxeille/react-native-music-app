@@ -61,36 +61,5 @@ export const rootStore = RootStore.create({
 //   }
 // });
 
-// Basic Controls
-MusicControl.enableControl('play', true);
-MusicControl.enableControl('pause', true);
-MusicControl.enableControl('stop', false);
-MusicControl.enableControl('nextTrack', true);
-MusicControl.enableControl('previousTrack', false);
-// Seeking
-MusicControl.enableControl('seekForward', false); // iOS only
-MusicControl.enableControl('seekBackward', false); // iOS only
-MusicControl.enableControl('seek', false); // Android only
-MusicControl.enableControl('skipForward', false);
-MusicControl.enableControl('skipBackward', false);
-// Android Specific Options
-MusicControl.enableControl('setRating', false);
-MusicControl.enableControl('volume', true); // Only affected when remoteVolume is enabled
-MusicControl.enableControl('remoteVolume', false);
-
-MusicControl.setNowPlaying({
-  title: 'Billie Jean',
-  artwork: 'https://i.imgur.com/e1cpwdo.png', // URL or RN's image require()
-  artist: 'Michael Jackson',
-  album: 'Thriller',
-  genre: 'Post-disco, Rhythm and Blues, Funk, Dance-pop',
-  duration: 294, // (Seconds)
-  description: '', // Android Only
-  color: 0xffffff, // Notification Color - Android Only
-  date: '1983-01-02T00:00:00Z', // Release Date (RFC 3339) - Android Only
-  rating: 84, // Android Only (Boolean or Number depending on the type)
-  notificationIcon: 'my_custom_icon', // Android Only (String), Android Drawable resource name for a custom notification icon
-});
-
 export const RootContext = React.createContext(rootStore);
 reactotron.trackMstNode(rootStore);

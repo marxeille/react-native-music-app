@@ -3,6 +3,7 @@ import { types, onSnapshot, flow, getParent } from 'mobx-state-tree';
 import { Song } from '../model/song';
 // import TrackPlayer from 'react-native-track-player';
 import * as _ from 'lodash';
+import MusicControl from 'react-native-music-control';
 
 export const PlayerState = types.enumeration('PlayerState', [
   'pause',
@@ -127,6 +128,45 @@ export const PlayerStore = types
       },
       playSong(song) {
         self.currentSong = song;
+        // Basic Controls
+        MusicControl.enableControl('play', true);
+        MusicControl.enableControl('pause', true);
+        MusicControl.enableControl('nextTrack', true);
+        MusicControl.enableControl('previousTrack', true);
+        MusicControl.enableControl('stop', true);
+
+        MusicControl.on('pause', () => {
+          console.log('er123 paused');
+          self.pause();
+        });
+        MusicControl.on('nextTrack', () => {
+          console.log('er123 nextTrack');
+          self.changeSong('next');
+        });
+        // Seeking
+        MusicControl.enableControl('seekForward', false); // iOS only
+        MusicControl.enableControl('seekBackward', false); // iOS only
+        MusicControl.enableControl('seek', false); // Android only
+        MusicControl.enableControl('skipForward', false);
+        MusicControl.enableControl('skipBackward', false);
+        // Android Specific Options
+        MusicControl.enableControl('setRating', false);
+        MusicControl.enableControl('volume', true); // Only affected when remoteVolume is enabled
+        MusicControl.enableControl('remoteVolume', false);
+
+        MusicControl.setNowPlaying({
+          title: 'Billie Jean',
+          artwork: 'https://i.imgur.com/e1cpwdo.png', // URL or RN's image require()
+          artist: 'Michael Jackson',
+          album: 'Thriller',
+          genre: 'Post-disco, Rhythm and Blues, Funk, Dance-pop',
+          duration: 294, // (Seconds)
+          description: '', // Android Only
+          color: 0xffffff, // Notification Color - Android Only
+          date: '1983-01-02T00:00:00Z', // Release Date (RFC 3339) - Android Only
+          rating: 84, // Android Only (Boolean or Number depending on the type)
+          notificationIcon: 'my_custom_icon', // Android Only (String), Android Drawable resource name for a custom notification icon
+        });
       },
     };
   });

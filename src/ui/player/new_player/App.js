@@ -37,7 +37,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     rootStore.updateSongs(TRACKS);
-    rootStore.queueStore.addSongs(TRACKS);
+    rootStore.queueStore.addNewQue(TRACKS);
   }
   render() {
     return <Player {...this.props} />;
