@@ -88,18 +88,14 @@ export default class Player extends Component {
   }
 
   render() {
-    const track = this.props.tracks[this.state.selectedTrack];
     const { currentSong } = rootStore?.playerStore;
 
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
         <Header message="Playing From Charts" />
-        <AlbumArt url={currentSong?.artwork ?? track.artwork} />
-        <TrackDetails
-          title={currentSong?.title ?? track.title}
-          artist={currentSong?.artist ?? track.artist}
-        />
+        <AlbumArt url={currentSong?.artwork} />
+        <TrackDetails title={currentSong?.title} artist={currentSong?.artist} />
         <SeekBar
           onSeek={this.seek.bind(this)}
           trackLength={rootStore?.playerStore?.duration}

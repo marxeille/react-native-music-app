@@ -53,28 +53,36 @@ export const PlayerStore = types
         let track;
 
         if (self.selectedId == null) {
+          // Case 1: no song in queue, start new song
           track = songs[self.trackIndex][1];
-          self.setPosition(0);
-          self.setDuration(0);
-          self.setSelectedId(track.id);
+          self.startNewSong(track.id);
         } else {
           if (trackStatus == 'next') {
-            self.setTrackIndex(self.trackIndex + 1);
+            //Case 2: next track (with shuffle or not)
+            self.setTrackIndex(
+              !self.shuffle
+                ? self.trackIndex + 1
+                : Math.floor(Math.random() * Math.floor(self.getQueueSize())),
+            );
             track = songs[self.trackIndex][1];
-            self.setPosition(0);
-            self.setDuration(0);
-            self.setSelectedId(track.id);
+            self.startNewSong(track.id);
           } else if (trackStatus == 'back') {
+            //Case 3: back track(no shuffle)
             self.setTrackIndex(self.trackIndex - 1);
             track = songs[self.trackIndex][1];
-            self.setPosition(0);
-            self.setDuration(0);
-            self.setSelectedId(track.id);
+            self.startNewSong(track.id);
           } else {
+            //Case 4: Continue current track(in case user from another screen get into player screen)
             track = getParent(self).songs.get(self.selectedId);
           }
         }
         self.playSong(track.id);
+      },
+
+      startNewSong(trackId) {
+        self.setPosition(0);
+        self.setDuration(0);
+        self.setSelectedId(trackId);
       },
 
       setState(state) {

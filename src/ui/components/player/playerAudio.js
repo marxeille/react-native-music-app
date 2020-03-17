@@ -27,7 +27,8 @@ class PlayerAudio extends React.Component {
   onEnd = () => {
     if (
       rootStore.playerStore?.trackIndex <
-      rootStore.playerStore?.getQueueSize() - 1
+        rootStore.playerStore?.getQueueSize() - 1 &&
+      !rootStore?.playerStore?.repeat
     ) {
       rootStore.playerStore?.prepareSong('next');
     }
