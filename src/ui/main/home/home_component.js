@@ -20,38 +20,33 @@ export default class HomeComponent extends Component {
 
   componentDidMount() {
     apiService.commonApiService.testAxios().then(value => {
-      console.log("HomeComponent -> componentDidMount -> value", value)
-    })
+      console.log('HomeComponent -> componentDidMount -> value', value);
+    });
     rootStore.homeStore.fetchData();
   }
 
   render() {
     return rootStore.homeStore.state === 'loading' ? (
-      <ImageBackground
-        cls="fullView aic jcc"
-        source={Images.bg}
-      >
+      <ImageBackground cls="fullView aic jcc" source={Images.bg}>
         <ActivityIndicator />
       </ImageBackground>
     ) : (
-        <ImageBackground
-          cls="fullView aic"
-          source={Images.bg}>
-          <ScrollView>
-            <HomeListComponent
-              cate="1"
-              type={'small'}
-              rightIcon
-              title="Mới phát gần đây"
-            />
-            <HomeListComponent
-              type={'large'}
-              title="Playlist phổ biến"
-              cate="2"
-            />
-            <HomeListComponent type={'large'} title="Dành cho bạn" cate="3" />
-          </ScrollView>
-        </ImageBackground>
-      );
+      <ImageBackground cls="fullView aic" source={Images.bg}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <HomeListComponent
+            cate="1"
+            type={'small'}
+            rightIcon
+            title="Mới phát gần đây"
+          />
+          <HomeListComponent
+            type={'large'}
+            title="Playlist phổ biến"
+            cate="2"
+          />
+          <HomeListComponent type={'large'} title="Dành cho bạn" cate="3" />
+        </ScrollView>
+      </ImageBackground>
+    );
   }
 }

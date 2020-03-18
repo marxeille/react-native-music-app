@@ -78,20 +78,24 @@ export const PlayerStore = types
         let track;
         if (trackStatus == 'next') {
           //Case 2: next track (with shuffle or not)
-          self.setTrackIndex(
-            !self.shuffle
-              ? self.trackIndex + 1
-              : Math.floor(Math.random() * Math.floor(self.getQueueSize())),
-          );
-          track = songs[self.trackIndex];
-          self.startNewSong(track.id);
+          if (self.trackIndex < songs.length - 1) {
+            //Check if it is the last track of queue
+            self.setTrackIndex(
+              !self.shuffle
+                ? self.trackIndex + 1
+                : Math.floor(Math.random() * Math.floor(self.getQueueSize())),
+            );
+            track = songs[self.trackIndex];
+            self.startNewSong(track.id);
+          }
         } else {
           //Case 3: back track(no shuffle)
           self.setTrackIndex(self.trackIndex - 1);
           track = songs[self.trackIndex];
           self.startNewSong(track.id);
         }
-        self.playSong(track.id);
+
+        if (track) self.playSong(track.id);
       },
 
       startNewSong(trackId) {
@@ -128,6 +132,7 @@ export const PlayerStore = types
       },
       playSong(song) {
         self.currentSong = song;
+        self.setState(true);
         // Basic Controls
         MusicControl.enableControl('play', true);
         MusicControl.enableControl('pause', true);
@@ -164,7 +169,7 @@ export const PlayerStore = types
           artist: self.currentSong.getSubTitlte(),
           // album: 'Thriller',
           // genre: 'Post-disco, Rhythm and Blues, Funk, Dance-pop',
-          duration: self.currentSong.duration ?? 120, // (Seconds)
+          duration: self.currentSong.duration ?? 100, // (Seconds)
           description: '', // Android Only
           color: 0xffffff, // Notification Color - Android Only
           // date: '1983-01-02T00:00:00Z', // Release Date (RFC 3339) - Android Only

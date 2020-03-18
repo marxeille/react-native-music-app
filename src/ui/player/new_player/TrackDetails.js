@@ -16,7 +16,7 @@ const TrackDetails = ({
   title,
   artist,
   onAddPress,
-  onMorePress,
+  onSharePress,
   onTitlePress,
   onArtistPress,
 }) => (
@@ -38,7 +38,7 @@ const TrackDetails = ({
         {artist}
       </Text>
     </View>
-    <TouchableOpacity onPress={onMorePress}>
+    <TouchableOpacity onPress={onSharePress}>
       <View>
         <Image source={Images.ic_share} />
       </View>

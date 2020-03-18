@@ -19,7 +19,7 @@ import GestureRecognizer, {
 import { skipToNext, skipToPrevious } from './service/play_service';
 import { wrap } from '../../themes';
 import { navigate } from '../../navigation/navigation_service';
-import ProgressBar from './components/progessbar';
+import SeekBar from './new_player/SeekBar';
 import TrackPlayer from 'react-native-track-player';
 
 @observer
@@ -85,7 +85,11 @@ export default class PlayerComponent extends Component {
             <TouchableHighlight onPress={() => navigate('player')}>
               <View style={styles.container}>
                 {/* <View cls="bg-white heightFn-2"></View> */}
-                <ProgressBar slider={false} />
+                <SeekBar
+                  slider={false}
+                  trackLength={rootStore?.playerStore?.duration}
+                  currentPosition={rootStore?.playerStore?.position}
+                />
                 <View cls="flx-row fullWidth">
                   <Image
                     source={{
