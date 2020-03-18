@@ -134,38 +134,42 @@ export const PlayerStore = types
         MusicControl.enableControl('nextTrack', true);
         MusicControl.enableControl('previousTrack', true);
         MusicControl.enableControl('stop', true);
-
         MusicControl.on('pause', () => {
-          console.log('er123 paused');
           self.pause();
         });
+        MusicControl.on('play', () => {
+          self.play();
+        });
         MusicControl.on('nextTrack', () => {
-          console.log('er123 nextTrack');
           self.changeSong('next');
         });
+        MusicControl.on('previousTrack', () => {
+          self.changeSong('back');
+        });
+
         // Seeking
-        MusicControl.enableControl('seekForward', false); // iOS only
-        MusicControl.enableControl('seekBackward', false); // iOS only
-        MusicControl.enableControl('seek', false); // Android only
+        MusicControl.enableControl('seekForward', true); // iOS only
+        MusicControl.enableControl('seekBackward', true); // iOS only
+        MusicControl.enableControl('seek', true); // Android only
         MusicControl.enableControl('skipForward', false);
         MusicControl.enableControl('skipBackward', false);
         // Android Specific Options
         MusicControl.enableControl('setRating', false);
         MusicControl.enableControl('volume', true); // Only affected when remoteVolume is enabled
         MusicControl.enableControl('remoteVolume', false);
-
+        // Set Now Playing
         MusicControl.setNowPlaying({
-          title: 'Billie Jean',
-          artwork: 'https://i.imgur.com/e1cpwdo.png', // URL or RN's image require()
-          artist: 'Michael Jackson',
-          album: 'Thriller',
-          genre: 'Post-disco, Rhythm and Blues, Funk, Dance-pop',
-          duration: 294, // (Seconds)
+          title: self.currentSong.getName(),
+          artwork: self.currentSong.getThumb(), // URL or RN's image require()
+          artist: self.currentSong.getSubTitlte(),
+          // album: 'Thriller',
+          // genre: 'Post-disco, Rhythm and Blues, Funk, Dance-pop',
+          duration: self.currentSong.duration ?? 120, // (Seconds)
           description: '', // Android Only
           color: 0xffffff, // Notification Color - Android Only
-          date: '1983-01-02T00:00:00Z', // Release Date (RFC 3339) - Android Only
+          // date: '1983-01-02T00:00:00Z', // Release Date (RFC 3339) - Android Only
           rating: 84, // Android Only (Boolean or Number depending on the type)
-          notificationIcon: 'my_custom_icon', // Android Only (String), Android Drawable resource name for a custom notification icon
+          // notificationIcon: 'my_custom_icon', // Android Only (String), Android Drawable resource name for a custom notification icon
         });
       },
     };

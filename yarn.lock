@@ -5360,7 +5360,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -5557,14 +5557,14 @@ react-native-track-player@^2.0.0-rc9:
   resolved "https://registry.yarnpkg.com/react-native-track-player/-/react-native-track-player-2.0.0-rc9.tgz#ac2036bcb8844d1e05b9367849abd0c90c6e11ea"
   integrity sha512-NAQyvAuU86VGPR45VFZLpsigNaxWZOAyigs7BxJfO8gknX22o/4408o2KDi+BbewsjL09g/Z52yg90KIhsj0PQ==
 
-react-native-video@^4.4.5:
-  version "4.4.5"
-  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-4.4.5.tgz#d0db799293f8622c7894dd0f8875cb41bfafbde8"
-  integrity sha512-jm1Yf1S3ZqrsbUo+3v9nUaQz/eD4kytzkm8jfDEvKzg/EEzci1EzjLSZqQcNtyLg1fvfkyRbvvzUYhS2SjdKPA==
+react-native-video@5.1.0-alpha6:
+  version "5.1.0-alpha6"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-5.1.0-alpha6.tgz#17d3ca44ed46ebfdd8fd361dfbf21b367c074c2f"
+  integrity sha512-oidsecmP7PHmo2bjqXLB/8nff9a2yCJG0+lscpA6z429Nl6iPvw9kg3UNRm5uH7QxrJYlC+3ouVLF1jt6a1RrQ==
   dependencies:
     keymirror "^0.1.1"
-    prop-types "^15.5.10"
-    shaka-player "^2.4.4"
+    prop-types "^15.7.2"
+    shaka-player "^2.5.9"
 
 react-native@0.61.5:
   version "0.61.5"
@@ -6138,7 +6138,7 @@ setprototypeof@1.1.1:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
   integrity sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
 
-shaka-player@^2.4.4:
+shaka-player@^2.5.9:
   version "2.5.9"
   resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-2.5.9.tgz#007dc19df2bb5d3d959d278b2d894af05adffe38"
   integrity sha512-XavLBqxvIbvLOPfk7VKZu5fbMJyVko9bBfzxmMWdX5bvQwUSjU7ZhV8v2tHqXQYafpHml1hlGHzKkLs7idouNQ==
