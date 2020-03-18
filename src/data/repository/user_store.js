@@ -80,9 +80,8 @@ export const UserStore = types
         var playlist: Array = yield apiService.commonApiService.getPlaylistOfUser();
         var playlistOfUser = [];
         playlist.forEach(data => {
-          var teamp = createPlaylistFromJson(data);
-          getParent(self).updatePlayList(teamp); //For RootStore
-          playlistOfUser.push(teamp.id);
+          getParent(self).updatePlayList(data); //For RootStore
+          playlistOfUser.push(data.id);
         });
         self.playlists = playlistOfUser;
       }),

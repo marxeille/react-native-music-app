@@ -8,7 +8,7 @@ import { observer } from 'mobx-react';
 
 @observer
 @wrap
-export default class playlistComponent extends Component {
+export default class PlaylistComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {};

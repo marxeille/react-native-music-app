@@ -24,9 +24,8 @@ export const HomeStore = types
       fetchPopularPlayList: flow(function* fetchPopularPlayList() {
         const playlist: Array = yield apiService.commonApiService.getPopularPlayList();
         playlist.forEach(data => {
-          const teamp = createPlaylistFromJson(data);
-          self.popular.push(teamp.id);
-          getParent(self).updatePlayList(teamp);
+          self.popular.push(data.id);
+          getParent(self).updatePlayList(data);
         });
         self.state = 'success';
       }),

@@ -11,29 +11,43 @@ import { observer } from 'mobx-react';
 import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import { rootStore } from '../../../data/context/root_context';
+import AddPlayListModal from './add_playlist_modal';
 
 @observer
 @wrap
 export default class SongMenu extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showAddPlaylist: false,
+    };
   }
+
+  addPlaylist = state => {
+    this.setState({ showAddPlaylist: state });
+  };
 
   render() {
     const { song } = this.props;
-    return (
+    const { showAddPlaylist } = this.state;
+
+    return showAddPlaylist ? (
+      <View>
+        <AddPlayListModal addPlaylist={this.addPlaylist} />
+      </View>
+    ) : (
       <>
         <View cls="aic jcc pt3 pb2">
           <ImageBackground
             cls="widthFn-283 heightFn-283 aic jcc"
             source={Images.ic_barcode}>
             <Image
-              source={{
-                uri:
-                  song?.artwork ??
-                  rootStore.playerStore?.currentSong?.getThumb(),
-              }}
+              // source={{
+              //   uri:
+              //     song?.artwork ??
+              //     rootStore.playerStore?.currentSong?.getThumb(),
+              // }}
+              source={require('../../../assets/images/khabanh.png')}
               cls="circleFn-185"
             />
           </ImageBackground>
@@ -56,7 +70,11 @@ export default class SongMenu extends Component {
           </View>
         </View>
         <View cls="pa3">
-          <ActionItem icon={'ic_add_playlist'} title={'Thêm vào playlist'} />
+          <ActionItem
+            onPress={() => this.addPlaylist(true)}
+            icon={'ic_add_playlist'}
+            title={'Thêm vào playlist'}
+          />
           <ActionItem icon={'ic_add_song'} title={'Thêm vào danh sách chờ'} />
           <ActionItem icon={'ic_album'} title={'Xem album'} />
           <ActionItem icon={'ic_artist'} title={'Xem nghệ sĩ'} />
@@ -70,7 +88,7 @@ export default class SongMenu extends Component {
 const ActionItem = wrap(props => {
   return (
     <>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={props.onPress}>
         <View cls="flx-row aic pt3 pb2">
           <Image source={Images[props.icon]} />
           <Text cls="primaryPurple pl3 fw7 f6">{props.title}</Text>

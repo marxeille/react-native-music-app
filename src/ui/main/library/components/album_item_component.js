@@ -15,11 +15,15 @@ export default class AlbumItem extends Component {
 
   render() {
     const { index } = this.props;
-    console.log('AlbumItem -> render -> index', index);
+    console.log(
+      'AlbumItem -> render -> index',
+      index,
+      rootStore.userStore.playlists,
+    );
 
     if (
       index == undefined ||
-      index > rootStore.userStore.playlists.length - 1
+      index > rootStore.userStore?.playlists?.length - 1
     ) {
       console.log(
         'TCL: PlaylistItem -> render -> rootStore.userStore.playlists[index].title()',

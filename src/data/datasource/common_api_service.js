@@ -7,6 +7,10 @@ export default class CommonApiService {
     return instanceAxios.get('/list_music');
   }
 
+  getLibraryPlaylists() {
+    return instanceAxios.get('/playlists');
+  }
+
   getSongsOfAlBum(index) {
     return new Promise(resolve => {
       resolve([
@@ -163,7 +167,7 @@ export default class CommonApiService {
       resolve([
         {
           id: '1',
-          name: 'Daily Mix 1',
+          name: 'Daily Mixcxxxxxxx 1',
           artist: 'Tim',
           thumb:
             'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',

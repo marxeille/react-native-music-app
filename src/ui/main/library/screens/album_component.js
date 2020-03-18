@@ -8,32 +8,33 @@ import { observer } from 'mobx-react';
 
 @observer
 @wrap
-export default class playlistComponent extends Component {
+export default class AlbumComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   componentDidMount() {
-    if (
-      rootStore.userStore.playlists == undefined ||
-      rootStore.userStore.playlists.length == 0
-    ) {
-      rootStore.userStore.fetchPlayListOfUser();
-    }
+    // if (
+    //   rootStore.userStore.playlists == undefined ||
+    //   rootStore.userStore.playlists.length == 0
+    // ) {
+    //   rootStore.userStore.fetchPlayListOfUser();
+    // }
   }
 
   renderPlaylist = item => {
     console.log('TCL: playlistComponent -> renderPlaylist item', item.index);
-    return (
-      <>
-        <AlbumItem index={item.index} />
-      </>
-    );
+    return null;
+    // return (
+    //   <>
+    //     <AlbumItem index={item.index} />
+    //   </>
+    // );
   };
 
   render() {
-    let newArr = [...rootStore.userStore.playlists];
+    // let newArr = [...rootStore.userStore.playlists];
 
     return (
       <>
@@ -42,7 +43,7 @@ export default class playlistComponent extends Component {
         </View>
         <View cls="pt3 fullHeight" style={{ marginBottom: 95 }}>
           <FlatList
-            data={newArr}
+            data={[]}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderPlaylist}
             numColumns={3}

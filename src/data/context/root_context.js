@@ -16,6 +16,7 @@ import { unprotect } from 'mobx-state-tree';
 import SongOfQueueStore from '../repository/song_of_queue_store';
 import MusicControl from 'react-native-music-control';
 import * as _ from 'lodash';
+import { LibraryStore } from '../repository/library_store';
 
 export const rootStore = RootStore.create({
   userStore: UserStore.create({
@@ -27,6 +28,9 @@ export const rootStore = RootStore.create({
     statusPlayer: 'playing',
   }),
   homeStore: HomeStore.create({
+    state: 'loading',
+  }),
+  libraryStore: LibraryStore.create({
     state: 'loading',
   }),
   queueStore: SongOfQueueStore.create({ songs: [] }),
