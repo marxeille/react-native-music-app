@@ -25,8 +25,11 @@ export const RootStore = types
     return {
       updatePlayList(playlistJson) {
         if (self.playlist.get(playlistJson.id)) {
+          console.log('playlistJson', playlistJson);
+
           self.playlist.get(playlistJson.id).update(playlistJson);
         } else {
+          console.log('playlistJson 2', playlistJson);
           let playList = createPlaylistFromJson(playlistJson);
           self.playlist.put(playList);
         }

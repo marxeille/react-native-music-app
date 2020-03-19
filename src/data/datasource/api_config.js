@@ -93,26 +93,3 @@ export const getPlaylists = async (limit = 10, offset = 0) => {
     console.log('TCL: try -> error', error);
   }
 };
-
-// export const getTenantInfos = async (limit, offset) => {
-//   try {
-//     const path = '/v1.0/tenant/lease/lease-tenant-info/find';
-//     const params = {
-//       limit,
-//       offset,
-//       includedInfos: ['ASSET_INFO', 'UNIT_INFO'],
-//     };
-//     return await privateRequest(BASE_URL.post, path, params);
-//   } catch (error) {
-//     console.log('TCL: try -> error', error);
-//   }
-// };
-
-// export const getAttributeUnit = async idUnit => {
-//   try {
-//     const path = `/v1.0/tenant/unit/${idUnit}/attribute`;
-//     return await privateRequest(BASE_URL.get, path, {});
-//   } catch (error) {
-//     console.log('TCL: try -> error', error);
-//   }
-// };

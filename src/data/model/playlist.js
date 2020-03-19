@@ -6,6 +6,9 @@ export const PlayList = types
     name: types.string,
     thumb: types.string,
     owner: types.string,
+    tracks: types.array(
+      types.frozen({ track_id: types.string, position: types.integer }),
+    ),
   })
   .views(self => {
     return {
@@ -30,9 +33,10 @@ export const PlayList = types
 
 export const createPlaylistFromJson = data => {
   return PlayList.create({
-    id: data.id,
+    id: data.id.toString(),
     name: data.name ?? '',
     thumb: data.thumb ?? '',
     owner: data.owner ?? '',
+    tracks: data.tracks ?? [],
   });
 };

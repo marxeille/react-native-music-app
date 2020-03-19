@@ -1,9 +1,11 @@
+import { Alert } from 'react-native';
 import { types, getEnv, flow, getParent } from 'mobx-state-tree';
 import { Result } from './result';
 import { PlayList, createPlaylistFromJson } from '../model/playlist';
 import { apiService } from '../context/api_context';
 import { Album } from '../model/album';
 import { Artist } from '../model/artist';
+import { getPlaylists } from '../datasource/api_config';
 
 export const LibraryStore = types
   .model('LibraryStore', {
@@ -21,13 +23,17 @@ export const LibraryStore = types
 
       fetchPlayList: flow(function* fetchPlayList() {
         try {
-          const playlist: Array = yield apiService.commonApiService.getLibraryPlaylists();
-          playlist.forEach(data => {
-            if (data.status == 200) {
-              self.playlists.push(data.id);
-              getParent(self).updatePlayList(data);
-            }
-          });
+          const playlist: Array = yield getPlaylists();
+          console.log('playlist,', playlist);
+
+          if (playlist.status == 200) {
+            playlist.data.map(pl => {
+              getParent(self).updatePlayList(pl);
+              self.playlists.push(pl.id);
+            });
+          } else {
+            Alert.alert(playlist.data.msg);
+          }
         } catch (err) {
           console.log('err ', err);
         }

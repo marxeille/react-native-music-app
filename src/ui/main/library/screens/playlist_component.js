@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { wrap } from '../../../../themes';
+import Loading from '../../../components/loading';
 import SearchComponent from '../components/search_component';
 import PlaylistItem from '../components/playlist_item_component';
 import { rootStore } from '../../../../data/context/root_context';
@@ -15,12 +16,7 @@ export default class PlaylistComponent extends Component {
   }
 
   componentDidMount() {
-    if (
-      rootStore.userStore.playlists == undefined ||
-      rootStore.userStore.playlists.length == 0
-    ) {
-      rootStore.userStore.fetchPlayListOfUser();
-    }
+    rootStore.libraryStore.fetchData();
   }
 
   renderPlaylist = item => {
@@ -33,21 +29,23 @@ export default class PlaylistComponent extends Component {
   };
 
   render() {
-    console.log('rootStore.userStore.playlists', rootStore.userStore.playlists);
-
     return (
       <View style={{ marginBottom: 195 }}>
         <View cls="pt3">
           <SearchComponent />
         </View>
         <View cls="pt3 fullHeight">
-          <FlatList
-            ListHeaderComponent={<PlaylistItem />}
-            showsVerticalScrollIndicator={false}
-            data={rootStore.userStore.playlists}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={this.renderPlaylist}
-          />
+          {rootStore.libraryStore.state == 'loading' ? (
+            <Loading />
+          ) : (
+            <FlatList
+              ListHeaderComponent={<PlaylistItem />}
+              showsVerticalScrollIndicator={false}
+              data={rootStore.libraryStore.playlists}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={this.renderPlaylist}
+            />
+          )}
         </View>
       </View>
     );

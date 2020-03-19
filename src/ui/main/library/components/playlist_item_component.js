@@ -16,8 +16,8 @@ export default class PlaylistItem extends Component {
     const { index } = this.props;
     if (index != undefined) {
       console.log(
-        'TCL: PlaylistItem -> render -> rootStore.userStore.playlists[index].title()',
-        rootStore.userStore.playlists[index].title(),
+        'TCL: PlaylistItem -> render -> rootStore.libraryStore.playlists[index].title()',
+        rootStore.libraryStore.playlists[index].title(),
       );
     }
     return (
@@ -28,7 +28,7 @@ export default class PlaylistItem extends Component {
               cls="widthFn-90 heightFn-82"
               source={
                 index != undefined
-                  ? { uri: rootStore.userStore.playlists[index].getThumb() }
+                  ? { uri: rootStore.libraryStore.playlists[index].getThumb() }
                   : require('../../../../assets/images/add_playlist.png')
               }
             />
@@ -36,12 +36,12 @@ export default class PlaylistItem extends Component {
             <View>
               <Text cls="white fw7 f6 pl2">
                 {index != undefined
-                  ? rootStore.userStore.playlists[index].title()
+                  ? rootStore.libraryStore.playlists[index].title()
                   : 'Tạo playlist'}
               </Text>
               {index != undefined ? (
                 <Text cls="primaryPurple f6 pl2 pt1">
-                  của {rootStore.userStore.playlists[index].subTitle()}
+                  của {rootStore.libraryStore.playlists[index].subTitle()}
                 </Text>
               ) : null}
             </View>
