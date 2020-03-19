@@ -7,7 +7,6 @@ import HomeListComponent from './components/home_list_component';
 import { rootStore } from '../../../data/context/root_context';
 import { observer } from 'mobx-react';
 import Images from '../../../assets/icons/icons';
-import { apiService } from '../../../data/context/api_context';
 
 @observer
 @wrap
@@ -17,7 +16,7 @@ export default class HomeComponent extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     rootStore.homeStore.fetchData();
   }
 

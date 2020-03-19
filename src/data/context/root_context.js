@@ -28,7 +28,7 @@ export const rootStore = RootStore.create({
     statusPlayer: 'playing',
   }),
   homeStore: HomeStore.create({
-    state: 'loading',
+    state: 'success',
   }),
   libraryStore: LibraryStore.create({
     state: 'loading',

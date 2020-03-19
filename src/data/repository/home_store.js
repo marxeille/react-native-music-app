@@ -13,13 +13,12 @@ export const HomeStore = types
   })
   .actions(self => {
     return {
-      //#region Fetch Data Home
+      // #region Fetch Data Home
       fetchData() {
         self.state = 'loading';
         self.fetchPopularPlayList();
       },
       //#endregion
-
       //#region Handle Fect Popular Success
       fetchPopularPlayList: flow(function* fetchPopularPlayList() {
         const playlist: Array = yield apiService.commonApiService.getPopularPlayList();
@@ -29,6 +28,6 @@ export const HomeStore = types
         });
         self.state = 'success';
       }),
-      //#endregion
+      // #endregion
     };
   });

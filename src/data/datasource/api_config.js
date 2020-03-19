@@ -1,11 +1,15 @@
 import { create } from 'apisauce';
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+const AsyncStorageKey = {
+  USERINFO: '@userinfo',
+};
 
 export const injectBearer = (token, configs) => {
   if (!configs) {
     return {
       headers: {
-        Authorization: `bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
   }
@@ -28,8 +32,13 @@ export const injectBearer = (token, configs) => {
 
 export const privateRequest = async (request, url, data, configs) => {
   try {
-    const token = store.getState?.()?.auth?.tenantToken;
-    return request(url, data, injectBearer(token, configs));
+    const token = await AsyncStorage.getItem(AsyncStorageKey.USERINFO);
+
+    return request(
+      url,
+      data,
+      injectBearer(JSON.parse(token).accessToken, configs),
+    );
   } catch (error) {
     console.log('error', error);
     Alert.alert('Cõ lỗi xảy ra vui lòng thử lại: ');
@@ -67,6 +76,19 @@ export const login = async (name, password) => {
       password,
     };
     return await BASE_URL.post(path, params);
+  } catch (error) {
+    console.log('TCL: try -> error', error);
+  }
+};
+
+export const getPlaylists = async (limit = 10, offset = 0) => {
+  try {
+    const path = '/playlists';
+    // const params = {
+    //   limit,
+    //   offset,
+    // };
+    return await privateRequest(BASE_URL.get, path, {});
   } catch (error) {
     console.log('TCL: try -> error', error);
   }

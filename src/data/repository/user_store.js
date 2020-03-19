@@ -24,7 +24,6 @@ export const UserStore = types
     playlists: types.maybeNull(types.array(types.reference(PlayList))),
     artists: types.maybeNull(types.array(types.reference(Artist))),
     albums: types.maybeNull(types.array(types.reference(Album))),
-    token: types.optional(types.string, ''),
   })
   .actions(self => {
     return {
@@ -90,5 +89,9 @@ export const UserStore = types
         });
         self.playlists = playlistOfUser;
       }),
+
+      getAccessToken() {
+        return self.token;
+      },
     };
   });

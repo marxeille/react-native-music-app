@@ -43,13 +43,14 @@ export default class LogInComponent extends Component {
     const { loginName, pass } = this.state;
     let value = this.context;
     const response = await login(loginName, pass);
+
     if (response.status == 200) {
       value.userStore.storeUserInfo(
         new UserInfo({
           name: loginName,
           uid: loginName,
-          accessToken: response.data.access_token,
-          refreshToken: null,
+          access_token: response.data.access_token,
+          refresh_token: null,
         }),
       );
     } else {

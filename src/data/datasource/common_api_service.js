@@ -1,15 +1,6 @@
 import Axios from 'axios';
-import { login } from './api_config';
 //Hanle data từ Api Services
 export default class CommonApiService {
-  testAxios() {
-    return instanceAxios.get('/playlists');
-  }
-
-  getLibraryPlaylists() {
-    return instanceAxios.get('/playlists');
-  }
-
   getSongsOfAlBum(index) {
     return new Promise(resolve => {
       resolve([
