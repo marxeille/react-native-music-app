@@ -1,40 +1,96 @@
-const httpAdapter = require('axios/lib/adapters/http');
-const settle = require('axios/lib/core/settle');
-import { rootStore } from '../repository/root_store';
+import { create } from 'apisauce';
+import { Alert } from 'react-native';
 
-const axios = require('axios').default;
-
-console.log('DEBUG => api_context axios', axios);
-
-export const instanceAxios = axios.create({
-  baseURL: 'https://5e5dd20f725f320014ed0df9.mockapi.io/api',
-  timeout: 15 * 1000,
-});
-
-const getAuthToken = () => {
-  return rootStore?.userStore?.token ?? null;
+export const injectBearer = (token, configs) => {
+  if (!configs) {
+    return {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+  }
+  if (configs.headers) {
+    return {
+      ...configs,
+      headers: {
+        ...configs.headers,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  }
+  return {
+    ...configs,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
 
-instanceAxios.interceptors.request.use(
-  function(config) {
-    if (getAuthToken() !== null)
-      config.headers = { ...config.headers, auth_token: getAuthToken() };
-    // you can also do other modification in config
-    return config;
-  },
-  function(error) {
-    return Promise.reject(error);
-  },
-);
+export const privateRequest = async (request, url, data, configs) => {
+  try {
+    const token = store.getState?.()?.auth?.tenantToken;
+    return request(url, data, injectBearer(token, configs));
+  } catch (error) {
+    console.log('error', error);
+    Alert.alert('Cõ lỗi xảy ra vui lòng thử lại: ');
+  }
+};
 
-instanceAxios.interceptors.response.use(
-  function(response) {
-    if (response.status === 401) {
-      // your failure logic
-    }
-    return response;
+export const privateRequestWithToken = async (
+  request,
+  url,
+  data,
+  token,
+  configs,
+) => {
+  try {
+    return request(url, data, injectBearer(token, configs));
+  } catch (error) {
+    Alert.alert('Cõ lỗi xảy ra vui lòng thử lại: ');
+  }
+};
+
+export const BASE_URL = create({
+  baseURL: 'http://103.28.37.44:5000/api',
+  headers: {
+    Accept: 'application/json;charset=UTF-8',
+    'Content-Type': 'application/json;charset=UTF-8',
+    'X-Language': 'VI',
   },
-  function(error) {
-    return Promise.reject(error);
-  },
-);
+});
+
+export const login = async (name, password) => {
+  try {
+    const path = '/login';
+    const params = {
+      name,
+      password,
+    };
+    return await BASE_URL.post(path, params);
+  } catch (error) {
+    console.log('TCL: try -> error', error);
+  }
+};
+
+// export const getTenantInfos = async (limit, offset) => {
+//   try {
+//     const path = '/v1.0/tenant/lease/lease-tenant-info/find';
+//     const params = {
+//       limit,
+//       offset,
+//       includedInfos: ['ASSET_INFO', 'UNIT_INFO'],
+//     };
+//     return await privateRequest(BASE_URL.post, path, params);
+//   } catch (error) {
+//     console.log('TCL: try -> error', error);
+//   }
+// };
+
+// export const getAttributeUnit = async idUnit => {
+//   try {
+//     const path = `/v1.0/tenant/unit/${idUnit}/attribute`;
+//     return await privateRequest(BASE_URL.get, path, {});
+//   } catch (error) {
+//     console.log('TCL: try -> error', error);
+//   }
+// };

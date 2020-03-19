@@ -8,10 +8,12 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { wrap } from '../../themes';
 import { RootStore } from '../../data/repository/root_store';
+import { login } from '../../data/datasource/api_config';
 import { RootContext } from '../../data/context/root_context';
 import UserInfo from '../../data/model/user_info';
 import Images from '../../assets/icons/icons';
@@ -32,23 +34,27 @@ export default class LogInComponent extends Component {
 
   onChangeText(event, name) {
     let value = {};
-    value[name] = event.nativeEvent.text;
+    value[name] = event.nativeEvent.text.toLowerCase();
 
     this.setState(value);
   }
 
-  handleLogin = () => {
+  handleLogin = async () => {
     const { loginName, pass } = this.state;
     let value = this.context;
-    value.userStore.login(loginName, pass);
-    // value.userStore.storeUserInfo(
-    //   new UserInfo({
-    //     name: loginName,
-    //     uid: '121212',
-    //     accessToken: '121212',
-    //     refreshToken: '343434',
-    //   }),
-    // );
+    const response = await login(loginName, pass);
+    if (response.status == 200) {
+      value.userStore.storeUserInfo(
+        new UserInfo({
+          name: loginName,
+          uid: loginName,
+          accessToken: response.data.access_token,
+          refreshToken: null,
+        }),
+      );
+    } else {
+      Alert.alert('Có lỗi xảy ra, vui lòng thử lại');
+    }
   };
 
   handleLoginWithFacebook = () => {};
@@ -74,7 +80,7 @@ export default class LogInComponent extends Component {
               onChange={event => this.onChangeText(event, 'loginName')}
               autoCorrect={false}
             />
-            <Image style={{ width: 20, height: 25 }} source={Images.ic_pass} />
+            <Image source={Images.ic_pass} />
           </View>
           <View cls="pt3">
             <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
@@ -87,7 +93,7 @@ export default class LogInComponent extends Component {
                 onChange={event => this.onChangeText(event, 'pass')}
                 autoCorrect={false}
               />
-              <Image style={{ width: 20, height: 25 }} source={Images.pass} />
+              <Image cls="widthFn-20 heightFn-25" source={Images.pass} />
             </View>
           </View>
         </View>
@@ -114,18 +120,14 @@ export default class LogInComponent extends Component {
         <View cls="fullWidth pa5 pt0 aic">
           <View cls="pt3">
             <TouchableOpacity>
-              <View
-                cls="aic ba b--#321A54 pt3 bg-#323277 br5"
-                style={{ width: 220, height: 50 }}>
+              <View cls="aic ba b--#321A54 pt3 bg-#323277 br5 widthFn-220 heightFn-50">
                 <Text cls="white">Đăng nhập bằng Facebook</Text>
               </View>
             </TouchableOpacity>
           </View>
           <View cls="pt3">
             <TouchableOpacity>
-              <View
-                cls="aic ba b--#321A54 pt3 bg-#A52222 br5"
-                style={{ width: 220, height: 50 }}>
+              <View cls="aic ba b--#321A54 pt3 bg-#A52222 br5 widthFn-220 heightFn-50">
                 <Text cls="white">Đăng nhập bằng Google</Text>
               </View>
             </TouchableOpacity>

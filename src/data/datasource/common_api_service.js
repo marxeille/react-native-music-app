@@ -1,21 +1,9 @@
-import { PlayList } from '../model/playlist';
 import Axios from 'axios';
-import { instanceAxios } from './api_config';
+import { login } from './api_config';
 //Hanle data từ Api Services
 export default class CommonApiService {
   testAxios() {
-    return instanceAxios.get('/list_music');
-  }
-
-  login(name, password, onSuccess, onError) {
-    return instanceAxios
-      .post('/login', { name, password })
-      .then(response => {
-        onSuccess(response);
-      })
-      .catch(err => {
-        onError(err);
-      });
+    return instanceAxios.get('/playlists');
   }
 
   getLibraryPlaylists() {

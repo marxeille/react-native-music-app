@@ -28,19 +28,6 @@ export const UserStore = types
   })
   .actions(self => {
     return {
-      login: flow(function* login(name, password) {
-        yield apiService.commonApiService.login(
-          name,
-          password,
-          res => {
-            console.log('res login,', res);
-          },
-          err => {
-            console.log('err login,', err);
-          },
-        );
-      }),
-
       // gọi khi user login thành công.
       storeUserInfo(userInfo: UserInfo) {
         AsyncStorage.setItem(

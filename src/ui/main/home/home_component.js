@@ -18,9 +18,6 @@ export default class HomeComponent extends Component {
   }
 
   componentDidMount() {
-    apiService.commonApiService.testAxios().then(value => {
-      console.log('HomeComponent -> componentDidMount -> value', value);
-    });
     rootStore.homeStore.fetchData();
   }
 
