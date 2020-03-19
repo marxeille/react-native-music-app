@@ -43,7 +43,7 @@ export default class AlbumComponent extends Component {
         </View>
         <View cls="pt3 fullHeight" style={{ marginBottom: 95 }}>
           <FlatList
-            data={[]}
+            data={[1, 2, 3]}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderPlaylist}
             numColumns={3}

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ImageBackground, ActivityIndicator, Text, View } from 'react-native';
-import { navigate } from '../../../navigation/navigation_service';
 import { wrap } from '../../../themes';
 import { ScrollView } from 'react-native-gesture-handler';
 

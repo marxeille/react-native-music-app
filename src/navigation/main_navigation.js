@@ -16,6 +16,7 @@ import createBottomTabNavigationMusic from './createBottomTabNavigationMusic';
 import homeContainer from './home_stack';
 import libContainer from './library_stack';
 import PlayerTabView from '../ui/player';
+import Settings from '../ui/main/home/settings';
 
 const Tab = createBottomTabNavigationMusic();
 const Stack = createStackNavigator();
@@ -86,6 +87,7 @@ export default function mainContainer() {
   return (
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="bottomtab" component={getBottomTabNavigator} />
+      <Stack.Screen name="setting" component={Settings} />
       <Stack.Screen
         name="player"
         component={PlayerTabView}

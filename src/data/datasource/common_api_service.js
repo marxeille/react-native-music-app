@@ -7,6 +7,17 @@ export default class CommonApiService {
     return instanceAxios.get('/list_music');
   }
 
+  login(name, password, onSuccess, onError) {
+    return instanceAxios
+      .post('/login', { name, password })
+      .then(response => {
+        onSuccess(response);
+      })
+      .catch(err => {
+        onError(err);
+      });
+  }
+
   getLibraryPlaylists() {
     return instanceAxios.get('/playlists');
   }

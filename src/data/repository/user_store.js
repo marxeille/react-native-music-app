@@ -24,9 +24,23 @@ export const UserStore = types
     playlists: types.maybeNull(types.array(types.reference(PlayList))),
     artists: types.maybeNull(types.array(types.reference(Artist))),
     albums: types.maybeNull(types.array(types.reference(Album))),
+    token: types.optional(types.string, ''),
   })
   .actions(self => {
     return {
+      login: flow(function* login(name, password) {
+        yield apiService.commonApiService.login(
+          name,
+          password,
+          res => {
+            console.log('res login,', res);
+          },
+          err => {
+            console.log('err login,', err);
+          },
+        );
+      }),
+
       // gọi khi user login thành công.
       storeUserInfo(userInfo: UserInfo) {
         AsyncStorage.setItem(
@@ -44,9 +58,13 @@ export const UserStore = types
         console.log('user_Store saveSuccess');
       },
 
+      removeSuccess(value) {
+        self.authState = 'not_auth';
+      },
+
       removeUserInfo() {
         AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(value => {
-          self.authState = 'not_auth';
+          self.removeSuccess(value);
         });
       },
 

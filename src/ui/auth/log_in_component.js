@@ -38,16 +38,17 @@ export default class LogInComponent extends Component {
   }
 
   handleLogin = () => {
+    const { loginName, pass } = this.state;
     let value = this.context;
-    console.log('DEBUG => log_in_component handleLogin value', value);
-    value.userStore.storeUserInfo(
-      new UserInfo({
-        name: 'Đặng Ngọc Đức',
-        uid: '121212',
-        accessToken: '121212',
-        refreshToken: '343434',
-      }),
-    );
+    value.userStore.login(loginName, pass);
+    // value.userStore.storeUserInfo(
+    //   new UserInfo({
+    //     name: loginName,
+    //     uid: '121212',
+    //     accessToken: '121212',
+    //     refreshToken: '343434',
+    //   }),
+    // );
   };
 
   handleLoginWithFacebook = () => {};
@@ -110,7 +111,7 @@ export default class LogInComponent extends Component {
           </View>
         </ImageBackground>
 
-        <View cls="fullWidth pa5 pt3 aic">
+        <View cls="fullWidth pa5 pt0 aic">
           <View cls="pt3">
             <TouchableOpacity>
               <View

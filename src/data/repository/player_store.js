@@ -152,6 +152,10 @@ export const PlayerStore = types
           self.changeSong('back');
         });
 
+        MusicControl.on('seekForward', () => {
+          self.changeSong('back');
+        });
+
         // Seeking
         MusicControl.enableControl('seekForward', true); // iOS only
         MusicControl.enableControl('seekBackward', true); // iOS only

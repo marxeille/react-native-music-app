@@ -57,7 +57,7 @@ export default class HomeListComponent extends Component {
             </LinearGradient>
           </MaskedView>
           {rightIcon ? (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigate('setting')}>
               <Image cls="widthFn-20 heightFn-20" source={Images.ic_setting} />
             </TouchableOpacity>
           ) : null}

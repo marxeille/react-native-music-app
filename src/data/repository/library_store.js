@@ -14,14 +14,11 @@ export const LibraryStore = types
   })
   .actions(self => {
     return {
-      //#region Fetch Data Home
       fetchData() {
         self.state = 'loading';
         self.fetchPlayList();
       },
-      //#endregion
 
-      //#region Handle Fect Popular Success
       fetchPlayList: flow(function* fetchPlayList() {
         try {
           const playlist: Array = yield apiService.commonApiService.getLibraryPlaylists();
@@ -37,6 +34,5 @@ export const LibraryStore = types
 
         self.state = 'success';
       }),
-      //#endregion
     };
   });
