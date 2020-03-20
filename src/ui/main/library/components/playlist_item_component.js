@@ -28,7 +28,13 @@ export default class PlaylistItem extends Component {
               cls="widthFn-90 heightFn-82"
               source={
                 index != undefined
-                  ? { uri: rootStore.libraryStore.playlists[index].getThumb() }
+                  ? {
+                      uri:
+                        rootStore.libraryStore.playlists[index]?.getThumb() !==
+                        ''
+                          ? rootStore.libraryStore.playlists[index]?.getThumb()
+                          : 'https://picsum.photos/200',
+                    }
                   : require('../../../../assets/images/add_playlist.png')
               }
             />
@@ -41,7 +47,7 @@ export default class PlaylistItem extends Component {
               </Text>
               {index != undefined ? (
                 <Text cls="primaryPurple f6 pl2 pt1">
-                  của {rootStore.libraryStore.playlists[index].subTitle()}
+                  của {rootStore.libraryStore.playlists[index].title()}
                 </Text>
               ) : null}
             </View>

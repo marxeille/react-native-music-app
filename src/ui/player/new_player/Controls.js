@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import Images from '../../../assets/icons/icons';
 
 const Controls = ({
@@ -19,29 +26,29 @@ const Controls = ({
     <TouchableOpacity activeOpacity={0.0} onPress={onPressShuffle}>
       <Image
         style={[styles.secondaryControl, shuffleOn ? [] : styles.off]}
-        source={Images.ic_shuffe}
+        source={Images.ic_shuffle}
       />
     </TouchableOpacity>
     <View style={{ width: 40 }} />
     <TouchableOpacity onPress={onBack}>
-      <Image source={Images.ic_prev} />
+      <Image style={styles.changeButton} source={Images.ic_prev} />
     </TouchableOpacity>
-    <View style={{ width: 20 }} />
+    <View style={{ width: 0 }} />
     {!paused ? (
-      <TouchableOpacity onPress={onPressPause}>
+      <TouchableWithoutFeedback onPress={onPressPause}>
         <View>
           <Image source={Images.ic_pause_large} />
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     ) : (
-      <TouchableOpacity onPress={onPressPlay}>
+      <TouchableWithoutFeedback onPress={onPressPlay}>
         <Image source={Images.ic_play_large} />
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     )}
-    <View style={{ width: 20 }} />
+    <View style={{ width: 0 }} />
     <TouchableOpacity onPress={onForward} disabled={forwardDisabled}>
       <Image
-        style={[forwardDisabled && { opacity: 0.3 }]}
+        style={[styles.changeButton, forwardDisabled && { opacity: 0.3 }]}
         source={Images.ic_next}
       />
     </TouchableOpacity>
@@ -61,8 +68,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     paddingTop: 8,
+    paddingLeft: 24,
+    paddingRight: 24,
   },
   playButton: {
     height: 72,
@@ -74,8 +83,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   secondaryControl: {
-    height: 18,
-    width: 18,
+    height: 20,
+    width: 20,
+  },
+  changeButton: {
+    height: 28,
+    width: 28,
   },
   off: {
     opacity: 0.3,

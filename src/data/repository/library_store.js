@@ -1,11 +1,10 @@
 import { Alert } from 'react-native';
 import { types, getEnv, flow, getParent } from 'mobx-state-tree';
 import { Result } from './result';
-import { PlayList, createPlaylistFromJson } from '../model/playlist';
-import { apiService } from '../context/api_context';
+import { PlayList } from '../model/playlist';
 import { Album } from '../model/album';
 import { Artist } from '../model/artist';
-import { getPlaylists } from '../datasource/api_config';
+import { apiService } from '../context/api_context';
 
 export const LibraryStore = types
   .model('LibraryStore', {
@@ -23,8 +22,8 @@ export const LibraryStore = types
 
       fetchPlayList: flow(function* fetchPlayList() {
         try {
-          const playlist: Array = yield getPlaylists();
-          console.log('playlist,', playlist);
+          const playlist: Array = yield apiService.commonApiService.getPlaylists();
+          console.log('playlist', playlist);
 
           if (playlist.status == 200) {
             playlist.data.map(pl => {

@@ -1,6 +1,7 @@
 import { create } from 'apisauce';
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+
 const AsyncStorageKey = {
   USERINFO: '@userinfo',
 };
@@ -68,6 +69,27 @@ export const BASE_URL = create({
   },
 });
 
+BASE_URL.addAsyncResponseTransform(response => {
+  const { status, data } = response;
+
+  if (status) {
+    if (status && (status < 200 || status >= 300)) {
+      if (status == 401) {
+        //DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native
+        //Link to this article: https://stackoverflow.com/questions/29807664/cyclic-dependency-returns-empty-object-in-react-native
+        let rootStore = require('../context/root_context');
+        AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(value => {
+          rootStore.rootStore.userStore.removeSuccess(value);
+        });
+      }
+    }
+
+    return Promise.resolve({
+      ...data,
+    });
+  }
+});
+
 export const login = async (name, password) => {
   try {
     const path = '/login';
@@ -84,10 +106,6 @@ export const login = async (name, password) => {
 export const getPlaylists = async (limit = 10, offset = 0) => {
   try {
     const path = '/playlists';
-    // const params = {
-    //   limit,
-    //   offset,
-    // };
     return await privateRequest(BASE_URL.get, path, {});
   } catch (error) {
     console.log('TCL: try -> error', error);

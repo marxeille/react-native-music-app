@@ -73,10 +73,10 @@ class Queue extends Component {
         <View cls="jcc pa3">
           <View cls="flx-row jcsb pl1 pr1 pb3">
             <TouchableOpacity>
-              <Image source={Images.ic_add_song} />
+              <Image cls="widthFn-24 heightFn-25" source={Images.ic_add_song} />
             </TouchableOpacity>
             <TouchableOpacity>
-              <Image source={Images.ic_trash} />
+              <Image cls="widthFn-24 heightFn-25" source={Images.ic_trash} />
             </TouchableOpacity>
           </View>
         </View>

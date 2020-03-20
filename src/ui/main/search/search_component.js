@@ -90,8 +90,8 @@ export default class SearchComponent extends Component {
           <View cls="bg-#4b3277 heightFn-1 fullWidth flx-i mb1"></View>
         </View>
         <View>
-          {data.map(item => (
-            <TouchableOpacity>
+          {data.map((item, index) => (
+            <TouchableOpacity key={index.toString()}>
               <Text cls="primaryPurple pt3 fw6 f6">Hey hey hey ${item}</Text>
             </TouchableOpacity>
           ))}
@@ -113,41 +113,43 @@ export default class SearchComponent extends Component {
 
     if (this.viewmodel.state == 'loading')
       return (
-        <ImageBackground cls="fullView aic jcc" source={Images.bg}>
+        <ImageBackground cls="fullView aic jcc" source={Images.bg2}>
           <Loading />
         </ImageBackground>
       );
 
     return (
-      <ImageBackground cls="fullView" source={Images.bg}>
-        {this.renderSearchSection()}
-        {keyword || showHistory ? (
-          <View cls="pa3 pt0 fullView">
-            <FlatList
-              data={[...this.viewmodel.recentlySong.values()]}
-              showsVerticalScrollIndicator={false}
-              renderItem={this.renderSearchItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
-            <View style={{ position: 'absolute', right: 12, bottom: 225 }}>
-              <TouchableOpacity onPress={this.viewmodel.removeAllRecently}>
-                <View
-                  cls="ba pa2 pt1 pb1 br5"
-                  style={{ borderColor: '#d8a1c8' }}>
-                  <Text cls="white">Xoá tất cả</Text>
-                </View>
-              </TouchableOpacity>
+      <View cls="bg-#230c40 fullView">
+        <ImageBackground cls="fullView" source={Images.bg2}>
+          {this.renderSearchSection()}
+          {keyword || showHistory ? (
+            <View cls="pa3 pt0 fullView">
+              <FlatList
+                data={[...this.viewmodel.recentlySong.values()]}
+                showsVerticalScrollIndicator={false}
+                renderItem={this.renderSearchItem}
+                keyExtractor={(item, index) => index.toString()}
+              />
+              <View style={{ position: 'absolute', right: 12, bottom: 225 }}>
+                <TouchableOpacity onPress={this.viewmodel.removeAllRecently}>
+                  <View
+                    cls="ba pa2 pt1 pb1 br5"
+                    style={{ borderColor: '#d8a1c8' }}>
+                    <Text cls="white">Xoá tất cả</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        ) : (
-          <ScrollView contentContainerCls="pa3 pt1">
-            <View>{this.renderResultSection('Nghệ sĩ', [1, 2, 3])}</View>
-            <View>
-              {this.renderResultSection('Bài hát hey hey', [1, 2, 3, 4])}
-            </View>
-          </ScrollView>
-        )}
-      </ImageBackground>
+          ) : (
+            <ScrollView contentContainerCls="pa3 pt1">
+              <View>{this.renderResultSection('Nghệ sĩ', [1, 2, 3])}</View>
+              <View>
+                {this.renderResultSection('Bài hát hey hey', [1, 2, 3, 4])}
+              </View>
+            </ScrollView>
+          )}
+        </ImageBackground>
+      </View>
     );
   }
 }

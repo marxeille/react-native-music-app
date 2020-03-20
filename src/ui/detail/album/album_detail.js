@@ -149,6 +149,7 @@ export default class AlbumDetail extends Component {
             />
             <Switch
               value={this.state.download}
+              trackColor={{ true: '#d59fc6', false: 'grey' }}
               style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
               onValueChange={value => {
                 this.setState({ download: value });
@@ -180,24 +181,26 @@ export default class AlbumDetail extends Component {
 
   render() {
     return (
-      <ImageBackground cls="fullView" source={Images.bg}>
-        <FlatList
-          ListHeaderComponent={this._renderListHeaderContent()}
-          data={[1, 2, 3, 4, 5]}
-          showsVerticalScrollIndicator={false}
-          renderItem={this._renderItem}
-          keyExtractor={(item, index) => index.toString()}
-        />
-        <BottomModal ref={this.modalSong} headerNone>
-          <SongMenu
-            song={{
-              title: 'hey hey hey',
-              artist: 'idol giới trẻ khÁ bẢnH',
-              artwork: '',
-            }}
+      <View cls="bg-#230c40 fullView">
+        <ImageBackground cls="fullView" source={Images.bg2}>
+          <FlatList
+            ListHeaderComponent={this._renderListHeaderContent()}
+            data={[1, 2, 3, 4, 5]}
+            showsVerticalScrollIndicator={false}
+            renderItem={this._renderItem}
+            keyExtractor={(item, index) => index.toString()}
           />
-        </BottomModal>
-      </ImageBackground>
+          <BottomModal ref={this.modalSong} headerNone>
+            <SongMenu
+              song={{
+                title: 'hey hey hey',
+                artist: 'idol giới trẻ khÁ bẢnH',
+                artwork: '',
+              }}
+            />
+          </BottomModal>
+        </ImageBackground>
+      </View>
     );
   }
 }

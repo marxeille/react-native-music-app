@@ -8,20 +8,17 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   Dimensions,
+  ImageBackground,
 } from 'react-native';
 
-const AlbumArt = ({
-  url,
-  onPress
-}) => (
-  <View style={styles.container}>
-    <TouchableOpacity onPress={onPress}>
-      <Image
-        style={styles.image}
-        source={{uri: url}}
-      />
-    </TouchableOpacity>
-  </View>
+const AlbumArt = ({ url, onPress }) => (
+  <ImageBackground style={styles.bg} blurRadius={75} source={{ uri: url }}>
+    <View style={styles.container}>
+      <TouchableOpacity onPress={onPress}>
+        <Image style={styles.image} source={{ uri: url }} />
+      </TouchableOpacity>
+    </View>
+  </ImageBackground>
 );
 
 export default AlbumArt;
@@ -30,6 +27,7 @@ const { width, height } = Dimensions.get('window');
 const imageSize = width - 48;
 
 const styles = StyleSheet.create({
+  bg: { width: '100%' },
   container: {
     paddingLeft: 24,
     paddingRight: 24,
@@ -38,4 +36,4 @@ const styles = StyleSheet.create({
     width: imageSize,
     height: imageSize,
   },
-})
+});

@@ -26,6 +26,7 @@ export default class LibraryTabView extends React.Component {
         {props.navigationState.routes.map((route, i) => {
           return (
             <TouchableOpacity
+              key={i.toString()}
               style={styles.tabItem}
               onPress={() => this.setState({ index: i })}>
               <View cls="pr5">

@@ -30,7 +30,7 @@ const QueueList = observer(
           item={item}
           drag={drag}
           isActive={isActive}
-          // key={index.toString()}
+          key={index.toString()}
         />
       );
     });
@@ -53,9 +53,6 @@ const QueueList = observer(
                 <Text cls="primaryPurple fw7 f6">{props.subTitle}</Text>
               </View>
             </View>
-            {/* {data.map((item, index) => (
-          <QueueChild item={item} key={index.toString()} />
-        ))} */}
             <View>
               <DraggableFlatList
                 data={data}

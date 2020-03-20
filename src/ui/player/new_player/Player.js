@@ -19,8 +19,11 @@ import Images from '../../../assets/icons/icons';
 import BottomModal from '../../components/modal/BottomModal';
 import * as _ from 'lodash';
 import { wrap } from '../../../themes';
+import { isMeidumDevice } from '../../../utils';
+import images from '../../../styles/images';
 
 @observer
+@wrap
 export default class Player extends Component {
   static contextType = PlayerContext;
   constructor(props) {
@@ -169,7 +172,7 @@ export default class Player extends Component {
     const { currentSong } = rootStore?.playerStore;
 
     return (
-      <View style={styles.container}>
+      <ImageBackground source={Images.bg2} style={styles.container}>
         <StatusBar hidden={true} />
         <Header message="Playing From Charts" />
         <AlbumArt url={currentSong?.artwork} />
@@ -203,6 +206,15 @@ export default class Player extends Component {
           onForward={this.onForward.bind(this)}
           paused={rootStore?.playerStore?.statusPlayer == 'pause'}
         />
+        {isMeidumDevice() ? null : (
+          <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+            <Image
+              source={require('../../../assets/images/wave2.png')}
+              style={{ zIndex: 0, width: '100%', height: 150 }}
+            />
+          </View>
+        )}
+
         <BottomModal
           ref={this.modalShare}
           title={'Chia sẻ'}
@@ -212,7 +224,7 @@ export default class Player extends Component {
           containerCls="">
           {this._renderModalContent()}
         </BottomModal>
-      </View>
+      </ImageBackground>
     );
   }
 }

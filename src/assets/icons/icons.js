@@ -1,6 +1,8 @@
 const Images = {
   bc_tabbottom: require('./bc_tabbottom.png'),
   bg: require('./bg.png'),
+  bg2: require('./bg2.png'),
+  bg3: require('./bg3.png'),
   bg_player: require('./bg_player.png'),
   bg_wave: require('./bg_wave.png'),
   ic_add_playlist: require('./ic_add_playlist.png'),
@@ -39,6 +41,7 @@ const Images = {
   ic_setting: require('./ic_setting.png'),
   ic_share: require('./ic_share.png'),
   ic_shuffe: require('./ic_shuffe.png'),
+  ic_shuffle: require('./ic_shuffle.png'),
   ic_trash: require('./ic_trash.png'),
   ic_uncheck: require('./ic_uncheck.png'),
   ic_uncheck_circle: require('./ic_uncheck_circle.png'),

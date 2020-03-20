@@ -12,6 +12,7 @@ import { RootContext } from '../../../data/context/root_context';
 
 import LibraryTopBar from './screens/lib_topbar_component';
 import LinearGradientText from './components/LinearGradientText';
+import Images from '../../../assets/icons/icons';
 
 @wrap
 export default class LibraryComponent extends Component {
@@ -25,19 +26,19 @@ export default class LibraryComponent extends Component {
   render() {
     let value = this.context;
     return (
-      <ImageBackground
-        cls="fullView pa3"
-        source={require('../../../assets/icons/bg.png')}>
-        <View cls="pt4">
-          <LinearGradientText
-            text={'MYJAM'}
-            styles={{ fontWeight: '700', fontSize: 28 }}
-          />
-        </View>
-        <View cls="flx-i pt3">
-          <LibraryTopBar />
-        </View>
-      </ImageBackground>
+      <View cls="bg-#230c40 fullView">
+        <ImageBackground cls="fullView pa3" source={Images.bg3}>
+          <View cls="pt4">
+            <LinearGradientText
+              text={'MYJAM'}
+              styles={{ fontWeight: '700', fontSize: 28 }}
+            />
+          </View>
+          <View cls="flx-i pt3">
+            <LibraryTopBar />
+          </View>
+        </ImageBackground>
+      </View>
     );
   }
 }

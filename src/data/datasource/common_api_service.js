@@ -1,6 +1,15 @@
-import Axios from 'axios';
+import { BASE_URL, privateRequest } from './api_config';
 //Hanle data từ Api Services
 export default class CommonApiService {
+  async getPlaylists() {
+    try {
+      const path = '/playlists';
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   getSongsOfAlBum(index) {
     return new Promise(resolve => {
       resolve([

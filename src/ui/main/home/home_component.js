@@ -22,26 +22,30 @@ export default class HomeComponent extends Component {
 
   render() {
     return rootStore.homeStore.state === 'loading' ? (
-      <ImageBackground cls="fullView aic jcc" source={Images.bg}>
-        <ActivityIndicator />
-      </ImageBackground>
+      <View cls="bg-#230c40 fullView">
+        <ImageBackground cls="fullView aic jcc" source={Images.bg2}>
+          <ActivityIndicator />
+        </ImageBackground>
+      </View>
     ) : (
-      <ImageBackground cls="fullView aic" source={Images.bg}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <HomeListComponent
-            cate="1"
-            type={'small'}
-            rightIcon
-            title="Mới phát gần đây"
-          />
-          <HomeListComponent
-            type={'large'}
-            title="Playlist phổ biến"
-            cate="2"
-          />
-          <HomeListComponent type={'large'} title="Dành cho bạn" cate="3" />
-        </ScrollView>
-      </ImageBackground>
+      <View cls="bg-#230c40 fullView">
+        <ImageBackground cls="fullView aic" source={Images.bg2}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <HomeListComponent
+              cate="1"
+              type={'small'}
+              rightIcon
+              title="Mới phát gần đây"
+            />
+            <HomeListComponent
+              type={'large'}
+              title="Playlist phổ biến"
+              cate="2"
+            />
+            <HomeListComponent type={'large'} title="Dành cho bạn" cate="3" />
+          </ScrollView>
+        </ImageBackground>
+      </View>
     );
   }
 }

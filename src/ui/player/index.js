@@ -69,14 +69,16 @@ export default class PlayerTabView extends React.Component {
 
   render() {
     return (
-      <ImageBackground cls="fullView" source={Images.bg}>
+      // <ImageBackground cls="fullView" source={Images.bg}>
+      <View cls="bg-#230c40 fullView">
         <TabView
           navigationState={this.state}
           renderScene={this._renderScene}
           renderTabBar={this._renderTabBar}
           onIndexChange={this._handleIndexChange}
         />
-      </ImageBackground>
+      </View>
+      // </ImageBackground>
     );
   }
 }

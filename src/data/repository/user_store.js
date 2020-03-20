@@ -45,6 +45,8 @@ export const UserStore = types
       },
 
       removeSuccess(value) {
+        console.log('removeSuccess', value);
+
         self.authState = 'not_auth';
       },
 

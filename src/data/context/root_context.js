@@ -1,20 +1,10 @@
 import React from 'react';
-import { UserStore, AuthState } from '../repository/user_store';
+import { UserStore } from '../repository/user_store';
 import { RootStore } from '../repository/root_store';
-import { AppState } from 'react-native';
 import { PlayerStore } from '../repository/player_store';
-import Song from '../model/song';
-import makeInspectable from 'mobx-devtools-mst';
-import CommonApiService from '../datasource/common_api_service';
-import ApiService from '../datasource/api_service';
 import { HomeStore } from '../repository/home_store';
-import * as Reactotron from 'reactotron-react-native';
-import { mst } from 'reactotron-mst';
 import { reactotron } from '../../../ReactotronConfig';
-import TrackPlayer, { Event, State } from 'react-native-track-player';
-import { unprotect } from 'mobx-state-tree';
 import SongOfQueueStore from '../repository/song_of_queue_store';
-import MusicControl from 'react-native-music-control';
 import * as _ from 'lodash';
 import { LibraryStore } from '../repository/library_store';
 

@@ -17,12 +17,14 @@ class Settings extends Component {
 
   render() {
     return (
-      <ImageBackground cls="fullView aic jcc" source={Images.bg}>
-        <TouchableOpacity
-          onPress={() => this.context.userStore.removeUserInfo()}>
-          <Text cls="white">Logout</Text>
-        </TouchableOpacity>
-      </ImageBackground>
+      <View cls="bg-#230c40 fullView">
+        <ImageBackground cls="fullView aic jcc" source={Images.bg3}>
+          <TouchableOpacity
+            onPress={() => this.context.userStore.removeUserInfo()}>
+            <Text cls="white">Logout</Text>
+          </TouchableOpacity>
+        </ImageBackground>
+      </View>
     );
   }
 }
