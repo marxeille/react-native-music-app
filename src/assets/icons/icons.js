@@ -3,6 +3,7 @@ const Images = {
   bg: require('./bg.png'),
   bg2: require('./bg2.png'),
   bg3: require('./bg3.png'),
+  bg4: require('./bg4.png'),
   bg_player: require('./bg_player.png'),
   bg_wave: require('./bg_wave.png'),
   ic_add_playlist: require('./ic_add_playlist.png'),

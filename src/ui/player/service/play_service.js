@@ -18,17 +18,10 @@ export async function skipToPrevious() {
 export async function checkQueue() {
   const queue = await TrackPlayer.getQueue();
   const currentTrack = await TrackPlayer.getCurrentTrack();
-  console.log('current', parseInt(currentTrack));
 
   if (
     parseInt(currentTrack) < parseInt(queue[0].id) ||
     parseInt(currentTrack) > parseInt(queue[queue.length - 1].id)
   ) {
-    console.log(
-      'something get here',
-      parseInt(currentTrack),
-      parseInt(queue[0].id),
-      parseInt(queue[queue.length - 1].id),
-    );
   }
 }

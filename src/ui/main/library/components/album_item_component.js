@@ -15,11 +15,6 @@ export default class AlbumItem extends Component {
 
   render() {
     const { index } = this.props;
-    console.log(
-      'AlbumItem -> render -> index',
-      index,
-      rootStore.userStore.playlists,
-    );
 
     if (
       index == undefined ||

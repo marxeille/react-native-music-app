@@ -36,7 +36,6 @@ export default class HomeListComponent extends Component {
 
   render() {
     const { type, title, cate, rightIcon } = this.props;
-    console.log('rootStore.homeStore.popular', rootStore.homeStore.popular);
 
     return (
       <View cls={`fullWidth pb3 bb b--#4B3277 ${rightIcon ? 'pt4' : ''}`}>

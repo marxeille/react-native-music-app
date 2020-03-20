@@ -172,7 +172,7 @@ export default class Player extends Component {
     const { currentSong } = rootStore?.playerStore;
 
     return (
-      <ImageBackground source={Images.bg2} style={styles.container}>
+      <ImageBackground source={Images.bg3} style={styles.container}>
         <StatusBar hidden={true} />
         <Header message="Playing From Charts" />
         <AlbumArt url={currentSong?.artwork} />
@@ -210,7 +210,7 @@ export default class Player extends Component {
           <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
             <Image
               source={require('../../../assets/images/wave2.png')}
-              style={{ zIndex: 0, width: '100%', height: 150 }}
+              style={{ zIndex: 0, width: '100%', height: 130 }}
             />
           </View>
         )}

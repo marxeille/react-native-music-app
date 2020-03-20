@@ -66,8 +66,8 @@ export default class LogInComponent extends Component {
     const { pass, loginName } = this.state;
     return (
       <View cls="bg-#230c40 fullView">
-        <ImageBackground cls="fullView aic jcc" source={Images.bg3}>
-          <View cls="pa3 pb5">
+        <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
+          <View cls="pa4 pb4">
             <Image style={styles.icon} source={Images.logo_signin} />
           </View>
           {/* Text Input group */}

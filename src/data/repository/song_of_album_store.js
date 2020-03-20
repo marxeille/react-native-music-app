@@ -16,7 +16,6 @@ const SongOfAlBumStore = types
       getSongs: flow(function* getRecently() {
         const recently: Array = yield apiService.commonApiService.getSongsOfAlBum();
         recently.forEach(data => {
-          console.log('data SongOfAlBumStore', data);
           self.songs.push(createSongFromJson(data));
         });
         self.state = 'success';

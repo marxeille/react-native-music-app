@@ -51,11 +51,6 @@ export default class PlayerTabView extends React.Component {
     );
   });
 
-  // _renderScene = SceneMap({
-  //   player: Player2,
-  //   queue: Queue,
-  // });
-
   _renderScene = ({ route }) => {
     switch (route.key) {
       case 'player':
@@ -69,7 +64,6 @@ export default class PlayerTabView extends React.Component {
 
   render() {
     return (
-      // <ImageBackground cls="fullView" source={Images.bg}>
       <View cls="bg-#230c40 fullView">
         <TabView
           navigationState={this.state}
@@ -78,7 +72,6 @@ export default class PlayerTabView extends React.Component {
           onIndexChange={this._handleIndexChange}
         />
       </View>
-      // </ImageBackground>
     );
   }
 }

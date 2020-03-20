@@ -29,7 +29,7 @@ export default class HomeComponent extends Component {
       </View>
     ) : (
       <View cls="bg-#230c40 fullView">
-        <ImageBackground cls="fullView aic" source={Images.bg2}>
+        <ImageBackground cls="fullView aic" source={Images.bg3}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <HomeListComponent
               cate="1"

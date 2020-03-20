@@ -9,15 +9,15 @@ export const sizes = {};
 
 // style functions
 const bg = color => ({
-  backgroundColor: color
+  backgroundColor: color,
 });
 
 const b_ = color => ({
-  borderColor: color
+  borderColor: color,
 });
 
 const tint = color => ({
-  tintColor: color
+  tintColor: color,
 });
 
 // fn should use this as React element instead of options.fn
@@ -41,8 +41,8 @@ export const options = {
   fn: {
     bg,
     b_,
-    tint
-  }
+    tint,
+  },
 };
 
 /**
@@ -123,10 +123,12 @@ const recursiveStyle = elementsTree => {
     if (options.clsPropName) {
       mapPropKeys[options.clsPropName] = 'style';
       for (const propKey in props) {
-        if (propKey.substr(-options.clsPropName.length) === options.clsPropNameCap) {
+        if (
+          propKey.substr(-options.clsPropName.length) === options.clsPropNameCap
+        ) {
           mapPropKeys[propKey] = `${propKey.substr(
             0,
-            propKey.length - options.clsPropName.length
+            propKey.length - options.clsPropName.length,
           )}Style`;
         }
       }
@@ -137,7 +139,11 @@ const recursiveStyle = elementsTree => {
 
     for (const propKey in mapPropKeys) {
       const targetPropKey = mapPropKeys[propKey];
-      const translatedStyle = transformStyle(elementsTree, props[targetPropKey], props[propKey]);
+      const translatedStyle = transformStyle(
+        elementsTree,
+        props[targetPropKey],
+        props[propKey],
+      );
       // there is something to translate
       if (translatedStyle) {
         newProps[targetPropKey] = translatedStyle;
@@ -179,7 +185,10 @@ const recursiveStyle = elementsTree => {
 };
 
 export const wrap = componentOrFunction => {
-  if (componentOrFunction.prototype && 'render' in componentOrFunction.prototype) {
+  if (
+    componentOrFunction.prototype &&
+    'render' in componentOrFunction.prototype
+  ) {
     const WrappedComponent = componentOrFunction;
     const newClass = class extends WrappedComponent {
       render() {
@@ -188,7 +197,8 @@ export const wrap = componentOrFunction => {
     };
 
     /* Fix name */
-    newClass.displayName = WrappedComponent.displayName || WrappedComponent.name;
+    newClass.displayName =
+      WrappedComponent.displayName || WrappedComponent.name;
 
     return newClass;
   }
@@ -224,10 +234,12 @@ export const build = (updatedOptions, StyleSheet) => {
           const val = styleObj[name];
           const size =
             val *
-            (name === 'fontSize' && updatedOptions.fontRem ? updatedOptions.fontRem : defaultRem);
+            (name === 'fontSize' && updatedOptions.fontRem
+              ? updatedOptions.fontRem
+              : defaultRem);
 
           styleSheet[key] = {
-            [name]: size
+            [name]: size,
           };
           // we have rem in options.rem, so no need to store calculated Sizes
           updatedSizes[key] = size;
@@ -257,13 +269,13 @@ export const build = (updatedOptions, StyleSheet) => {
   }
 
   Object.assign(styles, StyleSheet.create(hyphensToUnderscores(styleSheet)));
-  // console.log({ sizes });
   // update options deeply
   merge(options, updatedOptions);
 
   // head of time calculation for clsPropName capitalization, if not give
   if (updatedOptions.clsPropNameCap === undefined) {
     options.clsPropNameCap =
-      options.clsPropName.charAt(0).toUpperCase() + options.clsPropName.substr(1);
+      options.clsPropName.charAt(0).toUpperCase() +
+      options.clsPropName.substr(1);
   }
 };

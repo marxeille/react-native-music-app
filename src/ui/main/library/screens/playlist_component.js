@@ -20,7 +20,6 @@ export default class PlaylistComponent extends Component {
   }
 
   renderPlaylist = item => {
-    console.log('TCL: playlistComponent -> renderPlaylist item', item.index);
     return (
       <>
         <PlaylistItem index={item.index} />

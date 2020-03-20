@@ -23,7 +23,6 @@ export const LibraryStore = types
       fetchPlayList: flow(function* fetchPlayList() {
         try {
           const playlist: Array = yield apiService.commonApiService.getPlaylists();
-          console.log('playlist', playlist);
 
           if (playlist.status == 200) {
             playlist.data.map(pl => {

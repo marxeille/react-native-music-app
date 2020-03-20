@@ -41,12 +41,9 @@ export const UserStore = types
 
       saveSuccess(value) {
         self.authState = 'authed';
-        console.log('user_Store saveSuccess');
       },
 
       removeSuccess(value) {
-        console.log('removeSuccess', value);
-
         self.authState = 'not_auth';
       },
 
