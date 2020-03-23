@@ -70,8 +70,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: 8,
-    paddingLeft: 24,
-    paddingRight: 24,
+    paddingHorizontal: 24,
   },
   playButton: {
     height: 72,

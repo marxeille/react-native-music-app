@@ -70,8 +70,7 @@ const styles = StyleSheet.create({
     marginTop: -12,
   },
   container: {
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingHorizontal: 16,
     paddingTop: 16,
   },
   track: {

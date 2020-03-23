@@ -49,7 +49,7 @@ const QueueList = observer(
                   fontFamily: 'Averta-ExtraBold',
                 }}
               />
-              <View style={{ paddingTop: 2 }}>
+              <View style={{ paddingTop: 3 }}>
                 <Text cls="primaryPurple fw7 f6 avertaFont">
                   {props.subTitle}
                 </Text>

@@ -110,8 +110,8 @@ class Queue extends Component {
             />
             <QueueList
               data={rootStore.songs}
-              title="Playlist :"
-              subTitle="Break Point"
+              title="Playlist : "
+              subTitle="Best Vinahey Playlist"
               type="playlist"
             />
           </ScrollView>

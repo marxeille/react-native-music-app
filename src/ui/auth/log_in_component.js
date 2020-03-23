@@ -117,8 +117,7 @@ export default class LogInComponent extends Component {
                   <Text
                     cls="white f6 pl5 pr5 avertaFont"
                     style={{
-                      paddingTop: 12,
-                      paddingBottom: 12,
+                      paddingVertical: 12,
                     }}>
                     Đăng Nhập
                   </Text>
@@ -149,14 +148,7 @@ export default class LogInComponent extends Component {
                   colors={['#4A3278', '#8B659D', '#DDA5CB']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}>
-                  <Text
-                    cls="white f6 avertaFont"
-                    style={{
-                      paddingTop: 12,
-                      paddingBottom: 12,
-                      paddingLeft: 72,
-                      paddingRight: 72,
-                    }}>
+                  <Text cls="white f6 avertaFont" style={styles.regisButton}>
                     Đăng Ký
                   </Text>
                 </LinearGradient>
@@ -186,5 +178,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     fontFamily: 'lato-heavy',
     color: '#fff',
+  },
+  regisButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 72,
   },
 });

@@ -25,6 +25,7 @@ const Images = {
   ic_library: require('./ic_library.png'),
   ic_like: require('./ic_like.png'),
   ic_like_on: require('./ic_like_on.png'),
+  ic_like_uncheck: require('./ic_like_uncheck.png'),
   ic_link: require('./ic_link.png'),
   ic_menu: require('./ic_menu.png'),
   ic_menu_white: require('./ic_menu_white.png'),

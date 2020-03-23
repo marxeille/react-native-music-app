@@ -99,10 +99,10 @@ export default class PlayerComponent extends Component {
                   />
 
                   <View style={styles.infoSection}>
-                    <Text cls="white fw7">
+                    <Text cls="white fw7 lightFont">
                       {rootStore.playerStore.currentSong?.getName()}
                     </Text>
-                    <Text cls="primaryPurple f10 fw4">
+                    <Text cls="primaryPurple f10 fw4 lightFont">
                       {rootStore.playerStore.currentSong?.getSubTitlte()}
                     </Text>
                   </View>
@@ -123,10 +123,7 @@ export default class PlayerComponent extends Component {
                     </View>
                   </TouchableHighlight>
                   <View cls="pa3">
-                    <Image
-                      source={Images.ic_favorited}
-                      cls="widthFn-25 heightFn-24"
-                    />
+                    <Image source={Images.ic_like_uncheck} />
                   </View>
                 </View>
               </View>

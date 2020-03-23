@@ -31,6 +31,8 @@ export default class SignUpComponent extends Component {
       rePass: '',
       sex: 'male',
     };
+    this.sex = ['male', 'female', 'none'];
+    this.sexText = { male: 'Nam', female: 'Nữ', none: 'Khác' };
   }
 
   static contextType = RootContext;
@@ -42,9 +44,32 @@ export default class SignUpComponent extends Component {
     this.setState(value);
   }
 
-  handleSignUp = async () => {};
+  handleSignUp = async () => {
+    const { email, pass, rePass } = this.state;
+    if (pass !== rePass) return Alert.alert('Mật khẩu phải giống nhau');
+  };
 
   handleLoginWithFacebook = () => {};
+
+  renderCheckbox = sex => {
+    return (
+      <>
+        <CheckBox
+          style={styles.checkBoxStyle}
+          checkBoxColor={'#4b3277'}
+          onClick={() => {
+            this.setState({
+              sex: sex,
+            });
+          }}
+          isChecked={this.state.sex == sex}
+          rightText={this.sexText[sex]}
+          rightTextStyle={styles.rightTextStyle}
+          checkedImage={<Image source={Images.ic_checked} />}
+        />
+      </>
+    );
+  };
 
   render() {
     const { pass, email, rePass, sex } = this.state;
@@ -100,64 +125,19 @@ export default class SignUpComponent extends Component {
 
           <View cls="flx-row aic jcsb pb3 pa4 pt2">
             <Text cls="primaryPurple lightFont f8">Chọn giới tính</Text>
-            <CheckBox
-              style={{ flex: 1, padding: 10 }}
-              checkBoxColor={'#4b3277'}
-              onClick={() => {
-                this.setState({
-                  sex: 'male',
-                });
-              }}
-              isChecked={sex == 'male'}
-              rightText={'Nam'}
-              rightTextStyle={{ color: '#fff' }}
-              checkedImage={<Image source={Images.ic_checked} />}
-            />
-            <CheckBox
-              style={{ flex: 1, padding: 10 }}
-              checkBoxColor={'#4b3277'}
-              onClick={() => {
-                this.setState({
-                  sex: 'female',
-                });
-              }}
-              isChecked={sex == 'female'}
-              rightText={'Nữ'}
-              rightTextStyle={{ color: '#fff' }}
-              checkedImage={<Image source={Images.ic_checked} />}
-            />
-            <CheckBox
-              style={{ flex: 1, padding: 10 }}
-              checkBoxColor={'#4b3277'}
-              onClick={() => {
-                this.setState({
-                  sex: 'none',
-                });
-              }}
-              isChecked={sex == 'none'}
-              rightText={'Khác'}
-              rightTextStyle={{ color: '#fff' }}
-              checkedImage={<Image source={Images.ic_checked} />}
-            />
+            {this.sex.map(s => this.renderCheckbox(s))}
           </View>
 
           {/* Button Group */}
           <ImageBackground cls="fullWidth" source={Images.wave}>
             <View cls="fullWidth pa3 pt4 aic">
-              <TouchableOpacity onPress={this.handleLogin}>
+              <TouchableOpacity onPress={this.handleSignUp}>
                 <LinearGradient
                   cls="ba br5 b--#321A54"
                   colors={['#4A3278', '#8B659D', '#DDA5CB']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}>
-                  <Text
-                    cls="white f6 avertaFont"
-                    style={{
-                      paddingTop: 12,
-                      paddingBottom: 12,
-                      paddingLeft: 72,
-                      paddingRight: 72,
-                    }}>
+                  <Text cls="white f6 avertaFont" style={styles.regisButton}>
                     Đăng Ký
                   </Text>
                 </LinearGradient>
@@ -197,5 +177,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     fontFamily: 'lato-heavy',
     color: '#fff',
+  },
+  checkBoxStyle: { flex: 1, padding: 10 },
+  rightTextStyle: { color: '#fff', fontFamily: 'lato-heavy' },
+  regisButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 72,
   },
 });

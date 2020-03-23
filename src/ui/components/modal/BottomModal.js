@@ -99,12 +99,12 @@ export default class BottomModal extends React.Component {
                     onPress={this._hideModal}
                     cls="jcc pv1 ph3 aic">
                     <Image
-                      cls="widthFn-20 heightFn-20"
+                      cls="widthFn-20 heightFn-20 pt2"
                       source={Images.ic_delete}
                     />
                   </TouchableOpacity>
                 </View>
-                <View cls="aic jcc flexFn-5 pt2">
+                <View cls="aic jcc flexFn-5">
                   <LinearGradientText
                     text={`${title}`}
                     end={{ x: 0.7, y: 0 }}

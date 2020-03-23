@@ -52,9 +52,8 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 24,
     flexDirection: 'row',
-    paddingLeft: 20,
+    paddingHorizontal: 20,
     alignItems: 'center',
-    paddingRight: 20,
   },
   detailsWrapper: {
     justifyContent: 'center',

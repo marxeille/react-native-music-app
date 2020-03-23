@@ -27,8 +27,7 @@ const imageSize = width - 48;
 const styles = StyleSheet.create({
   bg: { width: '100%' },
   container: {
-    paddingLeft: 24,
-    paddingRight: 24,
+    paddingHorizontal: 24,
   },
   image: {
     width: imageSize,

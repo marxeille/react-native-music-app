@@ -28,8 +28,7 @@ export default Header;
 const styles = StyleSheet.create({
   container: {
     height: 72,
-    paddingLeft: 24,
-    paddingRight: 24,
+    paddingHorizontal: 24,
     flexDirection: 'row',
   },
   message: {
