@@ -12,9 +12,7 @@ const LinearGradientText = wrap(
           colors={['#4e357a', '#765591', '#daa3c9']}
           start={start ?? { x: 0, y: 0 }}
           end={end ?? { x: 0.2, y: 0 }}>
-          <Text style={[styles, { opacity: 0 }]} cls="fw5 f4">
-            {text}
-          </Text>
+          <Text style={[styles, { opacity: 0 }]}>{text}</Text>
         </LinearGradient>
       </MaskedView>
       {borderBottom ? (

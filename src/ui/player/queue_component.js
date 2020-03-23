@@ -36,15 +36,15 @@ class Queue extends Component {
               source={{
                 uri: rootStore.playerStore.currentSong?.getThumb(),
               }}
-              cls="widthFn-52 heightFn-52 mr2"
+              cls="widthFn-52 heightFn-52 mr3"
             />
             <View>
-              <Text cls="white fw7 f7">
+              <Text cls="white fw7 f6 latoFont">
                 {currentSong !== null
                   ? subLongStr(currentSong?.getName(), 25)
                   : 'Dèfault Title'}
               </Text>
-              <Text cls="primaryPurple f9 pt1">
+              <Text cls="primaryPurple f9 pt1 latoFont">
                 Idol {currentSong?.getSubTitlte()} bẢnH
               </Text>
             </View>

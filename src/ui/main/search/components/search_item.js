@@ -25,12 +25,12 @@ export default class SearchItem extends Component {
             />
             <View>
               <Text cls="white fw7 f6 pl2">{item?.getName()}</Text>
-              <Text cls="primaryPurple f6 pl2 pt1">{item?.artist}</Text>
+              <Text cls="primaryPurple f7 pl2 pt1">{item?.artist}</Text>
             </View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => model.removeRecentlySong(item?.id)}>
-          <Image source={Images.ic_delete} />
+          <Image cls="widthFn-20 heightFn-20" source={Images.ic_delete} />
         </TouchableOpacity>
       </View>
     );

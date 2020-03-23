@@ -61,7 +61,8 @@ export default class SearchComponent extends Component {
                 end={{ x: 0.2, y: 0 }}
                 styles={{
                   justifyContent: 'center',
-                  fontSize: 21,
+                  fontSize: 23,
+                  fontFamily: 'Averta-ExtraBold',
                   fontWeight: '800',
                 }}
               />
@@ -70,7 +71,7 @@ export default class SearchComponent extends Component {
                 onChangeKeyword={this.onChangeKeyword}
                 onFocus={this.onFocus}
               />
-              <Text cls="white fw6 f10">
+              <Text cls="white fw6 f10 lightFont">
                 {this.state.keyword || this.state.showHistory
                   ? 'Tìm gần đây'
                   : 'Duyệt tìm tất cả'}
@@ -86,13 +87,15 @@ export default class SearchComponent extends Component {
     return (
       <View cls="pt4">
         <View cls="flx-row aife">
-          <Text cls="white fw8 f5">{title}</Text>
+          <Text cls="white fw8 f5 avertaFont">{title}</Text>
           <View cls="bg-#4b3277 heightFn-1 fullWidth flx-i mb1"></View>
         </View>
         <View>
           {data.map((item, index) => (
             <TouchableOpacity key={index.toString()}>
-              <Text cls="primaryPurple pt3 fw6 f6">Hey hey hey ${item}</Text>
+              <Text cls="primaryPurple pt3 fw6 f6 lightFont">
+                Hey hey hey ${item}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -135,7 +138,7 @@ export default class SearchComponent extends Component {
                   <View
                     cls="ba pa2 pt1 pb1 br5"
                     style={{ borderColor: '#d8a1c8' }}>
-                    <Text cls="white">Xoá tất cả</Text>
+                    <Text cls="white lightFont f10 fw8">Xoá tất cả</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -143,9 +146,7 @@ export default class SearchComponent extends Component {
           ) : (
             <ScrollView contentContainerCls="pa3 pt1">
               <View>{this.renderResultSection('Nghệ sĩ', [1, 2, 3])}</View>
-              <View>
-                {this.renderResultSection('Bài hát hey hey', [1, 2, 3, 4])}
-              </View>
+              <View>{this.renderResultSection('Bài hát', [1, 2, 3, 4])}</View>
             </ScrollView>
           )}
         </ImageBackground>

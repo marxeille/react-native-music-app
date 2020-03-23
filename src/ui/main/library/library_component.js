@@ -31,10 +31,13 @@ export default class LibraryComponent extends Component {
           <View cls="pt4">
             <LinearGradientText
               text={'MYJAM'}
-              styles={{ fontWeight: '700', fontSize: 28 }}
+              styles={{
+                fontSize: 35,
+                fontFamily: 'Averta-ExtraBold',
+              }}
             />
           </View>
-          <View cls="flx-i pt3">
+          <View cls="flx-i pt4">
             <LibraryTopBar />
           </View>
         </ImageBackground>

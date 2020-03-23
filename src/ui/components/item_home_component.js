@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../themes';
 import { rootStore } from '../../data/context/root_context';
-import { useNavigation } from '@react-navigation/native';
 import { navigate } from '../../navigation/navigation_service';
 
 @observer
@@ -21,11 +20,11 @@ export default class ItemHome extends Component {
           cls="heightFn-150 widthFn-150"
           source={{ uri: rootStore.playlist.get(this.props.id).getThumb() }}
         />
-        <Text cls="white pt2 fw6">
+        <Text cls="white pt2 fw6 lightFont">
           {rootStore.playlist.get(this.props.id).title()}
         </Text>
-        <Text cls="primaryPurple pt1">
-          {rootStore.playlist.get(this.props.id).subTitle()}
+        <Text cls="primaryPurple pt1 lightFont f11">
+          {rootStore.playlist.get(this.props.id).subTitle() ?? 'Billie Erlish'}
         </Text>
       </View>
     );

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     color: '#fff',
     paddingLeft: 15,
-    fontWeight: '700',
-    fontSize: 16,
+    fontSize: 15,
+    fontFamily: 'lato-heavy',
   },
 });

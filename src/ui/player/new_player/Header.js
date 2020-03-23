@@ -34,9 +34,9 @@ const styles = StyleSheet.create({
   },
   message: {
     textAlign: 'center',
-    color: 'rgba(255, 255, 255, 0.72)',
-    fontWeight: 'bold',
-    fontSize: 17,
+    color: '#fff',
+    fontFamily: 'Averta-ExtraBold',
+    fontSize: 16,
   },
   button: {
     opacity: 0.72,

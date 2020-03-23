@@ -24,10 +24,10 @@ const QueueChild = observer(
             />
           </TouchableOpacity>
           <View cls="pl3">
-            <Text cls={`white fw6 f${onPlayItem ? '4' : '6'}`}>
+            <Text cls={`white fw6 f${onPlayItem ? '4' : '6'} latoFont`}>
               {props.item?.getName() ?? 'Queue Child'}
             </Text>
-            <Text cls={`primaryPurple pt1 ${onPlayItem ? 'f6' : ''}`}>
+            <Text cls={`primaryPurple pt1 ${onPlayItem ? 'f6' : ''} latoFont`}>
               {props.item?.getSubTitlte() ?? 'Queue Child'}
             </Text>
           </View>

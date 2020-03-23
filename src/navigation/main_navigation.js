@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, SafeAreaView } from 'react-native';
+import { Image, SafeAreaView, Text } from 'react-native';
 // import {
 //   createBottomTabNavigator,
 //   BottomTabView,
@@ -27,6 +27,10 @@ function getBottomTabNavigator() {
       tabBarOptions={{
         inactiveTintColor: '#835db8',
         activeTintColor: '#FFF',
+        labelStyle: {
+          fontSize: 11,
+          fontFamily: 'lato-heavy',
+        },
         style: {
           borderWidth: 0,
           borderTopWidth: 0,
@@ -43,7 +47,6 @@ function getBottomTabNavigator() {
         component={homeContainer}
         options={{
           tabBarLabel: 'Trang chủ',
-
           tabBarIcon: props => (
             <Image
               style={[Styles.icon, { tintColor: props.color }]}

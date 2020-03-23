@@ -25,7 +25,7 @@ export default class ItemHomeSmall extends Component {
             cls="heightFn-110 widthFn-110"
             source={{ uri: rootStore.playlist.get(this.props.id).getThumb() }}
           />
-          <Text cls="white pt2 fw6">
+          <Text cls="white pt2 fw6 lightFont">
             {rootStore.playlist.get(this.props.id).title()}
           </Text>
           <Text cls="primaryPurple pt1">

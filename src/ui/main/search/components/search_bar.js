@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     color: '#fff',
     paddingLeft: 15,
-    fontWeight: '600',
-    fontSize: 15,
+    fontFamily: 'lato-heavy',
+    fontSize: 13,
   },
 });

@@ -29,19 +29,19 @@ export default class LibraryTabView extends React.Component {
               key={i.toString()}
               style={styles.tabItem}
               onPress={() => this.setState({ index: i })}>
-              <View cls="pr5">
+              <View cls="pr4">
                 {i == this.state.index ? (
                   <LinearGradientText
                     text={route.title}
                     end={{ x: 0.8, y: 0 }}
                     borderBottom
                     styles={{
-                      fontWeight: '700',
-                      fontSize: 19,
+                      fontSize: 20,
+                      fontFamily: 'Averta-ExtraBold',
                     }}
                   />
                 ) : (
-                  <Text cls="white fw7 pr1" style={{ fontSize: 19 }}>
+                  <Text cls="white fw7 pr2 avertaFont" style={{ fontSize: 20 }}>
                     {route.title}
                   </Text>
                 )}

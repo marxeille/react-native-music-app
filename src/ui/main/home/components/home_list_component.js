@@ -49,7 +49,12 @@ export default class HomeListComponent extends Component {
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}>
               <Text
-                style={{ fontWeight: '700', fontSize: 22, opacity: 0 }}
+                style={{
+                  fontWeight: '700',
+                  fontSize: 22,
+                  opacity: 0,
+                  fontFamily: 'Averta-ExtraBold',
+                }}
                 cls="fw5 f4">
                 {title}
               </Text>
@@ -57,7 +62,7 @@ export default class HomeListComponent extends Component {
           </MaskedView>
           {rightIcon ? (
             <TouchableOpacity onPress={() => navigate('setting')}>
-              <Image cls="widthFn-20 heightFn-20" source={Images.ic_setting} />
+              <Image cls="widthFn-24 heightFn-24" source={Images.ic_setting} />
             </TouchableOpacity>
           ) : null}
         </View>

@@ -30,8 +30,8 @@ const TrackDetails = ({
         end={{ x: 0.7, y: 0 }}
         styles={{
           justifyContent: 'center',
-          fontSize: 23,
-          fontWeight: '800',
+          fontSize: 25,
+          fontFamily: 'Averta-ExtraBold',
         }}
       />
       <Text style={styles.artist} onPress={onArtistPress}>
@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   artist: {
-    color: 'rgba(255, 255, 255, 0.72)',
     fontSize: 15,
     marginTop: 4,
-    fontWeight: '600',
+    color: '#fff',
+    fontFamily: 'lato-regular',
   },
   button: {
     opacity: 0.72,

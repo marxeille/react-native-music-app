@@ -85,8 +85,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   text: {
-    color: 'rgba(255, 255, 255, 0.72)',
-    fontSize: 12,
+    color: '#fff',
+    fontFamily: 'lato-regular',
+    fontSize: 10,
     textAlign: 'center',
   },
 });

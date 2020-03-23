@@ -33,7 +33,7 @@ const Controls = ({
     <TouchableOpacity onPress={onBack}>
       <Image style={styles.changeButton} source={Images.ic_prev} />
     </TouchableOpacity>
-    <View style={{ width: 0 }} />
+    <View style={{ width: 15 }} />
     {!paused ? (
       <TouchableWithoutFeedback onPress={onPressPause}>
         <View>
@@ -45,7 +45,7 @@ const Controls = ({
         <Image source={Images.ic_play_large} />
       </TouchableWithoutFeedback>
     )}
-    <View style={{ width: 0 }} />
+    <View style={{ width: 15 }} />
     <TouchableOpacity onPress={onForward} disabled={forwardDisabled}>
       <Image
         style={[styles.changeButton, forwardDisabled && { opacity: 0.3 }]}
@@ -83,12 +83,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   secondaryControl: {
-    height: 20,
-    width: 20,
+    height: 18,
+    width: 18,
   },
   changeButton: {
-    height: 28,
-    width: 28,
+    height: 32,
+    width: 32,
   },
   off: {
     opacity: 0.3,

@@ -111,7 +111,7 @@ export default class PlayerComponent extends Component {
                       rootStore.playerStore.toggleStatus();
                     }}
                     background={TouchableNativeFeedback.SelectableBackground()}>
-                    <View cls="pa3">
+                    <View cls="pa3 pr2">
                       <Image
                         source={
                           rootStore.playerStore.statusPlayer == 'pause'
@@ -125,7 +125,7 @@ export default class PlayerComponent extends Component {
                   <View cls="pa3">
                     <Image
                       source={Images.ic_favorited}
-                      cls="widthFn-24 heightFn-24"
+                      cls="widthFn-25 heightFn-24"
                     />
                   </View>
                 </View>

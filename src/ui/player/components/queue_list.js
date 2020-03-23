@@ -45,12 +45,14 @@ const QueueList = observer(
                 end={{ x: 0.6, y: 0 }}
                 styles={{
                   justifyContent: 'center',
-                  fontSize: 19,
-                  fontWeight: '800',
+                  fontSize: 20,
+                  fontFamily: 'Averta-ExtraBold',
                 }}
               />
-              <View style={{ paddingTop: 1 }}>
-                <Text cls="primaryPurple fw7 f6">{props.subTitle}</Text>
+              <View style={{ paddingTop: 2 }}>
+                <Text cls="primaryPurple fw7 f6 avertaFont">
+                  {props.subTitle}
+                </Text>
               </View>
             </View>
             <View>

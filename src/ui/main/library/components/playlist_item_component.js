@@ -39,14 +39,14 @@ export default class PlaylistItem extends Component {
               }
             />
 
-            <View>
-              <Text cls="white fw7 f6 pl2">
+            <View cls="pl2">
+              <Text cls="white fw7 f6 pl2 lightFont">
                 {index != undefined
                   ? rootStore.libraryStore.playlists[index].title()
                   : 'Tạo playlist'}
               </Text>
               {index != undefined ? (
-                <Text cls="primaryPurple f6 pl2 pt1">
+                <Text cls="primaryPurple f7 pl2 pt1 lightFont">
                   của {rootStore.libraryStore.playlists[index].title()}
                 </Text>
               ) : null}
