@@ -86,13 +86,15 @@ export default class AlbumDetail extends Component {
             </TouchableOpacity>
           </View>
           <View cls="aic jcc">
-            <Text cls="white fw8 f3 pb2">
+            <Text cls="white fw8 f3 pb2 avertaFont">
               {"Today's top hits".toUpperCase()}
             </Text>
-            <Text cls="white f8">
+            <Text cls="white f8 latoFont">
               {'Idol khÁ bẢnH is on top of the Vinahey hey hey!'}
             </Text>
-            <Text cls="f9 primaryPurple">{'7.000.000.000 Người theo dõi'}</Text>
+            <Text cls="f9 primaryPurple latoFont pt2">
+              {'7.000.000.000 Người theo dõi'}
+            </Text>
           </View>
         </ImageBackground>
       </>
@@ -103,18 +105,20 @@ export default class AlbumDetail extends Component {
     return (
       <>
         <View>
-          <View cls="pt2 aic">
+          <View cls="pt2 aic pb2">
             <TouchableOpacity>
               <View
-                cls="widthFn-140 aic ba br5 pa4 pt1 pb1"
+                cls="widthFn-140 aic ba br5 pa3 pt2 pb2"
                 style={{ borderColor: '#d7a0c8' }}>
-                <Text cls="white f9 fw6">{`theo dõi`.toUpperCase()}</Text>
+                <Text cls="white f11 fw6 lightFont">
+                  {`theo dõi`.toUpperCase()}
+                </Text>
               </View>
             </TouchableOpacity>
           </View>
           <View>
             <ImageBackground
-              cls="heightFn-100 aic pt4"
+              cls="heightFn-70 aic pt3"
               style={{ width: '100%' }}
               source={Images.wave}>
               <TouchableOpacity onPress={this.handleLogin}>
@@ -123,7 +127,9 @@ export default class AlbumDetail extends Component {
                   colors={['#4A3278', '#8B659D', '#DDA5CB']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}>
-                  <Text cls="white f6 fw7 pa2 pl4 pr4">Phát trộn bài</Text>
+                  <Text cls="white f6 fw7 pa2 pl4 pr4 avertaFont">
+                    Phát trộn bài
+                  </Text>
                 </LinearGradient>
               </TouchableOpacity>
             </ImageBackground>
@@ -144,7 +150,7 @@ export default class AlbumDetail extends Component {
               styles={{
                 justifyContent: 'center',
                 fontSize: 18,
-                fontWeight: '800',
+                fontFamily: 'Averta-ExtraBold',
               }}
             />
             <Switch

@@ -15,8 +15,8 @@ const AlbumItem = observer(
           />
 
           <View cls="jcc pl3">
-            <Text cls="white fw7 f6">123123</Text>
-            <Text cls="primaryPurple">123123</Text>
+            <Text cls="white fw7 f6 lightFont">123123</Text>
+            <Text cls="primaryPurple lightFont">123123</Text>
           </View>
         </View>
       </TouchableOpacity>

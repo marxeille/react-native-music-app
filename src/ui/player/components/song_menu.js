@@ -59,11 +59,11 @@ export default class SongMenu extends Component {
               end={{ x: 0.7, y: 0 }}
               styles={{
                 justifyContent: 'center',
-                fontSize: 23,
-                fontWeight: '800',
+                fontSize: 25,
+                fontFamily: 'Averta-ExtraBold',
               }}
             />
-            <Text cls="white fw5 f7 pt1">
+            <Text cls="white fw5 f7 pt1 latoFont">
               {song?.artist ??
                 rootStore.playerStore?.currentSong?.getSubTitlte()}
             </Text>
@@ -91,7 +91,7 @@ const ActionItem = wrap(props => {
       <TouchableOpacity onPress={props.onPress}>
         <View cls="flx-row aic pt3 pb2">
           <Image source={Images[props.icon]} />
-          <Text cls="primaryPurple pl3 fw7 f6">{props.title}</Text>
+          <Text cls="primaryPurple pl3 fw7 f6 lightFont">{props.title}</Text>
         </View>
       </TouchableOpacity>
     </>

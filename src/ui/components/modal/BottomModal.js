@@ -98,7 +98,10 @@ export default class BottomModal extends React.Component {
                   <TouchableOpacity
                     onPress={this._hideModal}
                     cls="jcc pv1 ph3 aic">
-                    <Image source={Images.ic_delete} />
+                    <Image
+                      cls="widthFn-20 heightFn-20"
+                      source={Images.ic_delete}
+                    />
                   </TouchableOpacity>
                 </View>
                 <View cls="aic jcc flexFn-5 pt2">
@@ -107,8 +110,8 @@ export default class BottomModal extends React.Component {
                     end={{ x: 0.7, y: 0 }}
                     styles={{
                       justifyContent: 'center',
-                      fontSize: 21,
-                      fontWeight: '800',
+                      fontSize: 23,
+                      fontFamily: 'Averta-ExtraBold',
                     }}
                   />
                 </View>

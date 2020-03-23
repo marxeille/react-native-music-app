@@ -51,10 +51,10 @@ export default class PlayerInfo extends Component {
               source={{ uri: rootStore.playerStore?.currentSong?.getThumb() }}
             />
             <View cls="pl3  jcc">
-              <Text cls="white fw7 f6">
+              <Text cls="white fw7 f6 lightFont">
                 {rootStore.playerStore?.currentSong?.getName()}
               </Text>
-              <Text cls="white pt1">
+              <Text cls="white pt1 lightFont">
                 {rootStore.playerStore?.currentSong?.getSubTitlte()}
               </Text>
             </View>
@@ -62,25 +62,25 @@ export default class PlayerInfo extends Component {
         </ImageBackground>
         <View cls="pa3 pt4 jcc">
           <TouchableOpacity>
-            <View cls="flx-row aic pt3">
+            <View cls="flx-row aic pt3 lightFont">
               <Image source={Images.ic_mess} />
               <Text cls="fw7 f6 primaryPurple pl3">Tin nhắn</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <View cls="flx-row aic pt5">
+            <View cls="flx-row aic pt5 lightFont">
               <Image source={Images.ic_fb} />
               <Text cls="fw7 f6 primaryPurple pl3">Facebook</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <View cls="flx-row aic pt5">
+            <View cls="flx-row aic pt5 lightFont">
               <Image source={Images.ic_link} />
               <Text cls="fw7 f6 primaryPurple pl3">Sao chép liên kết</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <View cls="flx-row aic pt5">
+            <View cls="flx-row aic pt5 lightFont">
               <Image source={Images.ic_menu} />
               <Text cls="fw7 f6 primaryPurple pl3">Thêm nữa</Text>
             </View>
