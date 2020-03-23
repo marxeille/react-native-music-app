@@ -50,26 +50,34 @@ export const PlayerStore = types
       },
 
       prepareSong(id) {
+        //Get list of songs
         const songs = self.getSongs();
+
+        //Define track
         let track;
 
         if (self.selectedId == null || id !== null) {
           // Case 0: User choose a new song from list
           if (!id) {
             // Case 1: no song in queue, start new song with no ID
+            //set Track
             track = songs[self.trackIndex];
+            //set new song
             self.startNewSong(track.id);
           } else {
             //Case 5: no song in queue, start new song WITH ID
             track = getParent(self).songs.get(id);
             // Set track index by track id
             self.setTrackIndex(_.findIndex(self.getSongs(), ['id', track.id]));
+            //set new song
             self.startNewSong(track.id);
           }
         } else {
           //Case 4: Continue current track(in case user from another screen get into player screen)
           track = getParent(self).songs.get(self.selectedId);
         }
+
+        // Play song
         self.playSong(track.id);
       },
 
@@ -82,8 +90,10 @@ export const PlayerStore = types
             //Check if it is the last track of queue
             self.setTrackIndex(
               !self.shuffle
-                ? self.trackIndex + 1
-                : Math.floor(Math.random() * Math.floor(self.getQueueSize())),
+                ? //Next track WITH NO shuffle
+                  self.trackIndex + 1
+                : //Next track WITH shuffle ON
+                  Math.floor(Math.random() * Math.floor(self.getQueueSize())),
             );
             track = songs[self.trackIndex];
             self.startNewSong(track.id);
@@ -95,6 +105,7 @@ export const PlayerStore = types
           self.startNewSong(track.id);
         }
 
+        //play song
         if (track) self.playSong(track.id);
       },
 

@@ -36,6 +36,7 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-alphabet-sectionlist": "https://github.com/marxeille/react-native-atoz-list.git",
+    "react-native-check-box": "^2.1.7",
     "react-native-draggable-flatlist": "^2.3.1",
     "react-native-fbsdk": "^1.1.2",
     "react-native-gesture-handler": "^1.6.0",
