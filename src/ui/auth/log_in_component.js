@@ -110,9 +110,12 @@ export default class LogInComponent extends Component {
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}>
                   <Text
-                    cls="white f6 fw5 pl5 pr5"
-                    style={{ paddingTop: 12, paddingBottom: 12 }}>
-                    Đăng nhập
+                    cls="white f6 pl5 pr5 avertaFont"
+                    style={{
+                      paddingTop: 12,
+                      paddingBottom: 12,
+                    }}>
+                    Đăng Nhập
                   </Text>
                 </LinearGradient>
               </TouchableOpacity>
@@ -123,14 +126,14 @@ export default class LogInComponent extends Component {
             <View cls="pt3">
               <TouchableOpacity>
                 <View cls="aic ba b--#321A54 pt3 bg-#323277 br5 widthFn-220 heightFn-50">
-                  <Text cls="white">Đăng nhập bằng Facebook</Text>
+                  <Text cls="white latoHeavyFont">Đăng Nhập bằng Facebook</Text>
                 </View>
               </TouchableOpacity>
             </View>
             <View cls="pt3">
               <TouchableOpacity>
                 <View cls="aic ba b--#321A54 pt3 bg-#A52222 br5 widthFn-220 heightFn-50">
-                  <Text cls="white">Đăng nhập bằng Google</Text>
+                  <Text cls="white latoHeavyFont">Đăng Nhập bằng Google</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -156,6 +159,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'transparent',
+    fontFamily: 'lato-heavy',
     color: '#fff',
   },
 });

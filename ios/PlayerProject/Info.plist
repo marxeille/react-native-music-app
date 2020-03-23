@@ -38,10 +38,10 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Averta-ExtraBold_4.otf</string>
+		<string>Averta-ExtraBold.otf</string>
 		<string>lato-heavy.ttf</string>
 		<string>lato-regular.ttf</string>
 	</array>

@@ -142,10 +142,10 @@ const DEFAULT_OPTIONS = {
         fontFamily: 'lato-regular',
       },
       latoHeavyFont: {
-        fontFamily: 'lato-regular',
+        fontFamily: 'lato-heavy',
       },
       avertaFont: {
-        fontFamily: 'Averta-ExtraBold_4',
+        fontFamily: 'Averta-ExtraBold',
       },
       lightFont: {
         fontFamily: 'lato-heavy',
