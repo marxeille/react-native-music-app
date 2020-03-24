@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
+import { standardPadding } from '../../../utils';
 
 const TrackDetails = ({
   title,
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 24,
     flexDirection: 'row',
-    paddingHorizontal: 20,
+    paddingHorizontal: standardPadding() / 2,
     alignItems: 'center',
   },
   detailsWrapper: {

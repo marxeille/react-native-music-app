@@ -7,6 +7,7 @@ import HomeListComponent from './components/home_list_component';
 import { rootStore } from '../../../data/context/root_context';
 import { observer } from 'mobx-react';
 import Images from '../../../assets/icons/icons';
+import LinearGradient from 'react-native-linear-gradient';
 
 @observer
 @wrap
@@ -22,30 +23,40 @@ export default class HomeComponent extends Component {
 
   render() {
     return rootStore.homeStore.state === 'loading' ? (
-      <View cls="bg-#230c40 fullView">
-        <ImageBackground cls="fullView aic jcc" source={Images.bg2}>
-          <ActivityIndicator />
-        </ImageBackground>
-      </View>
+      <LinearGradient
+        colors={['#291048', '#1a0732', '#130727', '#110426']}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 1, y: 1 }}>
+        <View cls="fullView">
+          <ImageBackground cls="fullView aic jcc" source={Images.bg2}>
+            <ActivityIndicator />
+          </ImageBackground>
+        </View>
+      </LinearGradient>
     ) : (
-      <View cls="bg-#230c40 fullView">
-        <ImageBackground cls="fullView aic" source={Images.bg3}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <HomeListComponent
-              cate="1"
-              type={'small'}
-              rightIcon
-              title="Mới phát gần đây"
-            />
-            <HomeListComponent
-              type={'large'}
-              title="Playlist phổ biến"
-              cate="2"
-            />
-            <HomeListComponent type={'large'} title="Dành cho bạn" cate="3" />
-          </ScrollView>
-        </ImageBackground>
-      </View>
+      <LinearGradient
+        colors={['#291048', '#1a0732', '#130727', '#110426']}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 1, y: 1 }}>
+        <View cls="fullView">
+          <ImageBackground cls="fullView aic" source={Images.bg3}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <HomeListComponent
+                cate="1"
+                type={'small'}
+                rightIcon
+                title="Mới phát gần đây"
+              />
+              <HomeListComponent
+                type={'large'}
+                title="Playlist phổ biến"
+                cate="2"
+              />
+              <HomeListComponent type={'large'} title="Dành cho bạn" cate="3" />
+            </ScrollView>
+          </ImageBackground>
+        </View>
+      </LinearGradient>
     );
   }
 }

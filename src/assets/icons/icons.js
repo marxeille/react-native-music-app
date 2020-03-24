@@ -53,6 +53,7 @@ const Images = {
   logo_signin: require('./logo_signin.png'),
   pass: require('./pass.png'),
   setting: require('./setting.png'),
-  wave: require('./wave.png')
+  wave: require('./wave.png'),
+  wave2: require('./wave2.png')
 }
 export default Images

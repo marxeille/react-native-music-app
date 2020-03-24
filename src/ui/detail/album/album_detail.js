@@ -187,26 +187,31 @@ export default class AlbumDetail extends Component {
 
   render() {
     return (
-      <View cls="bg-#230c40 fullView">
-        <ImageBackground cls="fullView" source={Images.bg2}>
-          <FlatList
-            ListHeaderComponent={this._renderListHeaderContent()}
-            data={[1, 2, 3, 4, 5]}
-            showsVerticalScrollIndicator={false}
-            renderItem={this._renderItem}
-            keyExtractor={(item, index) => index.toString()}
-          />
-          <BottomModal ref={this.modalSong} headerNone>
-            <SongMenu
-              song={{
-                title: 'hey hey hey',
-                artist: 'idol giới trẻ khÁ bẢnH',
-                artwork: '',
-              }}
+      <LinearGradient
+        colors={['#291048', '#1a0732', '#130727', '#110426']}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 1, y: 1 }}>
+        <View cls="fullView">
+          <ImageBackground cls="fullView" source={Images.bg2}>
+            <FlatList
+              ListHeaderComponent={this._renderListHeaderContent()}
+              data={[1, 2, 3, 4, 5]}
+              showsVerticalScrollIndicator={false}
+              renderItem={this._renderItem}
+              keyExtractor={(item, index) => index.toString()}
             />
-          </BottomModal>
-        </ImageBackground>
-      </View>
+            <BottomModal ref={this.modalSong} headerNone>
+              <SongMenu
+                song={{
+                  title: 'hey hey hey',
+                  artist: 'idol giới trẻ khÁ bẢnH',
+                  artwork: '',
+                }}
+              />
+            </BottomModal>
+          </ImageBackground>
+        </View>
+      </LinearGradient>
     );
   }
 }

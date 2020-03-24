@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import Images from '../../../assets/icons/icons';
+import { standardPadding } from '../../../utils';
 
 const Controls = ({
   paused,
@@ -69,8 +70,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 8,
-    paddingHorizontal: 24,
+    paddingTop: 16 / standardPadding(),
+    paddingHorizontal: standardPadding() / 2,
   },
   playButton: {
     height: 72,

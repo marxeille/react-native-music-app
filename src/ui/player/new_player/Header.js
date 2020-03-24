@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Images from '../../../assets/icons/icons';
 import { pop } from '../../../navigation/navigation_service';
 import { wrap } from '../../../themes';
+import { standardPadding } from '../../../utils';
 
 const Header = wrap(
   ({ message, onDownPress, onQueuePress, onMessagePress }) => (
@@ -28,7 +29,7 @@ export default Header;
 const styles = StyleSheet.create({
   container: {
     height: 72,
-    paddingHorizontal: 24,
+    paddingHorizontal: standardPadding() / 2,
     flexDirection: 'row',
   },
   message: {

@@ -19,7 +19,7 @@ import Images from '../../../assets/icons/icons';
 import BottomModal from '../../components/modal/BottomModal';
 import * as _ from 'lodash';
 import { wrap } from '../../../themes';
-import { isMeidumDevice } from '../../../utils';
+import { isMeidumDevice, isSmallDevice } from '../../../utils';
 import images from '../../../styles/images';
 
 @observer
@@ -170,7 +170,6 @@ export default class Player extends Component {
 
   render() {
     const { currentSong } = rootStore?.playerStore;
-
     return (
       <ImageBackground source={Images.bg3} style={styles.container}>
         <StatusBar hidden={true} />
@@ -206,15 +205,23 @@ export default class Player extends Component {
           onForward={this.onForward.bind(this)}
           paused={rootStore?.playerStore?.statusPlayer == 'pause'}
         />
-        {isMeidumDevice() ? null : (
-          <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
-            <Image
-              source={require('../../../assets/images/wave2.png')}
-              style={{ zIndex: 0, width: '100%', height: 130 }}
-            />
-          </View>
-        )}
-
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+            height: isSmallDevice() ? 50 : isMeidumDevice() ? 70 : 130,
+          }}>
+          <Image
+            source={Images.wave2}
+            resizeMode="stretch"
+            style={{
+              zIndex: 0,
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        </View>
         <BottomModal
           ref={this.modalShare}
           title={'Chia sẻ'}

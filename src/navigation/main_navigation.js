@@ -30,6 +30,7 @@ function getBottomTabNavigator() {
         labelStyle: {
           fontSize: 11,
           fontFamily: 'lato-heavy',
+          paddingTop: 3,
         },
         style: {
           borderWidth: 0,

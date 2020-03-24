@@ -201,11 +201,24 @@ export function subLongStr(str, length) {
 }
 
 export const isSmallDevice = () => {
-  return D_HEIGHT <= 600;
+  return D_HEIGHT <= 680;
 };
 
 export const isMeidumDevice = () => {
-  return D_HEIGHT <= 700;
+  return D_HEIGHT <= 736;
+};
+
+export const standardPadding = () => {
+  let padding;
+  if (isMeidumDevice()) {
+    padding = 80;
+  } else if (isSmallDevice()) {
+    padding = 112;
+  } else {
+    padding = 48;
+  }
+
+  return padding;
 };
 
 export const makeCancelable = promise => {

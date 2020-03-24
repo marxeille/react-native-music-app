@@ -10,6 +10,7 @@ import {
   Dimensions,
   ImageBackground,
 } from 'react-native';
+import { standardPadding } from '../../../utils';
 
 const AlbumArt = ({ url, onPress }) => (
   <View style={styles.container}>
@@ -22,12 +23,13 @@ const AlbumArt = ({ url, onPress }) => (
 export default AlbumArt;
 
 const { width, height } = Dimensions.get('window');
-const imageSize = width - 48;
+const imageSize = width - standardPadding();
 
 const styles = StyleSheet.create({
   bg: { width: '100%' },
   container: {
     paddingHorizontal: 24,
+    alignItems: 'center',
   },
   image: {
     width: imageSize,

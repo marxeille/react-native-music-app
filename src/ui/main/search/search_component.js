@@ -122,35 +122,40 @@ export default class SearchComponent extends Component {
       );
 
     return (
-      <View cls="bg-#230c40 fullView">
-        <ImageBackground cls="fullView" source={Images.bg2}>
-          {this.renderSearchSection()}
-          {keyword || showHistory ? (
-            <View cls="pa3 pt0 fullView">
-              <FlatList
-                data={[...this.viewmodel.recentlySong.values()]}
-                showsVerticalScrollIndicator={false}
-                renderItem={this.renderSearchItem}
-                keyExtractor={(item, index) => index.toString()}
-              />
-              <View style={{ position: 'absolute', right: 12, bottom: 225 }}>
-                <TouchableOpacity onPress={this.viewmodel.removeAllRecently}>
-                  <View
-                    cls="ba pa2 pt1 pb1 br5"
-                    style={{ borderColor: '#d8a1c8' }}>
-                    <Text cls="white lightFont f10 fw8">Xoá tất cả</Text>
-                  </View>
-                </TouchableOpacity>
+      <LinearGradient
+        colors={['#291048', '#1a0732', '#130727', '#110426']}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 1, y: 1 }}>
+        <View cls="fullView">
+          <ImageBackground cls="fullView" source={Images.bg2}>
+            {this.renderSearchSection()}
+            {keyword || showHistory ? (
+              <View cls="pa3 pt0 fullView">
+                <FlatList
+                  data={[...this.viewmodel.recentlySong.values()]}
+                  showsVerticalScrollIndicator={false}
+                  renderItem={this.renderSearchItem}
+                  keyExtractor={(item, index) => index.toString()}
+                />
+                <View style={{ position: 'absolute', right: 12, bottom: 225 }}>
+                  <TouchableOpacity onPress={this.viewmodel.removeAllRecently}>
+                    <View
+                      cls="ba pa2 pt1 pb1 br5"
+                      style={{ borderColor: '#d8a1c8' }}>
+                      <Text cls="white lightFont f10 fw8">Xoá tất cả</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          ) : (
-            <ScrollView contentContainerCls="pa3 pt1">
-              <View>{this.renderResultSection('Nghệ sĩ', [1, 2, 3])}</View>
-              <View>{this.renderResultSection('Bài hát', [1, 2, 3, 4])}</View>
-            </ScrollView>
-          )}
-        </ImageBackground>
-      </View>
+            ) : (
+              <ScrollView contentContainerCls="pa3 pt1">
+                <View>{this.renderResultSection('Nghệ sĩ', [1, 2, 3])}</View>
+                <View>{this.renderResultSection('Bài hát', [1, 2, 3, 4])}</View>
+              </ScrollView>
+            )}
+          </ImageBackground>
+        </View>
+      </LinearGradient>
     );
   }
 }

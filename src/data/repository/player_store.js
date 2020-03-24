@@ -123,7 +123,6 @@ export const PlayerStore = types
         }
       },
       setPosition(position) {
-        // const parent = getParent(self).songs;
         self.position = position;
       },
       setDuration(duration) {
@@ -157,15 +156,19 @@ export const PlayerStore = types
           self.play();
         });
         MusicControl.on('nextTrack', () => {
-          self.changeSong('next');
+          if (self.trackIndex < self.getQueueSize() - 1) {
+            self.changeSong('next');
+          }
         });
         MusicControl.on('previousTrack', () => {
-          self.changeSong('back');
+          if (self.trackIndex > 0) {
+            self.changeSong('back');
+          }
         });
 
-        MusicControl.on('seekForward', () => {
-          self.changeSong('back');
-        });
+        // MusicControl.on('seekForward', () => {
+        //   self.changeSong('back');
+        // });
 
         // Seeking
         MusicControl.enableControl('seekForward', true); // iOS only

@@ -74,88 +74,95 @@ export default class SignUpComponent extends Component {
   render() {
     const { pass, email, rePass, sex } = this.state;
     return (
-      <View cls="bg-#230c40 fullView">
-        <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
-          <View cls="pa4 pb4">
-            <Image style={styles.icon} source={Images.logo_signin} />
-          </View>
-          {/* Text Input group */}
-          <View cls="fullWidth pa4 pb3">
-            <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
-              <TextInput
-                secureTextEntry={false}
-                placeholderTextColor="#fff"
-                placeholder={'Email'}
-                style={[styles.inputText]}
-                value={email}
-                onChange={event => this.onChangeText(event, 'email')}
-                autoCorrect={false}
-              />
-              <Image source={Images.ic_pass} />
+      <LinearGradient
+        colors={['#291048', '#1a0732', '#130727', '#110426']}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 1, y: 1 }}>
+        <View cls="fullView">
+          <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
+            <View cls="pa4 pb3">
+              <Image style={styles.icon} source={Images.logo_signin} />
             </View>
-            <View cls="pt3">
+            {/* Text Input group */}
+            <View cls="fullWidth pa4 pb3">
               <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
                 <TextInput
-                  secureTextEntry={true}
+                  secureTextEntry={false}
                   placeholderTextColor="#fff"
-                  placeholder={'Mật khẩu'}
+                  placeholder={'Email'}
                   style={[styles.inputText]}
-                  value={pass}
-                  onChange={event => this.onChangeText(event, 'pass')}
+                  value={email}
+                  onChange={event => this.onChangeText(event, 'email')}
                   autoCorrect={false}
                 />
-                <Image cls="widthFn-20 heightFn-25" source={Images.pass} />
+                <Image source={Images.ic_pass} />
+              </View>
+              <View cls="pt3">
+                <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
+                  <TextInput
+                    secureTextEntry={true}
+                    placeholderTextColor="#fff"
+                    placeholder={'Mật khẩu'}
+                    style={[styles.inputText]}
+                    value={pass}
+                    onChange={event => this.onChangeText(event, 'pass')}
+                    autoCorrect={false}
+                  />
+                  <Image cls="widthFn-20 heightFn-25" source={Images.pass} />
+                </View>
+              </View>
+              <View cls="pt3">
+                <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
+                  <TextInput
+                    secureTextEntry={true}
+                    placeholderTextColor="#fff"
+                    placeholder={'Nhập lại mật khẩu'}
+                    style={[styles.inputText]}
+                    value={rePass}
+                    onChange={event => this.onChangeText(event, 'rePass')}
+                    autoCorrect={false}
+                  />
+                  <Image cls="widthFn-20 heightFn-25" source={Images.pass} />
+                </View>
               </View>
             </View>
-            <View cls="pt3">
-              <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
-                <TextInput
-                  secureTextEntry={true}
-                  placeholderTextColor="#fff"
-                  placeholder={'Nhập lại mật khẩu'}
-                  style={[styles.inputText]}
-                  value={rePass}
-                  onChange={event => this.onChangeText(event, 'rePass')}
-                  autoCorrect={false}
-                />
-                <Image cls="widthFn-20 heightFn-25" source={Images.pass} />
-              </View>
+
+            <View cls="flx-row aic jcsb pb3 pa4 pt2">
+              <Text cls="primaryPurple lightFont f8">Chọn giới tính</Text>
+              {this.sex.map(s => this.renderCheckbox(s))}
             </View>
-          </View>
 
-          <View cls="flx-row aic jcsb pb3 pa4 pt2">
-            <Text cls="primaryPurple lightFont f8">Chọn giới tính</Text>
-            {this.sex.map(s => this.renderCheckbox(s))}
-          </View>
+            {/* Button Group */}
+            <ImageBackground cls="fullWidth" source={Images.wave}>
+              <View cls="fullWidth pa3 pt3 aic">
+                <TouchableOpacity onPress={this.handleSignUp}>
+                  <LinearGradient
+                    cls="ba br5 b--#321A54"
+                    colors={['#4A3278', '#8B659D', '#DDA5CB']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}>
+                    <Text cls="white f6 avertaFont" style={styles.regisButton}>
+                      Đăng Ký
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+            </ImageBackground>
 
-          {/* Button Group */}
-          <ImageBackground cls="fullWidth" source={Images.wave}>
-            <View cls="fullWidth pa3 pt4 aic">
-              <TouchableOpacity onPress={this.handleSignUp}>
-                <LinearGradient
-                  cls="ba br5 b--#321A54"
-                  colors={['#4A3278', '#8B659D', '#DDA5CB']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}>
-                  <Text cls="white f6 avertaFont" style={styles.regisButton}>
-                    Đăng Ký
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
+            <View cls="fullWidth pa5 pt0 aic">
+              <View cls="pt3">
+                <TouchableOpacity>
+                  <View cls="aic ba b--#321A54 pt3 bg-#323277 br5 widthFn-220 heightFn-50">
+                    <Text cls="white latoHeavyFont">
+                      Đăng Nhập bằng Facebook
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </ImageBackground>
-
-          <View cls="fullWidth pa5 pt0 aic">
-            <View cls="pt3">
-              <TouchableOpacity>
-                <View cls="aic ba b--#321A54 pt3 bg-#323277 br5 widthFn-220 heightFn-50">
-                  <Text cls="white latoHeavyFont">Đăng Nhập bằng Facebook</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ImageBackground>
-      </View>
+        </View>
+      </LinearGradient>
     );
   }
 }

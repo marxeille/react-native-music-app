@@ -5,6 +5,7 @@ import Slider from '@react-native-community/slider';
 import Images from '../../../assets/icons/icons';
 import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
+import { standardPadding } from '../../../utils';
 function pad(n, width, z = 0) {
   n = n + '';
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     marginTop: -12,
   },
   container: {
-    paddingHorizontal: 16,
+    paddingHorizontal: standardPadding() / 2 - 8,
     paddingTop: 16,
   },
   track: {

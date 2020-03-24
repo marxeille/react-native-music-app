@@ -4,7 +4,7 @@ import { wrap } from '../../../themes';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import QueueChild from './queue_child';
 import DraggableFlatList from 'react-native-draggable-flatlist';
-import TrackPlayer from 'react-native-track-player';
+// import TrackPlayer from 'react-native-track-player';
 import { observer } from 'mobx-react';
 
 const QueueList = observer(
