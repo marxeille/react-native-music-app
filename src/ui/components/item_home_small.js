@@ -20,9 +20,9 @@ export default class ItemHomeSmall extends Component {
         onPress={() =>
           this.props.navigate('player', { trackId: this.props.id })
         }>
-        <View cls="widthFn-110 pl3 mr2">
+        <View cls="widthFn-130 pl3 mr3">
           <Image
-            cls="heightFn-110 widthFn-110"
+            cls="heightFn-130 widthFn-130"
             source={{ uri: rootStore.playlist.get(this.props.id).getThumb() }}
           />
           <Text cls="white pt2 fw6 lightFont">

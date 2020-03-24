@@ -90,10 +90,8 @@ export const PlayerStore = types
             //Check if it is the last track of queue
             self.setTrackIndex(
               !self.shuffle
-                ? //Next track WITH NO shuffle
-                  self.trackIndex + 1
-                : //Next track WITH shuffle ON
-                  Math.floor(Math.random() * Math.floor(self.getQueueSize())),
+                ? self.trackIndex + 1
+                : Math.floor(Math.random() * Math.floor(self.getQueueSize())),
             );
             track = songs[self.trackIndex];
             self.startNewSong(track.id);

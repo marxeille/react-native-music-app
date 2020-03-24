@@ -184,7 +184,6 @@ export default class Player extends Component {
           onSeek={this.seek.bind(this)}
           trackLength={rootStore?.playerStore?.duration}
           onSlidingStart={() => this.setState({ paused: true })}
-          currentPosition={rootStore?.playerStore?.position}
         />
         <Controls
           onPressRepeat={() =>

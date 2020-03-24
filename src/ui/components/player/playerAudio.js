@@ -17,7 +17,9 @@ class PlayerAudio extends React.Component {
   }
 
   setTime(data) {
-    rootStore?.playerStore?.setPosition(Math.floor(data.currentTime));
+    if (Math.floor(data.seekableDuration) == rootStore?.playerStore?.duration) {
+      rootStore?.playerStore?.setPosition(Math.floor(data.currentTime));
+    }
   }
 
   setDuration(data) {

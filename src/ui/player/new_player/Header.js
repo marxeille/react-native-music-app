@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
     fontFamily: 'Averta-ExtraBold',
-    fontSize: 16,
+    fontSize: 15,
   },
   button: {
     opacity: 0.72,

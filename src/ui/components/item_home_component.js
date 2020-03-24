@@ -15,7 +15,7 @@ export default class ItemHome extends Component {
 
   render() {
     return (
-      <View cls="widthFn-150 pl3 mr2">
+      <View cls="widthFn-150 pl3 mr3">
         <Image
           cls="heightFn-150 widthFn-150"
           source={{ uri: rootStore.playlist.get(this.props.id).getThumb() }}
