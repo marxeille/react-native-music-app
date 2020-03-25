@@ -4,6 +4,7 @@ import { PlayList, createPlaylistFromJson } from '../model/playlist';
 import { apiService } from '../context/api_context';
 import { Album } from '../model/album';
 import { Song } from '../model/song';
+import { Alert } from 'react-native';
 
 export const HomeStore = types
   .model('HomeStore', {
@@ -33,10 +34,54 @@ export const HomeStore = types
           getParent(self).updatePlayList(data);
         });
 
-        // homeTracks.forEach(data => {
-        //   self.popularSongs.push(data.id);
-        //   getParent(self).createSongRef(data);
-        // });
+        if (homeTracks.status == 200) {
+          homeTracks.data.forEach(async data => {
+            const [trackInfo, trackUrl, trackArtist] = await Promise.all([
+              new Promise(async resolve => {
+                try {
+                  const result = await apiService.trackApiService.getTrackInfo(
+                    data.id,
+                  );
+                  resolve(result?.data || null);
+                } catch (error) {
+                  resolve(null);
+                }
+              }),
+              new Promise(async resolve => {
+                try {
+                  const result = await apiService.trackApiService.getTrackUrl(
+                    data.id,
+                  );
+                  resolve(result?.data || null);
+                } catch (error) {
+                  reject();
+                }
+              }),
+              new Promise(async resolve => {
+                try {
+                  const result = await apiService.trackApiService.getTrackArtistInfo(
+                    data.id,
+                  );
+                  resolve(result?.data || null);
+                } catch (error) {
+                  resolve(null);
+                }
+              }),
+            ]);
+
+            console.log('full track', {
+              ...trackInfo,
+              ...trackUrl,
+              ...trackArtist,
+            });
+
+            // self.popularSongs.push(data.id);
+            // getParent(self).createSongRef(data);
+          });
+        } else {
+          Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
+        }
+
         self.state = 'success';
       }),
       // #endregion
