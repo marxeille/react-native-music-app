@@ -38,6 +38,17 @@ export const RootStore = types
         });
       },
 
+      replaceSongs(songs: Array) {
+        songs.forEach(data => {
+          if (self.songs.get(data.id)) {
+            self.songs.get(data.id).update(data);
+          } else {
+            let song = createSongFromJson(data);
+            self.songs.put(song);
+          }
+        });
+      },
+
       updateAlbums(values: Array) {
         values.forEach(data => {
           self.songs.put(data);

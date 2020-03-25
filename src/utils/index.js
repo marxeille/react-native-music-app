@@ -1,7 +1,7 @@
 import { Dimensions, Platform, StatusBar } from 'react-native';
 import unorm from 'unorm';
 
-const { height: D_HEIGHT, width: D_WIDTH } = Dimensions.get('window');
+export const { height: D_HEIGHT, width: D_WIDTH } = Dimensions.get('window');
 
 export const mapValue = (object, iteratee) => {
   object = Object(object);

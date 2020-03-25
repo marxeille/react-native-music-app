@@ -28,7 +28,7 @@ class ModalWrapper extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.isVisible !== this.props.isVisible) {
       if (nextProps.isVisible === true) {
         pushInstance(this);

@@ -10,7 +10,7 @@ const QueueChild = observer(
     const onPlayItem = rootStore.playerStore?.currentSong?.id == props.item?.id;
     return (
       <View
-        cls={`heightFn-${onPlayItem ? '84' : '72'} flx-row jcsb aic ${
+        cls={`pa3 heightFn-${onPlayItem ? '84' : '72'} flx-row jcsb aic ${
           props.isActive ? 'bg-#1c0836' : ''
         } ${onPlayItem ? 'bb b--#d59fc6' : ''}`}>
         <View cls="flx-row jcc aic">

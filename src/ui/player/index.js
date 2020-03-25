@@ -9,7 +9,8 @@ import {
 import { TabView, SceneMap } from 'react-native-tab-view';
 import PlayerFullComponent from './player_full_component';
 import Player2 from './new_player/App';
-import Queue from './queue_component';
+// import Queue from './queue_component';
+import Queue from './queue_2';
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
 import { getStatusBarHeight } from '../../utils';
@@ -30,6 +31,7 @@ export default class PlayerTabView extends React.Component {
         {props.navigationState.routes.map((route, i) => {
           return (
             <TouchableOpacity
+              key={i}
               style={[styles.tabItem, { paddingTop: getStatusBarHeight() }]}
               onPress={() => this.setState({ index: i })}>
               <View cls="aic jcc">
