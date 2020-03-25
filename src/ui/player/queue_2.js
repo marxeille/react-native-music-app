@@ -89,14 +89,11 @@ class Queue2 extends Component {
   });
 
   shuffeData = queue => {
-    console.log('new queue', queue);
     let sliceIndex = _.findIndex(queue, q => q.order == 2);
     const queueSongs = queue.slice(0, sliceIndex);
     queueSongs.shift();
     const playlistSongs = queue.slice(sliceIndex, queue.length);
     playlistSongs.shift();
-    console.log('queueSongs', queueSongs);
-    console.log('playlistSongs', playlistSongs);
     rootStore.queueStore.addNewQue(queueSongs);
     this.setState({ playlist: playlistSongs });
   };
@@ -132,10 +129,10 @@ class Queue2 extends Component {
 
   render() {
     const { playlist } = this.state;
-    console.log('rootStore.queueStore.songs', rootStore.queueStore.songs);
 
     return (
-      <View cls="jcsb fullView">
+      //   <View cls="jcsb fullView">
+      <ImageBackground cls="jcsb fullView pt2" source={Images.bg3}>
         {this.renderQueuePlayer()}
         <View cls="pa3" style={{ height: D_HEIGHT - 112, paddingBottom: 56 }}>
           <DraggableFlatList
@@ -151,6 +148,7 @@ class Queue2 extends Component {
               ...playlist,
             ]}
             // ListHeaderComponent={this.renderQueuePlayer()}
+            showsVerticalScrollIndicator={false}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => `draggable-item-${index}`}
             onDragEnd={({ data }) => {
@@ -163,7 +161,8 @@ class Queue2 extends Component {
           style={{ position: 'absolute', bottom: 0 }}>
           {this.renderBottomBar()}
         </View>
-      </View>
+      </ImageBackground>
+      //   </View>
     );
   }
 }

@@ -10,6 +10,24 @@ export default class CommonApiService {
     }
   }
 
+  async getHomeTracks() {
+    try {
+      const path = '/top/tracks';
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
+  async getHomePlaylists() {
+    try {
+      const path = '/top/playlists';
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   getSongsOfAlBum(index) {
     return new Promise(resolve => {
       resolve([

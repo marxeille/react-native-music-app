@@ -48,6 +48,11 @@ export default class HomeComponent extends Component {
                 title="Mới phát gần đây"
               />
               <HomeListComponent
+                cate="1"
+                type={'small'}
+                title="Bài hát phổ biến"
+              />
+              <HomeListComponent
                 type={'large'}
                 title="Playlist phổ biến"
                 cate="2"

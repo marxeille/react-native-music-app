@@ -49,6 +49,15 @@ export const RootStore = types
         });
       },
 
+      createSongRef(song) {
+        if (self.songs.get(song.id)) {
+          self.songs.get(song.id).update(song);
+        } else {
+          let newSong = createSongFromJson(song);
+          self.songs.put(newSong);
+        }
+      },
+
       updateAlbums(values: Array) {
         values.forEach(data => {
           self.songs.put(data);
