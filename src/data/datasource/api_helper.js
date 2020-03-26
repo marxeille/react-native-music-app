@@ -1,3 +1,6 @@
+//THIS FILE FOR MAKE API SERVICE AND STORES LOOK MORE SIMPLE
+//IT'S HANDLE LOGIC FROM TAKING DATA FROM API
+
 import { apiService } from '../context/api_context';
 
 export async function getTrackFullDetail(trackId) {
@@ -35,7 +38,8 @@ export async function getTrackFullDetail(trackId) {
 
 export async function getPlaylistCover(tracks) {
   let artists = [];
-  let cover = { playlistCover: '', artists: '' };
+  let cover = {};
+  // Get first track cover for playlist cover
   const trackCover = await apiService.trackApiService.getTrackInfo(
     tracks[0].track_id,
   );
@@ -48,6 +52,7 @@ export async function getPlaylistCover(tracks) {
     };
   }
 
+  // Get 2 track artists for playlist artists
   tracks.map(async (track, index) => {
     if (index < 2) {
       const artist = await apiService.trackApiService.getTrackArtistInfo(

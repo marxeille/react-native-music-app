@@ -28,6 +28,15 @@ export default class CommonApiService {
     }
   }
 
+  async searchByKeyword(q) {
+    try {
+      const path = '/api/content/search';
+      return await privateRequest(BASE_URL.get, path, { q: q });
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   getSongsOfAlBum(index) {
     return new Promise(resolve => {
       resolve([

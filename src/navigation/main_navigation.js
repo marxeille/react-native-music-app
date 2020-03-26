@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import { Image, SafeAreaView, Text } from 'react-native';
+import { Image } from 'react-native';
 // import {
 //   createBottomTabNavigator,
 //   BottomTabView,
 // } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
-// import HomeComponent from '../ui/main/home';
-import SearchComponent from '../ui/main/search';
-import LibraryComponent from '../ui/main/library';
-// import PlayerComponent from '../ui/player/player_component';
 import { Styles } from '../styles/stylesheets';
 import Images from '../assets/icons/icons';
 import createBottomTabNavigationMusic from './createBottomTabNavigationMusic';
 import homeContainer from './home_stack';
 import libContainer from './library_stack';
+import searchContainer from './search_stack';
 import PlayerTabView from '../ui/player';
 import Settings from '../ui/main/home/settings';
 
@@ -59,7 +56,7 @@ function getBottomTabNavigator() {
       />
       <Tab.Screen
         name="search"
-        component={SearchComponent}
+        component={searchContainer}
         options={{
           tabBarLabel: 'Tìm kiếm',
           tabBarIcon: props => (

@@ -26,6 +26,10 @@ export const Song = types
         return self.artwork;
       },
 
+      getType() {
+        return self.type;
+      },
+
       getDataJson() {
         return {
           id: self.id,
@@ -33,6 +37,7 @@ export const Song = types
           artist: self.artist,
           artwork: self.artwork,
           url: self.url,
+          type: self.type,
           favorite: false,
         };
       },
@@ -54,6 +59,7 @@ export const createSongFromJson = data => {
     artwork: data.artwork,
     url: data.url,
     favorite: false,
+    type: 'song',
   });
 };
 
@@ -63,8 +69,9 @@ export const createSongFromJsonApi = data => {
     title: data.title,
     artist: data.artist ?? 'Chưa xác định',
     artwork: BASE_API_URL + data.cover_path,
-    url: data.track_url,
+    url: data.track_url ?? '',
     duration: data.duration,
     favorite: false,
+    type: 'song',
   });
 };

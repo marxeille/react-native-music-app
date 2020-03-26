@@ -18,6 +18,7 @@ export default class SearchBar extends Component {
 
   render() {
     const { keyword, onChangeKeyword, onFocus } = this.props;
+
     return (
       <View cls="fullWidth pt3 pb3 flx-row aic">
         <View cls="pa3 bg-#4B3277 flx-i" style={[styles.inputGroup]}>
@@ -32,6 +33,11 @@ export default class SearchBar extends Component {
             onChangeText={value => onChangeKeyword(value)}
             autoCorrect={false}
           />
+          {keyword == null || keyword == '' || keyword == undefined ? null : (
+            <TouchableOpacity onPress={() => onChangeKeyword('')}>
+              <Image source={Images.ic_delete_white} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     );

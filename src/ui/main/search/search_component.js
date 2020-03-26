@@ -17,6 +17,9 @@ import SearchItem from './components/search_item';
 import { SearchModel } from './view_model';
 import Loading from '../../components/loading';
 import { observer } from 'mobx-react';
+import { rootStore } from '../../../data/context/root_context';
+import BottomModal from '../../../ui/components/modal/BottomModal';
+import SongMenu from '../../../ui/player/components/song_menu';
 @observer
 @wrap
 export default class SearchComponent extends Component {
@@ -27,6 +30,7 @@ export default class SearchComponent extends Component {
       keyword: null,
     };
     this.viewmodel = SearchModel.create({ state: 'loading' });
+    this.modalMenu = React.createRef();
     this.timeout = 0;
   }
 
@@ -34,12 +38,24 @@ export default class SearchComponent extends Component {
     this.viewmodel.getRecentlySong();
   }
 
+  _showModal = () => {
+    if (this.modalMenu && this.modalMenu.current) {
+      this.modalMenu.current._showModal();
+    }
+  };
+
+  _hideModal = () => {
+    if (this.modalMenu && this.modalMenu.current) {
+      this.modalMenu.current._hideModal();
+    }
+  };
+
   onChangeKeyword = keyword => {
     this.setState({ keyword: keyword });
     if (this.timeout) clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       //search function
-      this.viewmodel.searchByKeyword(keyword);
+      if (keyword !== '') this.viewmodel.searchByKeyword(keyword);
     }, 800);
   };
 
@@ -94,7 +110,7 @@ export default class SearchComponent extends Component {
           {data.map((item, index) => (
             <TouchableOpacity key={index.toString()}>
               <Text cls="primaryPurple pt3 fw6 f6 lightFont">
-                Hey hey hey ${item}
+                {item?.title ?? `hey hey ${index}`}
               </Text>
             </TouchableOpacity>
           ))}
@@ -106,20 +122,31 @@ export default class SearchComponent extends Component {
   renderSearchItem = wrap(item => {
     return (
       <>
-        <SearchItem item={item.item} model={this.viewmodel} />
+        <SearchItem
+          item={item.item}
+          _showModal={this._showModal}
+          model={this.viewmodel}
+        />
       </>
     );
   });
 
+  renderEmptyContainer = wrap(() => (
+    <View cls="aic jcc pt3">
+      <Text cls="lightFont white">Không có kết quả</Text>
+    </View>
+  ));
+
   render() {
     const { showHistory, keyword } = this.state;
-
-    if (this.viewmodel.state == 'loading')
-      return (
-        <ImageBackground cls="fullView aic jcc" source={Images.bg2}>
-          <Loading />
-        </ImageBackground>
-      );
+    const data =
+      keyword == '' || keyword == null || keyword == undefined
+        ? [...this.viewmodel.recentlySong.values()]
+        : [
+            ...this.viewmodel.resultSongs.values(),
+            ...this.viewmodel.resultAlbums.values(),
+            ...this.viewmodel.resultArtists.values(),
+          ];
 
     return (
       <LinearGradient
@@ -129,30 +156,46 @@ export default class SearchComponent extends Component {
         <View cls="fullView">
           <ImageBackground cls="fullView" source={Images.bg2}>
             {this.renderSearchSection()}
-            {keyword || showHistory ? (
+            {this.viewmodel.state == 'loading' ? (
+              <View cls="aic jcc pt5">
+                <Loading />
+              </View>
+            ) : keyword || showHistory ? (
               <View cls="pa3 pt0 fullView">
                 <FlatList
-                  data={[...this.viewmodel.recentlySong.values()]}
+                  data={data}
                   showsVerticalScrollIndicator={false}
                   renderItem={this.renderSearchItem}
+                  ListEmptyComponent={this.renderEmptyContainer()}
                   keyExtractor={(item, index) => index.toString()}
                 />
-                <View style={{ position: 'absolute', right: 12, bottom: 225 }}>
-                  <TouchableOpacity onPress={this.viewmodel.removeAllRecently}>
-                    <View
-                      cls="ba pa2 pt1 pb1 br5"
-                      style={{ borderColor: '#d8a1c8' }}>
-                      <Text cls="white lightFont f10 fw8">Xoá tất cả</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
+                {keyword == '' || keyword == null || keyword == undefined ? (
+                  <View
+                    style={{ position: 'absolute', right: 12, bottom: 225 }}>
+                    <TouchableOpacity
+                      onPress={this.viewmodel.removeAllRecently}>
+                      <View
+                        cls="ba pa2 pt1 pb1 br5"
+                        style={{ borderColor: '#d8a1c8' }}>
+                        <Text cls="white lightFont f10 fw8">Xoá tất cả</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
               </View>
             ) : (
               <ScrollView contentContainerCls="pa3 pt1">
                 <View>{this.renderResultSection('Nghệ sĩ', [1, 2, 3])}</View>
-                <View>{this.renderResultSection('Bài hát', [1, 2, 3, 4])}</View>
+                <View>
+                  {this.renderResultSection('Bài hát', [
+                    ...rootStore?.homeStore?.popularSongs,
+                  ])}
+                </View>
               </ScrollView>
             )}
+            <BottomModal ref={this.modalMenu} headerNone>
+              <SongMenu />
+            </BottomModal>
           </ImageBackground>
         </View>
       </LinearGradient>
