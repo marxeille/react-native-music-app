@@ -3,7 +3,7 @@ import { BASE_URL, privateRequest } from './api_config';
 export default class CommonApiService {
   async getPlaylists() {
     try {
-      const path = '/playlists';
+      const path = '/api/playlists';
       return await privateRequest(BASE_URL.get, path, {});
     } catch (error) {
       console.log('TCL: try -> error', error);
@@ -12,7 +12,7 @@ export default class CommonApiService {
 
   async getHomeTracks() {
     try {
-      const path = '/top/tracks';
+      const path = '/api/top/tracks';
       return await privateRequest(BASE_URL.get, path, {});
     } catch (error) {
       console.log('TCL: try -> error', error);
@@ -21,7 +21,7 @@ export default class CommonApiService {
 
   async getHomePlaylists() {
     try {
-      const path = '/top/playlists';
+      const path = '/api/top/playlists';
       return await privateRequest(BASE_URL.get, path, {});
     } catch (error) {
       console.log('TCL: try -> error', error);

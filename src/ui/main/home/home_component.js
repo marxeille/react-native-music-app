@@ -40,11 +40,13 @@ export default class HomeComponent extends Component {
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
           <ImageBackground cls="fullView aic" source={Images.bg3}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+              style={{ width: '100%' }}
+              showsVerticalScrollIndicator={false}>
               <HomeListComponent
                 cate="1"
-                type={'large'}
-                data={rootStore?.homeStore?.popular}
+                type={'small'}
+                data={[...rootStore?.homeStore?.popularSongs]}
                 rightIcon
                 title="Mới phát gần đây"
               />
@@ -54,12 +56,18 @@ export default class HomeComponent extends Component {
                 data={[...rootStore?.homeStore?.popularSongs]}
                 title="Bài hát phổ biến"
               />
-              {/* <HomeListComponent
+              <HomeListComponent
                 type={'large'}
                 title="Playlist phổ biến"
+                data={[...rootStore?.homeStore?.popular]}
                 cate="2"
               />
-              <HomeListComponent type={'large'} title="Dành cho bạn" cate="3" /> */}
+              <HomeListComponent
+                type={'large'}
+                data={[...rootStore?.homeStore?.popular]}
+                title="Dành cho bạn"
+                cate="3"
+              />
             </ScrollView>
           </ImageBackground>
         </View>

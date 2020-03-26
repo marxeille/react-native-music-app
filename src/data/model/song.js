@@ -64,6 +64,7 @@ export const createSongFromJsonApi = data => {
     artist: data.artist ?? 'Chưa xác định',
     artwork: BASE_API_URL + data.cover_path,
     url: data.track_url,
+    duration: data.duration,
     favorite: false,
   });
 };

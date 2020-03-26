@@ -16,7 +16,7 @@ export const PlayList = types
         return self.name;
       },
       subTitle() {
-        return self.artist;
+        return self.owner;
       },
       getThumb() {
         return self.thumb;
@@ -30,6 +30,17 @@ export const PlayList = types
       },
     };
   });
+
+export const createPlaylistFromApiJson = data => {
+  return PlayList.create({
+    id: data.id.toString(),
+    name: data.name ?? '',
+    thumb: data.playlistCover ?? '',
+    owner: data.artists ?? '',
+    private: data.private ?? null,
+    tracks: data.tracks ?? [],
+  });
+};
 
 export const createPlaylistFromJson = data => {
   return PlayList.create({

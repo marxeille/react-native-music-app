@@ -93,7 +93,7 @@ BASE_URL.addAsyncResponseTransform(response => {
 
 export const login = async (name, password) => {
   try {
-    const path = '/login';
+    const path = '/api/login';
     const params = {
       name,
       password,
@@ -106,7 +106,7 @@ export const login = async (name, password) => {
 
 export const getPlaylists = async (limit = 10, offset = 0) => {
   try {
-    const path = '/playlists';
+    const path = '/api/playlists';
     return await privateRequest(BASE_URL.get, path, {});
   } catch (error) {
     console.log('TCL: try -> error', error);

@@ -170,6 +170,7 @@ export default class Player extends Component {
 
   render() {
     const { currentSong } = rootStore?.playerStore;
+
     return (
       <ImageBackground source={Images.bg3} style={styles.container}>
         <StatusBar hidden={true} />

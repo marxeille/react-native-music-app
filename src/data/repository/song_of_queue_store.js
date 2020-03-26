@@ -21,7 +21,6 @@ const SongOfQueueStore = types
       },
 
       addNewQue(songs) {
-        console.log('songs store', songs);
         self.songs = [];
         songs.map(song => {
           self.addSong(song);
