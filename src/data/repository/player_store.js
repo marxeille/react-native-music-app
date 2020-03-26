@@ -182,7 +182,7 @@ export const PlayerStore = types
         MusicControl.setNowPlaying({
           title: self.currentSong.getName(),
           artwork: self.currentSong.getThumb(), // URL or RN's image require()
-          artist: self.currentSong.getSubTitlte(),
+          artist: self.currentSong.getSubTitle(),
           // album: 'Thriller',
           // genre: 'Post-disco, Rhythm and Blues, Funk, Dance-pop',
           duration: self.currentSong.duration ?? 100, // (Seconds)

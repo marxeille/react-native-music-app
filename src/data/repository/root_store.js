@@ -5,7 +5,7 @@ import { HomeStore } from './home_store';
 import { types, flow } from 'mobx-state-tree';
 import { PlayList, createPlaylistFromJson } from '../model/playlist';
 import { apiService } from '../context/api_context';
-import { Song, createSongFromJson } from '../model/song';
+import { Song, createSongFromJson, createSongFromJsonApi } from '../model/song';
 import { Album } from '../model/album';
 import SongOfQueueStore from './song_of_queue_store';
 import { LibraryStore } from './library_store';
@@ -53,7 +53,7 @@ export const RootStore = types
         if (self.songs.get(song.id)) {
           self.songs.get(song.id).update(song);
         } else {
-          let newSong = createSongFromJson(song);
+          let newSong = createSongFromJsonApi(song);
           self.songs.put(newSong);
         }
       },

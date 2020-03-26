@@ -49,7 +49,7 @@ class Queue2 extends Component {
                   : 'Dèfault Title'}
               </Text>
               <Text cls="primaryPurple f9 pt1 latoFont">
-                Idol {currentSong?.getSubTitlte()} bẢnH
+                Idol {currentSong?.getSubTitle()} bẢnH
               </Text>
             </View>
           </View>

@@ -23,19 +23,19 @@ export default class HomeListComponent extends Component {
   };
 
   renderSmallItem = wrap(item => {
-    return <ItemHomeSmall id={item.item.id} navigate={navigate} />;
+    return <ItemHomeSmall id={item.item.id} item={item} navigate={navigate} />;
   });
 
   renderLargeItem = wrap(item => {
     return (
       <TouchableOpacity onPress={() => navigate('album_detail', { id: '1' })}>
-        <ItemHome id={item.item.id} navigate={navigate} />
+        <ItemHome id={item.item.id} item={item} navigate={navigate} />
       </TouchableOpacity>
     );
   });
 
   render() {
-    const { type, title, cate, rightIcon } = this.props;
+    const { type, title, cate, rightIcon, data } = this.props;
 
     return (
       <View cls={`fullWidth pb3 bb b--#4B3277 ${rightIcon ? 'pt4' : ''}`}>
@@ -70,7 +70,7 @@ export default class HomeListComponent extends Component {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={rootStore.homeStore.popular}
+            data={data}
             keyExtractor={(item, index) => index.toString()}
             renderItem={
               type == 'large' ? this.renderLargeItem : this.renderSmallItem

@@ -1,5 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { values } from 'mobx';
+import { BASE_API_URL } from '../../constant/constant';
 
 export const Song = types
   .model('Song', {
@@ -15,7 +16,7 @@ export const Song = types
       getName() {
         return self.title;
       },
-      getSubTitlte() {
+      getSubTitle() {
         return self.artist;
       },
       isFavorite() {
@@ -52,6 +53,17 @@ export const createSongFromJson = data => {
     artist: data.artist,
     artwork: data.artwork,
     url: data.url,
+    favorite: false,
+  });
+};
+
+export const createSongFromJsonApi = data => {
+  return Song.create({
+    id: data.id.toString(),
+    title: data.title,
+    artist: data.artist ?? 'Chưa xác định',
+    artwork: BASE_API_URL + data.cover_path,
+    url: data.track_url,
     favorite: false,
   });
 };

@@ -28,7 +28,7 @@ const QueueChild = observer(
               {props.item?.getName() ?? 'Queue Child'}
             </Text>
             <Text cls={`primaryPurple pt1 ${onPlayItem ? 'f6' : ''} latoFont`}>
-              {props.item?.getSubTitlte() ?? 'Queue Child'}
+              {props.item?.getSubTitle() ?? 'Queue Child'}
             </Text>
           </View>
         </View>

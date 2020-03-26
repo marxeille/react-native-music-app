@@ -88,7 +88,7 @@ export default class Player extends Component {
                 {rootStore.playerStore?.currentSong?.getName()}
               </Text>
               <Text cls="white pt1">
-                {rootStore.playerStore?.currentSong?.getSubTitlte()}
+                {rootStore.playerStore?.currentSong?.getSubTitle()}
               </Text>
             </View>
           </View>

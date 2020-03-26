@@ -97,7 +97,7 @@ export default class PlayerComponent extends Component {
                       {rootStore.playerStore.currentSong?.getName()}
                     </Text>
                     <Text cls="primaryPurple f10 fw4 lightFont">
-                      {rootStore.playerStore.currentSong?.getSubTitlte()}
+                      {rootStore.playerStore.currentSong?.getSubTitle()}
                     </Text>
                   </View>
                   <TouchableHighlight

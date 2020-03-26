@@ -22,18 +22,21 @@ export const HomeStore = types
         self.fetchHomeData();
       },
       //#endregion
+
+      addPopularSong(song) {
+        self.popularSongs.push(song.id);
+      },
       //#region Handle Fect Popular Success
       fetchHomeData: flow(function* fetchHomeData() {
         const playlist: Array = yield apiService.commonApiService.getPopularPlayList();
         const homeTracks: Array = yield apiService.commonApiService.getHomeTracks();
         const homePlaylist: Array = yield apiService.commonApiService.getHomePlaylists();
-        console.log('playlist', homeTracks, homePlaylist);
 
         playlist.forEach(data => {
           self.popular.push(data.id);
           getParent(self).updatePlayList(data);
         });
-
+        //Get full home track info
         if (homeTracks.status == 200) {
           homeTracks.data.forEach(async data => {
             const [trackInfo, trackUrl, trackArtist] = await Promise.all([
@@ -69,14 +72,15 @@ export const HomeStore = types
               }),
             ]);
 
-            console.log('full track', {
+            const fullTrack = {
               ...trackInfo,
               ...trackUrl,
               ...trackArtist,
-            });
-
-            // self.popularSongs.push(data.id);
-            // getParent(self).createSongRef(data);
+            };
+            if (fullTrack?.track_url) {
+              getParent(self).createSongRef(fullTrack);
+              self.addPopularSong(fullTrack);
+            }
           });
         } else {
           Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');

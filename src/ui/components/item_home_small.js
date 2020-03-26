@@ -15,6 +15,8 @@ export default class ItemHomeSmall extends Component {
   }
 
   render() {
+    const { item } = this.props.item;
+
     return (
       <TouchableOpacity
         onPress={() =>
@@ -23,13 +25,13 @@ export default class ItemHomeSmall extends Component {
         <View cls="widthFn-130 pl3 mr3">
           <Image
             cls="heightFn-130 widthFn-130"
-            source={{ uri: rootStore.playlist.get(this.props.id).getThumb() }}
+            source={{ uri: item?.getThumb() }}
           />
           <Text cls="white pt2 fw6 lightFont">
-            {rootStore.playlist.get(this.props.id).title()}
+            {item?.getName() ?? 'Default'}
           </Text>
           <Text cls="primaryPurple pt1">
-            {rootStore.playlist.get(this.props.id).subTitle()}
+            {item?.getSubTitle() ?? 'Default'}
           </Text>
         </View>
       </TouchableOpacity>

@@ -1,5 +1,6 @@
 import { create } from 'apisauce';
 import { Alert } from 'react-native';
+import { BASE_API_URL } from '../../constant/constant';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const AsyncStorageKey = {
@@ -61,7 +62,7 @@ export const privateRequestWithToken = async (
 };
 
 export const BASE_URL = create({
-  baseURL: 'http://103.28.37.44:5000/api',
+  baseURL: BASE_API_URL,
   headers: {
     Accept: 'application/json;charset=UTF-8',
     'Content-Type': 'application/json;charset=UTF-8',

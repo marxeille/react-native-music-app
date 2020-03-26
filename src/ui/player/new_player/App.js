@@ -5,7 +5,7 @@ import { rootStore } from '../../../data/context/root_context';
 
 export const TRACKS = [
   {
-    id: '1',
+    id: '7',
     title: 'Stressed Out',
     artist: 'Twenty One Pilots',
     artwork:

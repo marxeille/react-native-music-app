@@ -65,7 +65,7 @@ export default class SongMenu extends Component {
             />
             <Text cls="white fw5 f7 pt1 latoFont">
               {song?.artist ??
-                rootStore.playerStore?.currentSong?.getSubTitlte()}
+                rootStore.playerStore?.currentSong?.getSubTitle()}
             </Text>
           </View>
         </View>

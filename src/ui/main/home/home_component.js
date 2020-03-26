@@ -43,21 +43,23 @@ export default class HomeComponent extends Component {
             <ScrollView showsVerticalScrollIndicator={false}>
               <HomeListComponent
                 cate="1"
-                type={'small'}
+                type={'large'}
+                data={rootStore?.homeStore?.popular}
                 rightIcon
                 title="Mới phát gần đây"
               />
               <HomeListComponent
                 cate="1"
                 type={'small'}
+                data={[...rootStore?.homeStore?.popularSongs]}
                 title="Bài hát phổ biến"
               />
-              <HomeListComponent
+              {/* <HomeListComponent
                 type={'large'}
                 title="Playlist phổ biến"
                 cate="2"
               />
-              <HomeListComponent type={'large'} title="Dành cho bạn" cate="3" />
+              <HomeListComponent type={'large'} title="Dành cho bạn" cate="3" /> */}
             </ScrollView>
           </ImageBackground>
         </View>

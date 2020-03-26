@@ -55,7 +55,7 @@ export default class PlayerInfo extends Component {
                 {rootStore.playerStore?.currentSong?.getName()}
               </Text>
               <Text cls="white pt1 lightFont">
-                {rootStore.playerStore?.currentSong?.getSubTitlte()}
+                {rootStore.playerStore?.currentSong?.getSubTitle()}
               </Text>
             </View>
           </View>
@@ -113,7 +113,7 @@ export default class PlayerInfo extends Component {
           </TouchableOpacity>
         </View>
         <Text cls="white pt2 asc f7">
-          Idol {rootStore.playerStore?.currentSong?.getSubTitlte()} bẢnH
+          Idol {rootStore.playerStore?.currentSong?.getSubTitle()} bẢnH
         </Text>
         <BottomModal
           ref={this.modalShare}
