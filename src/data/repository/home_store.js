@@ -42,6 +42,8 @@ export const HomeStore = types
           homeTracks.data.forEach(async data => {
             const fullTrack = await getTrackFullDetail(data.id);
             if (fullTrack?.track_url) {
+              console.log('fullTrack', fullTrack);
+
               getParent(self).createSongRef(fullTrack);
               self.addPopularSong(fullTrack);
             }

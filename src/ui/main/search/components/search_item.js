@@ -28,6 +28,7 @@ export default class SearchItem extends Component {
 
   render() {
     const { item } = this.props;
+    console.log('item', item);
 
     const icon =
       item.getType() == 'song'

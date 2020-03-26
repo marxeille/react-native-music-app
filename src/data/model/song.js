@@ -9,6 +9,8 @@ export const Song = types
     artwork: types.string,
     artist: types.string,
     url: types.string,
+    type: types.string,
+    duration: types.integer,
     favorite: types.maybeNull(types.boolean),
   })
   .views(self => {
@@ -37,6 +39,7 @@ export const Song = types
           artist: self.artist,
           artwork: self.artwork,
           url: self.url,
+          duration: self.duration ?? 0,
           type: self.type,
           favorite: false,
         };
@@ -59,6 +62,7 @@ export const createSongFromJson = data => {
     artwork: data.artwork,
     url: data.url,
     favorite: false,
+    duration: data.duration ?? 100,
     type: 'song',
   });
 };
@@ -70,7 +74,7 @@ export const createSongFromJsonApi = data => {
     artist: data.artist ?? 'Chưa xác định',
     artwork: BASE_API_URL + data.cover_path,
     url: data.track_url ?? '',
-    duration: data.duration,
+    duration: data.duration ?? 100,
     favorite: false,
     type: 'song',
   });

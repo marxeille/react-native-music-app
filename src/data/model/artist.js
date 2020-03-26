@@ -5,6 +5,7 @@ export const Artist = types
     id: types.identifier,
     name: types.string,
     thumb: types.string,
+    type: types.string,
   })
   .views(self => {
     return {

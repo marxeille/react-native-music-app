@@ -140,6 +140,8 @@ export const PlayerStore = types
       },
       playSong(song) {
         self.currentSong = song;
+        console.log(' self.currentSong ', self.currentSong);
+
         self.setState(true);
         // Basic Controls
         MusicControl.enableControl('play', true);
