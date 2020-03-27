@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../../themes';
-import { rootStore } from '../../../../data/context/root_context';
 import { observer } from 'mobx-react';
+import { navigate } from '../../../../navigation/navigation_service';
 
 @observer
 @wrap
@@ -16,7 +16,8 @@ export default class ArtistItem extends Component {
     const { item } = this.props;
     return (
       <>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigate('artist_detail', { artist: item })}>
           <View cls="flx-row aic pb3">
             <Image
               cls="widthFn-90 heightFn-82"

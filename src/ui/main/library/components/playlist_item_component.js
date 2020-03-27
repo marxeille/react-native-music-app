@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../../themes';
 import { rootStore } from '../../../../data/context/root_context';
 import { observer } from 'mobx-react';
+import { navigate } from '../../../../navigation/navigation_service';
 
 @observer
 @wrap
@@ -22,7 +23,7 @@ export default class PlaylistItem extends Component {
     }
     return (
       <>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate('album_detail')}>
           <View cls="flx-row aic pb3">
             <Image
               cls="widthFn-90 heightFn-82"

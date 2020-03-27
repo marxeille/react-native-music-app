@@ -6,7 +6,6 @@ import {
   ImageBackground,
   Image,
 } from 'react-native';
-import { ShareDialog } from 'react-native-fbsdk';
 import { wrap } from '../../../themes';
 import { observer } from 'mobx-react';
 import Images from '../../../assets/icons/icons';
@@ -19,42 +18,15 @@ import AddPlayListModal from './add_playlist_modal';
 export default class SongMenu extends Component {
   constructor(props) {
     super(props);
-    const shareLinkContent = {
-      contentType: 'link',
-      contentUrl: 'https://facebook.com',
-      contentDescription: 'Facebook sharing is easy!',
-    };
+
     this.state = {
       showAddPlaylist: false,
-      shareLinkContent: shareLinkContent,
     };
   }
 
   addPlaylist = state => {
     this.setState({ showAddPlaylist: state });
   };
-
-  shareLinkWithShareDialog() {
-    var tmp = this;
-    ShareDialog.canShow(this.state.shareLinkContent)
-      .then(function(canShow) {
-        if (canShow) {
-          return ShareDialog.show(tmp.state.shareLinkContent);
-        }
-      })
-      .then(
-        function(result) {
-          if (result.isCancelled) {
-            alert('Share cancelled');
-          } else {
-            alert('Share success with postId: ' + result.postId);
-          }
-        },
-        function(error) {
-          alert('Share fail with error: ' + error);
-        },
-      );
-  }
 
   render() {
     const { song } = this.props;
@@ -101,11 +73,7 @@ export default class SongMenu extends Component {
             title={'Thêm vào playlist'}
           />
           <ActionItem icon={'ic_add_song'} title={'Thêm vào danh sách chờ'} />
-          <ActionItem
-            onPress={this.shareLinkWithShareDialog.bind(this)}
-            icon={'ic_album'}
-            title={'Xem album'}
-          />
+          <ActionItem icon={'ic_album'} title={'Xem album'} />
           <ActionItem icon={'ic_artist'} title={'Xem nghệ sĩ'} />
           <ActionItem icon={'ic_artist2'} title={'Nghệ sĩ tham gia'} />
         </View>

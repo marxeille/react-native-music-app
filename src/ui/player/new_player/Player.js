@@ -6,6 +6,8 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
+  StyleSheet,
+  Alert,
 } from 'react-native';
 import Header from './Header';
 import AlbumArt from './AlbumArt';
@@ -20,7 +22,7 @@ import BottomModal from '../../components/modal/BottomModal';
 import * as _ from 'lodash';
 import { wrap } from '../../../themes';
 import { isMeidumDevice, isSmallDevice } from '../../../utils';
-import images from '../../../styles/images';
+import { ShareDialog } from 'react-native-fbsdk';
 
 @observer
 @wrap
@@ -28,33 +30,22 @@ export default class Player extends Component {
   static contextType = PlayerContext;
   constructor(props) {
     super(props);
+    const shareLinkContent = {
+      contentType: 'link',
+      contentUrl: 'https://facebook.com',
+      contentDescription: 'Facebook sharing is easy!',
+    };
     this.state = {
       selectedTrack: 0,
+      shareLinkContent: shareLinkContent,
     };
     this.modalShare = React.createRef();
   }
 
   componentDidMount() {
     const trackId = this.props.route?.params?.trackId;
-
     rootStore.playerStore?.prepareSong(trackId ?? null);
-    // if (rootStore.playerStore?.selectedId == null) {
-    //   const track = this.props.tracks[this.state.selectedTrack];
-    //   rootStore.playerStore?.setSelectedId(track.id);
-    //   this.playingTrack(track.id);
-    // } else {
-    //   this.setState({
-    //     selectedTrack: _.findIndex(this.props.tracks, [
-    //       'id',
-    //       rootStore.playerStore?.selectedId,
-    //     ]),
-    //   });
-    // }
   }
-
-  // playingTrack = id => {
-  //   rootStore?.playerStore?.playSong(id);
-  // };
 
   _showModal = () => {
     if (this.modalShare && this.modalShare.current) {
@@ -67,6 +58,50 @@ export default class Player extends Component {
       this.modalShare.current._hideModal();
     }
   };
+
+  seek(time) {
+    time = Math.round(time);
+    this.context.playerRef.seek(time);
+  }
+
+  onBack() {
+    if (rootStore.playerStore?.trackIndex > 0) {
+      rootStore.playerStore?.changeSong('back');
+    } else {
+      this.context.playerRef?.seek(0);
+    }
+  }
+
+  onForward() {
+    if (
+      rootStore.playerStore?.trackIndex <
+      rootStore.playerStore?.getQueueSize() - 1
+    ) {
+      rootStore.playerStore?.changeSong('next');
+    }
+  }
+
+  shareLinkWithShareDialog() {
+    var tmp = this;
+    ShareDialog.canShow(this.state.shareLinkContent)
+      .then(function(canShow) {
+        if (canShow) {
+          return ShareDialog.show(tmp.state.shareLinkContent);
+        }
+      })
+      .then(
+        function(result) {
+          if (result.isCancelled) {
+            Alert.alert('Đã huỷ');
+          } else {
+            Alert.alert('Chia sẻ thành công với id: ' + result.postId);
+          }
+        },
+        function(error) {
+          Alert.alert('Chia sẻ thất bại: ' + error);
+        },
+      );
+  }
 
   _renderModalContent = wrap(() => {
     return (
@@ -100,7 +135,7 @@ export default class Player extends Component {
               <Text cls="fw7 f6 primaryPurple pl3">Tin nhắn</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.shareLinkWithShareDialog.bind(this)}>
             <View cls="flx-row aic pt5">
               <Image source={Images.ic_fb} />
               <Text cls="fw7 f6 primaryPurple pl3">Facebook</Text>
@@ -122,51 +157,6 @@ export default class Player extends Component {
       </View>
     );
   });
-
-  seek(time) {
-    time = Math.round(time);
-    this.context.playerRef.seek(time);
-  }
-
-  onBack() {
-    if (rootStore.playerStore?.trackIndex > 0) {
-      rootStore.playerStore?.changeSong('back');
-      // const prevTrack = this.props.tracks[this.state.selectedTrack - 1];
-      // rootStore.playerStore?.setSelectedId(prevTrack.id);
-      // this.playingTrack(prevTrack.id);
-      // rootStore?.playerStore?.setPosition(0);
-      // setTimeout(
-      //   () =>
-      //     this.setState({
-      //       selectedTrack: this.state.selectedTrack - 1,
-      //     }),
-      //   0,
-      // );
-    } else {
-      this.context.playerRef?.seek(0);
-    }
-  }
-
-  onForward() {
-    if (
-      rootStore.playerStore?.trackIndex <
-      rootStore.playerStore?.getQueueSize() - 1
-    ) {
-      rootStore.playerStore?.changeSong('next');
-      //   const nextTrack = this.props.tracks[this.state.selectedTrack + 1];
-      //   rootStore.playerStore?.setSelectedId(nextTrack.id);
-      //   this.playingTrack(nextTrack.id);
-      //   rootStore?.playerStore?.setPosition(0);
-      //   setTimeout(
-      //     () =>
-      //       this.setState({
-      //         selectedTrack: this.state.selectedTrack + 1,
-      //       }),
-      //     0,
-      //   );
-      // }
-    }
-  }
 
   render() {
     const { currentSong } = rootStore?.playerStore;
@@ -205,21 +195,11 @@ export default class Player extends Component {
           onForward={this.onForward.bind(this)}
           paused={rootStore?.playerStore?.statusPlayer == 'pause'}
         />
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            width: '100%',
-            height: isSmallDevice() ? 50 : isMeidumDevice() ? 70 : 130,
-          }}>
+        <View style={styles.beatContainer}>
           <Image
             source={Images.wave2}
             resizeMode="stretch"
-            style={{
-              zIndex: 0,
-              width: '100%',
-              height: '100%',
-            }}
+            style={styles.beat}
           />
         </View>
         <BottomModal
@@ -236,12 +216,19 @@ export default class Player extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  audioElement: {
-    height: 0,
-    width: 0,
+  beat: {
+    zIndex: 0,
+    width: '100%',
+    height: '100%',
   },
-};
+  beatContainer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: isSmallDevice() ? 50 : isMeidumDevice() ? 70 : 130,
+  },
+});
