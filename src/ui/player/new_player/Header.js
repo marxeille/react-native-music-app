@@ -6,23 +6,21 @@ import { pop } from '../../../navigation/navigation_service';
 import { wrap } from '../../../themes';
 import { standardPadding } from '../../../utils';
 
-const Header = wrap(
-  ({ message, onDownPress, onQueuePress, onMessagePress }) => (
-    <View style={styles.container} cls="aic jcsb">
-      <TouchableOpacity onPress={pop}>
-        <Image source={Images.ic_down} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={pop}>
-        <Text onPress={onMessagePress} style={styles.message}>
-          {message.toUpperCase()}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={onQueuePress}>
-        <Image source={Images.ic_menu} />
-      </TouchableOpacity>
-    </View>
-  ),
-);
+const Header = wrap(({ message, onDownPress, _showModal, onMessagePress }) => (
+  <View style={styles.container} cls="aic jcsb">
+    <TouchableOpacity onPress={pop}>
+      <Image source={Images.ic_down} />
+    </TouchableOpacity>
+    <TouchableOpacity onPress={pop}>
+      <Text onPress={onMessagePress} style={styles.message}>
+        {message.toUpperCase()}
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => _showModal(true)}>
+      <Image source={Images.ic_menu} />
+    </TouchableOpacity>
+  </View>
+));
 
 export default Header;
 

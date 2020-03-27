@@ -23,6 +23,7 @@ import * as _ from 'lodash';
 import { wrap } from '../../../themes';
 import { isMeidumDevice, isSmallDevice } from '../../../utils';
 import { ShareDialog } from 'react-native-fbsdk';
+import SongMenu from '../components/song_menu';
 
 @observer
 @wrap
@@ -38,6 +39,7 @@ export default class Player extends Component {
     this.state = {
       selectedTrack: 0,
       shareLinkContent: shareLinkContent,
+      showPlayMenu: false,
     };
     this.modalShare = React.createRef();
   }
@@ -47,10 +49,12 @@ export default class Player extends Component {
     rootStore.playerStore?.prepareSong(trackId ?? null);
   }
 
-  _showModal = () => {
-    if (this.modalShare && this.modalShare.current) {
-      this.modalShare.current._showModal();
-    }
+  _showModal = (playMenu = false) => {
+    this.setState({ showPlayMenu: playMenu }, () => {
+      if (this.modalShare && this.modalShare.current) {
+        this.modalShare.current._showModal();
+      }
+    });
   };
 
   _hideModal = () => {
@@ -104,7 +108,11 @@ export default class Player extends Component {
   }
 
   _renderModalContent = wrap(() => {
-    return (
+    const { showPlayMenu } = this.state;
+
+    return showPlayMenu ? (
+      <SongMenu song={rootStore.playerStore?.currentSong} />
+    ) : (
       <View cls="jcc pt3">
         <ImageBackground
           cls="fullWidth jcc"
@@ -164,7 +172,7 @@ export default class Player extends Component {
     return (
       <ImageBackground source={Images.bg3} style={styles.container}>
         <StatusBar hidden={true} />
-        <Header message="Playing From Charts" />
+        <Header _showModal={this._showModal} message="Playing From Charts" />
         <AlbumArt url={currentSong?.artwork} />
         <TrackDetails
           title={currentSong?.title}

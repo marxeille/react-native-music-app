@@ -45,19 +45,28 @@ export const HomeStore = types
 
       //#region Handle Fect Popular Success
       fetchHomeData: flow(function* fetchHomeData() {
-        const homeTracks: Array = yield apiService.commonApiService.getHomeTracks();
+        const homeTrackIds: Array = yield apiService.commonApiService.getHomeTrackIds();
         const homePlaylist: Array = yield apiService.commonApiService.getHomePlaylists();
 
         //Get full home track info
-        if (homeTracks.status == 200) {
-          homeTracks.data.forEach(async data => {
-            const fullTrack = await getTrackFullDetail(data.id);
-            if (fullTrack?.track_url) {
-              getParent(self).createSongRef(fullTrack);
-              self.addPopularSong(fullTrack);
-            }
-          });
+        if (homeTrackIds.status == 200) {
+          let ids = homeTrackIds.data.map(ht => ht.id).join(',');
+
+          const homeTracks: Array = yield apiService.commonApiService.getHomeTracks(
+            ids,
+          );
+          if (homeTracks.status == 200) {
+            homeTracks.data.forEach(async data => {
+              let fullTrack = await getTrackFullDetail(data.id);
+              fullTrack = { ...data, ...fullTrack };
+              if (fullTrack?.track_url) {
+                getParent(self).createSongRef(fullTrack);
+                self.addPopularSong(fullTrack);
+              }
+            });
+          }
         } else {
+          Alert.alert(homeTrackIds.data.msg);
           // Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
         }
 

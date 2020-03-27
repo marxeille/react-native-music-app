@@ -4,15 +4,7 @@
 import { apiService } from '../context/api_context';
 
 export async function getTrackFullDetail(trackId) {
-  const [trackInfo, trackUrl, trackArtist] = await Promise.all([
-    new Promise(async resolve => {
-      try {
-        const result = await apiService.trackApiService.getTrackInfo(trackId);
-        resolve(result?.data || null);
-      } catch (error) {
-        resolve(null);
-      }
-    }),
+  const [trackUrl, trackArtist] = await Promise.all([
     new Promise(async resolve => {
       try {
         const result = await apiService.trackApiService.getTrackUrl(trackId);
@@ -33,7 +25,7 @@ export async function getTrackFullDetail(trackId) {
     }),
   ]);
 
-  return { ...trackInfo, ...trackUrl, ...trackArtist };
+  return { ...trackUrl, ...trackArtist };
 }
 
 export async function getPlaylistCover(tracks) {

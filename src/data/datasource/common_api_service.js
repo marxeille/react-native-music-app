@@ -10,9 +10,18 @@ export default class CommonApiService {
     }
   }
 
-  async getHomeTracks() {
+  async getHomeTrackIds() {
     try {
       const path = '/api/top/tracks';
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
+  async getHomeTracks(ids) {
+    try {
+      const path = `/api/tracks?ids=${ids}`;
       return await privateRequest(BASE_URL.get, path, {});
     } catch (error) {
       console.log('TCL: try -> error', error);
