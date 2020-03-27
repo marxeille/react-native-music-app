@@ -64,6 +64,9 @@ export const HomeStore = types
                 self.addPopularSong(fullTrack);
               }
             });
+          } else {
+            Alert.alert(homeTracks.data.msg);
+            // Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
           }
         } else {
           Alert.alert(homeTrackIds.data.msg);
@@ -80,6 +83,9 @@ export const HomeStore = types
               const playlistFullInfo = { ...playlistInfo.data, ...cover };
               getParent(self).updatePlayList(playlistFullInfo);
               self.addPopular(playlistFullInfo);
+            } else {
+              Alert.alert(playlistInfo.data.msg);
+              // Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
             }
           });
         }

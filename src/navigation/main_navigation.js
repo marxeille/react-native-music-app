@@ -4,7 +4,10 @@ import { Image } from 'react-native';
 //   createBottomTabNavigator,
 //   BottomTabView,
 // } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
 
 import { Styles } from '../styles/stylesheets';
 import Images from '../assets/icons/icons';
@@ -86,25 +89,33 @@ function getBottomTabNavigator() {
 
 export default function mainContainer() {
   return (
-    <Stack.Navigator headerMode="none">
+    <Stack.Navigator
+      headerMode="none"
+      screenOptions={{
+        gestureEnabled: true,
+        gestureDirection: 'vertical',
+        cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+      }}>
       <Stack.Screen name="bottomtab" component={getBottomTabNavigator} />
       <Stack.Screen name="setting" component={Settings} />
       <Stack.Screen
         name="player"
         component={PlayerTabView}
-        options={{
-          headerTransparent: true,
-          gestureEnabled: false,
-          animationEnabled: true,
-          animationTypeForReplace: 'pop',
-          transitionConfig: () => ({
-            transitionSpec: {
-              duration: 0,
-              timing: Animated.timing,
-              easing: Easing.step0,
-            },
-          }),
-        }}
+        options={
+          {
+            // headerTransparent: true,
+            // gestureEnabled: false,
+            // animationEnabled: true,
+            // animationTypeForReplace: 'pop',
+            // transitionConfig: () => ({
+            //   transitionSpec: {
+            //     duration: 0,
+            //     timing: Animated.timing,
+            //     easing: Easing.step0,
+            //   },
+            // }),
+          }
+        }
       />
     </Stack.Navigator>
   );
