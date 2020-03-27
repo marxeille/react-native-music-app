@@ -58,7 +58,7 @@ export const HomeStore = types
             }
           });
         } else {
-          Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
+          // Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
         }
 
         if (homePlaylist.status == 200) {

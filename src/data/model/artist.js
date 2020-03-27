@@ -22,6 +22,14 @@ export const Artist = types
         return self.type;
       },
     };
+  })
+  .actions(self => {
+    return {
+      update(newJson) {
+        self.name = newJson.name;
+        self.thumb = newJson.thumb;
+      },
+    };
   });
 
 export const createArtistFromApiJson = data => {

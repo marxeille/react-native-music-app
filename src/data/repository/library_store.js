@@ -11,16 +11,22 @@ export const LibraryStore = types
     state: Result,
     albums: types.optional(types.array(types.reference(Album)), []),
     playlists: types.optional(types.array(types.reference(PlayList)), []),
-    atirst: types.optional(types.array(types.reference(Artist)), []),
+    artists: types.optional(types.array(types.reference(Artist)), []),
   })
   .actions(self => {
     return {
       fetchData() {
         self.state = 'loading';
-        self.fetchPlayList();
+        self.fetchTabsData();
       },
 
-      fetchPlayList: flow(function* fetchPlayList() {
+      fetchTabsData: flow(function* fetchTabsData() {
+        self.fetchPlaylist();
+        self.fetchArtists();
+        self.state = 'success';
+      }),
+
+      fetchPlaylist: flow(function* fetchPlaylist() {
         try {
           const playlist: Array = yield apiService.commonApiService.getPlaylists();
 
@@ -35,8 +41,22 @@ export const LibraryStore = types
         } catch (err) {
           console.log('err ', err);
         }
+      }),
 
-        self.state = 'success';
+      fetchArtists: flow(function* fetchArtists() {
+        try {
+          const artists: Array = yield apiService.libraryApiService.getArtists();
+          if (artists.status == 200) {
+            artists.data.map(ar => {
+              getParent(self).updateArtist(ar);
+              self.artists.push(ar.id);
+            });
+          } else {
+            Alert.alert(artists.data.msg);
+          }
+        } catch (err) {
+          console.log('err ', err);
+        }
       }),
     };
   });

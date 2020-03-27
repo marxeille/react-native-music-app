@@ -4,6 +4,7 @@ import { HomeStore } from './home_store';
 
 import { types, flow } from 'mobx-state-tree';
 import { PlayList, createPlaylistFromApiJson } from '../model/playlist';
+import { Artist, createArtistFromApiJson } from '../model/artist';
 import { apiService } from '../context/api_context';
 import { Song, createSongFromJson, createSongFromJsonApi } from '../model/song';
 import { Album } from '../model/album';
@@ -18,6 +19,7 @@ export const RootStore = types
     libraryStore: LibraryStore,
     queueStore: SongOfQueueStore,
     playlist: types.maybeNull(types.map(PlayList)),
+    artist: types.maybeNull(types.map(Artist)),
     songs: types.maybeNull(types.map(Song)),
     albums: types.maybeNull(types.map(Album)),
   })
@@ -29,6 +31,15 @@ export const RootStore = types
         } else {
           let playList = createPlaylistFromApiJson(playlistJson);
           self.playlist.put(playList);
+        }
+      },
+
+      updateArtist(artistJson) {
+        if (self.artist !== null && self.artist.get(artistJson.id)) {
+          self.artist.get(artistJson.id).update(artistJson);
+        } else {
+          const artist = createArtistFromApiJson(artistJson);
+          self.artist.put(artist);
         }
       },
 

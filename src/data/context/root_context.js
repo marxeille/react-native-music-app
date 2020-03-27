@@ -13,6 +13,7 @@ export const rootStore = RootStore.create({
     authState: 'none',
   }),
   playlist: {},
+  artist: {},
   playerStore: PlayerStore.create({
     currentSong: null,
     statusPlayer: 'playing',

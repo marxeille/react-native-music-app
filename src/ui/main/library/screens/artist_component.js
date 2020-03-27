@@ -1,39 +1,25 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../../themes';
 import SearchComponent from '../components/search_component';
-import PlaylistItem from '../components/playlist_item_component';
+import ArtistItem from '../components/artist_item_component';
 import AlphabetSectionList from 'react-native-alphabet-sectionlist';
+import { rootStore } from '../../../../data/context/root_context';
+import { orderBy } from 'lodash';
+import { observer } from 'mobx-react';
+import { sortByAlphabet } from '../../../../constant/constant';
 
+@observer
 @wrap
 export default class ArtistComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.data = {
-      '#': [{ name: 'A1' }, { name: 'A2' }, { name: 'A3' }],
-      A: [{ name: 'A1' }, { name: 'A2' }, { name: 'A3' }],
-      E: [{ name: 'E1' }, { name: 'E2' }, { name: 'E3' }, { name: 'E4' }],
-      F: [{ name: 'F1' }, { name: 'F2' }, { name: 'F3' }],
-      H: [{ name: 'H1' }, { name: 'H2' }, { name: 'H3' }, { name: 'H5' }],
-      J: [{ name: 'J1' }, { name: 'J2' }, { name: 'J3' }, { name: 'J5' }],
-      K: [{ name: 'K1' }, { name: 'K2' }, { name: 'K3' }, { name: 'K5' }],
-      N: [{ name: 'N1' }, { name: 'N2' }, { name: 'N3' }, { name: 'N5' }],
-      Y: [
-        { name: 'Y1' },
-        { name: 'Y2' },
-        { name: 'Y3' },
-        { name: 'Y5' },
-        { name: 'Y6' },
-      ],
-    };
   }
 
-  // Testing
   renderItem = ({ item }) => {
     return (
       <>
-        <PlaylistItem title={'Idol kHÁ bẢnH'} img />
+        <ArtistItem item={item} />
       </>
     );
   };
@@ -69,6 +55,11 @@ export default class ArtistComponent extends Component {
   // End test
 
   render() {
+    const artists = [...rootStore?.libraryStore?.artists];
+    const sortedArtists = sortByAlphabet(
+      orderBy(artists, [artist => artist.name.toLowerCase()], ['desc']),
+    );
+
     return (
       <>
         <View cls="pt3">
@@ -84,7 +75,7 @@ export default class ArtistComponent extends Component {
           </View>
           <View cls="fullHeight">
             <AlphabetSectionList
-              data={this.data}
+              data={sortedArtists}
               renderItem={this.renderItem}
               renderHeader={this.renderHeader}
               showsVerticalScrollIndicator={false}
