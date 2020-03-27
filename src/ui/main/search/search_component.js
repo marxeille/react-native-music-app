@@ -28,6 +28,7 @@ export default class SearchComponent extends Component {
     this.state = {
       showHistory: true,
       keyword: null,
+      song: null,
     };
     this.viewmodel = SearchModel.create({ state: 'loading' });
     this.modalMenu = React.createRef();
@@ -38,10 +39,12 @@ export default class SearchComponent extends Component {
     this.viewmodel.getRecentlySong();
   }
 
-  _showModal = () => {
-    if (this.modalMenu && this.modalMenu.current) {
-      this.modalMenu.current._showModal();
-    }
+  _showModal = song => {
+    this.setState({ song: song }, () => {
+      if (this.modalMenu && this.modalMenu.current) {
+        this.modalMenu.current._showModal();
+      }
+    });
   };
 
   _hideModal = () => {
@@ -138,7 +141,7 @@ export default class SearchComponent extends Component {
   ));
 
   render() {
-    const { showHistory, keyword } = this.state;
+    const { showHistory, keyword, song } = this.state;
     const data =
       keyword == '' || keyword == null || keyword == undefined
         ? [...this.viewmodel.recentlySong.values()]
@@ -194,7 +197,7 @@ export default class SearchComponent extends Component {
               </ScrollView>
             )}
             <BottomModal ref={this.modalMenu} headerNone>
-              <SongMenu />
+              <SongMenu song={song} />
             </BottomModal>
           </ImageBackground>
         </View>

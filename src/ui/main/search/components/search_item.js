@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../../themes';
-import { rootStore } from '../../../../data/context/root_context';
-import { observer } from 'mobx-react';
 import Images from '../../../../assets/icons/icons';
 import { navigate } from '../../../../navigation/navigation_service';
 
-@observer
 @wrap
 export default class SearchItem extends Component {
   constructor(props) {
@@ -17,10 +14,10 @@ export default class SearchItem extends Component {
   handleOnPress = () => {
     const { item, model, _showModal } = this.props;
     if (item.getType() == 'song') {
-      if (typeof _showModal == 'function') _showModal();
+      if (typeof _showModal == 'function') _showModal(item);
       return;
     } else if (item.getType() == 'artist') {
-      return navigate('album_detail');
+      return navigate('artist_detail', { artist: item });
     } else {
       model.removeRecentlySong(item?.id);
     }
@@ -28,7 +25,6 @@ export default class SearchItem extends Component {
 
   render() {
     const { item } = this.props;
-    console.log('item', item);
 
     const icon =
       item.getType() == 'song'

@@ -30,6 +30,7 @@ export default class SongMenu extends Component {
   render() {
     const { song } = this.props;
     const { showAddPlaylist } = this.state;
+    console.log('song modal', song);
 
     return showAddPlaylist ? (
       <View>
@@ -42,20 +43,18 @@ export default class SongMenu extends Component {
             cls="widthFn-283 heightFn-283 aic jcc"
             source={Images.ic_barcode}>
             <Image
-              // source={{
-              //   uri:
-              //     song?.artwork ??
-              //     rootStore.playerStore?.currentSong?.getThumb(),
-              // }}
-              source={require('../../../assets/images/khabanh.png')}
+              source={{
+                uri:
+                  song?.artwork ??
+                  rootStore.playerStore?.currentSong?.getThumb(),
+              }}
+              // source={require('../../../assets/images/khabanh.png')}
               cls="circleFn-185"
             />
           </ImageBackground>
           <View cls="aic jcc pt3">
             <LinearGradientText
-              text={
-                song?.title ?? rootStore.playerStore?.currentSong?.getName()
-              }
+              text={song?.title ?? 'Chưa xác định'}
               end={{ x: 0.7, y: 0 }}
               styles={{
                 justifyContent: 'center',
@@ -64,8 +63,7 @@ export default class SongMenu extends Component {
               }}
             />
             <Text cls="white fw5 f7 pt1 latoFont">
-              {song?.artist ??
-                rootStore.playerStore?.currentSong?.getSubTitle()}
+              {song?.artist ?? 'Chưa rõ'}
             </Text>
           </View>
         </View>
