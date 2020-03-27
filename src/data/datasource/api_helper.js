@@ -47,8 +47,7 @@ export async function getPlaylistCover(tracks) {
     cover = {
       ...cover,
       playlistCover:
-        trackCover?.data?.cover_path ??
-        'https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BBVzjuG.img?h=597&w=660&m=6&q=60&o=f&l=f&x=300&y=232',
+        trackCover?.data?.cover_path ?? 'https://picsum.photos/200',
     };
   }
 

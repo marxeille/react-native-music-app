@@ -53,11 +53,7 @@ export const RootStore = types
         if (self.songs.get(song.id)) {
           self.songs.get(song.id).update(song);
         } else {
-          console.log('create new song', song);
-
-          let newSong = createSongFromJsonApi(song);
-          console.log('newSong', newSong);
-
+          const newSong = createSongFromJsonApi(song);
           self.songs.put(newSong);
         }
       },

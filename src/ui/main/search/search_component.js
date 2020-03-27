@@ -26,7 +26,7 @@ export default class SearchComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showHistory: false,
+      showHistory: true,
       keyword: null,
     };
     this.viewmodel = SearchModel.create({ state: 'loading' });
@@ -56,7 +56,7 @@ export default class SearchComponent extends Component {
     this.timeout = setTimeout(() => {
       //search function
       if (keyword !== '') this.viewmodel.searchByKeyword(keyword);
-    }, 800);
+    }, 1300);
   };
 
   onFocus = () => {

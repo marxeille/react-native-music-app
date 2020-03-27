@@ -6,6 +6,7 @@ import { Album } from '../model/album';
 import { Song } from '../model/song';
 import { Alert } from 'react-native';
 import { getTrackFullDetail, getPlaylistCover } from '../datasource/api_helper';
+import { indexOf } from 'lodash';
 
 export const HomeStore = types
   .model('HomeStore', {
@@ -25,11 +26,21 @@ export const HomeStore = types
       //#endregion
 
       addPopularSong(song) {
-        self.popularSongs.push(song.id);
+        const songExist = [...self.popularSongs].find(
+          popularSong => popularSong.id == song.id,
+        );
+        if (!songExist) {
+          self.popularSongs.push(song.id);
+        }
       },
 
       addPopular(playlist) {
-        self.popular.push(playlist.id);
+        const playlistExist = [...self.popular].find(
+          popular => popular.id == playlist.id,
+        );
+        if (!playlistExist) {
+          self.popular.push(playlist.id);
+        }
       },
 
       //#region Handle Fect Popular Success
@@ -42,8 +53,6 @@ export const HomeStore = types
           homeTracks.data.forEach(async data => {
             const fullTrack = await getTrackFullDetail(data.id);
             if (fullTrack?.track_url) {
-              console.log('fullTrack', fullTrack);
-
               getParent(self).createSongRef(fullTrack);
               self.addPopularSong(fullTrack);
             }

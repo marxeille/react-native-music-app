@@ -28,9 +28,7 @@ export const createArtistFromApiJson = data => {
   return Artist.create({
     id: data.id.toString(),
     name: data.name ?? '',
-    thumb:
-      data.thumb ??
-      'https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BBVzjuG.img?h=597&w=660&m=6&q=60&o=f&l=f&x=300&y=232',
+    thumb: data.thumb ?? 'https://picsum.photos/200',
     type: 'artist',
   });
 };

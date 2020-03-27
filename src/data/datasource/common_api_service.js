@@ -60,16 +60,6 @@ export default class CommonApiService {
           artwork:
             'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
-        {
-          id: '7',
-          title: 'Cục xì lầu ông bê lắp',
-          artist: 'hey',
-          favorite: false,
-          url:
-            'https://drive.google.com/uc?export=download&id=1AjPwylDJgR8DOnmJWeRgZzjsohi-7ekj',
-          artwork:
-            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-        },
       ]);
     });
   }

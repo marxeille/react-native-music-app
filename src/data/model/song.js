@@ -51,6 +51,9 @@ export const Song = types
       toggleFavorite() {
         self.favorite = !(self.favorite == true);
       },
+      update(newJson) {
+        self.name = newJson.name;
+      },
     };
   });
 
@@ -72,7 +75,9 @@ export const createSongFromJsonApi = data => {
     id: data.id.toString(),
     title: data.title,
     artist: data.artist ?? 'Chưa xác định',
-    artwork: BASE_API_URL + data.cover_path,
+    artwork: data.cover_path
+      ? BASE_API_URL + data.cover_path
+      : 'https://picsum.photos/200',
     url: data.track_url ?? '',
     duration: data.duration ?? 100,
     favorite: false,
