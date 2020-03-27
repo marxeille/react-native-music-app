@@ -20,11 +20,13 @@ export default class ArtistItem extends Component {
           <View cls="flx-row aic pb3">
             <Image
               cls="widthFn-90 heightFn-82"
-              source={{ uri: item.getThumb() }}
+              source={{ uri: item?.getThumb() }}
             />
 
             <View cls="pl2">
-              <Text cls="white fw7 f6 pl2 lightFont">{item.getName()}</Text>
+              <Text cls="white fw7 f6 pl2 lightFont">
+                {item.getName() ?? ''}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>

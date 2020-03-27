@@ -33,6 +33,14 @@ export const alphabetJson = [
 export function sortByAlphabet(arr) {
   const sortedObj = {};
   arr.map(element => {
+    if (!element.getName().match('[^a-zA-Z]')) {
+      if (typeof sortedObj['0-9'] == 'undefined') {
+        sortedObj['0-9'] = [];
+        sortedObj['0-9'].push(element);
+      } else {
+        sortedObj['0-9'].push(element);
+      }
+    }
     alphabetJson.map(letter => {
       if (
         element
@@ -45,13 +53,6 @@ export function sortByAlphabet(arr) {
           sortedObj[letter].push(element);
         } else {
           sortedObj[letter].push(element);
-        }
-      } else {
-        if (typeof sortedObj['0-9'] == 'undefined') {
-          sortedObj['0-9'] = [];
-          sortedObj['0-9'].push(element);
-        } else {
-          sortedObj['0-9'].push(element);
         }
       }
     });

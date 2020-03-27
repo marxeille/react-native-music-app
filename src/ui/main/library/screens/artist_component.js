@@ -14,6 +14,9 @@ import { sortByAlphabet } from '../../../../constant/constant';
 export default class ArtistComponent extends Component {
   constructor(props) {
     super(props);
+    this.data = {
+      '#': [{ name: 'A1' }, { name: 'A2' }, { name: 'A3' }],
+    };
   }
 
   renderItem = ({ item }) => {
