@@ -9,18 +9,17 @@ const AlbumItem = observer(
     <View cls="jcsb flx-row aic pr3" style={{ backgroundColor: '#321a54' }}>
       <TouchableOpacity>
         <View cls="flx-row pa3 pb2 pt2">
-          <Image
-            cls="squareFn-50"
-            source={require('../../../../assets/images/cover1.png')}
-          />
+          <Image cls="squareFn-50" source={{ uri: props.item.getThumb() }} />
 
           <View cls="jcc pl3">
-            <Text cls="white fw7 f6 lightFont">123123</Text>
-            <Text cls="primaryPurple lightFont">123123</Text>
+            <Text cls="white fw7 f6 lightFont">{props.item.getName()}</Text>
+            <Text cls="primaryPurple lightFont">
+              {props.item.getSubTitle()}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={props.openModal}>
+      <TouchableOpacity onPress={() => props.openModal(props.item)}>
         <Image source={Images.ic_menu} />
       </TouchableOpacity>
     </View>

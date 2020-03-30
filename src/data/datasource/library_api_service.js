@@ -10,4 +10,12 @@ export default class LibraryApiService {
       console.log('TCL: try -> error', error);
     }
   }
+  async getArtistTracks(artist_id) {
+    try {
+      const path = `/api/artists/${artist_id}/tracks`;
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
 }

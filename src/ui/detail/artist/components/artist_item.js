@@ -21,7 +21,7 @@ const ArtistItem = observer(
 
             <View cls="jcc pl3">
               <Text cls="white fw7 f5 lightFont">
-                {subLongStr(`Vinahouse hey hey hey`, 15)}
+                {subLongStr(props.item.getName(), 15)}
               </Text>
               <Text cls="primaryPurple lightFont">123.456.789</Text>
             </View>
@@ -38,7 +38,7 @@ const ArtistItem = observer(
               source={like ? Images.ic_like_on : Images.ic_like_uncheck}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={props.openModal}>
+          <TouchableOpacity onPress={() => props.openModal(props.item)}>
             <Image source={Images.ic_menu} />
           </TouchableOpacity>
         </View>

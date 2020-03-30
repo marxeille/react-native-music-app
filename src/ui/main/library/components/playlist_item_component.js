@@ -14,7 +14,7 @@ export default class PlaylistItem extends Component {
   }
 
   render() {
-    const { index } = this.props;
+    const { index, item } = this.props;
     if (index != undefined) {
       console.log(
         'TCL: PlaylistItem -> render -> rootStore.libraryStore.playlists[index].title()',
@@ -23,7 +23,8 @@ export default class PlaylistItem extends Component {
     }
     return (
       <>
-        <TouchableOpacity onPress={() => navigate('album_detail')}>
+        <TouchableOpacity
+          onPress={() => navigate('album_detail', { id: item.id, item: item })}>
           <View cls="flx-row aic pb3">
             <Image
               cls="widthFn-90 heightFn-82"

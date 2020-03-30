@@ -49,14 +49,14 @@ export const HomeStore = types
         const homePlaylist: Array = yield apiService.commonApiService.getHomePlaylists();
 
         //Get full home track info
-        if (homeTrackIds.status == 200) {
-          let ids = homeTrackIds.data.map(ht => ht.id).join(',');
+        if (homeTrackIds?.status == 200) {
+          let ids = homeTrackIds?.data.map(ht => ht.id).join(',');
 
-          const homeTracks: Array = yield apiService.commonApiService.getHomeTracks(
+          const homeTracks: Array = yield apiService.commonApiService.getTracks(
             ids,
           );
-          if (homeTracks.status == 200) {
-            homeTracks.data.forEach(async data => {
+          if (homeTracks?.status == 200) {
+            homeTracks?.data.forEach(async data => {
               let fullTrack = await getTrackFullDetail(data.id);
               fullTrack = { ...data, ...fullTrack };
               if (fullTrack?.track_url) {
@@ -73,8 +73,8 @@ export const HomeStore = types
           // Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
         }
 
-        if (homePlaylist.status == 200) {
-          homePlaylist.data.forEach(async data => {
+        if (homePlaylist?.status == 200) {
+          homePlaylist?.data.forEach(async data => {
             const playlistInfo = await apiService.trackApiService.getPlaylistInfo(
               data.id,
             );

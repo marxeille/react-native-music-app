@@ -22,7 +22,7 @@ export default class PlaylistComponent extends Component {
   renderPlaylist = item => {
     return (
       <>
-        <PlaylistItem index={item.index} />
+        <PlaylistItem index={item.index} item={item.item} />
       </>
     );
   };

@@ -25,8 +25,8 @@ export default class PlayerComponent extends Component {
     this.state = {};
   }
 
-  onSwipeUp(gestureState) {
-    console.log('you swipe up', gestureState);
+  onSwipeUp() {
+    navigate('player');
   }
 
   onSwipeDown(gestureState) {

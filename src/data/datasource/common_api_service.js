@@ -19,7 +19,7 @@ export default class CommonApiService {
     }
   }
 
-  async getHomeTracks(ids) {
+  async getTracks(ids) {
     try {
       const path = `/api/tracks?ids=${ids}`;
       return await privateRequest(BASE_URL.get, path, {});

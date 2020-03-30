@@ -28,7 +28,13 @@ export default class HomeListComponent extends Component {
 
   renderLargeItem = wrap(item => {
     return (
-      <TouchableOpacity onPress={() => navigate('album_detail', { id: '1' })}>
+      <TouchableOpacity
+        onPress={() =>
+          navigate('album_detail', {
+            id: item.item.id.toString(),
+            item: item.item,
+          })
+        }>
         <ItemHome id={item.item.id} item={item} navigate={navigate} />
       </TouchableOpacity>
     );

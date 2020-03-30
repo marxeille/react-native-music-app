@@ -19,38 +19,32 @@ import LinearGradient from 'react-native-linear-gradient';
 import ArtistItem from './components/artist_item';
 import SongMenu from '../../player/components/song_menu';
 import BottomModal from '../../components/modal/BottomModal';
+import { ArtistModel } from './model/ArtistModel';
 
 @observer
 @wrap
 export default class ArtistDetail extends Component {
   constructor(props) {
     super(props);
-    this.model = SongOfAlBumStore.create({
-      id: props.route?.params?.id ?? '',
-      state: 'loading',
-      songs: [],
-    });
+    this.viewModel = ArtistModel.create({ state: 'loading' });
     this.modalSong = React.createRef();
     this.state = {};
   }
 
   componentDidMount() {
+    const { artist } = this.props.route.params;
     this.cancelablePromise = makeCancelable(
-      apiService.commonApiService.getSongsOfAlBum(1).then((values: Array) => {
-        rootStore.updateSongs(values);
-        this.model.addList(values.map(data => data?.id));
-      }),
+      this.viewModel.getArtistTracks(Number(artist.id)),
     );
-
-    this.model.getSongs();
   }
 
   componentWillUnmount() {
     this.cancelablePromise.cancel();
   }
 
-  _showModal = () => {
+  _showModal = song => {
     if (this.modalSong && this.modalSong.current) {
+      this.viewModel.setSelectedSong(song);
       this.modalSong.current._showModal();
     }
   };
@@ -150,7 +144,11 @@ export default class ArtistDetail extends Component {
   _renderItem = wrap(item => {
     return (
       <View cls="pa3 pt0">
-        <ArtistItem index={item.index} openModal={this._showModal} />
+        <ArtistItem
+          index={item.index}
+          item={item.item}
+          openModal={this._showModal}
+        />
       </View>
     );
   });
@@ -165,19 +163,13 @@ export default class ArtistDetail extends Component {
           <ImageBackground cls="fullView" source={Images.bg3}>
             <FlatList
               ListHeaderComponent={this._renderListHeaderContent()}
-              data={[1, 2, 3, 4, 5]}
+              data={[...this.viewModel.songs.values()]}
               showsVerticalScrollIndicator={false}
               renderItem={this._renderItem}
               keyExtractor={(item, index) => index.toString()}
             />
             <BottomModal ref={this.modalSong} headerNone>
-              <SongMenu
-                song={{
-                  title: 'hey hey hey',
-                  artist: 'idol giới trẻ khÁ bẢnH',
-                  artwork: '',
-                }}
-              />
+              <SongMenu song={this.viewModel?.selectedSong} />
             </BottomModal>
           </ImageBackground>
         </View>

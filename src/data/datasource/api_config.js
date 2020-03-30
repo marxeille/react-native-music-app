@@ -43,7 +43,7 @@ export const privateRequest = async (request, url, data, configs) => {
     );
   } catch (error) {
     console.log('error', error);
-    Alert.alert('Cõ lỗi xảy ra vui lòng thử lại: ');
+    Alert.alert('Có lỗi xảy ra vui lòng thử lại: ');
   }
 };
 
