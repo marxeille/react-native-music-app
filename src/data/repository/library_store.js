@@ -5,6 +5,7 @@ import { PlayList } from '../model/playlist';
 import { Album } from '../model/album';
 import { Artist } from '../model/artist';
 import { apiService } from '../context/api_context';
+import { getTrackFullDetail, getPlaylistCover } from '../datasource/api_helper';
 
 export const LibraryStore = types
   .model('LibraryStore', {
@@ -24,6 +25,7 @@ export const LibraryStore = types
         self.fetchPlaylist();
         self.fetchLikedTracksPlaylist();
         self.fetchArtists();
+        self.fetchAlbums();
         self.state = 'success';
       }),
 
@@ -77,6 +79,23 @@ export const LibraryStore = types
             });
           } else {
             Alert.alert(artists.data.msg);
+          }
+        } catch (err) {
+          console.log('err ', err);
+        }
+      }),
+      fetchAlbums: flow(function* fetchAlbums() {
+        try {
+          const albums: Array = yield apiService.libraryApiService.getAlbums();
+          if (albums.status == 200) {
+            albums.data.map(async al => {
+              const cover = await getPlaylistCover(al.tracks);
+              const albumFullInfo = { ...al, ...cover };
+              getParent(self).updateAlbum(albumFullInfo);
+              self.albums.push(al.id);
+            });
+          } else {
+            Alert.alert(albums.data.msg);
           }
         } catch (err) {
           console.log('err ', err);

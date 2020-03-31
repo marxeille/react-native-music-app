@@ -24,17 +24,15 @@ export default class AlbumComponent extends Component {
   }
 
   renderPlaylist = item => {
-    console.log('TCL: playlistComponent -> renderPlaylist item', item.index);
-    return null;
-    // return (
-    //   <>
-    //     <AlbumItem index={item.index} />
-    //   </>
-    // );
+    return (
+      <>
+        <AlbumItem item={item.item} />
+      </>
+    );
   };
 
   render() {
-    // let newArr = [...rootStore.userStore.playlists];
+    const albums = [...rootStore.libraryStore.playlists];
 
     return (
       <>
@@ -43,7 +41,7 @@ export default class AlbumComponent extends Component {
         </View>
         <View cls="pt3 fullHeight" style={{ marginBottom: 95 }}>
           <FlatList
-            data={[1, 2, 3]}
+            data={albums}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderPlaylist}
             numColumns={3}

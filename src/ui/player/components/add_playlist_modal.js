@@ -28,7 +28,7 @@ export default class AddPlayListModal extends Component {
 
   render() {
     return (
-      <View cls="mb4">
+      <View>
         <View cls="pv2 flx-row aic bg-#280f46">
           <View cls="aifs jcc flx-i">
             <TouchableOpacity
@@ -61,9 +61,9 @@ export default class AddPlayListModal extends Component {
             </LinearGradient>
           </TouchableOpacity>
         </View>
-        <View cls="pa3 pt4">
+        <View cls="pa3 pt4 pb0" style={{ height: '80%' }}>
           <FlatList
-            data={[1, 2, 3, 4, 5, 6, 7, 8]}
+            data={[1, 2, 3, 4, 5, 7, 8, 9, 10]}
             showsVerticalScrollIndicator={false}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => index.toString()}
@@ -86,7 +86,7 @@ const ActionItem = wrap(({ item }) => {
 
           <View cls="pl2">
             <Text cls="white fw7 f6 pl2">{'Tạo playlist'}</Text>
-            <Text cls="primaryPurple f6 pl2 pt1">{'asdasdsa'}</Text>
+            <Text cls="primaryPurple f6 pl2 pt1">{'khÁ bẢnH on the fly'}</Text>
           </View>
         </View>
       </TouchableOpacity>

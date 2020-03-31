@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  SafeAreaView,
 } from 'react-native';
 import { wrap } from '../../../themes';
 import { observer } from 'mobx-react';

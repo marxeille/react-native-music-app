@@ -14,47 +14,26 @@ export default class AlbumItem extends Component {
   }
 
   render() {
-    const { index } = this.props;
+    const { item } = this.props;
 
-    if (
-      index == undefined ||
-      index > rootStore.userStore?.playlists?.length - 1
-    ) {
-      console.log(
-        'TCL: PlaylistItem -> render -> rootStore.userStore.playlists[index].title()',
-      );
-      return null;
-    } else {
-      return (
-        <View cls="pb3 pr3">
+    return (
+      <View cls="pb3 pr3">
+        <TouchableOpacity>
+          <Image
+            cls="widthFn-100 heightFn-82"
+            source={{ uri: item.getThumb() }}
+          />
+        </TouchableOpacity>
+
+        <View>
           <TouchableOpacity>
-            <Image
-              cls="widthFn-100 heightFn-82"
-              source={
-                index != undefined
-                  ? { uri: rootStore.userStore.playlists[index].getThumb() }
-                  : require('../../../../assets/images/add_playlist.png')
-              }
-            />
+            <Text cls="white fw7 f8 pt2">{subLongStr(item.title(), 12)}</Text>
           </TouchableOpacity>
-
-          <View>
-            <TouchableOpacity>
-              <Text cls="white fw7 f8 pt2">
-                {index != undefined
-                  ? rootStore.userStore.playlists[index].title()
-                  : 'Tạo playlist'}
-              </Text>
-            </TouchableOpacity>
-            {index != undefined ? (
-              <Text cls="primaryPurple f8 pt1">
-                của{' '}
-                {subLongStr(rootStore.userStore.playlists[index].subTitle(), 6)}
-              </Text>
-            ) : null}
-          </View>
+          <Text cls="primaryPurple f8 pt1">
+            của {subLongStr(item.subTitle(), 6)}
+          </Text>
         </View>
-      );
-    }
+      </View>
+    );
   }
 }

@@ -168,6 +168,7 @@ export default class Player extends Component {
 
   render() {
     const { currentSong } = rootStore?.playerStore;
+    const { showPlayMenu } = this.state;
 
     return (
       <ImageBackground source={Images.bg3} style={styles.container}>
@@ -215,6 +216,7 @@ export default class Player extends Component {
           title={'Chia sẻ'}
           // onModalShow={this._showModal}
           justifyCenterModal
+          headerNone={showPlayMenu}
           // onModalHide={this._hideModal}
           containerCls="">
           {this._renderModalContent()}

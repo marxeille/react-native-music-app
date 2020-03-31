@@ -125,7 +125,7 @@ export default class BottomModal extends React.Component {
             <View style={[containerStyle]}>{children}</View>
 
             {headerNone ? (
-              <View cls="aic jcc pt4">
+              <View cls="aic jcc pt0">
                 <TouchableOpacity
                   onPress={this._hideModal}
                   cls="jcc pv1 ph3 aic">

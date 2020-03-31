@@ -5,7 +5,7 @@ import {
   Image,
   TouchableNativeFeedback,
   StyleSheet,
-  TouchableHighlight,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Images from '../../assets/icons/icons';
 import { RootContext, rootStore } from '../../data/context/root_context';
@@ -134,7 +134,7 @@ export default class PlayerComponent extends Component {
             onSwipeLeft={this.onSwipeLeft}
             onSwipeRight={this.onSwipeRight}
             config={config}>
-            <TouchableHighlight onPress={() => navigate('player')}>
+            <TouchableWithoutFeedback onPress={() => navigate('player')}>
               <View style={styles.container}>
                 <SeekBar
                   slider={false}
@@ -157,7 +157,7 @@ export default class PlayerComponent extends Component {
                       {rootStore.playerStore.currentSong?.getSubTitle()}
                     </Text>
                   </View>
-                  <TouchableHighlight
+                  <TouchableWithoutFeedback
                     onPress={() => {
                       rootStore.playerStore.toggleStatus();
                     }}
@@ -172,8 +172,8 @@ export default class PlayerComponent extends Component {
                         cls
                       />
                     </View>
-                  </TouchableHighlight>
-                  <TouchableHighlight onPress={this.reaction}>
+                  </TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback onPress={this.reaction}>
                     <View cls="pa3">
                       <Image
                         source={
@@ -181,10 +181,10 @@ export default class PlayerComponent extends Component {
                         }
                       />
                     </View>
-                  </TouchableHighlight>
+                  </TouchableWithoutFeedback>
                 </View>
               </View>
-            </TouchableHighlight>
+            </TouchableWithoutFeedback>
           </GestureRecognizer>
         </>
       );

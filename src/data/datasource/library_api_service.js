@@ -47,4 +47,13 @@ export default class LibraryApiService {
       console.log('TCL: try -> error', error);
     }
   }
+
+  async getAlbums() {
+    try {
+      const path = `/api/articles`;
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
 }

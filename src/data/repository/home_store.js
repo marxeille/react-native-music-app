@@ -80,6 +80,7 @@ export const HomeStore = types
             const playlistInfo = await apiService.trackApiService.getPlaylistInfo(
               data.id,
             );
+
             if (playlistInfo.status == 200 && playlistInfo.data) {
               const cover = await getPlaylistCover(playlistInfo.data.tracks);
               const playlistFullInfo = { ...playlistInfo.data, ...cover };
