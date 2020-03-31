@@ -94,7 +94,8 @@ export default function mainContainer() {
       screenOptions={{
         gestureEnabled: true,
         gestureDirection: 'vertical',
-        cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        cardStyleInterpolator:
+          CardStyleInterpolators.forRevealFromBottomAndroid,
       }}>
       <Stack.Screen name="bottomtab" component={getBottomTabNavigator} />
       <Stack.Screen name="setting" component={Settings} />

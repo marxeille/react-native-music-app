@@ -3,6 +3,25 @@
 
 import { apiService } from '../context/api_context';
 
+export async function likeTrackHelper(trackId, onSuccess, onError) {
+  const like = await apiService.commonApiService.likeTrack(trackId);
+
+  if (like.status == 201) {
+    if (typeof onSuccess == 'function') onSuccess('like', like.data.entity_id);
+  } else {
+    if (typeof onError == 'function') onError('like', like.data);
+  }
+}
+
+export async function unlikeTrackHelper(trackId, onSuccess, onError) {
+  const unlike = await apiService.commonApiService.unlikeTrack(trackId);
+  if (unlike.status == 200) {
+    if (typeof onSuccess == 'function') onSuccess('unlike', trackId);
+  } else {
+    if (typeof onError == 'function') onError('unlike', unlike.data);
+  }
+}
+
 export async function getTrackFullDetail(trackId) {
   const [trackUrl, trackArtist] = await Promise.all([
     new Promise(async resolve => {

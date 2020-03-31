@@ -19,6 +19,14 @@ export default class PlaylistComponent extends Component {
     rootStore.libraryStore.fetchData();
   }
 
+  renderPlaylistHeader = () => {
+    return (
+      <>
+        <PlaylistItem />
+      </>
+    );
+  };
+
   renderPlaylist = item => {
     return (
       <>
@@ -38,7 +46,7 @@ export default class PlaylistComponent extends Component {
             <Loading />
           ) : (
             <FlatList
-              ListHeaderComponent={<PlaylistItem />}
+              ListHeaderComponent={this.renderPlaylistHeader()}
               showsVerticalScrollIndicator={false}
               data={rootStore.libraryStore.playlists}
               keyExtractor={(item, index) => index.toString()}

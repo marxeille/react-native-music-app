@@ -46,6 +46,33 @@ export default class CommonApiService {
     }
   }
 
+  async getLikedTracks() {
+    try {
+      const path = '/api/like/track';
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
+  async likeTrack(track_id) {
+    try {
+      const path = '/api/like/track';
+      return await privateRequest(BASE_URL.post, path, { entity_id: track_id });
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
+  async unlikeTrack(track_id) {
+    try {
+      const path = `/api/like/track/${track_id}`;
+      return await privateRequest(BASE_URL.delete, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   getSongsOfAlBum(index) {
     return new Promise(resolve => {
       resolve([
@@ -100,65 +127,6 @@ export default class CommonApiService {
 
   //Lấy danh sách album gần đây
   getRecentlyPlaylist() {
-    return new Promise(resolve => {
-      resolve([
-        {
-          id: '1',
-          name: 'Daily Mix 1',
-          artist: '',
-          thumb:
-            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-        },
-        {
-          id: '2',
-          name: 'Daily Mix 1',
-          artist: '',
-          thumb:
-            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-        },
-        {
-          id: '3',
-          name: 'Daily Mix 1',
-          artist: '',
-          thumb:
-            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-        },
-      ]);
-    });
-  }
-  //Lấy danh sách PlayList phổ biến
-  getPopularPlayList() {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve([
-          {
-            id: '1',
-            name: 'Daily Mix 1',
-            artist: '',
-            thumb:
-              'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-          },
-          {
-            id: '2',
-            name: 'Daily Mix 1',
-            artist: '',
-            thumb:
-              'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-          },
-          {
-            id: '3',
-            name: 'Daily Mix 1',
-            artist: '',
-            thumb:
-              'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-          },
-        ]);
-      }, 2000);
-    });
-  }
-
-  //Lấy danh sách PlayList dành cho user
-  getSuggestPlayList() {
     return new Promise(resolve => {
       resolve([
         {

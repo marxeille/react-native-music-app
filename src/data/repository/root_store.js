@@ -10,6 +10,7 @@ import { Song, createSongFromJson, createSongFromJsonApi } from '../model/song';
 import { Album } from '../model/album';
 import SongOfQueueStore from './song_of_queue_store';
 import { LibraryStore } from './library_store';
+import { remove, cloneDeep } from 'lodash';
 
 export const RootStore = types
   .model('RootStore', {
@@ -22,6 +23,7 @@ export const RootStore = types
     artist: types.maybeNull(types.map(Artist)),
     songs: types.maybeNull(types.map(Song)),
     albums: types.maybeNull(types.map(Album)),
+    likedTracks: types.array(types.number),
   })
   .actions(self => {
     return {
@@ -29,7 +31,7 @@ export const RootStore = types
         if (self.playlist.get(playlistJson.id)) {
           self.playlist.get(playlistJson.id).update(playlistJson);
         } else {
-          let playList = createPlaylistFromApiJson(playlistJson);
+          const playList = createPlaylistFromApiJson(playlistJson);
           self.playlist.put(playList);
         }
       },
@@ -73,6 +75,20 @@ export const RootStore = types
         values.forEach(data => {
           self.songs.put(data);
         });
+      },
+
+      setLikedTracks(tracks) {
+        self.likedTracks = tracks;
+      },
+      addLikedTrack(trackId) {
+        const tmpLikedTracks = cloneDeep(self.likedTracks);
+        tmpLikedTracks.push(trackId);
+        self.setLikedTracks([...tmpLikedTracks]);
+      },
+      removeLikedTrack(trackId) {
+        const tmpLikedTracks = cloneDeep(self.likedTracks);
+        remove(tmpLikedTracks, track => track == trackId);
+        self.setLikedTracks([...tmpLikedTracks]);
       },
     };
   });

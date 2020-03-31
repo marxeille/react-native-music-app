@@ -69,7 +69,7 @@ export const SearchModel = types
             if (result.data.hits.tracks.length > 0) {
               result.data.hits.tracks.forEach(data => {
                 getTrackFullDetail(data.id).then(res => {
-                  const song = createSongFromJsonApi(res);
+                  const song = createSongFromJsonApi({ ...data, ...res });
                   self.setResultSong(song);
                 });
               });

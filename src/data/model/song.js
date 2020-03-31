@@ -72,7 +72,7 @@ export const createSongFromJson = data => {
 
 export const createSongFromJsonApi = data => {
   return Song.create({
-    id: data.id.toString(),
+    id: data?.id?.toString(),
     title: data.title,
     artist: data.artist ?? 'Chưa xác định',
     artwork: data.cover_path

@@ -22,14 +22,38 @@ export const LibraryStore = types
 
       fetchTabsData: flow(function* fetchTabsData() {
         self.fetchPlaylist();
+        self.fetchLikedTracksPlaylist();
         self.fetchArtists();
         self.state = 'success';
       }),
 
+      fetchLikedTracksPlaylist() {
+        const likedTracks = getParent(self).likedTracks;
+        const playlistTracks = likedTracks.map((trackId, i) => {
+          return { track_id: trackId, position: i };
+        });
+
+        if (likedTracks) {
+          const likedTracksPlaylist = {
+            id: 0,
+            name: 'Bài hát yêu thích',
+            private: null,
+            artists: 'bạn',
+            tracks:
+              likedTracks.length > 0
+                ? playlistTracks
+                : [{ track_id: '', position: '' }],
+            playlistCover: 'https://picsum.photos/100',
+          };
+
+          getParent(self).updatePlayList(likedTracksPlaylist);
+          self.playlists.push(likedTracksPlaylist.id);
+        }
+      },
+
       fetchPlaylist: flow(function* fetchPlaylist() {
         try {
           const playlist: Array = yield apiService.commonApiService.getPlaylists();
-
           if (playlist.status == 200) {
             playlist.data.map(pl => {
               getParent(self).updatePlayList(pl);

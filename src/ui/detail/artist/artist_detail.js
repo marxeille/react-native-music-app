@@ -87,7 +87,7 @@ export default class ArtistDetail extends Component {
                 50,
               )}
             </Text>
-            <Text cls="f9 primaryPurple latoFont pt2">{'2020 - 69 Songs'}</Text>
+            <Text cls="f9 primaryPurple latoFont pt2">{`2020 - ${this.viewModel.songs.size} Songs`}</Text>
           </View>
         </ImageBackground>
       </>

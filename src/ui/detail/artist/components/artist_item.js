@@ -4,10 +4,52 @@ import { wrap } from '../../../../themes';
 import { observer } from 'mobx-react';
 import Images from '../../../../assets/icons/icons';
 import { subLongStr } from '../../../../utils';
+import {
+  likeTrackHelper,
+  unlikeTrackHelper,
+} from '../../../../data/datasource/api_helper';
+import { rootStore } from '../../../../data/context/root_context';
+import { indexOf } from 'lodash';
 
 const ArtistItem = observer(
   wrap(props => {
-    const [like, setLike] = useState(false);
+    const [like, setLike] = useState(
+      indexOf([...rootStore?.likedTracks], Number(props.item.id)) >= 0,
+    );
+
+    const onReactionSuccess = useCallback((type, data) => {
+      if (type == 'like') {
+        if (indexOf([...rootStore?.likedTracks], Number(props.item.id)) < 0) {
+          rootStore?.addLikedTrack(data);
+        }
+      } else {
+        if (indexOf([...rootStore?.likedTracks], Number(props.item.id)) >= 0) {
+          rootStore?.removeLikedTrack(data);
+        }
+      }
+    });
+
+    const onReactionError = useCallback((type, data) => {
+      setLike(!like);
+    });
+
+    const likeTrack = useCallback(async () => {
+      await likeTrackHelper(props.item.id, onReactionSuccess, onReactionError);
+    });
+
+    const unlikeTrack = useCallback(async () => {
+      await unlikeTrackHelper(
+        props.item.id,
+        onReactionSuccess,
+        onReactionError,
+      );
+    });
+
+    const reaction = useCallback(() => {
+      setLike(!like);
+      !like ? likeTrack() : unlikeTrack();
+    });
+
     return (
       <View cls="jcsb flx-row aic pr3" style={{ backgroundColor: '#321a54' }}>
         <TouchableOpacity>
@@ -28,11 +70,7 @@ const ArtistItem = observer(
           </View>
         </TouchableOpacity>
         <View cls="flx-row">
-          <TouchableOpacity
-            cls="pr3"
-            onPress={() => {
-              setLike(!like);
-            }}>
+          <TouchableOpacity cls="pr3" onPress={reaction}>
             <Image
               style={{ opacity: like ? 1 : 0.2 }}
               source={like ? Images.ic_like_on : Images.ic_like_uncheck}

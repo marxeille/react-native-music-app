@@ -41,7 +41,12 @@ export default class AlbumDetail extends Component {
       track => track.track_id,
     );
 
-    this.cancelablePromise = makeCancelable(this.viewModel.getAlbumTracks(ids));
+    this.cancelablePromise = makeCancelable(
+      this.viewModel.getAlbumTracks(
+        //if item.id = 0, it's liked tracks playlist, so just get the list right in the rootStore. Otherwise, it's normal playlist
+        item.id == 0 ? [...rootStore?.likedTracks] : ids,
+      ),
+    );
   }
 
   componentWillUnmount() {
@@ -68,7 +73,7 @@ export default class AlbumDetail extends Component {
         <ImageBackground
           cls={`jcsb pa3 heightFn-300`}
           // style={{ height: '60%' }}
-          source={require('../../../assets/images/khabanh2.png')}>
+          source={{ uri: 'https://picsum.photos/300' }}>
           <View
             cls="flx-row aic jcsb"
             style={{ paddingTop: getStatusBarHeight() }}>
@@ -184,7 +189,14 @@ export default class AlbumDetail extends Component {
 
   render() {
     return this.viewModel.state == 'loading' ? (
-      <Loading />
+      <LinearGradient
+        colors={['#291048', '#1a0732', '#130727', '#110426']}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 1, y: 1 }}>
+        <View cls="fullView">
+          <Loading />
+        </View>
+      </LinearGradient>
     ) : (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}

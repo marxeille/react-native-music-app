@@ -6,8 +6,10 @@ export const PlayList = types
     name: types.string,
     thumb: types.string,
     owner: types.string,
-    tracks: types.array(
-      types.frozen({ track_id: types.string, position: types.integer }),
+    tracks: types.maybe(
+      types.array(
+        types.frozen({ track_id: types.string, position: types.integer }),
+      ),
     ),
   })
   .views(self => {

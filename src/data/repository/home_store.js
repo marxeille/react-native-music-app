@@ -6,7 +6,6 @@ import { Album } from '../model/album';
 import { Song } from '../model/song';
 import { Alert } from 'react-native';
 import { getTrackFullDetail, getPlaylistCover } from '../datasource/api_helper';
-import { indexOf } from 'lodash';
 
 export const HomeStore = types
   .model('HomeStore', {
@@ -22,6 +21,8 @@ export const HomeStore = types
       fetchData() {
         self.state = 'loading';
         self.fetchHomeData();
+        self.fetchLikedTracks();
+        self.state = 'success';
       },
       //#endregion
 
@@ -89,9 +90,21 @@ export const HomeStore = types
             }
           });
         }
-
-        self.state = 'success';
       }),
       // #endregion
+
+      fetchLikedTracks: flow(function* fetchLikedTracks() {
+        try {
+          const likedTracks: Array = yield apiService.commonApiService.getLikedTracks();
+          if (likedTracks?.status == 200) {
+            const preparedData = likedTracks.data.map(track => track.entity_id);
+            getParent(self).setLikedTracks(preparedData);
+          } else {
+            Alert.alert(likedTracks.data.msg);
+          }
+        } catch (err) {
+          console.log('err ', err);
+        }
+      }),
     };
   });
