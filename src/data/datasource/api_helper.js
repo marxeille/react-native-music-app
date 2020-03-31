@@ -22,6 +22,25 @@ export async function unlikeTrackHelper(trackId, onSuccess, onError) {
   }
 }
 
+export async function likeArtistHelper(artistId, onSuccess, onError) {
+  const like = await apiService.libraryApiService.likeArtist(artistId);
+
+  if (like.status == 201) {
+    if (typeof onSuccess == 'function') onSuccess('like', like.data.entity_id);
+  } else {
+    if (typeof onError == 'function') onError('like', like.data);
+  }
+}
+
+export async function unlikeArtistHelper(artistId, onSuccess, onError) {
+  const unlike = await apiService.libraryApiService.unlikeArtist(artistId);
+  if (unlike.status == 200) {
+    if (typeof onSuccess == 'function') onSuccess('unlike', artistId);
+  } else {
+    if (typeof onError == 'function') onError('unlike', unlike.data);
+  }
+}
+
 export async function getTrackFullDetail(trackId) {
   const [trackUrl, trackArtist] = await Promise.all([
     new Promise(async resolve => {

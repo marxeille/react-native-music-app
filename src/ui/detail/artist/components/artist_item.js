@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../../themes';
 import { observer } from 'mobx-react';
@@ -16,6 +16,10 @@ const ArtistItem = observer(
     const [like, setLike] = useState(
       indexOf([...rootStore?.likedTracks], Number(props.item.id)) >= 0,
     );
+
+    useEffect(() => {
+      setLike(indexOf([...rootStore?.likedTracks], Number(props.item.id)) >= 0);
+    }, [[...rootStore?.likedTracks]]);
 
     const onReactionSuccess = useCallback((type, data) => {
       if (type == 'like') {

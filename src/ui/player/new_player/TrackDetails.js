@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useCallback } from 'react';
 
 import {
   View,
@@ -12,6 +12,12 @@ import {
 import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import { standardPadding } from '../../../utils';
+import { indexOf } from 'lodash';
+import { rootStore } from '../../../data/context/root_context';
+import {
+  likeTrackHelper,
+  unlikeTrackHelper,
+} from '../../../data/datasource/api_helper';
 
 const TrackDetails = ({
   title,
@@ -20,32 +26,90 @@ const TrackDetails = ({
   onSharePress,
   onTitlePress,
   onArtistPress,
-}) => (
-  <View style={styles.container}>
-    <TouchableOpacity onPress={onAddPress}>
-      <Image style={styles.button} source={Images.ic_like} />
-    </TouchableOpacity>
-    <View style={styles.detailsWrapper}>
-      <LinearGradientText
-        text={title}
-        end={{ x: 0.7, y: 0 }}
-        styles={{
-          justifyContent: 'center',
-          fontSize: 25,
-          fontFamily: 'Averta-ExtraBold',
-        }}
-      />
-      <Text style={styles.artist} onPress={onArtistPress}>
-        {artist}
-      </Text>
-    </View>
-    <TouchableOpacity onPress={() => onSharePress(false)}>
-      <View>
-        <Image source={Images.ic_share} />
+}) => {
+  const [like, setLike] = useState(
+    indexOf(
+      [...rootStore?.likedTracks],
+      Number(rootStore?.playerStore?.currentSong?.id),
+    ) >= 0,
+  );
+
+  const onReactionSuccess = useCallback((type, data) => {
+    if (type == 'like') {
+      if (
+        indexOf(
+          [...rootStore?.likedTracks],
+          Number(rootStore?.playerStore?.currentSong?.id),
+        ) < 0
+      ) {
+        rootStore?.addLikedTrack(data);
+      }
+    } else {
+      if (
+        indexOf(
+          [...rootStore?.likedTracks],
+          Number(rootStore?.playerStore?.currentSong?.id),
+        ) >= 0
+      ) {
+        rootStore?.removeLikedTrack(data);
+      }
+    }
+  });
+
+  const onReactionError = useCallback((type, data) => {
+    setLike(!like);
+  });
+
+  const likeTrack = useCallback(async () => {
+    await likeTrackHelper(
+      rootStore?.playerStore?.currentSong?.id,
+      onReactionSuccess,
+      onReactionError,
+    );
+  });
+
+  const unlikeTrack = useCallback(async () => {
+    await unlikeTrackHelper(
+      rootStore?.playerStore?.currentSong?.id,
+      onReactionSuccess,
+      onReactionError,
+    );
+  });
+
+  const reaction = useCallback(() => {
+    setLike(!like);
+    !like ? likeTrack() : unlikeTrack();
+  });
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={reaction}>
+        <Image
+          style={styles.button}
+          source={like ? Images.ic_like_on : Images.ic_like}
+        />
+      </TouchableOpacity>
+      <View style={styles.detailsWrapper}>
+        <LinearGradientText
+          text={title}
+          end={{ x: 0.7, y: 0 }}
+          styles={{
+            justifyContent: 'center',
+            fontSize: 25,
+            fontFamily: 'Averta-ExtraBold',
+          }}
+        />
+        <Text style={styles.artist} onPress={onArtistPress}>
+          {artist}
+        </Text>
       </View>
-    </TouchableOpacity>
-  </View>
-);
+      <TouchableOpacity onPress={() => onSharePress(false)}>
+        <View>
+          <Image source={Images.ic_share} />
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default TrackDetails;
 

@@ -16,6 +16,11 @@ import GestureRecognizer, {
 import { wrap } from '../../themes';
 import { navigate } from '../../navigation/navigation_service';
 import SeekBar from './new_player/SeekBar';
+import { indexOf } from 'lodash';
+import {
+  likeTrackHelper,
+  unlikeTrackHelper,
+} from '../../data/datasource/api_helper';
 
 @observer
 @wrap
@@ -62,11 +67,63 @@ export default class PlayerComponent extends Component {
     }
   }
 
+  onReactionSuccess = (type, data) => {
+    if (type == 'like') {
+      if (
+        indexOf(
+          [...rootStore?.likedTracks],
+          Number(rootStore?.playerStore?.currentSong?.id),
+        ) < 0
+      ) {
+        rootStore?.addLikedTrack(data);
+      }
+    } else {
+      if (
+        indexOf(
+          [...rootStore?.likedTracks],
+          Number(rootStore?.playerStore?.currentSong?.id),
+        ) >= 0
+      ) {
+        rootStore?.removeLikedTrack(data);
+      }
+    }
+  };
+
+  likeTrack = async () => {
+    await likeTrackHelper(
+      rootStore?.playerStore?.currentSong?.id,
+      this.onReactionSuccess,
+      null,
+    );
+  };
+
+  unlikeTrack = async () => {
+    await unlikeTrackHelper(
+      rootStore?.playerStore?.currentSong?.id,
+      this.onReactionSuccess,
+      null,
+    );
+  };
+
+  reaction = () => {
+    const like =
+      indexOf(
+        [...rootStore?.likedTracks],
+        Number(rootStore?.playerStore?.currentSong?.id),
+      ) >= 0;
+    !like ? this.likeTrack() : this.unlikeTrack();
+  };
+
   render() {
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,
     };
+    const like =
+      indexOf(
+        [...rootStore?.likedTracks],
+        Number(rootStore?.playerStore?.currentSong?.id),
+      ) >= 0;
     if (rootStore.playerStore.currentSong) {
       return (
         <>
@@ -116,9 +173,15 @@ export default class PlayerComponent extends Component {
                       />
                     </View>
                   </TouchableHighlight>
-                  <View cls="pa3">
-                    <Image source={Images.ic_like_uncheck} />
-                  </View>
+                  <TouchableHighlight onPress={this.reaction}>
+                    <View cls="pa3">
+                      <Image
+                        source={
+                          like ? Images.ic_like_checked : Images.ic_like_uncheck
+                        }
+                      />
+                    </View>
+                  </TouchableHighlight>
                 </View>
               </View>
             </TouchableHighlight>

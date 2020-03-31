@@ -43,7 +43,7 @@ export const privateRequest = async (request, url, data, configs) => {
     );
   } catch (error) {
     console.log('error', error);
-    Alert.alert('Có lỗi xảy ra vui lòng thử lại: ');
+    // Alert.alert('Có lỗi xảy ra vui lòng thử lại: ');
   }
 };
 
@@ -99,15 +99,6 @@ export const login = async (name, password) => {
       password,
     };
     return await BASE_URL.post(path, params);
-  } catch (error) {
-    console.log('TCL: try -> error', error);
-  }
-};
-
-export const getPlaylists = async (limit = 10, offset = 0) => {
-  try {
-    const path = '/api/playlists';
-    return await privateRequest(BASE_URL.get, path, {});
   } catch (error) {
     console.log('TCL: try -> error', error);
   }

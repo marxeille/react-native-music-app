@@ -20,6 +20,11 @@ import ArtistItem from './components/artist_item';
 import SongMenu from '../../player/components/song_menu';
 import BottomModal from '../../components/modal/BottomModal';
 import { ArtistModel } from './model/ArtistModel';
+import {
+  likeArtistHelper,
+  unlikeArtistHelper,
+} from '../../../data/datasource/api_helper';
+import { indexOf } from 'lodash';
 
 @observer
 @wrap
@@ -28,7 +33,22 @@ export default class ArtistDetail extends Component {
     super(props);
     this.viewModel = ArtistModel.create({ state: 'loading' });
     this.modalSong = React.createRef();
-    this.state = {};
+    console.log(
+      'indexOf',
+      [...rootStore?.likedArtists],
+      indexOf(
+        [...rootStore?.likedArtists],
+        Number(props.route.params.artist.id),
+      ),
+    );
+
+    this.state = {
+      following:
+        indexOf(
+          [...rootStore?.likedArtists],
+          Number(props.route.params.artist.id),
+        ) >= 0,
+    };
   }
 
   componentDidMount() {
@@ -53,6 +73,47 @@ export default class ArtistDetail extends Component {
     if (this.modalSong && this.modalSong.current) {
       this.modalSong.current._hideModal();
     }
+  };
+
+  onReactionSuccess = (type, data) => {
+    const { artist } = this.props.route.params;
+    if (type == 'like') {
+      if (indexOf([...rootStore?.likedArtists], Number(artist.id)) < 0) {
+        rootStore?.addLikedArtist(data);
+      }
+    } else {
+      if (indexOf([...rootStore?.likedArtists], Number(artist.id)) >= 0) {
+        rootStore?.removeLikedArtist(data);
+      }
+    }
+  };
+
+  onReactionError = () => {
+    this.setState({ following: !this.state.following });
+  };
+
+  followArtist = async () => {
+    const { artist } = this.props.route.params;
+    await likeArtistHelper(
+      artist.id,
+      this.onReactionSuccess,
+      this.onReactionError,
+    );
+  };
+
+  unfollowArtist = async () => {
+    const { artist } = this.props.route.params;
+    await unlikeArtistHelper(
+      artist.id,
+      this.onReactionSuccess,
+      this.onReactionError,
+    );
+  };
+
+  reaction = () => {
+    const { following } = this.state;
+    this.setState({ following: !following });
+    !following ? this.followArtist() : this.unfollowArtist();
   };
 
   renderHeaderSection = wrap(() => {
@@ -95,16 +156,19 @@ export default class ArtistDetail extends Component {
   });
 
   renderMiddleSection = wrap(() => {
+    const { following } = this.state;
     return (
       <>
         <View cls="pb3">
           <View cls="pt2 aic pb2">
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.reaction}>
               <View
-                cls="widthFn-140 aic ba br5 pa3 pt2 pb2"
+                cls={`widthFn-140 aic ba br5 pa3 pt2 pb2 ${
+                  following ? ' bg-#835db8' : ''
+                }`}
                 style={{ borderColor: '#d7a0c8' }}>
                 <Text cls="white f11 fw6 lightFont">
-                  {`theo dõi`.toUpperCase()}
+                  {`${following ? 'Đang' : ''} theo dõi`.toUpperCase()}
                 </Text>
               </View>
             </TouchableOpacity>

@@ -25,6 +25,7 @@ const Images = {
   ic_filter: require('./ic_filter.png'),
   ic_library: require('./ic_library.png'),
   ic_like: require('./ic_like.png'),
+  ic_like_checked: require('./ic_like_checked.png'),
   ic_like_on: require('./ic_like_on.png'),
   ic_like_uncheck: require('./ic_like_uncheck.png'),
   ic_link: require('./ic_link.png'),

@@ -24,6 +24,7 @@ export const RootStore = types
     songs: types.maybeNull(types.map(Song)),
     albums: types.maybeNull(types.map(Album)),
     likedTracks: types.array(types.number),
+    likedArtists: types.array(types.number),
   })
   .actions(self => {
     return {
@@ -76,7 +77,7 @@ export const RootStore = types
           self.songs.put(data);
         });
       },
-
+      // Tracks reaction
       setLikedTracks(tracks) {
         self.likedTracks = tracks;
       },
@@ -89,6 +90,20 @@ export const RootStore = types
         const tmpLikedTracks = cloneDeep(self.likedTracks);
         remove(tmpLikedTracks, track => track == trackId);
         self.setLikedTracks([...tmpLikedTracks]);
+      },
+      // Artists reaction
+      setLikedArtists(artists) {
+        self.likedArtists = artists;
+      },
+      addLikedArtist(artistId) {
+        const tmpLikedArtists = cloneDeep(self.likedArtists);
+        tmpLikedArtists.push(artistId);
+        self.setLikedArtists([...tmpLikedArtists]);
+      },
+      removeLikedArtist(artistId) {
+        const tmpLikedArtists = cloneDeep(self.likedArtists);
+        remove(tmpLikedArtists, a => a == artistId);
+        self.setLikedArtists([...tmpLikedArtists]);
       },
     };
   });

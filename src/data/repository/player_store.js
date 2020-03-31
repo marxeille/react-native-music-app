@@ -32,12 +32,10 @@ export const PlayerStore = types
       },
 
       play: flow(function* play() {
-        // yield TrackPlayer.play();
         self.statusPlayer = 'playing';
       }),
 
       pause: flow(function* pause() {
-        // yield TrackPlayer.pause();
         self.statusPlayer = 'pause';
       }),
 
@@ -140,8 +138,9 @@ export const PlayerStore = types
       },
       playSong(song) {
         self.currentSong = song;
-
-        self.setState(true);
+        if (self.position == 0) {
+          self.setState(true);
+        }
         // Basic Controls
         MusicControl.enableControl('play', true);
         MusicControl.enableControl('pause', true);

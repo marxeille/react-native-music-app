@@ -22,6 +22,7 @@ export const HomeStore = types
         self.state = 'loading';
         self.fetchHomeData();
         self.fetchLikedTracks();
+        self.fetchLikedArtists();
         self.state = 'success';
       },
       //#endregion
@@ -66,11 +67,11 @@ export const HomeStore = types
               }
             });
           } else {
-            Alert.alert(homeTracks.data.msg);
+            homeTracks?.data ? Alert.alert(homeTracks?.data?.msg) : null;
             // Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
           }
         } else {
-          Alert.alert(homeTrackIds.data.msg);
+          homeTrackIds?.data ? Alert.alert(homeTrackIds?.data.msg) : null;
           // Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
         }
 
@@ -85,7 +86,7 @@ export const HomeStore = types
               getParent(self).updatePlayList(playlistFullInfo);
               self.addPopular(playlistFullInfo);
             } else {
-              Alert.alert(playlistInfo.data.msg);
+              playlistInfo?.data ? Alert.alert(playlistInfo?.data.msg) : null;
               // Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
             }
           });
@@ -100,7 +101,23 @@ export const HomeStore = types
             const preparedData = likedTracks.data.map(track => track.entity_id);
             getParent(self).setLikedTracks(preparedData);
           } else {
-            Alert.alert(likedTracks.data.msg);
+            likedTracks?.data ? Alert.alert(likedTracks.data.msg) : null;
+          }
+        } catch (err) {
+          console.log('err ', err);
+        }
+      }),
+
+      fetchLikedArtists: flow(function* fetchLikedArtists() {
+        try {
+          const likedArtists: Array = yield apiService.libraryApiService.getLikedArtists();
+          if (likedArtists?.status == 200) {
+            const preparedData = likedArtists.data.map(
+              artist => artist.entity_id,
+            );
+            getParent(self).setLikedArtists(preparedData);
+          } else {
+            likedArtists?.data ? Alert.alert(likedArtists.data.msg) : null;
           }
         } catch (err) {
           console.log('err ', err);
