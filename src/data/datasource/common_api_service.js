@@ -55,24 +55,6 @@ export default class CommonApiService {
     }
   }
 
-  // async likeTrack(track_id) {
-  //   try {
-  //     const path = '/api/like/track';
-  //     return await privateRequest(BASE_URL.post, path, { entity_id: track_id });
-  //   } catch (error) {
-  //     console.log('TCL: try -> error', error);
-  //   }
-  // }
-
-  // async unlikeTrack(track_id) {
-  //   try {
-  //     const path = `/api/like/track/${track_id}`;
-  //     return await privateRequest(BASE_URL.delete, path, {});
-  //   } catch (error) {
-  //     console.log('TCL: try -> error', error);
-  //   }
-  // }
-
   async like(type, id) {
     try {
       const path = `/api/like/${type}`;
@@ -104,16 +86,6 @@ export default class CommonApiService {
           artwork:
             'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },
-        {
-          id: '6',
-          title: '999 đoá hồng',
-          artist: 'hey hey hey',
-          favorite: false,
-          url:
-            'https://drive.google.com/uc?export=download&id=1AjPwylDJgR8DOnmJWeRgZzjsohi-7ekj',
-          artwork:
-            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-        },
       ]);
     });
   }
@@ -126,34 +98,6 @@ export default class CommonApiService {
           id: '1',
           name: 'Daily Mixcxxxxxxx 1',
           artist: 'Tim',
-          thumb:
-            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-        },
-        {
-          id: '4',
-          name: 'Daily Mix 2',
-          artist: 'Hồ Ngọc Hà',
-          thumb:
-            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-        },
-        {
-          id: '5',
-          name: 'Daily Mix 3',
-          artist: 'Vũ',
-          thumb:
-            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-        },
-        {
-          id: '6',
-          name: 'Daily Mix 6',
-          artist: 'Vũ',
-          thumb:
-            'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
-        },
-        {
-          id: '6',
-          name: 'Daily Mix 6',
-          artist: 'Vũ',
           thumb:
             'https://photo-resize-zmp3.zadn.vn/w480_r1x1_jpeg/cover/6/f/3/6/6f3688c38de70cd69dd2919d6a7ad318.jpg',
         },

@@ -1,14 +1,6 @@
 import React, { Component, useState, useCallback } from 'react';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableHighlight,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import { standardPadding } from '../../../utils';
@@ -16,38 +8,20 @@ import { indexOf } from 'lodash';
 import { rootStore } from '../../../data/context/root_context';
 import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
 
-const TrackDetails = ({
-  title,
-  artist,
-  onAddPress,
-  onSharePress,
-  onTitlePress,
-  onArtistPress,
-}) => {
-  const [like, setLike] = useState(
-    indexOf(
-      [...rootStore?.likedTracks],
-      Number(rootStore?.playerStore?.currentSong?.id),
-    ) >= 0,
+const TrackDetails = ({ title, artist, onSharePress, onArtistPress }) => {
+  const idExist = indexOf(
+    [...rootStore?.likedTracks],
+    Number(rootStore?.playerStore?.currentSong?.id),
   );
+  const [like, setLike] = useState(idExist >= 0);
 
   const onReactionSuccess = useCallback((type, data) => {
     if (type == 'like') {
-      if (
-        indexOf(
-          [...rootStore?.likedTracks],
-          Number(rootStore?.playerStore?.currentSong?.id),
-        ) < 0
-      ) {
+      if (idExist < 0) {
         rootStore?.addLikedTrack(data);
       }
     } else {
-      if (
-        indexOf(
-          [...rootStore?.likedTracks],
-          Number(rootStore?.playerStore?.currentSong?.id),
-        ) >= 0
-      ) {
+      if (idExist >= 0) {
         rootStore?.removeLikedTrack(data);
       }
     }

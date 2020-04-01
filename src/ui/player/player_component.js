@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import Images from '../../assets/icons/icons';
-import { RootContext, rootStore } from '../../data/context/root_context';
+import { rootStore } from '../../data/context/root_context';
 import { observer } from 'mobx-react';
 import GestureRecognizer, {
   swipeDirections,
@@ -65,22 +65,16 @@ export default class PlayerComponent extends Component {
   }
 
   onReactionSuccess = (type, data) => {
+    const idExist = indexOf(
+      [...rootStore?.likedTracks],
+      Number(rootStore?.playerStore?.currentSong?.id),
+    );
     if (type == 'like') {
-      if (
-        indexOf(
-          [...rootStore?.likedTracks],
-          Number(rootStore?.playerStore?.currentSong?.id),
-        ) < 0
-      ) {
+      if (idExist < 0) {
         rootStore?.addLikedTrack(data);
       }
     } else {
-      if (
-        indexOf(
-          [...rootStore?.likedTracks],
-          Number(rootStore?.playerStore?.currentSong?.id),
-        ) >= 0
-      ) {
+      if (idExist >= 0) {
         rootStore?.removeLikedTrack(data);
       }
     }

@@ -13,21 +13,20 @@ import { indexOf } from 'lodash';
 
 const ArtistItem = observer(
   wrap(props => {
-    const [like, setLike] = useState(
-      indexOf([...rootStore?.likedTracks], Number(props.item.id)) >= 0,
-    );
+    const idExist = indexOf([...rootStore?.likedTracks], Number(props.item.id));
+    const [like, setLike] = useState(idExist >= 0);
 
     useEffect(() => {
-      setLike(indexOf([...rootStore?.likedTracks], Number(props.item.id)) >= 0);
+      setLike(idExist >= 0);
     }, [[...rootStore?.likedTracks]]);
 
     const onReactionSuccess = useCallback((type, data) => {
       if (type == 'like') {
-        if (indexOf([...rootStore?.likedTracks], Number(props.item.id)) < 0) {
+        if (idExist < 0) {
           rootStore?.addLikedTrack(data);
         }
       } else {
-        if (indexOf([...rootStore?.likedTracks], Number(props.item.id)) >= 0) {
+        if (idExist >= 0) {
           rootStore?.removeLikedTrack(data);
         }
       }

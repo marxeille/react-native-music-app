@@ -5,12 +5,9 @@ import {
   ImageBackground,
   Image,
   FlatList,
-  Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import SongOfAlBumStore from '../../../data/repository/song_of_album_store';
 import { observer } from 'mobx-react';
-import { apiService } from '../../../data/context/api_context';
 import { makeCancelable, getStatusBarHeight, subLongStr } from '../../../utils';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
@@ -30,15 +27,6 @@ export default class ArtistDetail extends Component {
     super(props);
     this.viewModel = ArtistModel.create({ state: 'loading' });
     this.modalSong = React.createRef();
-    console.log(
-      'indexOf',
-      [...rootStore?.likedArtists],
-      indexOf(
-        [...rootStore?.likedArtists],
-        Number(props.route.params.artist.id),
-      ),
-    );
-
     this.state = {
       following:
         indexOf(
@@ -74,12 +62,13 @@ export default class ArtistDetail extends Component {
 
   onReactionSuccess = (type, data) => {
     const { artist } = this.props.route.params;
+    const idExist = indexOf([...rootStore?.likedArtists], Number(artist.id));
     if (type == 'like') {
-      if (indexOf([...rootStore?.likedArtists], Number(artist.id)) < 0) {
+      if (idExist < 0) {
         rootStore?.addLikedArtist(data);
       }
     } else {
-      if (indexOf([...rootStore?.likedArtists], Number(artist.id)) >= 0) {
+      if (idExist >= 0) {
         rootStore?.removeLikedArtist(data);
       }
     }
