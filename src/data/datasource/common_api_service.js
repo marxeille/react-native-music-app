@@ -1,4 +1,8 @@
-import { BASE_URL, privateRequest } from './api_config';
+import {
+  BASE_URL,
+  privateRequest,
+  privateRequestWithToken,
+} from './api_config';
 //Hanle data từ Api Services
 export default class CommonApiService {
   async getPlaylists() {
@@ -68,6 +72,20 @@ export default class CommonApiService {
     try {
       const path = `/api/like/${type}/${id}`;
       return await privateRequest(BASE_URL.delete, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
+  async refreshToken(refreshToken) {
+    try {
+      const path = `/api/token/refresh`;
+      return await privateRequestWithToken(
+        BASE_URL.post,
+        path,
+        {},
+        refreshToken,
+      );
     } catch (error) {
       console.log('TCL: try -> error', error);
     }

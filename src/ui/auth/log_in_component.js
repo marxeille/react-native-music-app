@@ -51,7 +51,7 @@ export default class LogInComponent extends Component {
           name: loginName,
           uid: loginName,
           access_token: response.data.access_token,
-          refresh_token: null,
+          refresh_token: response.data.refresh_token,
         }),
       );
     } else {

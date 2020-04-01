@@ -2,6 +2,7 @@ import { create } from 'apisauce';
 import { Alert } from 'react-native';
 import { BASE_API_URL } from '../../constant/constant';
 import AsyncStorage from '@react-native-community/async-storage';
+import UserInfo from '../model/user_info';
 
 const AsyncStorageKey = {
   USERINFO: '@userinfo',
@@ -70,18 +71,48 @@ export const BASE_URL = create({
   },
 });
 
-BASE_URL.addAsyncResponseTransform(response => {
+BASE_URL.addAsyncResponseTransform(async response => {
+  console.log('res block', response);
+
   const { status, data } = response;
 
   if (status) {
     if (status && (status < 200 || status >= 300)) {
       if (status == 401) {
-        //DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native
-        //Link to this article: https://stackoverflow.com/questions/29807664/cyclic-dependency-returns-empty-object-in-react-native
-        let rootStore = require('../context/root_context');
-        AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(value => {
-          rootStore.rootStore.userStore.removeSuccess(value);
-        });
+        //If token expired, call to API to get a new token and refresh token
+        const user = await AsyncStorage.getItem(AsyncStorageKey.USERINFO);
+        const refreshToken = JSON.parse(user).refreshToken;
+        const responseJson = await privateRequestWithToken(
+          BASE_URL.post,
+          '/api/token/refresh',
+          {},
+          refreshToken,
+        );
+        console.log('responseJson', responseJson);
+        const rootStore = require('../context/root_context');
+        if (responseJson.status == 200) {
+          rootStore.userStore.storeUserInfo(
+            new UserInfo({
+              ...user,
+              access_token: responseJson.data.access_token,
+              refresh_token: responseJson.data.refresh_token,
+            }),
+          );
+
+          return privateRequest(
+            BASE_URL[response.config.method],
+            response.config.url,
+            response.params,
+          );
+        } else {
+          //  DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native
+          // Link to this article: https://stackoverflow.com/questions/29807664/cyclic-dependency-returns-empty-object-in-react-native
+          // If token expired, and can not get new refresh token, redirect user to the login screen
+          const rootStore = require('../context/root_context');
+          AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(value => {
+            rootStore.rootStore.userStore.removeSuccess(value);
+          });
+        }
       }
     }
 
