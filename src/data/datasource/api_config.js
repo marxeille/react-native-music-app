@@ -72,8 +72,6 @@ export const BASE_URL = create({
 });
 
 BASE_URL.addAsyncResponseTransform(async response => {
-  console.log('res block', response);
-
   const { status, data } = response;
 
   if (status) {
@@ -89,9 +87,11 @@ BASE_URL.addAsyncResponseTransform(async response => {
           refreshToken,
         );
         console.log('responseJson', responseJson);
-        const rootStore = require('../context/root_context');
+        let rootStore = require('../context/root_context');
+
+        console.log('rootStore', rootStore);
         if (responseJson.status == 200) {
-          rootStore.userStore.storeUserInfo(
+          rootStore?.rootStore?.userStore.storeUserInfo(
             new UserInfo({
               ...user,
               access_token: responseJson.data.access_token,
@@ -99,7 +99,7 @@ BASE_URL.addAsyncResponseTransform(async response => {
             }),
           );
 
-          return privateRequest(
+          privateRequest(
             BASE_URL[response.config.method],
             response.config.url,
             response.params,
@@ -108,7 +108,8 @@ BASE_URL.addAsyncResponseTransform(async response => {
           //  DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native
           // Link to this article: https://stackoverflow.com/questions/29807664/cyclic-dependency-returns-empty-object-in-react-native
           // If token expired, and can not get new refresh token, redirect user to the login screen
-          const rootStore = require('../context/root_context');
+          let rootStore = require('../context/root_context');
+
           AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(value => {
             rootStore.rootStore.userStore.removeSuccess(value);
           });

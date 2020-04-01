@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeComponent from '../ui/main/home';
 import AlbumDetail from '../ui/detail/album/album_detail';
 import PlaylistDetail from '../ui/detail/playlist/playlist_detail';
+import ArtistDetail from '../ui/detail/artist/artist_detail';
 const Stack = createStackNavigator();
 
 export default function homeContainer() {
@@ -10,6 +11,7 @@ export default function homeContainer() {
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="home" component={HomeComponent} />
       <Stack.Screen name="album_detail" component={AlbumDetail} />
+      <Stack.Screen name="artist_detail" component={ArtistDetail} />
       <Stack.Screen name="playlist_detail" component={PlaylistDetail} />
     </Stack.Navigator>
   );

@@ -12,6 +12,7 @@ export const Album = types
         types.frozen({ track_id: types.string, position: types.integer }),
       ),
     ),
+    type: types.string,
   })
   .views(self => {
     return {
@@ -23,6 +24,9 @@ export const Album = types
       },
       getThumb() {
         return self.thumb;
+      },
+      getType() {
+        return self.type;
       },
     };
   })
@@ -41,5 +45,6 @@ export const createAlbumFromApiJson = data => {
     thumb: data.thumb ?? '',
     owner: data.owner ?? '',
     tracks: data.tracks ?? [],
+    type: 'article',
   });
 };

@@ -11,6 +11,7 @@ export const PlayList = types
         types.frozen({ track_id: types.string, position: types.integer }),
       ),
     ),
+    type: types.string,
   })
   .views(self => {
     return {
@@ -22,6 +23,9 @@ export const PlayList = types
       },
       getThumb() {
         return self.thumb;
+      },
+      getType() {
+        return self.type;
       },
     };
   })
@@ -41,6 +45,7 @@ export const createPlaylistFromApiJson = data => {
     owner: data.artists ?? '',
     private: data.private ?? null,
     tracks: data.tracks ?? [],
+    type: 'playlist',
   });
 };
 
@@ -51,5 +56,6 @@ export const createPlaylistFromJson = data => {
     thumb: data.thumb ?? '',
     owner: data.owner ?? '',
     tracks: data.tracks ?? [],
+    type: 'playlist',
   });
 };

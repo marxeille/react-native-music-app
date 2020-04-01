@@ -9,6 +9,7 @@ export const AlbumModel = types
     state: Result,
     songs: types.optional(types.map(Song), {}),
     selectedSong: types.maybeNull(types.reference(Song)),
+    stats: types.number,
   })
   .actions(self => {
     return {
@@ -19,6 +20,9 @@ export const AlbumModel = types
           let song = createSongFromJsonApi(track);
           self.songs.put(song);
         }
+      },
+      setStats(stats) {
+        self.stats = stats;
       },
       setSelectedSong(song) {
         self.selectedSong = song.id;
@@ -31,6 +35,15 @@ export const AlbumModel = types
           });
         }
         self.state = 'success';
+      }),
+      getStats: flow(function* getStats(type, id) {
+        const stats: Array = yield apiService.commonApiService.getStats(
+          type,
+          id,
+        );
+        if (stats?.status == 200) {
+          self.setStats(stats.data.count);
+        }
       }),
     };
   })

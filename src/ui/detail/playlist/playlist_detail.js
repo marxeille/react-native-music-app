@@ -25,14 +25,14 @@ export default class PlaylistDetail extends Component {
     this.modalMenu = React.createRef();
   }
 
-  componentDidMount() {
-    this.cancelablePromise = makeCancelable(
-      apiService.commonApiService.getSongsOfAlBum(1).then((values: Array) => {
-        rootStore.updateSongs(values);
-        this.model.addList(values.map(data => data.id));
-      }),
-    );
-  }
+  // componentDidMount() {
+  //   this.cancelablePromise = makeCancelable(
+  //     apiService.commonApiService.getSongsOfAlBum(1).then((values: Array) => {
+  //       rootStore.updateSongs(values);
+  //       this.model.addList(values.map(data => data.id));
+  //     }),
+  //   );
+  // }
 
   componentWillUnmount() {
     this.cancelablePromise.cancel();

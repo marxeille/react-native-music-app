@@ -5,6 +5,7 @@ export const Artist = types
     id: types.identifier,
     name: types.string,
     thumb: types.string,
+    short_biography: types.string,
     type: types.string,
   })
   .views(self => {
@@ -17,6 +18,9 @@ export const Artist = types
       },
       getThumb() {
         return self.thumb;
+      },
+      getBio() {
+        return self.short_biography;
       },
       getType() {
         return self.type;
@@ -37,6 +41,7 @@ export const createArtistFromApiJson = data => {
     id: data.id.toString(),
     name: data.name ?? '',
     thumb: data.thumb ?? 'https://picsum.photos/200',
+    short_biography: data.short_biography ?? '',
     type: 'artist',
   });
 };

@@ -131,10 +131,7 @@ export default class ArtistDetail extends Component {
               {artist.getName().toUpperCase()}
             </Text>
             <Text cls="white f8 latoFont">
-              {subLongStr(
-                `Idol khÁ ${artist.getName()} bẢnH is on top of the Vinahey hey hey!`,
-                50,
-              )}
+              {subLongStr(artist.getBio(), 50)}
             </Text>
             <Text cls="f9 primaryPurple latoFont pt2">{`2020 - ${this.viewModel.songs.size} Songs`}</Text>
           </View>

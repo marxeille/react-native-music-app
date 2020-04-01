@@ -91,6 +91,15 @@ export default class CommonApiService {
     }
   }
 
+  async getStats(type, id) {
+    try {
+      const path = `/api/like/${type}/${id}/stats`;
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   getSongsOfAlBum(index) {
     return new Promise(resolve => {
       resolve([

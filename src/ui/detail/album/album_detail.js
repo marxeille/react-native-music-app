@@ -30,7 +30,7 @@ export default class AlbumDetail extends Component {
   constructor(props) {
     super(props);
     this.modalSong = React.createRef();
-    this.viewModel = AlbumModel.create({ state: 'loading' });
+    this.viewModel = AlbumModel.create({ state: 'loading', stats: 0 });
     this.state = {
       download: false,
       following:
@@ -48,6 +48,7 @@ export default class AlbumDetail extends Component {
     );
 
     this.cancelablePromise = makeCancelable(
+      this.viewModel.getStats(item.getType(), item.id),
       this.viewModel.getAlbumTracks(
         //if item.id = 0, it's liked tracks playlist, so just get the list right in the rootStore. Otherwise, it's normal playlist
         item.id == 0 ? [...rootStore?.likedTracks] : ids,
@@ -145,7 +146,9 @@ export default class AlbumDetail extends Component {
               {`Idol khÁ ${item.subTitle()} bẢnH is on top of the Vinahey hey hey!`}
             </Text>
             <Text cls="f9 primaryPurple latoFont pt2">
-              {'7.000.000.000 Người theo dõi'}
+              {`${this.viewModel.stats
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} Người theo dõi`}
             </Text>
           </View>
         </ImageBackground>

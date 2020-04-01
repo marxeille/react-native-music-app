@@ -13,13 +13,13 @@ import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import { rootStore } from '../../../data/context/root_context';
 import AddPlayListModal from './add_playlist_modal';
+import { navigate } from '../../../navigation/navigation_service';
 
 @observer
 @wrap
 export default class SongMenu extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       showAddPlaylist: false,
     };
@@ -74,9 +74,16 @@ export default class SongMenu extends Component {
             title={'Thêm vào playlist'}
           />
           <ActionItem icon={'ic_add_song'} title={'Thêm vào danh sách chờ'} />
-          <ActionItem icon={'ic_album'} title={'Xem album'} />
-          <ActionItem icon={'ic_artist'} title={'Xem nghệ sĩ'} />
-          <ActionItem icon={'ic_artist2'} title={'Nghệ sĩ tham gia'} />
+          <ActionItem
+            onPress={() => navigate('album_detail')}
+            icon={'ic_album'}
+            title={'Xem album'}
+          />
+          <ActionItem
+            onPress={() => navigate('artist_detail')}
+            icon={'ic_artist'}
+            title={'Xem nghệ sĩ'}
+          />
         </View>
       </>
     );
