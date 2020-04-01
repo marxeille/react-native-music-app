@@ -28,6 +28,15 @@ export default class LibraryApiService {
     }
   }
 
+  async getLikedAlbums() {
+    try {
+      const path = '/api/like/article';
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   async getAlbums() {
     try {
       const path = `/api/articles`;

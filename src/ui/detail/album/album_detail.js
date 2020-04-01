@@ -20,7 +20,8 @@ import AlbumItem from './components/album_item';
 import SongMenu from '../../player/components/song_menu';
 import BottomModal from '../../components/modal/BottomModal';
 import { AlbumModel } from './model/AlbumModel';
-import { orderBy } from 'lodash';
+import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
+import { indexOf, orderBy } from 'lodash';
 import Loading from '../../components/loading';
 
 @observer
@@ -32,6 +33,11 @@ export default class AlbumDetail extends Component {
     this.viewModel = AlbumModel.create({ state: 'loading' });
     this.state = {
       download: false,
+      following:
+        indexOf(
+          [...rootStore?.likedAlbums],
+          Number(props.route.params.item.id),
+        ) >= 0,
     };
   }
 
@@ -64,6 +70,50 @@ export default class AlbumDetail extends Component {
     if (this.modalSong && this.modalSong.current) {
       this.modalSong.current._hideModal();
     }
+  };
+
+  onReactionSuccess = (type, data) => {
+    const { item } = this.props.route?.params;
+    const idExist = indexOf([...rootStore?.likedAlbums], Number(item.id));
+    if (type == 'like') {
+      if (idExist < 0) {
+        rootStore?.addLikedAlbum(data);
+      }
+    } else {
+      if (idExist >= 0) {
+        rootStore?.removeLikedAlbum(data);
+      }
+    }
+  };
+
+  onReactionError = () => {
+    this.setState({ following: !this.state.following });
+  };
+
+  follow = async () => {
+    const { item } = this.props.route?.params;
+    await likeHelper(
+      'article',
+      item.id,
+      this.onReactionSuccess,
+      this.onReactionError,
+    );
+  };
+
+  unfollow = async () => {
+    const { item } = this.props.route?.params;
+    await unlikeHelper(
+      'article',
+      item.id,
+      this.onReactionSuccess,
+      this.onReactionError,
+    );
+  };
+
+  reaction = () => {
+    const { following } = this.state;
+    this.setState({ following: !following });
+    !following ? this.follow() : this.unfollow();
   };
 
   renderHeaderSection = wrap(() => {
@@ -104,16 +154,19 @@ export default class AlbumDetail extends Component {
   });
 
   renderMiddleSection = wrap(() => {
+    const { following } = this.state;
     return (
       <>
         <View>
           <View cls="pt2 aic pb2">
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.reaction}>
               <View
-                cls="widthFn-140 aic ba br5 pa3 pt2 pb2"
+                cls={`widthFn-140 aic ba br5 pa3 pt2 pb2 ${
+                  following ? ' bg-#835db8' : ''
+                }`}
                 style={{ borderColor: '#d7a0c8' }}>
                 <Text cls="white f11 fw6 lightFont">
-                  {`theo dõi`.toUpperCase()}
+                  {`${following ? 'Đang' : ''} theo dõi`.toUpperCase()}
                 </Text>
               </View>
             </TouchableOpacity>

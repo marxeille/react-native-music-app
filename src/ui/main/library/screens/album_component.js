@@ -14,15 +14,6 @@ export default class AlbumComponent extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    // if (
-    //   rootStore.userStore.playlists == undefined ||
-    //   rootStore.userStore.playlists.length == 0
-    // ) {
-    //   rootStore.userStore.fetchPlayListOfUser();
-    // }
-  }
-
   renderPlaylist = item => {
     return (
       <>
@@ -32,7 +23,7 @@ export default class AlbumComponent extends Component {
   };
 
   render() {
-    const albums = [...rootStore.libraryStore.playlists];
+    const albums = [...rootStore.libraryStore.albums];
 
     return (
       <>

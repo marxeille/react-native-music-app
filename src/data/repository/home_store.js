@@ -21,8 +21,7 @@ export const HomeStore = types
       fetchData() {
         self.state = 'loading';
         self.fetchHomeData();
-        self.fetchLikedTracks();
-        self.fetchLikedArtists();
+        self.fetchLikedStuff();
         self.state = 'success';
       },
       //#endregion
@@ -94,31 +93,25 @@ export const HomeStore = types
         }
       }),
       // #endregion
-
-      fetchLikedTracks: flow(function* fetchLikedTracks() {
+      //fetch liked stuff refactor
+      fetchLikedStuff: flow(function* fetchLikedStuff() {
         try {
           const likedTracks: Array = yield apiService.commonApiService.getLikedTracks();
+          const likedArtists: Array = yield apiService.libraryApiService.getLikedArtists();
+          const likedAlbums: Array = yield apiService.libraryApiService.getLikedAlbums();
           if (likedTracks?.status == 200) {
             const preparedData = likedTracks.data.map(track => track.entity_id);
             getParent(self).setLikedTracks(preparedData);
-          } else {
-            likedTracks?.data ? Alert.alert(likedTracks.data.msg) : null;
           }
-        } catch (err) {
-          console.log('err ', err);
-        }
-      }),
-
-      fetchLikedArtists: flow(function* fetchLikedArtists() {
-        try {
-          const likedArtists: Array = yield apiService.libraryApiService.getLikedArtists();
           if (likedArtists?.status == 200) {
             const preparedData = likedArtists.data.map(
               artist => artist.entity_id,
             );
             getParent(self).setLikedArtists(preparedData);
-          } else {
-            likedArtists?.data ? Alert.alert(likedArtists.data.msg) : null;
+          }
+          if (likedAlbums?.status == 200) {
+            const preparedData = likedAlbums.data.map(album => album.entity_id);
+            getParent(self).setLikedAlbums(preparedData);
           }
         } catch (err) {
           console.log('err ', err);
