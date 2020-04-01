@@ -17,10 +17,7 @@ import { wrap } from '../../themes';
 import { navigate } from '../../navigation/navigation_service';
 import SeekBar from './new_player/SeekBar';
 import { indexOf } from 'lodash';
-import {
-  likeTrackHelper,
-  unlikeTrackHelper,
-} from '../../data/datasource/api_helper';
+import { likeHelper, unlikeHelper } from '../../data/datasource/api_helper';
 
 @observer
 @wrap
@@ -90,7 +87,8 @@ export default class PlayerComponent extends Component {
   };
 
   likeTrack = async () => {
-    await likeTrackHelper(
+    await likeHelper(
+      'track',
       rootStore?.playerStore?.currentSong?.id,
       this.onReactionSuccess,
       null,
@@ -98,7 +96,8 @@ export default class PlayerComponent extends Component {
   };
 
   unlikeTrack = async () => {
-    await unlikeTrackHelper(
+    await unlikeHelper(
+      'track',
       rootStore?.playerStore?.currentSong?.id,
       this.onReactionSuccess,
       null,

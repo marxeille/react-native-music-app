@@ -28,26 +28,6 @@ export default class LibraryApiService {
     }
   }
 
-  async likeArtist(artist_id) {
-    try {
-      const path = '/api/like/artist';
-      return await privateRequest(BASE_URL.post, path, {
-        entity_id: artist_id,
-      });
-    } catch (error) {
-      console.log('TCL: try -> error', error);
-    }
-  }
-
-  async unlikeArtist(artist_id) {
-    try {
-      const path = `/api/like/artist/${artist_id}`;
-      return await privateRequest(BASE_URL.delete, path, {});
-    } catch (error) {
-      console.log('TCL: try -> error', error);
-    }
-  }
-
   async getAlbums() {
     try {
       const path = `/api/articles`;

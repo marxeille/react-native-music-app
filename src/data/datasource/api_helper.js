@@ -3,8 +3,9 @@
 
 import { apiService } from '../context/api_context';
 
-export async function likeTrackHelper(trackId, onSuccess, onError) {
-  const like = await apiService.commonApiService.likeTrack(trackId);
+//Reaction refactor
+export async function likeHelper(type, id, onSuccess, onError) {
+  const like = await apiService.commonApiService.like(type, id);
 
   if (like.status == 201) {
     if (typeof onSuccess == 'function') onSuccess('like', like.data.entity_id);
@@ -13,33 +14,16 @@ export async function likeTrackHelper(trackId, onSuccess, onError) {
   }
 }
 
-export async function unlikeTrackHelper(trackId, onSuccess, onError) {
-  const unlike = await apiService.commonApiService.unlikeTrack(trackId);
+export async function unlikeHelper(type, id, onSuccess, onError) {
+  const unlike = await apiService.commonApiService.unlike(type, id);
   if (unlike.status == 200) {
-    if (typeof onSuccess == 'function') onSuccess('unlike', trackId);
+    if (typeof onSuccess == 'function') onSuccess('unlike', id);
   } else {
     if (typeof onError == 'function') onError('unlike', unlike.data);
   }
 }
 
-export async function likeArtistHelper(artistId, onSuccess, onError) {
-  const like = await apiService.libraryApiService.likeArtist(artistId);
-
-  if (like.status == 201) {
-    if (typeof onSuccess == 'function') onSuccess('like', like.data.entity_id);
-  } else {
-    if (typeof onError == 'function') onError('like', like.data);
-  }
-}
-
-export async function unlikeArtistHelper(artistId, onSuccess, onError) {
-  const unlike = await apiService.libraryApiService.unlikeArtist(artistId);
-  if (unlike.status == 200) {
-    if (typeof onSuccess == 'function') onSuccess('unlike', artistId);
-  } else {
-    if (typeof onError == 'function') onError('unlike', unlike.data);
-  }
-}
+//End Reaction refactor
 
 export async function getTrackFullDetail(trackId) {
   const [trackUrl, trackArtist] = await Promise.all([

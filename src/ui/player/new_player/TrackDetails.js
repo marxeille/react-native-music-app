@@ -14,10 +14,7 @@ import LinearGradientText from '../../main/library/components/LinearGradientText
 import { standardPadding } from '../../../utils';
 import { indexOf } from 'lodash';
 import { rootStore } from '../../../data/context/root_context';
-import {
-  likeTrackHelper,
-  unlikeTrackHelper,
-} from '../../../data/datasource/api_helper';
+import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
 
 const TrackDetails = ({
   title,
@@ -61,7 +58,8 @@ const TrackDetails = ({
   });
 
   const likeTrack = useCallback(async () => {
-    await likeTrackHelper(
+    await likeHelper(
+      'track',
       rootStore?.playerStore?.currentSong?.id,
       onReactionSuccess,
       onReactionError,
@@ -69,7 +67,8 @@ const TrackDetails = ({
   });
 
   const unlikeTrack = useCallback(async () => {
-    await unlikeTrackHelper(
+    await unlikeHelper(
+      'track',
       rootStore?.playerStore?.currentSong?.id,
       onReactionSuccess,
       onReactionError,

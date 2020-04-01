@@ -5,8 +5,8 @@ import { observer } from 'mobx-react';
 import Images from '../../../../assets/icons/icons';
 import { subLongStr } from '../../../../utils';
 import {
-  likeTrackHelper,
-  unlikeTrackHelper,
+  likeHelper,
+  unlikeHelper,
 } from '../../../../data/datasource/api_helper';
 import { rootStore } from '../../../../data/context/root_context';
 import { indexOf } from 'lodash';
@@ -38,11 +38,17 @@ const ArtistItem = observer(
     });
 
     const likeTrack = useCallback(async () => {
-      await likeTrackHelper(props.item.id, onReactionSuccess, onReactionError);
+      await likeHelper(
+        'track',
+        props.item.id,
+        onReactionSuccess,
+        onReactionError,
+      );
     });
 
     const unlikeTrack = useCallback(async () => {
-      await unlikeTrackHelper(
+      await unlikeHelper(
+        'track',
         props.item.id,
         onReactionSuccess,
         onReactionError,

@@ -20,10 +20,7 @@ import ArtistItem from './components/artist_item';
 import SongMenu from '../../player/components/song_menu';
 import BottomModal from '../../components/modal/BottomModal';
 import { ArtistModel } from './model/ArtistModel';
-import {
-  likeArtistHelper,
-  unlikeArtistHelper,
-} from '../../../data/datasource/api_helper';
+import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
 import { indexOf } from 'lodash';
 
 @observer
@@ -94,7 +91,8 @@ export default class ArtistDetail extends Component {
 
   followArtist = async () => {
     const { artist } = this.props.route.params;
-    await likeArtistHelper(
+    await likeHelper(
+      'artist',
       artist.id,
       this.onReactionSuccess,
       this.onReactionError,
@@ -103,7 +101,8 @@ export default class ArtistDetail extends Component {
 
   unfollowArtist = async () => {
     const { artist } = this.props.route.params;
-    await unlikeArtistHelper(
+    await unlikeHelper(
+      'artist',
       artist.id,
       this.onReactionSuccess,
       this.onReactionError,
