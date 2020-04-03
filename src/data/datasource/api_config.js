@@ -3,10 +3,7 @@ import { Alert } from 'react-native';
 import { BASE_API_URL } from '../../constant/constant';
 import AsyncStorage from '@react-native-community/async-storage';
 import UserInfo from '../model/user_info';
-
-const AsyncStorageKey = {
-  USERINFO: '@userinfo',
-};
+import { AsyncStorageKey } from '../../constant/constant';
 
 export const injectBearer = (token, configs) => {
   if (!configs) {
@@ -91,7 +88,6 @@ BASE_URL.addAsyncResponseTransform(async response => {
           {},
           refreshToken,
         );
-        console.log('responseJson refresh', responseJson);
         let rootStore = require('../context/root_context');
         if (responseJson.status == 200) {
           rootStore?.rootStore?.userStore.storeUserInfo(
@@ -108,7 +104,6 @@ BASE_URL.addAsyncResponseTransform(async response => {
             response.params,
           );
           console.log('refreshResponse', refreshResponse);
-
           const freshData = refreshResponse.data;
           console.log('freshData', freshData);
 

@@ -36,7 +36,7 @@ export default class SearchComponent extends Component {
   }
 
   componentDidMount() {
-    this.viewmodel.getRecentlySong();
+    this.viewmodel.getRecentlyResult();
   }
 
   _showModal = song => {
@@ -136,15 +136,24 @@ export default class SearchComponent extends Component {
 
   renderEmptyContainer = wrap(() => (
     <View cls="aic jcc pt3">
-      <Text cls="lightFont white">Không có kết quả</Text>
+      <Text cls="lightFont white">Không có dữ liệu</Text>
     </View>
   ));
+
+  clearRecently = () => {
+    rootStore.playerStore.clearSong();
+    this.viewmodel.removeAllRecently();
+  };
 
   render() {
     const { showHistory, keyword, song } = this.state;
     const data =
       keyword == '' || keyword == null || keyword == undefined
-        ? [...this.viewmodel.recentlySong.values()]
+        ? [
+            ...this.viewmodel.recentlySong.values(),
+            ...this.viewmodel.recentlyAlbum.values(),
+            ...this.viewmodel.recentlyArtist.values(),
+          ]
         : [
             ...this.viewmodel.resultSongs.values(),
             ...this.viewmodel.resultAlbums.values(),
@@ -175,8 +184,7 @@ export default class SearchComponent extends Component {
                 {keyword == '' || keyword == null || keyword == undefined ? (
                   <View
                     style={{ position: 'absolute', right: 12, bottom: 225 }}>
-                    <TouchableOpacity
-                      onPress={this.viewmodel.removeAllRecently}>
+                    <TouchableOpacity onPress={() => this.clearRecently()}>
                       <View
                         cls="ba pa2 pt1 pb1 br5"
                         style={{ borderColor: '#d8a1c8' }}>

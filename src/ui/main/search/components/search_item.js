@@ -28,8 +28,10 @@ export default class SearchItem extends Component {
     const { item, model } = this.props;
     if (item.getType() == 'song') {
       rootStore.createSongRef(item);
+      model.addRecentlySong(item);
       return navigate('player', { trackId: item.id });
     } else if (item.getType() == 'artist') {
+      model.addRecentlyArtist(item);
       return navigate('artist_detail', { artist: item });
     } else {
       model.removeRecentlySong(item?.id);

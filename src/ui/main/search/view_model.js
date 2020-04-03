@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import { types, flow } from 'mobx-state-tree';
 import { Result } from '../../../data/repository/result';
 import {
@@ -9,14 +10,15 @@ import { apiService } from '../../../data/context/api_context';
 import { Artist, createArtistFromApiJson } from '../../../data/model/artist';
 import { Album } from '../../../data/model/album';
 import { getTrackFullDetail } from '../../../data/datasource/api_helper';
+import { AsyncStorageKey } from '../../../constant/constant';
 
 export const SearchModel = types
   .model('SearchModel', {
     state: Result,
     recentlyKeyWord: types.maybeNull(types.array(types.string)),
-    recentlySong: types.map(Song),
-    recentlyAlbum: types.maybeNull(types.map(Album)),
-    recentlyArtist: types.maybeNull(types.map(Artist)),
+    recentlySong: types.optional(types.map(Song), {}),
+    recentlyAlbum: types.optional(types.map(Album), {}),
+    recentlyArtist: types.optional(types.map(Artist), {}),
     keyword: types.maybeNull(types.string),
     resultSongs: types.optional(types.map(Song), {}),
     resultAlbums: types.optional(types.map(Album), {}),
@@ -24,16 +26,22 @@ export const SearchModel = types
   })
   .actions(self => {
     return {
-      getRecentlySong: flow(function* getRecently() {
-        const recently: Array = yield apiService.commonApiService.getSongsOfAlBum();
-        recently.forEach(data => {
-          let song = createSongFromJson(data);
-          self.recentlySong.put(song);
-        });
-
-        self.state = 'success';
-      }),
-
+      addRecentlySong(song) {
+        if (self.recentlySong.get(song.id)) {
+          self.recentlySong.get(song.id).update(song);
+        } else {
+          const newSong = createSongFromJsonApi(song);
+          self.recentlySong.put(newSong);
+        }
+      },
+      addRecentlyArrtist(artist) {
+        if (self.recentlyArtist.get(artist.id)) {
+          self.recentlyArtist.get(artist.id).update(artist);
+        } else {
+          const newArtist = createArtistFromApiJson(artist);
+          self.recentlyArtist.put(newArtist);
+        }
+      },
       removeRecentlySong(id) {
         self.recentlySong.delete(id);
       },
@@ -55,6 +63,32 @@ export const SearchModel = types
       setResultArtist(artist) {
         self.resultArtists.put(artist);
       },
+
+      getRecentlyResult: flow(function* getRecentlyResult() {
+        const songs = yield AsyncStorage.getItem(
+          AsyncStorageKey.RECENTLYSEARCH.SONGS,
+        );
+        songs?.length > 0 &&
+          songs?.forEach(s => {
+            let song = createSongFromJsonApi(s);
+            self.recentlySong.put(song);
+          });
+
+        const artists = yield AsyncStorage.getItem(
+          AsyncStorageKey.RECENTLYSEARCH.ARTISTS,
+        );
+        artists?.length > 0 &&
+          artists?.forEach(a => {
+            let artist = createArtistFromApiJson(a);
+            self.recentlyArtist.put(artist);
+          });
+
+        const albums = yield AsyncStorage.getItem(
+          AsyncStorageKey.RECENTLYSEARCH.ALBUMS,
+        );
+
+        self.state = 'success';
+      }),
 
       searchByKeyword: flow(function* searchByKeyword(keyword) {
         self.keyword = keyword;

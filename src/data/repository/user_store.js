@@ -7,16 +7,13 @@ import { PlayList, createPlaylistFromJson } from '../model/playlist';
 import { Artist } from '../model/artist';
 import { Album } from '../model/album';
 import { apiService } from '../context/api_context';
+import { AsyncStorageKey } from '../../constant/constant';
 
 export const AuthState = types.enumeration('AuthState', [
   'authed',
   'none',
   'not_auth',
 ]);
-
-const AsyncStorageKey = {
-  USERINFO: '@userinfo',
-};
 
 export const UserStore = types
   .model('UserStore', {

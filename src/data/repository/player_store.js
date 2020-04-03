@@ -31,6 +31,10 @@ export const PlayerStore = types
         }
       },
 
+      clearSong() {
+        self.currentSong = null;
+      },
+
       play: flow(function* play() {
         self.statusPlayer = 'playing';
       }),
