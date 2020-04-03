@@ -21,7 +21,7 @@ import Images from '../../../assets/icons/icons';
 import BottomModal from '../../components/modal/BottomModal';
 import * as _ from 'lodash';
 import { wrap } from '../../../themes';
-import { isMeidumDevice, isSmallDevice } from '../../../utils';
+import { isMeidumDevice, isSmallDevice, subLongStr } from '../../../utils';
 import { ShareDialog } from 'react-native-fbsdk';
 import SongMenu from '../components/song_menu';
 
@@ -111,7 +111,10 @@ export default class Player extends Component {
     const { showPlayMenu } = this.state;
 
     return showPlayMenu ? (
-      <SongMenu song={rootStore.playerStore?.currentSong} />
+      <SongMenu
+        song={rootStore.playerStore?.currentSong}
+        _hideModal={this._hideModal}
+      />
     ) : (
       <View cls="jcc pt3">
         <ImageBackground
@@ -128,7 +131,7 @@ export default class Player extends Component {
             />
             <View cls="pl3  jcc">
               <Text cls="white fw7 f6">
-                {rootStore.playerStore?.currentSong?.getName()}
+                {subLongStr(rootStore.playerStore?.currentSong?.getName(), 18)}
               </Text>
               <Text cls="white pt1">
                 {rootStore.playerStore?.currentSong?.getSubTitle()}

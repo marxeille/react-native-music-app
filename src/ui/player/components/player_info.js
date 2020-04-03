@@ -9,7 +9,7 @@ import {
 import { observer } from 'mobx-react';
 import { rootStore } from '../../../data/context/root_context';
 import { wrap } from '../../../themes';
-import { isSmallDevice } from '../../../utils';
+import { isSmallDevice, subLongStr } from '../../../utils';
 import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import BottomModal from '../../components/modal/BottomModal';
@@ -52,7 +52,7 @@ export default class PlayerInfo extends Component {
             />
             <View cls="pl3  jcc">
               <Text cls="white fw7 f6 lightFont">
-                {rootStore.playerStore?.currentSong?.getName()}
+                {subLongStr(rootStore.playerStore?.currentSong?.getName(), 18)}
               </Text>
               <Text cls="white pt1 lightFont">
                 {rootStore.playerStore?.currentSong?.getSubTitle()}

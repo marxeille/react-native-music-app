@@ -10,6 +10,7 @@ import { Song, createSongFromJson, createSongFromJsonApi } from '../model/song';
 import SongOfQueueStore from './song_of_queue_store';
 import { LibraryStore } from './library_store';
 import { remove, cloneDeep } from 'lodash';
+import SongOfAlPlaylistStore from './song_of_playlist_store';
 
 export const RootStore = types
   .model('RootStore', {
@@ -18,6 +19,7 @@ export const RootStore = types
     homeStore: HomeStore,
     libraryStore: LibraryStore,
     queueStore: SongOfQueueStore,
+    playlistSongStore: SongOfAlPlaylistStore,
     playlist: types.maybeNull(types.map(PlayList)),
     artist: types.maybeNull(types.map(Artist)),
     albums: types.optional(types.map(Album), {}),

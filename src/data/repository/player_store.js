@@ -44,7 +44,11 @@ export const PlayerStore = types
       }),
 
       getSongs() {
-        return [...getParent(self).songs.values()];
+        return [
+          ...getParent(self).queueStore.getSongs(),
+          ...getParent(self).playlistSongStore.getSongs(),
+        ];
+        // return [...getParent(self).songs.values()];
       },
 
       getQueueSize() {

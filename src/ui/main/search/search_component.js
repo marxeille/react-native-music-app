@@ -91,7 +91,7 @@ export default class SearchComponent extends Component {
                 onFocus={this.onFocus}
               />
               <Text cls="white fw6 f10 lightFont">
-                {this.state.keyword || this.state.showHistory
+                {this.state.keyword == '' || this.state.keyword == null
                   ? 'Tìm gần đây'
                   : 'Duyệt tìm tất cả'}
               </Text>

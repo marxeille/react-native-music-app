@@ -7,6 +7,7 @@ import { reactotron } from '../../../ReactotronConfig';
 import SongOfQueueStore from '../repository/song_of_queue_store';
 import * as _ from 'lodash';
 import { LibraryStore } from '../repository/library_store';
+import SongOfAlPlaylistStore from '../repository/song_of_playlist_store';
 
 export const rootStore = RootStore.create({
   userStore: UserStore.create({
@@ -25,6 +26,7 @@ export const rootStore = RootStore.create({
     state: 'loading',
   }),
   queueStore: SongOfQueueStore.create({ songs: [] }),
+  playlistSongStore: SongOfAlPlaylistStore.create({ song: [] }),
   songs: {},
 });
 

@@ -122,7 +122,7 @@ class Queue2 extends Component {
         item={item}
         drag={drag}
         isActive={isActive}
-        key={index.toString()}
+        key={item.id.toString()}
       />
     );
   });

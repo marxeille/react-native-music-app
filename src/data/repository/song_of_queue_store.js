@@ -6,7 +6,7 @@ const SongOfQueueStore = types
   .model('SongOfQueueStore', {
     id: types.maybeNull(types.string),
     state: types.maybeNull(Result),
-    songs: types.maybeNull(types.array(types.reference(Song))),
+    songs: types.optional(types.array(types.reference(Song)), []),
   })
   .actions(self => {
     return {

@@ -29,6 +29,12 @@ export default class SongMenu extends Component {
     this.setState({ showAddPlaylist: state });
   };
 
+  addToQueue = () => {
+    const { song, _hideModal } = this.props;
+    rootStore.queueStore.addSong(song);
+    if (typeof _hideModal == 'function') _hideModal();
+  };
+
   render() {
     const { song } = this.props;
     const { showAddPlaylist } = this.state;
@@ -73,7 +79,11 @@ export default class SongMenu extends Component {
             icon={'ic_add_playlist'}
             title={'Thêm vào playlist'}
           />
-          <ActionItem icon={'ic_add_song'} title={'Thêm vào danh sách chờ'} />
+          <ActionItem
+            onPress={() => this.addToQueue()}
+            icon={'ic_add_song'}
+            title={'Thêm vào danh sách chờ'}
+          />
           <ActionItem
             onPress={() => navigate('album_detail')}
             icon={'ic_album'}

@@ -72,11 +72,6 @@ BASE_URL.addAsyncResponseTransform(async response => {
   const { status, data } = response;
 
   if (status) {
-    privateRequest(
-      BASE_URL[response.config.method],
-      response.config.url,
-      response.params,
-    );
     if (status && (status < 200 || status >= 300)) {
       if (status == 401) {
         //If token expired, call to API to get a new token and refresh token
@@ -106,7 +101,6 @@ BASE_URL.addAsyncResponseTransform(async response => {
           console.log('refreshResponse', refreshResponse);
           const freshData = refreshResponse.data;
           console.log('freshData', freshData);
-
           return Promise.resolve({
             ...freshData,
           });
