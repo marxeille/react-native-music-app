@@ -75,6 +75,11 @@ BASE_URL.addAsyncResponseTransform(async response => {
   const { status, data } = response;
 
   if (status) {
+    privateRequest(
+      BASE_URL[response.config.method],
+      response.config.url,
+      response.params,
+    );
     if (status && (status < 200 || status >= 300)) {
       if (status == 401) {
         //If token expired, call to API to get a new token and refresh token
@@ -86,10 +91,8 @@ BASE_URL.addAsyncResponseTransform(async response => {
           {},
           refreshToken,
         );
-        console.log('responseJson', responseJson);
+        console.log('responseJson refresh', responseJson);
         let rootStore = require('../context/root_context');
-
-        console.log('rootStore', rootStore);
         if (responseJson.status == 200) {
           rootStore?.rootStore?.userStore.storeUserInfo(
             new UserInfo({
@@ -99,11 +102,19 @@ BASE_URL.addAsyncResponseTransform(async response => {
             }),
           );
 
-          privateRequest(
+          const refreshResponse = await privateRequest(
             BASE_URL[response.config.method],
             response.config.url,
             response.params,
           );
+          console.log('refreshResponse', refreshResponse);
+
+          const freshData = refreshResponse.data;
+          console.log('freshData', freshData);
+
+          return Promise.resolve({
+            ...freshData,
+          });
         } else {
           //  DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native
           // Link to this article: https://stackoverflow.com/questions/29807664/cyclic-dependency-returns-empty-object-in-react-native
