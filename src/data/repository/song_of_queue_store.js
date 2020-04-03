@@ -1,6 +1,7 @@
 import { types, flow } from 'mobx-state-tree';
 import { Result } from './result';
 import { Song } from '../model/song';
+import { indexOf, map } from 'lodash';
 
 const SongOfQueueStore = types
   .model('SongOfQueueStore', {
@@ -17,7 +18,9 @@ const SongOfQueueStore = types
       },
 
       addSong(song) {
-        self.songs.push(song.id);
+        if (indexOf(map([...self.songs], 'id'), song.id) < 0) {
+          self.songs.push(song.id);
+        }
       },
 
       addNewQue(songs) {

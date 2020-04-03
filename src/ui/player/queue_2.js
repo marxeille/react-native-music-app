@@ -89,13 +89,15 @@ class Queue2 extends Component {
   });
 
   shuffeData = queue => {
-    let sliceIndex = _.findIndex(queue, q => q.order == 2);
-    const queueSongs = queue.slice(0, sliceIndex);
-    queueSongs.shift();
-    const playlistSongs = queue.slice(sliceIndex, queue.length);
-    playlistSongs.shift();
-    rootStore.queueStore.addNewQue(queueSongs);
-    this.setState({ playlist: playlistSongs });
+    if (queue[0].flag == 'header') {
+      let sliceIndex = _.findIndex(queue, q => q.order == 2);
+      const queueSongs = queue.slice(0, sliceIndex);
+      queueSongs.shift();
+      const playlistSongs = queue.slice(sliceIndex, queue.length);
+      playlistSongs.shift();
+      rootStore.queueStore.addNewQue(queueSongs);
+      this.setState({ playlist: playlistSongs });
+    }
   };
 
   renderItem = wrap(({ item, index, drag, isActive }) => {

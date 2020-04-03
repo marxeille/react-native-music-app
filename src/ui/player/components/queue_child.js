@@ -4,6 +4,7 @@ import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
 import { observer } from 'mobx-react';
 import { rootStore } from '../../../data/context/root_context';
+import { subLongStr } from '../../../utils';
 
 const QueueChild = observer(
   wrap(props => {
@@ -25,7 +26,7 @@ const QueueChild = observer(
           </TouchableOpacity>
           <View cls="pl3">
             <Text cls={`white fw6 f${onPlayItem ? '4' : '6'} latoFont`}>
-              {props.item?.getName() ?? 'Queue Child'}
+              {subLongStr(props.item?.getName(), 18) ?? 'Queue Child'}
             </Text>
             <Text cls={`primaryPurple pt1 ${onPlayItem ? 'f6' : ''} latoFont`}>
               {props.item?.getSubTitle() ?? 'Queue Child'}
