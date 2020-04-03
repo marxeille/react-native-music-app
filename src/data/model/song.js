@@ -78,7 +78,7 @@ export const createSongFromJsonApi = data => {
     artwork: data.cover_path
       ? BASE_API_URL + data.cover_path
       : 'https://picsum.photos/200',
-    url: data.track_url ?? '',
+    url: data.track_url ? data.track_url : data.url ?? '',
     duration: data.duration ?? 100,
     favorite: false,
     type: 'song',

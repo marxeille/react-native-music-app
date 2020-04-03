@@ -20,7 +20,7 @@ export const RootStore = types
     queueStore: SongOfQueueStore,
     playlist: types.maybeNull(types.map(PlayList)),
     artist: types.maybeNull(types.map(Artist)),
-    albums: types.maybeNull(types.map(Album)),
+    albums: types.optional(types.map(Album), {}),
     songs: types.maybeNull(types.map(Song)),
     likedTracks: types.array(types.number),
     likedArtists: types.array(types.number),

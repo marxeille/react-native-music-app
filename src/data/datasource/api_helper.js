@@ -54,14 +54,21 @@ export async function getPlaylistCover(tracks) {
   let artists = [];
   let cover = {};
   // Get first track cover for playlist cover
-  const trackCover = await apiService.trackApiService.getTrackInfo(
-    tracks[0].track_id,
-  );
-  if (trackCover.status == 200) {
+  if (tracks.length > 0) {
+    const trackCover = await apiService.trackApiService.getTrackInfo(
+      tracks[0].track_id,
+    );
+    if (trackCover.status == 200) {
+      cover = {
+        ...cover,
+        playlistCover:
+          trackCover?.data?.cover_path ?? 'https://picsum.photos/200',
+      };
+    }
+  } else {
     cover = {
       ...cover,
-      playlistCover:
-        trackCover?.data?.cover_path ?? 'https://picsum.photos/200',
+      playlistCover: 'https://picsum.photos/200',
     };
   }
 

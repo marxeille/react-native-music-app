@@ -39,7 +39,7 @@ export const Album = types
   });
 
 export const createAlbumFromApiJson = data => {
-  return Artist.create({
+  return Album.create({
     id: data.id.toString(),
     name: data.name ?? '',
     thumb: data.thumb ?? '',

@@ -29,6 +29,10 @@ export const LibraryStore = types
         self.state = 'success';
       }),
 
+      setAlbum(album) {
+        self.albums.push(album.id);
+      },
+
       fetchLikedTracksPlaylist() {
         const likedTracks = getParent(self).likedTracks;
         const playlistTracks = likedTracks.map((trackId, i) => {
@@ -89,10 +93,10 @@ export const LibraryStore = types
           const albums: Array = yield apiService.libraryApiService.getAlbums();
           if (albums.status == 200) {
             albums.data.map(async al => {
-              const cover = await getPlaylistCover(al.tracks);
+              const cover = await getPlaylistCover(al?.tracks);
               const albumFullInfo = { ...al, ...cover };
               getParent(self).updateAlbum(albumFullInfo);
-              self.albums.push(al.id);
+              self.setAlbum(al);
             });
           } else {
             Alert.alert(albums.data.msg);

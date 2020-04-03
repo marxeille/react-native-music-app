@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../../themes';
 import Images from '../../../../assets/icons/icons';
 import { navigate } from '../../../../navigation/navigation_service';
+import { rootStore } from '../../../../data/context/root_context';
 
 @wrap
 export default class SearchItem extends Component {
@@ -11,7 +12,7 @@ export default class SearchItem extends Component {
     this.state = {};
   }
 
-  handleOnPress = () => {
+  handleOnActionPress = () => {
     const { item, model, _showModal } = this.props;
     if (item.getType() == 'song') {
       if (typeof _showModal == 'function') _showModal(item);
@@ -23,9 +24,20 @@ export default class SearchItem extends Component {
     }
   };
 
+  handleOnItemPress = () => {
+    const { item, model } = this.props;
+    if (item.getType() == 'song') {
+      rootStore.createSongRef(item);
+      return navigate('player', { trackId: item.id });
+    } else if (item.getType() == 'artist') {
+      return navigate('artist_detail', { artist: item });
+    } else {
+      model.removeRecentlySong(item?.id);
+    }
+  };
+
   render() {
     const { item } = this.props;
-
     const icon =
       item.getType() == 'song'
         ? Images.ic_menu
@@ -35,7 +47,7 @@ export default class SearchItem extends Component {
 
     return (
       <View cls="flx-row aic pt4 jcsb">
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.handleOnItemPress}>
           <View cls="flx-row aic">
             <Image
               cls="widthFn-90 heightFn-82"
@@ -47,7 +59,7 @@ export default class SearchItem extends Component {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this.handleOnPress}>
+        <TouchableOpacity onPress={this.handleOnActionPress}>
           <Image cls="widthFn-20 heightFn-20" source={icon} />
         </TouchableOpacity>
       </View>

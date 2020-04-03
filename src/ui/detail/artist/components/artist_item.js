@@ -65,7 +65,7 @@ const ArtistItem = observer(
           <View cls="flx-row pa3 pb2 pt2">
             <View cls="squareFn-50 aic jcc">
               <Text cls="white lightFont f5">
-                {props.index < 10 ? '0' : ''}
+                {props.index < 9 ? '0' : ''}
                 {props.index + 1}
               </Text>
             </View>

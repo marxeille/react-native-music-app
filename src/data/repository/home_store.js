@@ -81,7 +81,7 @@ export const HomeStore = types
             );
 
             if (playlistInfo.status == 200 && playlistInfo.data) {
-              const cover = await getPlaylistCover(playlistInfo.data.tracks);
+              const cover = await getPlaylistCover(playlistInfo?.data?.tracks);
               const playlistFullInfo = { ...playlistInfo.data, ...cover };
               getParent(self).updatePlayList(playlistFullInfo);
               self.addPopular(playlistFullInfo);
