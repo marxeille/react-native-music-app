@@ -31,7 +31,9 @@ export default class SongMenu extends Component {
 
   addToQueue = () => {
     const { song, _hideModal } = this.props;
-    rootStore.queueStore.addSong(song);
+    if (song.id !== rootStore?.playerStore?.currentSong.id) {
+      rootStore.queueStore.addSong(song);
+    }
     if (typeof _hideModal == 'function') _hideModal();
   };
 

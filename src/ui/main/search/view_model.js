@@ -26,18 +26,45 @@ export const SearchModel = types
   })
   .actions(self => {
     return {
+      addToLocalStorage: flow(function* addToLocalStorage(key, data) {
+        const preLocalData = yield AsyncStorage.getItem(key);
+        const localDataJson = JSON.parse(preLocalData);
+        if (localDataJson !== null) {
+          //In case there is already a data list in local storage
+          if (localDataJson?.length < 10) {
+            localDataJson.push(data);
+            localDataJson.reverse();
+            AsyncStorage.setItem(key, JSON.stringify(localDataJson));
+          } else {
+            localDataJson.shift();
+            localDataJson.push(data);
+            localDataJson.reverse();
+            AsyncStorage.setItem(key, JSON.stringify(localDataJson));
+          }
+        } else {
+          //If not, create a new one
+          const newLocalData = [];
+          newLocalData.push(data);
+          AsyncStorage.setItem(key, JSON.stringify(newLocalData));
+        }
+      }),
       addRecentlySong(song) {
         if (self.recentlySong.get(song.id)) {
           self.recentlySong.get(song.id).update(song);
         } else {
+          self.addToLocalStorage(AsyncStorageKey.RECENTLYSEARCH.SONGS, song);
           const newSong = createSongFromJsonApi(song);
           self.recentlySong.put(newSong);
         }
       },
-      addRecentlyArrtist(artist) {
+      addRecentlyArtist(artist) {
         if (self.recentlyArtist.get(artist.id)) {
           self.recentlyArtist.get(artist.id).update(artist);
         } else {
+          self.addToLocalStorage(
+            AsyncStorageKey.RECENTLYSEARCH.ARTISTS,
+            artist,
+          );
           const newArtist = createArtistFromApiJson(artist);
           self.recentlyArtist.put(newArtist);
         }
@@ -46,9 +73,14 @@ export const SearchModel = types
         self.recentlySong.delete(id);
       },
 
-      removeAllRecently() {
+      removeAllRecently: flow(function* removeAllRecently() {
+        yield AsyncStorage.removeItem(AsyncStorageKey.RECENTLYSEARCH.SONGS);
+        yield AsyncStorage.removeItem(AsyncStorageKey.RECENTLYSEARCH.ARTISTS);
+        yield AsyncStorage.removeItem(AsyncStorageKey.RECENTLYSEARCH.ALBUMS);
         self.recentlySong.clear();
-      },
+        self.recentlyArtist.clear();
+        self.recentlyAlbum.clear();
+      }),
 
       removeAllSearchResult() {
         self.resultSongs.clear();
@@ -68,19 +100,21 @@ export const SearchModel = types
         const songs = yield AsyncStorage.getItem(
           AsyncStorageKey.RECENTLYSEARCH.SONGS,
         );
-        songs?.length > 0 &&
-          songs?.forEach(s => {
-            let song = createSongFromJsonApi(s);
-            self.recentlySong.put(song);
+        const songsJson = JSON.parse(songs);
+        songsJson?.length > 0 &&
+          songsJson?.forEach(s => {
+            const newSong = createSongFromJsonApi(s);
+            self.recentlySong.put(newSong);
           });
 
         const artists = yield AsyncStorage.getItem(
           AsyncStorageKey.RECENTLYSEARCH.ARTISTS,
         );
-        artists?.length > 0 &&
-          artists?.forEach(a => {
-            let artist = createArtistFromApiJson(a);
-            self.recentlyArtist.put(artist);
+        const artistsJson = JSON.parse(artists);
+        artistsJson?.length > 0 &&
+          artistsJson?.forEach(a => {
+            const newArtist = createArtistFromApiJson(a);
+            self.recentlyArtist.put(newArtist);
           });
 
         const albums = yield AsyncStorage.getItem(

@@ -24,7 +24,7 @@ class Queue2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playlist: [...rootStore.songs.values()],
+      // playlist: [...rootStore.songs.values()],
     };
   }
 
@@ -96,7 +96,7 @@ class Queue2 extends Component {
       const playlistSongs = queue.slice(sliceIndex, queue.length);
       playlistSongs.shift();
       rootStore.queueStore.addNewQue(queueSongs);
-      this.setState({ playlist: playlistSongs });
+      // this.setState({ playlist: playlistSongs });
     }
   };
 
@@ -130,7 +130,21 @@ class Queue2 extends Component {
   });
 
   render() {
-    const { playlist } = this.state;
+    // const { playlist } = this.state;
+    const data = [
+      { flag: 'header', title: 'Danh sách chờ', order: 1 },
+      ...rootStore.queueStore.songs,
+      // ...playlist,
+    ];
+    if ([...rootStore.playlistSongStore.songs].length > 0) {
+      data.push({
+        flag: 'header',
+        title: 'Playlist : ',
+        subTitle: 'Best Remix',
+        order: 2,
+      });
+      [...rootStore.playlistSongStore.songs].map(song => data.push(song));
+    }
 
     return (
       //   <View cls="jcsb fullView">
@@ -138,17 +152,7 @@ class Queue2 extends Component {
         {this.renderQueuePlayer()}
         <View cls="pa3" style={{ height: D_HEIGHT - 112, paddingBottom: 56 }}>
           <DraggableFlatList
-            data={[
-              { flag: 'header', title: 'Danh sách chờ', order: 1 },
-              ...rootStore.queueStore.songs,
-              {
-                flag: 'header',
-                title: 'Playlist : ',
-                subTitle: 'Best Remix',
-                order: 2,
-              },
-              ...playlist,
-            ]}
+            data={data}
             // ListHeaderComponent={this.renderQueuePlayer()}
             showsVerticalScrollIndicator={false}
             renderItem={this.renderItem}
