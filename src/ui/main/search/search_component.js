@@ -183,7 +183,7 @@ export default class SearchComponent extends Component {
                 />
                 {keyword == '' || keyword == null || keyword == undefined ? (
                   <View
-                    style={{ position: 'absolute', right: 12, bottom: 225 }}>
+                    style={{ position: 'absolute', right: 12, bottom: 215 }}>
                     <TouchableOpacity onPress={() => this.clearRecently()}>
                       <View
                         cls="ba pa2 pt1 pb1 br5"

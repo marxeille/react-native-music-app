@@ -23,20 +23,23 @@ export const ArtistModel = types
       setSelectedSong(song) {
         self.selectedSong = song.id;
       },
-      getArtistTracks: flow(function* getArtistTracks(id) {
+      getArtistTrackIds: flow(function* getArtistTracks(id) {
         const artistTrackIds: Array = yield apiService.libraryApiService.getArtistTracks(
           id,
         );
+        let ids = [];
         if (artistTrackIds?.status == 200) {
-          const ids = artistTrackIds?.data.map(track => track.track_id);
-          const tracks: Array = yield apiService.commonApiService.getTracks(
-            ids,
-          );
-          if (tracks?.status == 200) {
-            tracks?.data?.map(track => {
-              self.setSongs(track);
-            });
-          }
+          ids = artistTrackIds?.data.map(track => track.track_id);
+        }
+        return ids;
+      }),
+      getArtistTracks: flow(function* getArtistTracks(id) {
+        const ids = yield self.getArtistTrackIds(id);
+        const tracks: Array = yield apiService.commonApiService.getTracks(ids);
+        if (tracks?.status == 200) {
+          tracks?.data?.map(track => {
+            self.setSongs(track);
+          });
         }
         self.state = 'success';
       }),

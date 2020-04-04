@@ -18,7 +18,8 @@ import SongMenu from '../../player/components/song_menu';
 import BottomModal from '../../components/modal/BottomModal';
 import { ArtistModel } from './model/ArtistModel';
 import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
-import { indexOf } from 'lodash';
+import { indexOf, find } from 'lodash';
+import { navigate } from '../../../navigation/navigation_service';
 
 @observer
 @wrap
@@ -28,6 +29,7 @@ export default class ArtistDetail extends Component {
     this.viewModel = ArtistModel.create({ state: 'loading' });
     this.modalSong = React.createRef();
     this.state = {
+      ids: [],
       following:
         indexOf(
           [...rootStore?.likedArtists],
@@ -40,6 +42,11 @@ export default class ArtistDetail extends Component {
     const { artist } = this.props.route.params;
     this.cancelablePromise = makeCancelable(
       this.viewModel.getArtistTracks(Number(artist.id)),
+    );
+    this.cancelablePromise = makeCancelable(
+      this.viewModel.getArtistTrackIds(Number(artist.id)).then(ids => {
+        this.setState({ ids: ids });
+      }),
     );
   }
 
@@ -104,6 +111,16 @@ export default class ArtistDetail extends Component {
     !following ? this.followArtist() : this.unfollowArtist();
   };
 
+  playRandomSong = () => {
+    const { ids } = this.state;
+    const randomId = ids[Math.floor(Math.random() * ids.length)];
+    const item = find([...this.viewModel.songs.values()], {
+      id: randomId.toString(),
+    });
+    rootStore.createSongRef(item);
+    navigate('player', { trackId: randomId });
+  };
+
   renderHeaderSection = wrap(() => {
     const { artist } = this.props.route.params;
 
@@ -163,7 +180,7 @@ export default class ArtistDetail extends Component {
               cls="heightFn-70 aic pt3"
               style={{ width: '100%' }}
               source={Images.wave}>
-              <TouchableOpacity onPress={this.handleLogin}>
+              <TouchableOpacity onPress={this.playRandomSong}>
                 <LinearGradient
                   cls="ba br5 b--#321A54"
                   colors={['#4A3278', '#8B659D', '#DDA5CB']}
