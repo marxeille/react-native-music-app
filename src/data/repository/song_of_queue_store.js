@@ -1,7 +1,7 @@
 import { types, flow } from 'mobx-state-tree';
 import { Result } from './result';
 import { Song } from '../model/song';
-import { indexOf, map } from 'lodash';
+import { indexOf, map, remove } from 'lodash';
 
 const SongOfQueueStore = types
   .model('SongOfQueueStore', {
@@ -27,6 +27,11 @@ const SongOfQueueStore = types
         self.songs = [];
         songs.map(song => {
           self.addSong(song);
+        });
+      },
+      removeSongs(songIds) {
+        remove(self.songs, song => {
+          return indexOf(songIds, song.id) >= 0;
         });
       },
     };

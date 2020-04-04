@@ -205,7 +205,7 @@ export default class SearchComponent extends Component {
               </ScrollView>
             )}
             <BottomModal ref={this.modalMenu} headerNone>
-              <SongMenu song={song} />
+              <SongMenu song={song} _hideModal={this._hideModal} />
             </BottomModal>
           </ImageBackground>
         </View>

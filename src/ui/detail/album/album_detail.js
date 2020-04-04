@@ -268,7 +268,10 @@ export default class AlbumDetail extends Component {
               keyExtractor={(item, index) => index.toString()}
             />
             <BottomModal ref={this.modalSong} headerNone>
-              <SongMenu song={this.viewModel.selectedSong} />
+              <SongMenu
+                song={this.viewModel.selectedSong}
+                _hideModal={this._hideModal}
+              />
             </BottomModal>
           </ImageBackground>
         </View>

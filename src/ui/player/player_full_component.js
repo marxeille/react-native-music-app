@@ -137,7 +137,7 @@ const PlayerFull = observer(
           <Text cls="white asc">Now {getStateName(playbackState)}</Text>
         </View>
         <BottomModal ref={modalMenu} headerNone>
-          <SongMenu />
+          <SongMenu _hideModal={this._hideModal} />
         </BottomModal>
         {/* </ImageBackground> */}
       </View>

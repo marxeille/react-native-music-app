@@ -24,7 +24,7 @@ class Queue2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // playlist: [...rootStore.songs.values()],
+      checkedSongs: [],
     };
   }
 
@@ -79,7 +79,10 @@ class Queue2 extends Component {
             <TouchableOpacity>
               <Image cls="widthFn-24 heightFn-25" source={Images.ic_add_song} />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                rootStore?.queueStore?.removeSongs(this.state.checkedSongs)
+              }>
               <Image cls="widthFn-24 heightFn-25" source={Images.ic_trash} />
             </TouchableOpacity>
           </View>
@@ -98,6 +101,17 @@ class Queue2 extends Component {
       rootStore.queueStore.addNewQue(queueSongs);
       // this.setState({ playlist: playlistSongs });
     }
+  };
+
+  onSongCheck = id => {
+    const { checkedSongs } = this.state;
+    const newCheckList = _.cloneDeep(checkedSongs);
+    if (_.indexOf(checkedSongs, id) >= 0) {
+      newCheckList.splice(_.indexOf(checkedSongs, id), 1);
+    } else {
+      newCheckList.push(id);
+    }
+    this.setState({ checkedSongs: newCheckList });
   };
 
   renderItem = wrap(({ item, index, drag, isActive }) => {
@@ -122,6 +136,8 @@ class Queue2 extends Component {
     ) : (
       <QueueChild
         item={item}
+        onSongCheck={this.onSongCheck}
+        checked={_.indexOf(this.state.checkedSongs, item.id) >= 0}
         drag={drag}
         isActive={isActive}
         key={item.id.toString()}
@@ -130,11 +146,9 @@ class Queue2 extends Component {
   });
 
   render() {
-    // const { playlist } = this.state;
     const data = [
       { flag: 'header', title: 'Danh sách chờ', order: 1 },
       ...rootStore.queueStore.songs,
-      // ...playlist,
     ];
     if ([...rootStore.playlistSongStore.songs].length > 0) {
       data.push({

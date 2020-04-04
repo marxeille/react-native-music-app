@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
@@ -9,19 +9,22 @@ import { subLongStr } from '../../../utils';
 const QueueChild = observer(
   wrap(props => {
     const onPlayItem = rootStore.playerStore?.currentSong?.id == props.item?.id;
+    const [checked, setChecked] = useState(props.checked);
+
+    const checkedSong = useCallback(() => {
+      setChecked(!checked);
+      props.onSongCheck(props.item.id);
+    });
+
     return (
       <View
         cls={`pa3 heightFn-${onPlayItem ? '84' : '72'} flx-row jcsb aic ${
           props.isActive ? 'bg-#1c0836' : ''
         } ${onPlayItem ? 'bb b--#d59fc6' : ''}`}>
         <View cls="flx-row jcc aic">
-          <TouchableOpacity>
+          <TouchableOpacity onPress={checkedSong}>
             <Image
-              source={
-                // rootStore.playerStore?.currentSong?.id == props.item?.id
-                //   ? Images.ic_checked :
-                Images.ic_uncheck
-              }
+              source={checked ? Images.ic_checked_circle : Images.ic_uncheck}
             />
           </TouchableOpacity>
           <View cls="pl3">

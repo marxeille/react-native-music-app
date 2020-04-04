@@ -14,6 +14,7 @@ const Images = {
   ic_back_white: require('./ic_back_white.png'),
   ic_barcode: require('./ic_barcode.png'),
   ic_checked: require('./ic_checked.png'),
+  ic_checked_circle: require('./ic_checked_circle.png'),
   ic_circle: require('./ic_circle.png'),
   ic_del_song: require('./ic_del_song.png'),
   ic_delete: require('./ic_delete.png'),
