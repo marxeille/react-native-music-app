@@ -113,12 +113,14 @@ export default class ArtistDetail extends Component {
 
   playRandomSong = () => {
     const { ids } = this.state;
-    const randomId = ids[Math.floor(Math.random() * ids.length)];
-    const item = find([...this.viewModel.songs.values()], {
-      id: randomId.toString(),
-    });
-    rootStore.createSongRef(item);
-    navigate('player', { trackId: randomId });
+    if (ids.length > 0) {
+      const randomId = ids[Math.floor(Math.random() * ids.length)];
+      [...this.viewModel.songs.values()].map(song => {
+        rootStore.createSongRef(song);
+      });
+      rootStore.playlistSongStore?.addList(ids);
+      navigate('player', { trackId: randomId });
+    }
   };
 
   renderHeaderSection = wrap(() => {

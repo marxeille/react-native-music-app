@@ -66,12 +66,7 @@ export const RootStore = types
       // Update whole song list
       replaceSongs(songs: Array) {
         songs.forEach(data => {
-          if (self.songs.get(data.id)) {
-            self.songs.get(data.id).update(data);
-          } else {
-            let song = createSongFromJson(data);
-            self.songs.put(song);
-          }
+          self.createSongRef(data);
         });
       },
 

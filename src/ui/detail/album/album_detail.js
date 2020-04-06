@@ -23,6 +23,7 @@ import { AlbumModel } from './model/AlbumModel';
 import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
 import { indexOf, orderBy } from 'lodash';
 import Loading from '../../components/loading';
+import { navigate } from '../../../navigation/navigation_service';
 
 @observer
 @wrap
@@ -33,6 +34,7 @@ export default class AlbumDetail extends Component {
     this.viewModel = AlbumModel.create({ state: 'loading', stats: 0 });
     this.state = {
       download: false,
+      ids: [],
       following:
         indexOf(
           [...rootStore?.likedAlbums],
@@ -46,7 +48,6 @@ export default class AlbumDetail extends Component {
     const ids = orderBy([...item.tracks.values()], ['position', 'asc']).map(
       track => track.track_id,
     );
-
     this.cancelablePromise = makeCancelable(
       this.viewModel.getStats(item.getType(), item.id),
       this.viewModel.getAlbumTracks(
@@ -54,6 +55,7 @@ export default class AlbumDetail extends Component {
         item.id == 0 ? [...rootStore?.likedTracks] : ids,
       ),
     );
+    this.setState({ ids: ids });
   }
 
   componentWillUnmount() {
@@ -115,6 +117,18 @@ export default class AlbumDetail extends Component {
     const { following } = this.state;
     this.setState({ following: !following });
     !following ? this.follow() : this.unfollow();
+  };
+
+  playRandomSong = () => {
+    const { ids } = this.state;
+    if (ids.length > 0) {
+      const randomId = ids[Math.floor(Math.random() * ids.length)];
+      [...this.viewModel.songs.values()].map(song => {
+        rootStore.createSongRef(song);
+      });
+      rootStore.playlistSongStore?.addList(ids);
+      navigate('player', { trackId: randomId });
+    }
   };
 
   renderHeaderSection = wrap(() => {
@@ -179,7 +193,7 @@ export default class AlbumDetail extends Component {
               cls="heightFn-70 aic pt3"
               style={{ width: '100%' }}
               source={Images.wave}>
-              <TouchableOpacity onPress={this.handleLogin}>
+              <TouchableOpacity onPress={this.playRandomSong}>
                 <LinearGradient
                   cls="ba br5 b--#321A54"
                   colors={['#4A3278', '#8B659D', '#DDA5CB']}

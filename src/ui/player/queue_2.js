@@ -99,7 +99,13 @@ class Queue2 extends Component {
       const playlistSongs = queue.slice(sliceIndex, queue.length);
       playlistSongs.shift();
       rootStore.queueStore.addNewQue(queueSongs);
-      // this.setState({ playlist: playlistSongs });
+      rootStore.playlistSongStore.addNewPlaylist(playlistSongs);
+
+      const newIndex = _.findIndex(
+        playlistSongs,
+        song => song.id == rootStore.playerStore?.currentSong.id,
+      );
+      rootStore.playerStore?.setTrackIndex(newIndex);
     }
   };
 
