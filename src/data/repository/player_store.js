@@ -48,7 +48,6 @@ export const PlayerStore = types
           ...getParent(self).queueStore.getSongs(),
           ...getParent(self).playlistSongStore.getSongs(),
         ];
-        // return [...getParent(self).songs.values()];
       },
 
       getQueueSize() {
@@ -58,7 +57,6 @@ export const PlayerStore = types
       prepareSong(id) {
         //Get list of songs
         const songs = self.getSongs();
-
         //Define track
         let track;
 
@@ -68,13 +66,18 @@ export const PlayerStore = types
             // Case 1: no song in queue, start new song with no ID
             //set Track
             track = songs[self.trackIndex];
+
             //set new song
             self.startNewSong(track.id);
           } else {
             //Case 5: no song in queue, start new song WITH ID
             track = getParent(self).songs.get(id);
             // Set track index by track id
-            self.setTrackIndex(_.findIndex(self.getSongs(), ['id', track.id]));
+            // Minus the length of queue song, cause we will remove those song later on
+            self.setTrackIndex(
+              _.findIndex(self.getSongs(), ['id', track.id]) -
+                [...getParent(self).queueStore.getSongs()].length,
+            );
             //set new song
             self.startNewSong(track.id);
           }
@@ -91,16 +94,25 @@ export const PlayerStore = types
         const songs = self.getSongs();
         let track;
         if (trackStatus == 'next') {
-          //Case 2: next track (with shuffle or not)
-          if (self.trackIndex < songs.length - 1) {
-            //Check if it is the last track of queue
-            self.setTrackIndex(
-              !self.shuffle
-                ? self.trackIndex + 1
-                : Math.floor(Math.random() * Math.floor(self.getQueueSize())),
-            );
-            track = songs[self.trackIndex];
+          if ([...getParent(self).queueStore.getSongs()].length > 0) {
+            track = songs[getParent(self).queueStore.queueIndex];
+            getParent(self).queueStore.removeSongs([track.id]);
             self.startNewSong(track.id);
+            //play song
+            if (track) self.playSong(track.id);
+            return;
+          } else {
+            //Case 2: next track (with shuffle or not)
+            if (self.trackIndex < songs.length - 1) {
+              //Check if it is the last track of queue
+              self.setTrackIndex(
+                !self.shuffle
+                  ? self.trackIndex + 1
+                  : Math.floor(Math.random() * Math.floor(self.getQueueSize())),
+              );
+              track = songs[self.trackIndex];
+              self.startNewSong(track.id);
+            }
           }
         } else {
           //Case 3: back track(no shuffle)
@@ -146,7 +158,7 @@ export const PlayerStore = types
       },
       playSong(song) {
         self.currentSong = song;
-        if (self.position == 0) {
+        if (self.position == 0 && self.currentSong.url !== '') {
           self.setState(true);
         }
         // Basic Controls

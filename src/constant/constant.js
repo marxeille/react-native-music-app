@@ -50,7 +50,7 @@ export function sortByAlphabet(arr) {
         sortedObj['0-9'].push(element);
       }
     }
-    alphabetJson.map(letter => {
+    alphabetJson.reverse().map(letter => {
       if (
         element
           .getName()

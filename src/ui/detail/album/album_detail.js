@@ -55,6 +55,7 @@ export default class AlbumDetail extends Component {
         item.id == 0 ? [...rootStore?.likedTracks] : ids,
       ),
     );
+
     this.setState({ ids: ids });
   }
 
@@ -126,7 +127,9 @@ export default class AlbumDetail extends Component {
       [...this.viewModel.songs.values()].map(song => {
         rootStore.createSongRef(song);
       });
+
       rootStore.playlistSongStore?.addList(ids);
+      rootStore?.queueStore?.removeSongs([randomId.toString()]);
       navigate('player', { trackId: randomId });
     }
   };

@@ -32,6 +32,7 @@ export default class SongMenu extends Component {
   addToQueue = () => {
     const { song, _hideModal } = this.props;
     if (song.id !== rootStore?.playerStore?.currentSong?.id) {
+      rootStore?.createSongRef(song);
       rootStore.queueStore.addSong(song);
     }
     if (typeof _hideModal == 'function') _hideModal();
@@ -87,12 +88,12 @@ export default class SongMenu extends Component {
             title={'Thêm vào danh sách chờ'}
           />
           <ActionItem
-            onPress={() => navigate('album_detail')}
+            // onPress={() => navigate('album_detail')}
             icon={'ic_album'}
             title={'Xem album'}
           />
           <ActionItem
-            onPress={() => navigate('artist_detail')}
+            // onPress={() => navigate('artist_detail')}
             icon={'ic_artist'}
             title={'Xem nghệ sĩ'}
           />

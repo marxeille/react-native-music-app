@@ -1,4 +1,5 @@
 import { types } from 'mobx-state-tree';
+import { BASE_API_URL } from '../../constant/constant';
 
 export const PlayList = types
   .model('PlayList', {
@@ -41,7 +42,7 @@ export const createPlaylistFromApiJson = data => {
   return PlayList.create({
     id: data.id.toString(),
     name: data.name ?? '',
-    thumb: data.playlistCover ?? '',
+    thumb: data.playlistCover ? BASE_API_URL + data.playlistCover : '',
     owner: data.artists ?? '',
     private: data.private ?? null,
     tracks: data.tracks ?? [],
@@ -53,7 +54,7 @@ export const createPlaylistFromJson = data => {
   return PlayList.create({
     id: data.id.toString(),
     name: data.name ?? '',
-    thumb: data.thumb ?? '',
+    thumb: data.thumb ? BASE_API_URL + data.thumb : '',
     owner: data.owner ?? '',
     tracks: data.tracks ?? [],
     type: 'playlist',

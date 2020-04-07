@@ -111,6 +111,7 @@ BASE_URL.addAsyncResponseTransform(async response => {
         }
       }
     }
+    console.log('it get here first', { ...data });
 
     return Promise.resolve({
       ...data,

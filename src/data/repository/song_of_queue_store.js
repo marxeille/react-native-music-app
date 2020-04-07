@@ -1,12 +1,13 @@
 import { types, flow } from 'mobx-state-tree';
 import { Result } from './result';
 import { Song } from '../model/song';
-import { indexOf, map, remove } from 'lodash';
+import { indexOf, map, remove, cloneDeep } from 'lodash';
 
 const SongOfQueueStore = types
   .model('SongOfQueueStore', {
     id: types.maybeNull(types.string),
     state: types.maybeNull(Result),
+    queueIndex: types.optional(types.number, 0),
     songs: types.optional(types.array(types.reference(Song)), []),
   })
   .actions(self => {
@@ -29,10 +30,13 @@ const SongOfQueueStore = types
           self.addSong(song);
         });
       },
+
       removeSongs(songIds) {
-        remove(self.songs, song => {
+        let songs = cloneDeep(self.songs);
+        remove(songs, song => {
           return indexOf(songIds, song.id) >= 0;
         });
+        self.addNewQue(songs);
       },
     };
   })

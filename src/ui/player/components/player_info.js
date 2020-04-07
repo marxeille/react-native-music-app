@@ -61,12 +61,12 @@ export default class PlayerInfo extends Component {
           </View>
         </ImageBackground>
         <View cls="pa3 pt4 jcc">
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <View cls="flx-row aic pt3 lightFont">
               <Image source={Images.ic_mess} />
               <Text cls="fw7 f6 primaryPurple pl3">Tin nhắn</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity>
             <View cls="flx-row aic pt5 lightFont">
               <Image source={Images.ic_fb} />
@@ -79,12 +79,12 @@ export default class PlayerInfo extends Component {
               <Text cls="fw7 f6 primaryPurple pl3">Sao chép liên kết</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <View cls="flx-row aic pt5 lightFont">
               <Image source={Images.ic_menu} />
               <Text cls="fw7 f6 primaryPurple pl3">Thêm nữa</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     );

@@ -4,6 +4,7 @@ import { wrap } from '../../../../themes';
 import { rootStore } from '../../../../data/context/root_context';
 import { observer } from 'mobx-react';
 import { subLongStr } from '../../../../utils';
+import { navigate } from '../../../../navigation/navigation_service';
 
 @observer
 @wrap
@@ -17,23 +18,23 @@ export default class AlbumItem extends Component {
     const { item } = this.props;
 
     return (
-      <View cls="pb3 pr3">
-        <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          item ? navigate('album_detail', { id: item.id, item: item }) : null;
+        }}>
+        <View cls="pb3 pr3">
           <Image
             cls="widthFn-100 heightFn-82"
             source={{ uri: item.getThumb() }}
           />
-        </TouchableOpacity>
-
-        <View>
-          <TouchableOpacity>
+          <View>
             <Text cls="white fw7 f8 pt2">{subLongStr(item.title(), 12)}</Text>
-          </TouchableOpacity>
-          <Text cls="primaryPurple f8 pt1">
-            của {subLongStr(item.subTitle(), 6)}
-          </Text>
+            <Text cls="primaryPurple f8 pt1">
+              của {subLongStr(item.subTitle(), 6)}
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

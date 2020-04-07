@@ -1,4 +1,5 @@
 import { types } from 'mobx-state-tree';
+import { BASE_API_URL } from '../../constant/constant';
 
 export const Artist = types
   .model('Artist', {
@@ -40,7 +41,7 @@ export const createArtistFromApiJson = data => {
   return Artist.create({
     id: data.id.toString(),
     name: data.name ?? '',
-    thumb: data.thumb ?? 'https://picsum.photos/200',
+    thumb: data.thumb ? BASE_API_URL + data.thumb : '',
     short_biography: data.short_biography ?? '',
     type: 'artist',
   });

@@ -26,7 +26,7 @@ export default class ArtistItem extends Component {
 
             <View cls="pl2">
               <Text cls="white fw7 f6 pl2 lightFont">
-                {item.getName() ?? ''}
+                {item?.getName() ?? ''}
               </Text>
             </View>
           </View>

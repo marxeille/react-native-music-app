@@ -119,6 +119,7 @@ export default class ArtistDetail extends Component {
         rootStore.createSongRef(song);
       });
       rootStore.playlistSongStore?.addList(ids);
+      rootStore?.queueStore?.removeSongs([randomId.toString()]);
       navigate('player', { trackId: randomId });
     }
   };

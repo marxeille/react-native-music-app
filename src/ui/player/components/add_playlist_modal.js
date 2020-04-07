@@ -23,6 +23,8 @@ export default class AddPlayListModal extends Component {
   }
 
   _renderItem = item => {
+    console.log('item', item);
+
     return <ActionItem item={item.item} />;
   };
 
@@ -63,7 +65,7 @@ export default class AddPlayListModal extends Component {
         </View>
         <View cls="pa3 pt4 pb0" style={{ height: '80%' }}>
           <FlatList
-            data={[1, 2, 3, 4, 5, 7, 8, 9, 10]}
+            data={[...rootStore?.homeStore?.popular]}
             showsVerticalScrollIndicator={false}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => index.toString()}
@@ -81,12 +83,15 @@ const ActionItem = wrap(({ item }) => {
         <View cls="flx-row aic pb3">
           <Image
             cls="widthFn-90 heightFn-82"
-            source={require('../../../assets/images/khabanh.png')}
+            source={{ uri: item?.getThumb() }}
           />
 
           <View cls="pl2">
-            <Text cls="white fw7 f6 pl2">{'Tạo playlist'}</Text>
-            <Text cls="primaryPurple f6 pl2 pt1">{'khÁ bẢnH on the fly'}</Text>
+            <Text cls="white fw7 f6 pl2"> {item?.title() ?? 'Default'}</Text>
+            <Text cls="primaryPurple f6 pl2 pt1">
+              {' '}
+              {item?.subTitle() ?? 'Default'}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>

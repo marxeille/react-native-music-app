@@ -30,7 +30,7 @@ export default class AlbumComponent extends Component {
         <View cls="pt3">
           <SearchComponent />
         </View>
-        <View cls="pt3 fullHeight" style={{ marginBottom: 95 }}>
+        <View cls="pt3" style={{ marginBottom: 95 }}>
           <FlatList
             data={albums}
             keyExtractor={(item, index) => index.toString()}

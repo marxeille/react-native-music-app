@@ -16,6 +16,20 @@ export default class ArtistComponent extends Component {
     super(props);
     this.data = {
       '#': [{ name: 'A1' }, { name: 'A2' }, { name: 'A3' }],
+      A: [{ name: 'A1' }, { name: 'A2' }, { name: 'A3' }],
+      E: [{ name: 'E1' }, { name: 'E2' }, { name: 'E3' }, { name: 'E4' }],
+      F: [{ name: 'F1' }, { name: 'F2' }, { name: 'F3' }],
+      H: [{ name: 'H1' }, { name: 'H2' }, { name: 'H3' }, { name: 'H5' }],
+      J: [{ name: 'J1' }, { name: 'J2' }, { name: 'J3' }, { name: 'J5' }],
+      K: [{ name: 'K1' }, { name: 'K2' }, { name: 'K3' }, { name: 'K5' }],
+      N: [{ name: 'N1' }, { name: 'N2' }, { name: 'N3' }, { name: 'N5' }],
+      Y: [
+        { name: 'Y1' },
+        { name: 'Y2' },
+        { name: 'Y3' },
+        { name: 'Y5' },
+        { name: 'Y6' },
+      ],
     };
   }
 
@@ -62,6 +76,7 @@ export default class ArtistComponent extends Component {
     const sortedArtists = sortByAlphabet(
       orderBy(artists, [artist => artist.name.toLowerCase()], ['desc']),
     );
+    console.log('sortedArtists', sortedArtists);
 
     return (
       <>

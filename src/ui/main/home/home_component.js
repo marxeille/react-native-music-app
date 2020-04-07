@@ -22,6 +22,10 @@ export default class HomeComponent extends Component {
   }
 
   render() {
+    console.log('[...rootStore?.homeStore?.popular]', [
+      ...rootStore?.homeStore?.popular,
+    ]);
+
     return rootStore.homeStore.state === 'loading' ? (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}
