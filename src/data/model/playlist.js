@@ -1,12 +1,13 @@
 import { types } from 'mobx-state-tree';
 import { BASE_API_URL } from '../../constant/constant';
+import { subLongStr } from '../../utils';
 
 export const PlayList = types
   .model('PlayList', {
     id: types.identifier,
     name: types.string,
     thumb: types.string,
-    owner: types.string,
+    owner: types.array(types.frozen({ id: types.number, name: types.string })),
     tracks: types.maybe(
       types.array(
         types.frozen({ track_id: types.string, position: types.integer }),
@@ -20,7 +21,7 @@ export const PlayList = types
         return self.name;
       },
       subTitle() {
-        return self.owner;
+        return subLongStr(self.owner.map(o => o.name).join(','), 20);
       },
       getThumb() {
         return self.thumb;
@@ -43,7 +44,7 @@ export const createPlaylistFromApiJson = data => {
     id: data.id.toString(),
     name: data.name ?? '',
     thumb: data.playlistCover ? BASE_API_URL + data.playlistCover : '',
-    owner: data.artists ?? '',
+    owner: data.artists ?? [],
     private: data.private ?? null,
     tracks: data.tracks ?? [],
     type: 'playlist',

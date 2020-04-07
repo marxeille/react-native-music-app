@@ -44,7 +44,7 @@ export const LibraryStore = types
             id: 0,
             name: 'Bài hát yêu thích',
             private: null,
-            artists: 'bạn',
+            artists: [{ name: 'bạn' }],
             tracks:
               likedTracks.length > 0
                 ? playlistTracks

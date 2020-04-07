@@ -65,7 +65,7 @@ export default class ArtistDetail extends Component {
   }
 
   componentWillUnmount() {
-    this.cancelablePromise.cancel();
+    // this.cancelablePromise.cancel();
   }
 
   _showModal = song => {

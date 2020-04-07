@@ -1,12 +1,12 @@
 import { types } from 'mobx-state-tree';
-import { Song } from './song';
+import { subLongStr } from '../../utils';
 
 export const Album = types
   .model('Album', {
     id: types.identifier,
     name: types.string,
     thumb: types.string,
-    owner: types.string,
+    owner: types.array(types.frozen({ id: types.number, name: types.string })),
     tracks: types.maybe(
       types.array(
         types.frozen({ track_id: types.string, position: types.integer }),
@@ -20,7 +20,7 @@ export const Album = types
         return self.name;
       },
       subTitle() {
-        return self.owner;
+        return subLongStr(self.owner.map(o => o.name).join(','), 20);
       },
       getThumb() {
         return self.thumb;
@@ -43,7 +43,7 @@ export const createAlbumFromApiJson = data => {
     id: data.id.toString(),
     name: data.name ?? '',
     thumb: data.thumb ?? '',
-    owner: data.owner ?? '',
+    owner: data.artists ?? [],
     tracks: data.tracks ?? [],
     type: 'article',
   });

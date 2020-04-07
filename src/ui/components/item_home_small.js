@@ -16,6 +16,7 @@ export default class ItemHomeSmall extends Component {
 
   render() {
     const { item } = this.props.item;
+    console.log('item', item);
 
     return (
       <TouchableOpacity

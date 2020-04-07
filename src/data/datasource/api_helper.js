@@ -75,12 +75,19 @@ export async function getPlaylistCover(tracks) {
     const trackCover = await apiService.trackApiService.getTrackInfo(
       tracks[0].track_id,
     );
+    const trackArtistInfo = await apiService.trackApiService.getTrackArtistInfo(
+      tracks[0].track_id,
+    );
     if (trackCover.status == 200) {
       cover = {
         ...cover,
         playlistCover:
           trackCover?.data?.cover_path ?? 'https://picsum.photos/200',
       };
+    }
+    if (trackArtistInfo.status == 200) {
+      const ids = trackArtistInfo?.data.map(r => r.artist_id);
+      artists = await getArtistInfo(ids);
     }
   } else {
     cover = {
@@ -89,19 +96,9 @@ export async function getPlaylistCover(tracks) {
     };
   }
 
-  // Get 2 track artists for playlist artists
-  tracks.map(async (track, index) => {
-    if (index < 2) {
-      const artist = await apiService.trackApiService.getTrackArtistInfo(
-        track.track_id,
-      );
-      if (artist.data.length > 0 && artist.status == 200) artists.push(artist);
-    }
-  });
-
   cover = {
     ...cover,
-    artists: artists.length > 0 ? artists.join(',') : 'Chưa xác định',
+    artists: artists.length > 0 ? [...artists] : [],
   };
 
   return cover;

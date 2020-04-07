@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree';
 import { values } from 'mobx';
 import { BASE_API_URL } from '../../constant/constant';
+import { subLongStr } from '../../utils';
 
 export const Song = types
   .model('Song', {
@@ -22,7 +23,7 @@ export const Song = types
         return self.title;
       },
       getSubTitle() {
-        return self.artist;
+        return subLongStr(self.artists.map(a => a.name).join(','), 20);
       },
       isFavorite() {
         return self.favorite == true; // for case undefine
