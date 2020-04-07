@@ -94,8 +94,14 @@ class Queue2 extends Component {
   shuffeData = queue => {
     if (queue[0].flag == 'header') {
       let sliceIndex = _.findIndex(queue, q => q.order == 2);
-      const queueSongs = queue.slice(0, sliceIndex);
-      queueSongs.shift();
+      const queueSongs = _.cloneDeep(queue);
+      if (sliceIndex >= 0) {
+        queueSongs = queue.slice(0, sliceIndex);
+      }
+      if (queueSongs[0].flag == 'header') {
+        queueSongs.shift();
+      }
+
       const playlistSongs = queue.slice(sliceIndex, queue.length);
       playlistSongs.shift();
       rootStore.queueStore.addNewQue(queueSongs);

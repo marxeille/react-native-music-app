@@ -40,14 +40,31 @@ export async function getTrackFullDetail(trackId) {
         const result = await apiService.trackApiService.getTrackArtistInfo(
           trackId,
         );
-        resolve(result?.data || null);
+        let artists;
+        if (result?.status == 200) {
+        }
+        const ids = result?.data.map(r => r.artist_id);
+
+        artists = await getArtistInfo(ids);
+
+        resolve(artists || null);
       } catch (error) {
         resolve(null);
       }
     }),
   ]);
 
-  return { ...trackUrl, ...trackArtist };
+  return { ...trackUrl, artists: [...trackArtist] };
+}
+
+export async function getArtistInfo(ids) {
+  const artist = await Promise.all(
+    ids.map(async id => {
+      const artistInfo = await apiService.trackApiService.getArtistInfo(id);
+      return artistInfo?.data;
+    }),
+  );
+  return artist;
 }
 
 export async function getPlaylistCover(tracks) {

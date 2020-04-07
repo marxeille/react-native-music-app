@@ -78,7 +78,6 @@ export const RootStore = types
           const newSong = createSongFromJsonApi(song);
           self.songs.put(newSong);
         }
-        console.log('created song', song);
       },
 
       //Create albums for rootStore

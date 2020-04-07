@@ -98,7 +98,7 @@ BASE_URL.addAsyncResponseTransform(async response => {
             response.config.url,
             response.params,
           );
-          console.log('refreshResponse', refreshResponse);
+          // console.log('refreshResponse', refreshResponse);
           data = refreshResponse.data;
         } else {
           //  DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native
@@ -111,8 +111,7 @@ BASE_URL.addAsyncResponseTransform(async response => {
         }
       }
     }
-    console.log('it get here first', { ...data });
-
+    // console.log('it get here first', { ...data });
     return Promise.resolve({
       ...data,
     });

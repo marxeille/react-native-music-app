@@ -76,7 +76,6 @@ export default class ArtistComponent extends Component {
     const sortedArtists = sortByAlphabet(
       orderBy(artists, [artist => artist.name.toLowerCase()], ['desc']),
     );
-    console.log('sortedArtists', sortedArtists);
 
     return (
       <>

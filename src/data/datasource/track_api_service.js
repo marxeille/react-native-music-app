@@ -21,6 +21,15 @@ export default class TrackApiService {
     }
   }
 
+  async getArtistInfo(id) {
+    try {
+      const path = `/api/artists/${id}`;
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   // Get track url
   async getTrackUrl(trackId) {
     try {

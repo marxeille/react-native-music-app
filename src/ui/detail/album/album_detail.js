@@ -34,6 +34,7 @@ export default class AlbumDetail extends Component {
     this.viewModel = AlbumModel.create({ state: 'loading', stats: 0 });
     this.state = {
       download: false,
+      article: {},
       ids: [],
       following:
         indexOf(
@@ -43,8 +44,13 @@ export default class AlbumDetail extends Component {
     };
   }
 
-  componentDidMount() {
-    const { item } = this.props.route?.params;
+  async componentDidMount() {
+    let { item } = this.props.route?.params;
+    if (typeof item == 'number') {
+      await this.viewModel.getItemDetail(item);
+      item = rootStore?.albums.get(item);
+      this.setState({ article: item });
+    }
     const ids = orderBy([...item.tracks.values()], ['position', 'asc']).map(
       track => track.track_id,
     );
@@ -135,7 +141,10 @@ export default class AlbumDetail extends Component {
   };
 
   renderHeaderSection = wrap(() => {
-    const { item } = this.props.route?.params;
+    let { item } = this.props.route?.params;
+    if (typeof item == 'number') {
+      item = this.state.article;
+    }
     return (
       <>
         <ImageBackground

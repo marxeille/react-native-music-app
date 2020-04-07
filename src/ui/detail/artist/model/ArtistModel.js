@@ -2,7 +2,6 @@ import { types, flow } from 'mobx-state-tree';
 import { Result } from '../../../../data/repository/result';
 import { apiService } from '../../../../data/context/api_context';
 import { Song, createSongFromJsonApi } from '../../../../data/model/song';
-import { getTrackFullDetail } from '../../../../data/datasource/api_helper';
 
 export const ArtistModel = types
   .model('ArtistModel', {

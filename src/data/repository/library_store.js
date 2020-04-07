@@ -1,11 +1,11 @@
 import { Alert } from 'react-native';
-import { types, getEnv, flow, getParent } from 'mobx-state-tree';
+import { types, flow, getParent } from 'mobx-state-tree';
 import { Result } from './result';
 import { PlayList } from '../model/playlist';
 import { Album } from '../model/album';
 import { Artist } from '../model/artist';
 import { apiService } from '../context/api_context';
-import { getTrackFullDetail, getPlaylistCover } from '../datasource/api_helper';
+import { getPlaylistCover } from '../datasource/api_helper';
 
 export const LibraryStore = types
   .model('LibraryStore', {

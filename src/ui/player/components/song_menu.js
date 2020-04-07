@@ -40,6 +40,7 @@ export default class SongMenu extends Component {
 
   render() {
     const { song } = this.props;
+
     const { showAddPlaylist } = this.state;
 
     return showAddPlaylist ? (
@@ -88,7 +89,7 @@ export default class SongMenu extends Component {
             title={'Thêm vào danh sách chờ'}
           />
           <ActionItem
-            // onPress={() => navigate('album_detail')}
+            onPress={() => navigate('album_detail', { item: song.article.id })}
             icon={'ic_album'}
             title={'Xem album'}
           />

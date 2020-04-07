@@ -100,6 +100,15 @@ export default class CommonApiService {
     }
   }
 
+  async getArticleInfo(id) {
+    try {
+      const path = `/api/articles/${id}`;
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   getSongsOfAlBum(index) {
     return new Promise(resolve => {
       resolve([

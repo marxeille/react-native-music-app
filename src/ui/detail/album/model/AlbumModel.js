@@ -2,7 +2,7 @@ import { types, flow } from 'mobx-state-tree';
 import { Result } from '../../../../data/repository/result';
 import { apiService } from '../../../../data/context/api_context';
 import { Song, createSongFromJsonApi } from '../../../../data/model/song';
-// import { getTrackFullDetail } from '../../../../data/datasource/api_helper';
+import { rootStore } from '../../../../data/context/root_context';
 
 export const AlbumModel = types
   .model('AlbumModel', {
@@ -27,6 +27,12 @@ export const AlbumModel = types
       setSelectedSong(song) {
         self.selectedSong = song.id;
       },
+      getItemDetail: flow(function* getItemDetail(id) {
+        const article = yield apiService.commonApiService.getArticleInfo(id);
+        if (article.status == 200) {
+          rootStore?.updateAlbum(article.data);
+        }
+      }),
       getAlbumTracks: flow(function* getAlbumTracks(ids) {
         const tracks: Array = yield apiService.commonApiService.getTracks(ids);
         if (tracks?.status == 200) {

@@ -7,7 +7,10 @@ export const Song = types
     id: types.identifier,
     title: types.string,
     artwork: types.string,
-    artist: types.string,
+    artists: types.array(
+      types.frozen({ id: types.number, name: types.string }),
+    ),
+    article: types.frozen({ id: types.number, name: types.string }),
     url: types.string,
     type: types.string,
     duration: types.integer,
@@ -74,7 +77,8 @@ export const createSongFromJsonApi = data => {
   return Song.create({
     id: data?.id?.toString(),
     title: data.title,
-    artist: data.artist ?? 'Chưa xác định',
+    artists: data.artists ?? [],
+    article: data.article ?? {},
     artwork: data.cover_path
       ? BASE_API_URL + data.cover_path
       : 'https://picsum.photos/200',
