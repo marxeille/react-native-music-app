@@ -23,8 +23,6 @@ export default class AddPlayListModal extends Component {
   }
 
   _renderItem = item => {
-    console.log('item', item);
-
     return <ActionItem item={item.item} />;
   };
 

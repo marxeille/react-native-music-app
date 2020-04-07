@@ -10,7 +10,7 @@ export const AsyncStorageKey = {
 };
 
 export const alphabetJson = [
-  '0-9',
+  // '[#]',
   'A',
   'B',
   'C',
@@ -41,15 +41,16 @@ export const alphabetJson = [
 
 export function sortByAlphabet(arr) {
   const sortedObj = {};
+
   arr.map(element => {
-    if (!element.getName().match('[^a-zA-Z]')) {
-      if (typeof sortedObj['0-9'] == 'undefined') {
-        sortedObj['0-9'] = [];
-        sortedObj['0-9'].push(element);
-      } else {
-        sortedObj['0-9'].push(element);
-      }
-    }
+    // if (!element.getName().match('[^a-zA-Z]')) {
+    //   if (typeof sortedObj['[#]'] == 'undefined') {
+    //     sortedObj['[#]'] = [];
+    //     sortedObj['[#]'].push(element);
+    //   } else {
+    //     sortedObj['[#]'].push(element);
+    //   }
+    // }
     alphabetJson.reverse().map(letter => {
       if (
         element

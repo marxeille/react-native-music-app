@@ -14,6 +14,7 @@ import { sortByAlphabet } from '../../../../constant/constant';
 export default class ArtistComponent extends Component {
   constructor(props) {
     super(props);
+
     this.data = {
       '#': [{ name: 'A1' }, { name: 'A2' }, { name: 'A3' }],
       A: [{ name: 'A1' }, { name: 'A2' }, { name: 'A3' }],
@@ -72,11 +73,13 @@ export default class ArtistComponent extends Component {
   // End test
 
   render() {
-    const artists = [...rootStore?.libraryStore?.artists];
     const sortedArtists = sortByAlphabet(
-      orderBy(artists, [artist => artist.name.toLowerCase()], ['desc']),
+      orderBy(
+        [...rootStore?.libraryStore?.artists],
+        [artist => artist.name.toLowerCase()],
+        ['asc'],
+      ),
     );
-
     return (
       <>
         <View cls="pt3">
