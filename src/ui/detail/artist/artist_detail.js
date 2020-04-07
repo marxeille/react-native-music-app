@@ -30,6 +30,7 @@ export default class ArtistDetail extends Component {
     this.modalSong = React.createRef();
     this.state = {
       ids: [],
+      artist: {},
       following:
         indexOf(
           [...rootStore?.likedArtists],
@@ -38,15 +39,28 @@ export default class ArtistDetail extends Component {
     };
   }
 
-  componentDidMount() {
-    const { artist } = this.props.route.params;
+  async componentDidMount() {
+    let { artist } = this.props.route.params;
+
+    if (typeof artist == 'number') {
+      await this.viewModel.getItemDetail(artist);
+      artist = rootStore?.artist.get(artist);
+    }
+
+    this.setState({ artist: artist });
     this.cancelablePromise = makeCancelable(
-      this.viewModel.getArtistTracks(Number(artist.id)),
+      this.viewModel.getArtistTracks(
+        Number(typeof artist == 'number' ? artist : artist.id),
+      ),
     );
     this.cancelablePromise = makeCancelable(
-      this.viewModel.getArtistTrackIds(Number(artist.id)).then(ids => {
-        this.setState({ ids: ids });
-      }),
+      this.viewModel
+        .getArtistTrackIds(
+          Number(typeof artist == 'number' ? artist : artist.id),
+        )
+        .then(ids => {
+          this.setState({ ids: ids });
+        }),
     );
   }
 
@@ -120,12 +134,16 @@ export default class ArtistDetail extends Component {
       });
       rootStore.playlistSongStore?.addList(ids);
       rootStore?.queueStore?.removeSongs([randomId.toString()]);
-      navigate('player', { trackId: randomId });
+      if (randomId == rootStore?.playerStore?.currentSong?.id) {
+        navigate('player');
+      } else {
+        navigate('player', { trackId: randomId });
+      }
     }
   };
 
   renderHeaderSection = wrap(() => {
-    const { artist } = this.props.route.params;
+    let { artist } = this.state;
 
     return (
       <>
@@ -148,10 +166,15 @@ export default class ArtistDetail extends Component {
           </View>
           <View cls="aic jcc">
             <Text cls="white fw8 f3 pb2 avertaFont">
-              {artist.getName().toUpperCase()}
+              {typeof artist?.getName == 'function'
+                ? artist?.getName().toUpperCase()
+                : '...'}
             </Text>
             <Text cls="white f8 latoFont">
-              {subLongStr(artist.getBio(), 50)}
+              {subLongStr(
+                typeof artist?.getBio == 'function' ? artist?.getBio() : '...',
+                50,
+              )}
             </Text>
             <Text cls="f9 primaryPurple latoFont pt2">{`2020 - ${this.viewModel.songs.size} Songs`}</Text>
           </View>
@@ -223,6 +246,8 @@ export default class ArtistDetail extends Component {
   });
 
   render() {
+    console.log('artist 3', this.state.artist);
+
     return (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}

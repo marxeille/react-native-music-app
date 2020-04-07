@@ -94,7 +94,9 @@ export default class SongMenu extends Component {
             title={'Xem album'}
           />
           <ActionItem
-            // onPress={() => navigate('artist_detail')}
+            onPress={() =>
+              navigate('artist_detail', { artist: [...song.artists][0].id })
+            }
             icon={'ic_artist'}
             title={'Xem nghệ sĩ'}
           />

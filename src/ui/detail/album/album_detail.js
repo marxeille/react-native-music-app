@@ -136,7 +136,11 @@ export default class AlbumDetail extends Component {
 
       rootStore.playlistSongStore?.addList(ids);
       rootStore?.queueStore?.removeSongs([randomId.toString()]);
-      navigate('player', { trackId: randomId });
+      if (randomId == rootStore?.playerStore?.currentSong?.id) {
+        navigate('player');
+      } else {
+        navigate('player', { trackId: randomId });
+      }
     }
   };
 

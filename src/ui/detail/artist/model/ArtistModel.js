@@ -2,6 +2,7 @@ import { types, flow } from 'mobx-state-tree';
 import { Result } from '../../../../data/repository/result';
 import { apiService } from '../../../../data/context/api_context';
 import { Song, createSongFromJsonApi } from '../../../../data/model/song';
+import { rootStore } from '../../../../data/context/root_context';
 
 export const ArtistModel = types
   .model('ArtistModel', {
@@ -22,6 +23,12 @@ export const ArtistModel = types
       setSelectedSong(song) {
         self.selectedSong = song.id;
       },
+      getItemDetail: flow(function* getItemDetail(id) {
+        const artist = yield apiService.trackApiService.getArtistInfo(id);
+        if (artist.status == 200) {
+          rootStore?.updateArtist(artist.data);
+        }
+      }),
       getArtistTrackIds: flow(function* getArtistTracks(id) {
         const artistTrackIds: Array = yield apiService.libraryApiService.getArtistTracks(
           id,
