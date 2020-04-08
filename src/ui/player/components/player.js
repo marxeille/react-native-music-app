@@ -51,10 +51,10 @@ const Player = wrap(props => {
         <View>
           <View cls="flx-row jcsa aic pt2">
             <TouchableOpacity onPress={() => {}}>
-              <Image cls="widthFn-20 heightFn-20" source={Images.ic_shuffe} />
+              <Image source={Images.ic_shuffle} />
             </TouchableOpacity>
             <TouchableOpacity onPress={onPrevious}>
-              <Image cls="widthFn-32 heightFn-32" source={Images.ic_prev} />
+              <Image source={Images.ic_prev} />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleTogglePlay}>
               <Image
@@ -69,7 +69,7 @@ const Player = wrap(props => {
               <Image cls="widthFn-32 heightFn-32" source={Images.ic_next} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {}}>
-              <Image cls="widthFn-18 heightFn-18" source={Images.ic_repeat} />
+              <Image source={Images.ic_repeat} />
             </TouchableOpacity>
           </View>
         </View>

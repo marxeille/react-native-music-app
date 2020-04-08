@@ -6,7 +6,9 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
+
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../library/components/LinearGradientText';
@@ -177,6 +179,7 @@ export default class SearchComponent extends Component {
                 <FlatList
                   data={data}
                   showsVerticalScrollIndicator={false}
+                  onScrollBeginDrag={Keyboard.dismiss}
                   renderItem={this.renderSearchItem}
                   ListEmptyComponent={this.renderEmptyContainer()}
                   keyExtractor={(item, index) => index.toString()}

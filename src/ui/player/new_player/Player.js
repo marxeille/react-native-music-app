@@ -24,6 +24,10 @@ import { wrap } from '../../../themes';
 import { isMeidumDevice, isSmallDevice, subLongStr } from '../../../utils';
 import { ShareDialog } from 'react-native-fbsdk';
 import SongMenu from '../components/song_menu';
+import GestureRecognizer, {
+  swipeDirections,
+} from 'react-native-swipe-gestures';
+import { pop } from '../../../navigation/navigation_service';
 
 @observer
 @wrap
@@ -107,6 +111,10 @@ export default class Player extends Component {
       );
   }
 
+  onSwipeDown = () => {
+    pop();
+  };
+
   _renderModalContent = wrap(() => {
     const { showPlayMenu } = this.state;
 
@@ -172,41 +180,48 @@ export default class Player extends Component {
   render() {
     const { currentSong } = rootStore?.playerStore;
     const { showPlayMenu } = this.state;
-
+    const config = {
+      velocityThreshold: 0.3,
+      directionalOffsetThreshold: 80,
+    };
     return (
       <ImageBackground source={Images.bg3} style={styles.container}>
         <StatusBar hidden={true} />
         <Header _showModal={this._showModal} message="Playing From Charts" />
-        <AlbumArt url={currentSong?.artwork} />
-        <TrackDetails
-          title={currentSong?.getName()}
-          artist={currentSong?.getSubTitle()}
-          onSharePress={this._showModal}
-        />
-        <SeekBar
-          onSeek={this.seek.bind(this)}
-          trackLength={rootStore?.playerStore?.duration}
-          onSlidingStart={() => this.setState({ paused: true })}
-        />
-        <Controls
-          onPressRepeat={() =>
-            rootStore?.playerStore?.setRepeat(!rootStore?.playerStore?.repeat)
-          }
-          repeatOn={rootStore?.playerStore?.repeat}
-          shuffleOn={rootStore?.playerStore?.shuffle}
-          forwardDisabled={
-            rootStore.playerStore?.trackIndex ===
-            rootStore.playerStore?.getQueueSize() - 1
-          }
-          onPressShuffle={() =>
-            rootStore?.playerStore?.setShuffle(!rootStore?.playerStore?.shuffle)
-          }
-          onPressPlay={() => rootStore?.playerStore?.setState('playing')}
-          onPressPause={() => rootStore?.playerStore?.setState('pause')}
-          onBack={this.onBack.bind(this)}
-          onForward={this.onForward.bind(this)}
-          paused={rootStore?.playerStore?.statusPlayer == 'pause'}
-        />
+        <GestureRecognizer onSwipeDown={this.onSwipeDown} config={config}>
+          <AlbumArt url={currentSong?.artwork} />
+          <TrackDetails
+            title={currentSong?.getName()}
+            artist={currentSong?.getSubTitle()}
+            onSharePress={this._showModal}
+          />
+          <SeekBar
+            onSeek={this.seek.bind(this)}
+            trackLength={rootStore?.playerStore?.duration}
+            onSlidingStart={() => this.setState({ paused: true })}
+          />
+          <Controls
+            onPressRepeat={() =>
+              rootStore?.playerStore?.setRepeat(!rootStore?.playerStore?.repeat)
+            }
+            repeatOn={rootStore?.playerStore?.repeat}
+            shuffleOn={rootStore?.playerStore?.shuffle}
+            forwardDisabled={
+              rootStore.playerStore?.trackIndex ===
+              rootStore.playerStore?.getQueueSize() - 1
+            }
+            onPressShuffle={() =>
+              rootStore?.playerStore?.setShuffle(
+                !rootStore?.playerStore?.shuffle,
+              )
+            }
+            onPressPlay={() => rootStore?.playerStore?.setState('playing')}
+            onPressPause={() => rootStore?.playerStore?.setState('pause')}
+            onBack={this.onBack.bind(this)}
+            onForward={this.onForward.bind(this)}
+            paused={rootStore?.playerStore?.statusPlayer == 'pause'}
+          />
+        </GestureRecognizer>
         <View style={styles.beatContainer}>
           <Image
             source={Images.wave2}

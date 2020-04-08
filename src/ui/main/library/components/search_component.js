@@ -14,10 +14,17 @@ import LinearGradient from 'react-native-linear-gradient';
 export default class SearchComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      keyword: '',
+    };
   }
 
-  onChangeText = text => {};
+  onChangeText(event, name) {
+    let value = {};
+    value[name] = event.nativeEvent.text;
+
+    this.setState(value);
+  }
 
   render() {
     return (
@@ -29,8 +36,8 @@ export default class SearchComponent extends Component {
             placeholderTextColor="#fff"
             placeholder={'Tìm trong nghệ sĩ'}
             style={[styles.inputText]}
-            value={''}
-            onChange={event => this.onChangeText(event, 'loginName')}
+            value={this.state.keyword}
+            onChange={event => this.onChangeText(event, 'keyword')}
             autoCorrect={false}
           />
         </View>
