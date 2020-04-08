@@ -28,13 +28,18 @@ export default class ArtistDetail extends Component {
     super(props);
     this.viewModel = ArtistModel.create({ state: 'loading' });
     this.modalSong = React.createRef();
+
     this.state = {
       ids: [],
       artist: {},
       following:
         indexOf(
           [...rootStore?.likedArtists],
-          Number(props.route.params.artist.id),
+          Number(
+            typeof props.route.params.artist == 'number'
+              ? props.route.params.artist
+              : props.route.params.artist.id,
+          ),
         ) >= 0,
     };
   }
@@ -246,8 +251,6 @@ export default class ArtistDetail extends Component {
   });
 
   render() {
-    console.log('artist 3', this.state.artist);
-
     return (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}

@@ -3,6 +3,7 @@ import { Result } from '../../../../data/repository/result';
 import { apiService } from '../../../../data/context/api_context';
 import { Song, createSongFromJsonApi } from '../../../../data/model/song';
 import { rootStore } from '../../../../data/context/root_context';
+import { getTrackFullDetail } from '../../../../data/datasource/api_helper';
 
 export const AlbumModel = types
   .model('AlbumModel', {
@@ -36,8 +37,17 @@ export const AlbumModel = types
       getAlbumTracks: flow(function* getAlbumTracks(ids) {
         const tracks: Array = yield apiService.commonApiService.getTracks(ids);
         if (tracks?.status == 200) {
-          tracks?.data?.map(track => {
-            self.setSongs(track);
+          tracks?.data?.map(async track => {
+            let fullTrack = await getTrackFullDetail(track.id);
+            fullTrack = { ...track, ...fullTrack };
+            fullTrack = {
+              ...fullTrack,
+              articleId: fullTrack.article.id,
+              artistId: fullTrack.artists[0]?.id ?? 0,
+              artists: fullTrack.artists.map(a => a.name),
+            };
+
+            self.setSongs(fullTrack);
           });
         }
         self.state = 'success';

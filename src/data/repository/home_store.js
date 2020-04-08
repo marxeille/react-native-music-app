@@ -61,6 +61,12 @@ export const HomeStore = types
             homeTracks?.data.forEach(async data => {
               let fullTrack = await getTrackFullDetail(data.id);
               fullTrack = { ...data, ...fullTrack };
+              fullTrack = {
+                ...fullTrack,
+                articleId: fullTrack.article.id,
+                artistId: fullTrack.artists[0]?.id ?? 0,
+                artists: fullTrack.artists.map(a => a.name),
+              };
 
               if (fullTrack?.track_url) {
                 getParent(self).createSongRef(fullTrack);

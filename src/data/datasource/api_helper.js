@@ -81,19 +81,13 @@ export async function getPlaylistCover(tracks) {
     if (trackCover.status == 200) {
       cover = {
         ...cover,
-        playlistCover:
-          trackCover?.data?.cover_path ?? 'https://picsum.photos/200',
+        playlistCover: trackCover?.data?.cover_path ?? null,
       };
     }
     if (trackArtistInfo.status == 200) {
       const ids = trackArtistInfo?.data.map(r => r.artist_id);
       artists = await getArtistInfo(ids);
     }
-  } else {
-    cover = {
-      ...cover,
-      playlistCover: 'https://picsum.photos/200',
-    };
   }
 
   cover = {

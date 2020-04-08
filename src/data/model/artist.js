@@ -32,7 +32,11 @@ export const Artist = types
     return {
       update(newJson) {
         self.name = newJson.name;
-        self.thumb = newJson.thumb;
+        self.thumb = newJson.thumb
+          ? newJson.thumb
+          : newJson.avatar_thumb_path
+          ? newJson.avatar_thumb_path
+          : '';
       },
     };
   });
@@ -41,7 +45,7 @@ export const createArtistFromApiJson = data => {
   return Artist.create({
     id: data.id.toString(),
     name: data.name ?? '',
-    thumb: data.thumb ? BASE_API_URL + data.thumb : '',
+    thumb: data.avatar_thumb_path ? BASE_API_URL + data.avatar_thumb_path : '',
     short_biography: data.short_biography ?? '',
     type: 'artist',
   });

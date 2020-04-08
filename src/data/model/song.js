@@ -1,5 +1,4 @@
 import { types } from 'mobx-state-tree';
-import { values } from 'mobx';
 import { BASE_API_URL } from '../../constant/constant';
 import { subLongStr } from '../../utils';
 
@@ -8,10 +7,9 @@ export const Song = types
     id: types.identifier,
     title: types.string,
     artwork: types.string,
-    artists: types.array(
-      types.frozen({ id: types.number, name: types.string }),
-    ),
-    article: types.frozen({ id: types.number, name: types.string }),
+    artist: types.array(types.string),
+    artistId: types.number,
+    articleId: types.number,
     url: types.string,
     type: types.string,
     duration: types.integer,
@@ -23,7 +21,7 @@ export const Song = types
         return self.title;
       },
       getSubTitle() {
-        return subLongStr(self.artists.map(a => a.name).join(','), 20);
+        return subLongStr(self.artist.join(','), 20);
       },
       isFavorite() {
         return self.favorite == true; // for case undefine
@@ -78,8 +76,9 @@ export const createSongFromJsonApi = data => {
   return Song.create({
     id: data?.id?.toString(),
     title: data.title,
-    artists: data.artists ?? [],
-    article: data.article ?? {},
+    artist: data.artists ?? [],
+    artistId: data.artistId ?? 0,
+    articleId: data.articleId ?? 0,
     artwork: data.cover_path
       ? BASE_API_URL + data.cover_path
       : 'https://picsum.photos/200',

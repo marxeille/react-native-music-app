@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../../themes';
 import { observer } from 'mobx-react';
 import { navigate } from '../../../../navigation/navigation_service';
+import { subLongStr } from '../../../../utils';
 
 @observer
 @wrap
@@ -14,6 +15,7 @@ export default class PlaylistItem extends Component {
 
   render() {
     const { item } = this.props;
+
     return (
       <>
         <TouchableOpacity
@@ -24,7 +26,9 @@ export default class PlaylistItem extends Component {
             <Image
               cls="widthFn-90 heightFn-82"
               source={
-                item !== undefined
+                item !== undefined &&
+                item.getThumb() !== null &&
+                item.getThumb() !== ''
                   ? {
                       uri: item.getThumb(),
                     }
@@ -34,7 +38,9 @@ export default class PlaylistItem extends Component {
 
             <View cls="pl2">
               <Text cls="white fw7 f6 pl2 lightFont">
-                {item !== undefined ? item.title() : 'Tạo playlist'}
+                {item !== undefined
+                  ? subLongStr(item.title(), 20)
+                  : 'Tạo playlist'}
               </Text>
               {item !== undefined ? (
                 <Text cls="primaryPurple f7 pl2 pt1 lightFont">

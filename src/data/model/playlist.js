@@ -55,7 +55,7 @@ export const createPlaylistFromJson = data => {
   return PlayList.create({
     id: data.id.toString(),
     name: data.name ?? '',
-    thumb: data.thumb ? BASE_API_URL + data.thumb : '',
+    thumb: data.thumb ? BASE_API_URL + data.thumb : null,
     owner: data.owner ?? '',
     tracks: data.tracks ?? [],
     type: 'playlist',

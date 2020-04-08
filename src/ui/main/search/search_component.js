@@ -188,7 +188,7 @@ export default class SearchComponent extends Component {
                       <View
                         cls="ba pa2 pt1 pb1 br5"
                         style={{ borderColor: '#d8a1c8' }}>
-                        <Text cls="white lightFont f10 fw8">Xoá tất cả</Text>
+                        <Text cls="white lightFont f7 fw8">Xoá tất cả</Text>
                       </View>
                     </TouchableOpacity>
                   </View>

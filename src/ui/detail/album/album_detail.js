@@ -46,11 +46,30 @@ export default class AlbumDetail extends Component {
 
   async componentDidMount() {
     let { item } = this.props.route?.params;
+
     if (typeof item == 'number') {
       await this.viewModel.getItemDetail(item);
       item = rootStore?.albums.get(item);
       this.setState({ article: item });
     }
+
+    this.getTracks(item);
+  }
+
+  async componentWillReceiveProps(nextProps) {
+    let { item } = this.props.route?.params;
+    const nextId = nextProps.route?.params.item;
+
+    if ((typeof item == 'number' && item !== nextId) || item.id !== nextId) {
+      await this.viewModel.getItemDetail(nextId);
+      item = rootStore?.albums.get(nextId);
+      this.setState({ article: item });
+    }
+
+    this.getTracks(item);
+  }
+
+  getTracks = item => {
     const ids = orderBy([...item.tracks.values()], ['position', 'asc']).map(
       track => track.track_id,
     );
@@ -63,11 +82,7 @@ export default class AlbumDetail extends Component {
     );
 
     this.setState({ ids: ids });
-  }
-
-  componentWillUnmount() {
-    this.cancelablePromise.cancel();
-  }
+  };
 
   _showModal = song => {
     if (this.modalSong && this.modalSong.current) {
@@ -130,6 +145,7 @@ export default class AlbumDetail extends Component {
     const { ids } = this.state;
     if (ids.length > 0) {
       const randomId = ids[Math.floor(Math.random() * ids.length)];
+
       [...this.viewModel.songs.values()].map(song => {
         rootStore.createSongRef(song);
       });
@@ -146,6 +162,7 @@ export default class AlbumDetail extends Component {
 
   renderHeaderSection = wrap(() => {
     let { item } = this.props.route?.params;
+
     if (typeof item == 'number') {
       item = this.state.article;
     }
@@ -170,10 +187,14 @@ export default class AlbumDetail extends Component {
           </View>
           <View cls="aic jcc">
             <Text cls="white fw8 f3 pb2 avertaFont">
-              {item.title().toUpperCase()}
+              {typeof item.title == 'function'
+                ? item.title().toUpperCase()
+                : '...'}
             </Text>
             <Text cls="white f8 latoFont">
-              {`Idol khÁ ${item.subTitle()} bẢnH is on top of the Vinahey hey hey!`}
+              {`Idol khÁ ${
+                typeof item.subTitle == 'function' ? item.subTitle() : '...'
+              } bẢnH is on top of the Vinahey hey hey!`}
             </Text>
             <Text cls="f9 primaryPurple latoFont pt2">
               {`${this.viewModel.stats

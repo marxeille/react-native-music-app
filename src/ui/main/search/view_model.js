@@ -137,8 +137,14 @@ export const SearchModel = types
             if (result.data.hits.tracks.length > 0) {
               result.data.hits.tracks.forEach(data => {
                 getTrackFullDetail(data.id).then(res => {
-                  const song = createSongFromJsonApi({ ...data, ...res });
-                  self.setResultSong(song);
+                  let fullTrack = createSongFromJsonApi({ ...data, ...res });
+                  fullTrack = {
+                    ...fullTrack,
+                    article: fullTrack.article.id,
+                    artistId: fullTrack.artists[0]?.id ?? 0,
+                    artists: fullTrack.artists.map(a => a.name),
+                  };
+                  self.setResultSong(fullTrack);
                 });
               });
             }

@@ -31,15 +31,17 @@ export default class LibraryTabView extends React.Component {
               onPress={() => this.setState({ index: i })}>
               <View cls="pr4">
                 {i == this.state.index ? (
-                  <LinearGradientText
-                    text={route.title}
-                    end={{ x: 0.8, y: 0 }}
-                    borderBottom
-                    styles={{
-                      fontSize: 20,
-                      fontFamily: 'Averta-ExtraBold',
-                    }}
-                  />
+                  <View cls="pr2">
+                    <LinearGradientText
+                      text={route.title}
+                      end={{ x: 0.8, y: 0 }}
+                      borderBottom
+                      styles={{
+                        fontSize: 20,
+                        fontFamily: 'Averta-ExtraBold',
+                      }}
+                    />
+                  </View>
                 ) : (
                   <Text cls="white fw7 pr2 avertaFont" style={{ fontSize: 20 }}>
                     {route.title}

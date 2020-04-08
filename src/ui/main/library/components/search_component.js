@@ -34,7 +34,7 @@ export default class SearchComponent extends Component {
             autoCorrect={false}
           />
         </View>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <LinearGradient
             colors={['#4A3278', '#8B659D', '#DDA5CB']}
             style={[
@@ -51,7 +51,7 @@ export default class SearchComponent extends Component {
               source={Images.ic_filter}
             />
           </LinearGradient>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }

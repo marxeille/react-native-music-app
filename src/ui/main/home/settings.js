@@ -28,6 +28,9 @@ class Settings extends Component {
               onPress={() => this.context.userStore.removeUserInfo()}>
               <Text cls="white">Logout</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => pop()}>
+              <Text cls="white">Go back</Text>
+            </TouchableOpacity>
           </ImageBackground>
         </View>
       </LinearGradient>

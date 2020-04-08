@@ -41,6 +41,7 @@ export default class SearchItem extends Component {
 
   render() {
     const { item } = this.props;
+
     const icon =
       item.getType() == 'song'
         ? Images.ic_menu
@@ -54,7 +55,15 @@ export default class SearchItem extends Component {
           <View cls="flx-row aic">
             <Image
               cls="widthFn-90 heightFn-82"
-              source={{ uri: item?.getThumb() }}
+              source={
+                item !== undefined &&
+                item.getThumb() !== null &&
+                item.getThumb() !== ''
+                  ? {
+                      uri: item.getThumb(),
+                    }
+                  : require('../../../../assets/images/add_playlist.png')
+              }
             />
             <View>
               <Text cls="white fw7 f6 pl2">

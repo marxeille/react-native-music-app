@@ -25,10 +25,18 @@ export default class AlbumItem extends Component {
         <View cls="pb3 pr3">
           <Image
             cls="widthFn-100 heightFn-82"
-            source={{ uri: item.getThumb() }}
+            source={
+              item !== undefined &&
+              item.getThumb() !== null &&
+              item.getThumb() !== ''
+                ? {
+                    uri: item.getThumb(),
+                  }
+                : require('../../../../assets/images/add_playlist.png')
+            }
           />
           <View>
-            <Text cls="white fw7 f8 pt2">{subLongStr(item.title(), 12)}</Text>
+            <Text cls="white fw7 f8 pt2">{subLongStr(item.title(), 8)}</Text>
             <Text cls="primaryPurple f8 pt1">
               của {subLongStr(item.subTitle(), 6)}
             </Text>

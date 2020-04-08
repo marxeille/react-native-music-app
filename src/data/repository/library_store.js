@@ -49,7 +49,7 @@ export const LibraryStore = types
               likedTracks.length > 0
                 ? playlistTracks
                 : [{ track_id: '', position: '' }],
-            playlistCover: 'https://picsum.photos/100',
+            playlistCover: null,
           };
 
           getParent(self).updatePlayList(likedTracksPlaylist);

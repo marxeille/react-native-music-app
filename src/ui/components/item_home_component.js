@@ -14,11 +14,16 @@ export default class ItemHome extends Component {
   }
 
   render() {
+    const item = rootStore.playlist.get(this.props.id);
     return (
       <View cls="widthFn-150 pl3 mr3">
         <Image
           cls="heightFn-150 widthFn-150"
-          source={{ uri: rootStore.playlist.get(this.props.id).getThumb() }}
+          source={
+            item.getThumb() !== null && item.getThumb() !== ''
+              ? { uri: item?.getThumb() }
+              : require('../../assets/images/add_playlist.png')
+          }
         />
         <Text cls="white pt2 fw6 lightFont">
           {rootStore.playlist.get(this.props.id).title()}

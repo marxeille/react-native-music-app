@@ -38,6 +38,22 @@ export default class SongMenu extends Component {
     if (typeof _hideModal == 'function') _hideModal();
   };
 
+  navigateToAlbum = () => {
+    const { song, _hideModal } = this.props;
+    song.articleId > 0
+      ? navigate('album_detail', { item: song.articleId })
+      : null;
+    if (typeof _hideModal == 'function') _hideModal();
+  };
+
+  navigateToArtist = () => {
+    const { song, _hideModal } = this.props;
+    song.artistId > 0
+      ? navigate('artist_detail', { artist: song.artistId })
+      : null;
+    if (typeof _hideModal == 'function') _hideModal();
+  };
+
   render() {
     const { song } = this.props;
 
@@ -89,14 +105,12 @@ export default class SongMenu extends Component {
             title={'Thêm vào danh sách chờ'}
           />
           <ActionItem
-            onPress={() => navigate('album_detail', { item: song.article.id })}
+            onPress={this.navigateToAlbum}
             icon={'ic_album'}
             title={'Xem album'}
           />
           <ActionItem
-            onPress={() =>
-              navigate('artist_detail', { artist: [...song.artists][0].id })
-            }
+            onPress={this.navigateToArtist}
             icon={'ic_artist'}
             title={'Xem nghệ sĩ'}
           />

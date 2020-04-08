@@ -85,14 +85,8 @@ export default class ArtistComponent extends Component {
         <View cls="pt3">
           <SearchComponent />
         </View>
+
         <View cls="pt3" style={{ marginBottom: 95 }}>
-          <View
-            style={{ position: 'absolute' }}
-            cls="ba br4 jcc asfe pa2 b--#4B3277">
-            <TouchableOpacity>
-              <Text cls="white fw6">Chỉ hiện DJ</Text>
-            </TouchableOpacity>
-          </View>
           <View cls="fullHeight">
             <AlphabetSectionList
               data={sortedArtists}
@@ -106,6 +100,13 @@ export default class ArtistComponent extends Component {
               rightSectionListItem={this.renderRightSectionItem}
               // sectionHeaderTextStyle={{ fontSize: 16, color: 'blue' }}
             />
+          </View>
+          <View
+            style={{ position: 'absolute' }}
+            cls="ba br4 jcc asfe pa2 b--#4B3277">
+            <TouchableOpacity>
+              <Text cls="white fw6">Chỉ hiện DJ</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </>
