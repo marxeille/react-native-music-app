@@ -141,7 +141,7 @@ export default class AlbumDetail extends Component {
     !following ? this.follow() : this.unfollow();
   };
 
-  playRandomSong = () => {
+  playSong = song => {
     const { ids } = this.state;
     if (ids.length > 0) {
       const randomId = ids[Math.floor(Math.random() * ids.length)];
@@ -151,11 +151,13 @@ export default class AlbumDetail extends Component {
       });
 
       rootStore.playlistSongStore?.addList(ids);
-      rootStore?.queueStore?.removeSongs([randomId.toString()]);
+      rootStore?.queueStore?.removeSongs([
+        song ? song.id.toString() : randomId.toString(),
+      ]);
       if (randomId == rootStore?.playerStore?.currentSong?.id) {
         navigate('player');
       } else {
-        navigate('player', { trackId: randomId });
+        navigate('player', { trackId: song ? song.id : randomId });
       }
     }
   };
@@ -230,7 +232,7 @@ export default class AlbumDetail extends Component {
               cls="heightFn-70 aic pt3"
               style={{ width: '100%' }}
               source={Images.wave}>
-              <TouchableOpacity onPress={this.playRandomSong}>
+              <TouchableOpacity onPress={this.playSong}>
                 <LinearGradient
                   cls="ba br5 b--#321A54"
                   colors={['#4A3278', '#8B659D', '#DDA5CB']}
@@ -288,9 +290,11 @@ export default class AlbumDetail extends Component {
 
   _renderItem = wrap(item => {
     return (
-      <View cls="pa3 pt0">
-        <AlbumItem item={item.item} openModal={this._showModal} />
-      </View>
+      <TouchableOpacity onPress={() => this.playSong(item.item)}>
+        <View cls="pa3 pt0">
+          <AlbumItem item={item.item} openModal={this._showModal} />
+        </View>
+      </TouchableOpacity>
     );
   });
 
