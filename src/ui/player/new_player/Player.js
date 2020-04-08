@@ -179,8 +179,8 @@ export default class Player extends Component {
         <Header _showModal={this._showModal} message="Playing From Charts" />
         <AlbumArt url={currentSong?.artwork} />
         <TrackDetails
-          title={currentSong?.title}
-          artist={currentSong?.artist}
+          title={currentSong?.getName()}
+          artist={currentSong?.getSubTitle()}
           onSharePress={this._showModal}
         />
         <SeekBar

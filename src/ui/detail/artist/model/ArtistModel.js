@@ -47,6 +47,7 @@ export const ArtistModel = types
         if (tracks?.status == 200) {
           tracks?.data?.map(async track => {
             let fullTrack = await getTrackFullDetail(track.id);
+
             fullTrack = { ...track, ...fullTrack };
             fullTrack = {
               ...fullTrack,

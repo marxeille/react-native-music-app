@@ -137,13 +137,17 @@ export const SearchModel = types
             if (result.data.hits.tracks.length > 0) {
               result.data.hits.tracks.forEach(data => {
                 getTrackFullDetail(data.id).then(res => {
-                  let fullTrack = createSongFromJsonApi({ ...data, ...res });
+                  let fullTrack = { ...data, ...res };
+
                   fullTrack = {
                     ...fullTrack,
-                    article: fullTrack.article.id,
+                    id: fullTrack.id.toString(),
+                    articleId: fullTrack.article ? fullTrack.article.id : 0,
                     artistId: fullTrack.artists[0]?.id ?? 0,
                     artists: fullTrack.artists.map(a => a.name),
+                    artwork: '',
                   };
+                  fullTrack = createSongFromJsonApi(fullTrack);
                   self.setResultSong(fullTrack);
                 });
               });
