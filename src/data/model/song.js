@@ -7,7 +7,7 @@ export const Song = types
     id: types.identifier,
     title: types.string,
     artwork: types.string,
-    artist: types.array(types.string),
+    artist: types.string,
     artistId: types.number,
     articleId: types.number,
     url: types.string,
@@ -21,7 +21,7 @@ export const Song = types
         return self.title;
       },
       getSubTitle() {
-        return subLongStr(self.artist.join(','), 20);
+        return self.artist;
       },
       isFavorite() {
         return self.favorite == true; // for case undefine
@@ -76,12 +76,18 @@ export const createSongFromJsonApi = data => {
   return Song.create({
     id: data?.id?.toString(),
     title: data.title,
-    artist: data.artists ?? [],
+    artist: data.artists
+      ? subLongStr(data.artists.join(', '), 25)
+      : data.artist
+      ? data.artist
+      : '',
     artistId: data.artistId ?? 0,
     articleId: data.articleId ?? 0,
     artwork: data.cover_path
       ? BASE_API_URL + data.cover_path
-      : 'https://picsum.photos/200',
+      : data.artwork
+      ? data.artwork
+      : '',
     url: data.track_url ? data.track_url : data.url ?? '',
     duration: data.duration ?? 100,
     favorite: false,

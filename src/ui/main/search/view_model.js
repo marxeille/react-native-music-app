@@ -100,7 +100,9 @@ export const SearchModel = types
         const songs = yield AsyncStorage.getItem(
           AsyncStorageKey.RECENTLYSEARCH.SONGS,
         );
+
         const songsJson = JSON.parse(songs);
+
         songsJson?.length > 0 &&
           songsJson?.forEach(s => {
             const newSong = createSongFromJsonApi(s);
@@ -135,10 +137,12 @@ export const SearchModel = types
           self.removeAllSearchResult();
           if (result.status == 200) {
             if (result.data.hits.tracks.length > 0) {
-              result.data.hits.tracks.forEach(data => {
+              result.data.hits.tracks.forEach(async data => {
+                const trackDetail = await apiService.trackApiService.getTrackInfo(
+                  data.id,
+                );
                 getTrackFullDetail(data.id).then(res => {
-                  let fullTrack = { ...data, ...res };
-
+                  let fullTrack = { ...trackDetail.data, ...res };
                   fullTrack = {
                     ...fullTrack,
                     id: fullTrack.id.toString(),
@@ -147,6 +151,7 @@ export const SearchModel = types
                     artists: fullTrack.artists.map(a => a.name),
                     artwork: '',
                   };
+
                   fullTrack = createSongFromJsonApi(fullTrack);
                   self.setResultSong(fullTrack);
                 });

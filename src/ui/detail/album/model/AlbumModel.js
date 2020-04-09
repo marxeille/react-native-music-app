@@ -36,6 +36,7 @@ export const AlbumModel = types
       }),
       getAlbumTracks: flow(function* getAlbumTracks(ids) {
         const tracks: Array = yield apiService.commonApiService.getTracks(ids);
+
         if (tracks?.status == 200) {
           tracks?.data?.map(async track => {
             let fullTrack = await getTrackFullDetail(track.id);
@@ -51,6 +52,7 @@ export const AlbumModel = types
             self.setSongs(fullTrack);
           });
         }
+
         self.state = 'success';
       }),
       getStats: flow(function* getStats(type, id) {

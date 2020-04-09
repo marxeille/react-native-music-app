@@ -56,7 +56,7 @@ export default class AlbumDetail extends Component {
     this.getTracks(item);
   }
 
-  async componentWillReceiveProps(nextProps) {
+  async UNSAFE_componentWillReceiveProps(nextProps) {
     let { item } = this.props.route?.params;
     const nextId = nextProps.route?.params.item;
 
@@ -70,7 +70,7 @@ export default class AlbumDetail extends Component {
   }
 
   getTracks = item => {
-    const ids = orderBy([...item.tracks.values()], ['position', 'asc']).map(
+    let ids = orderBy([...item.tracks.values()], ['position', 'asc']).map(
       track => track.track_id,
     );
     this.cancelablePromise = makeCancelable(
@@ -142,10 +142,12 @@ export default class AlbumDetail extends Component {
   };
 
   playSong = song => {
-    const { ids } = this.state;
+    const ids = [...this.viewModel.songs.values()].map(song => {
+      return song.id;
+    });
+
     if (ids.length > 0) {
       const randomId = ids[Math.floor(Math.random() * ids.length)];
-
       [...this.viewModel.songs.values()].map(song => {
         rootStore.createSongRef(song);
       });
@@ -232,7 +234,7 @@ export default class AlbumDetail extends Component {
               cls="heightFn-70 aic pt3"
               style={{ width: '100%' }}
               source={Images.wave}>
-              <TouchableOpacity onPress={this.playSong}>
+              <TouchableOpacity onPress={() => this.playSong()}>
                 <LinearGradient
                   cls="ba br5 b--#321A54"
                   colors={['#4A3278', '#8B659D', '#DDA5CB']}

@@ -13,6 +13,7 @@ import Modal from './WrapperModal';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
+import LinearGradient from 'react-native-linear-gradient';
 
 @wrap
 export default class BottomModal extends React.Component {
@@ -91,53 +92,59 @@ export default class BottomModal extends React.Component {
           forceInset={{ top: 'always', bottom: forceInsetBottom }}
           cls="jcfe">
           {/* <View cls="bg-white fullView" style={[style]}> */}
-          <ImageBackground cls="fullView" style={[style]} source={Images.bg}>
-            {headerNone ? null : (
-              <View cls="pv2 flx-row aic">
-                <View cls="aifs jcc flx-i">
+          <LinearGradient
+            colors={['#291047', '#1a0632', '#110926', '#110926']}
+            start={{ x: 1, y: 0 }}
+            end={{ x: 1, y: 1 }}>
+            <ImageBackground cls="fullView" style={[style]} source={Images.bg2}>
+              {headerNone ? null : (
+                <View cls="pv2 flx-row aic">
+                  <View cls="aifs jcc flx-i">
+                    <TouchableOpacity
+                      onPress={this._hideModal}
+                      cls="jcc pv1 ph3 aic">
+                      <Image
+                        cls="widthFn-20 heightFn-20 pt2"
+                        source={Images.ic_delete}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <View cls="aic jcc flexFn-5">
+                    <LinearGradientText
+                      text={`${title}`}
+                      end={{ x: 0.7, y: 0 }}
+                      styles={{
+                        justifyContent: 'center',
+                        fontSize: 23,
+                        fontFamily: 'Averta-ExtraBold',
+                      }}
+                    />
+                  </View>
+                  <View cls="flx-i" />
+                  {rightComponent ? (
+                    <View cls="absolute right-0">{rightComponent}</View>
+                  ) : null}
+                </View>
+              )}
+
+              <View style={[containerStyle]}>{children}</View>
+
+              {headerNone ? (
+                <View cls="aic jcc pt0">
                   <TouchableOpacity
                     onPress={this._hideModal}
                     cls="jcc pv1 ph3 aic">
-                    <Image
-                      cls="widthFn-20 heightFn-20 pt2"
-                      source={Images.ic_delete}
-                    />
+                    <View
+                      cls="br5 ba pa1 pl4 pr4"
+                      style={{ borderColor: '#d29dc5' }}>
+                      <Text cls="white fw6 f9">Đóng</Text>
+                    </View>
                   </TouchableOpacity>
                 </View>
-                <View cls="aic jcc flexFn-5">
-                  <LinearGradientText
-                    text={`${title}`}
-                    end={{ x: 0.7, y: 0 }}
-                    styles={{
-                      justifyContent: 'center',
-                      fontSize: 23,
-                      fontFamily: 'Averta-ExtraBold',
-                    }}
-                  />
-                </View>
-                <View cls="flx-i" />
-                {rightComponent ? (
-                  <View cls="absolute right-0">{rightComponent}</View>
-                ) : null}
-              </View>
-            )}
+              ) : null}
+            </ImageBackground>
+          </LinearGradient>
 
-            <View style={[containerStyle]}>{children}</View>
-
-            {headerNone ? (
-              <View cls="aic jcc pt0">
-                <TouchableOpacity
-                  onPress={this._hideModal}
-                  cls="jcc pv1 ph3 aic">
-                  <View
-                    cls="br5 ba pa1 pl4 pr4"
-                    style={{ borderColor: '#d29dc5' }}>
-                    <Text cls="white fw6 f9">Đóng</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            ) : null}
-          </ImageBackground>
           {/* </View> */}
         </SafeAreaView>
       </Modal>

@@ -14,6 +14,7 @@ import LinearGradientText from '../../main/library/components/LinearGradientText
 import { rootStore } from '../../../data/context/root_context';
 import AddPlayListModal from './add_playlist_modal';
 import { navigate } from '../../../navigation/navigation_service';
+import { subLongStr } from '../../../utils';
 
 @observer
 @wrap
@@ -80,7 +81,7 @@ export default class SongMenu extends Component {
           </ImageBackground>
           <View cls="aic jcc pt3">
             <LinearGradientText
-              text={song?.title ?? 'Chưa xác định'}
+              text={song?.getName() ?? 'Chưa xác định'}
               end={{ x: 0.7, y: 0 }}
               styles={{
                 justifyContent: 'center',
@@ -89,7 +90,7 @@ export default class SongMenu extends Component {
               }}
             />
             <Text cls="white fw5 f7 pt1 latoFont">
-              {song?.artist ?? 'Chưa rõ'}
+              {song?.getSubTitle() ?? 'Chưa rõ'}
             </Text>
           </View>
         </View>
