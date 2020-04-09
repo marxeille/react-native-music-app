@@ -129,5 +129,21 @@ export const HomeStore = types
           console.log('err ', err);
         }
       }),
+
+      //Add tracks to playlist
+      addTracksToPlaylist: flow(function* addTracksToPlaylist(playlist) {
+        try {
+          const newPlaylist = yield apiService.trackApiService.editPlaylist(
+            playlist,
+          );
+
+          if (newPlaylist?.status == 200) {
+            getParent(self).updatePlayList(newPlaylist.data);
+            Alert.alert('Thêm thành công');
+          }
+        } catch (err) {
+          console.log('err ', err);
+        }
+      }),
     };
   });

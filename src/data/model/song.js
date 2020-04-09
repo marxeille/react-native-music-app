@@ -21,7 +21,7 @@ export const Song = types
         return self.title;
       },
       getSubTitle() {
-        return self.artist;
+        return subLongStr(self.artist, 25);
       },
       isFavorite() {
         return self.favorite == true; // for case undefine
@@ -77,7 +77,7 @@ export const createSongFromJsonApi = data => {
     id: data?.id?.toString(),
     title: data.title,
     artist: data.artists
-      ? subLongStr(data.artists.join(', '), 25)
+      ? data.artists.join(', ')
       : data.artist
       ? data.artist
       : '',

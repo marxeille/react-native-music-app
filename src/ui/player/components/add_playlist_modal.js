@@ -13,6 +13,7 @@ import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
 import { rootStore } from '../../../data/context/root_context';
+import { cloneDeep } from 'lodash';
 
 @observer
 @wrap
@@ -23,7 +24,22 @@ export default class AddPlayListModal extends Component {
   }
 
   _renderItem = item => {
-    return <ActionItem item={item.item} />;
+    return (
+      <TouchableOpacity onPress={() => this.addTracksToPlaylist(item.item)}>
+        <ActionItem item={item.item} />
+      </TouchableOpacity>
+    );
+  };
+
+  addTracksToPlaylist = playlist => {
+    const { song } = this.props;
+    const newTracks = cloneDeep(playlist.tracks);
+    newTracks.push({
+      track_id: Number(song.id),
+      position: [...playlist.tracks].length,
+    });
+    playlist = { ...playlist, tracks: newTracks };
+    rootStore?.homeStore?.addTracksToPlaylist(playlist);
   };
 
   render() {
@@ -77,22 +93,20 @@ export default class AddPlayListModal extends Component {
 const ActionItem = wrap(({ item }) => {
   return (
     <>
-      <TouchableOpacity>
-        <View cls="flx-row aic pb3">
-          <Image
-            cls="widthFn-90 heightFn-82"
-            source={{ uri: item?.getThumb() }}
-          />
+      <View cls="flx-row aic pb3">
+        <Image
+          cls="widthFn-90 heightFn-82"
+          source={{ uri: item?.getThumb() }}
+        />
 
-          <View cls="pl2">
-            <Text cls="white fw7 f6 pl2"> {item?.title() ?? 'Default'}</Text>
-            <Text cls="primaryPurple f6 pl2 pt1">
-              {' '}
-              {item?.subTitle() ?? 'Default'}
-            </Text>
-          </View>
+        <View cls="pl2">
+          <Text cls="white fw7 f6 pl2"> {item?.title() ?? 'Default'}</Text>
+          <Text cls="primaryPurple f6 pl2 pt1">
+            {' '}
+            {item?.subTitle() ?? 'Default'}
+          </Text>
         </View>
-      </TouchableOpacity>
+      </View>
     </>
   );
 });

@@ -62,7 +62,7 @@ export default class SongMenu extends Component {
 
     return showAddPlaylist ? (
       <View>
-        <AddPlayListModal addPlaylist={this.addPlaylist} />
+        <AddPlayListModal addPlaylist={this.addPlaylist} song={song} />
       </View>
     ) : (
       <>

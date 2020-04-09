@@ -1,7 +1,7 @@
 import { types, flow } from 'mobx-state-tree';
 import { Result } from './result';
 import { Song } from '../model/song';
-import { indexOf, map, remove } from 'lodash';
+import { indexOf, map } from 'lodash';
 
 const SongOfAlPlaylistStore = types
   .model('SongOfAlPlaylistStore', {

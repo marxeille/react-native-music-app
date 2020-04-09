@@ -7,7 +7,7 @@ export const PlayList = types
     id: types.identifier,
     name: types.string,
     thumb: types.string,
-    owner: types.array(types.frozen({ id: types.number, name: types.string })),
+    owner: types.string,
     tracks: types.maybe(
       types.array(
         types.frozen({ track_id: types.string, position: types.integer }),
@@ -21,7 +21,7 @@ export const PlayList = types
         return self.name;
       },
       subTitle() {
-        return subLongStr(self.owner.map(o => o.name).join(','), 20);
+        return subLongStr(self.owner, 25);
       },
       getThumb() {
         return self.thumb;
@@ -35,6 +35,7 @@ export const PlayList = types
     return {
       update(newJson) {
         self.name = newJson.name;
+        self.tracks = newJson.tracks;
       },
     };
   });
@@ -44,7 +45,7 @@ export const createPlaylistFromApiJson = data => {
     id: data.id.toString(),
     name: data.name ?? '',
     thumb: data.playlistCover ? BASE_API_URL + data.playlistCover : '',
-    owner: data.artists ?? [],
+    owner: data.artists ? data.artists.map(a => a.name).join(', ') : '',
     private: data.private ?? null,
     tracks: data.tracks ?? [],
     type: 'playlist',

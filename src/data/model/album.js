@@ -6,7 +6,7 @@ export const Album = types
     id: types.identifier,
     name: types.string,
     thumb: types.string,
-    owner: types.array(types.frozen({ id: types.number, name: types.string })),
+    owner: types.string,
     tracks: types.maybe(
       types.array(
         types.frozen({ track_id: types.string, position: types.integer }),
@@ -20,7 +20,7 @@ export const Album = types
         return self.name;
       },
       subTitle() {
-        return subLongStr(self.owner.map(o => o.name).join(','), 20);
+        return subLongStr(self.owner, 25);
       },
       getThumb() {
         return self.thumb;
@@ -43,7 +43,7 @@ export const createAlbumFromApiJson = data => {
     id: data.id.toString(),
     name: data.name ?? '',
     thumb: data.thumb ?? '',
-    owner: data.artists ?? [],
+    owner: data.artists ? data.artists.map(a => a.name).join(', ') : '',
     tracks: data.tracks ?? [],
     type: 'article',
   });

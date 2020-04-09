@@ -48,4 +48,19 @@ export default class TrackApiService {
       console.log('TCL: try -> error', error);
     }
   }
+
+  async editPlaylist(playlist) {
+    try {
+      const path = `/api/playlists/${playlist.id}`;
+      const params = {
+        name: playlist.name,
+        private: true,
+        tracks: [...playlist.tracks],
+      };
+
+      return await privateRequest(BASE_URL.put, path, params);
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
 }
