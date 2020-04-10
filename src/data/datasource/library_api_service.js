@@ -2,10 +2,15 @@ import { BASE_URL, privateRequest } from './api_config';
 //Hanle data từ Library Api Services
 export default class LibraryApiService {
   // Get track basic info
-  async getArtists() {
+  async getArtists(ids) {
     try {
       const path = `/api/artists`;
-      return await privateRequest(BASE_URL.get, path, {});
+      const params = ids
+        ? {
+            ids: ids.join(','),
+          }
+        : {};
+      return await privateRequest(BASE_URL.get, path, params);
     } catch (error) {
       console.log('TCL: try -> error', error);
     }
@@ -22,7 +27,7 @@ export default class LibraryApiService {
   async getLikedArtists() {
     try {
       const path = '/api/like/artist';
-      return await privateRequest(BASE_URL.get, path, {});
+      return await privateRequest(BASE_URL.get, path, { per_page: 50 });
     } catch (error) {
       console.log('TCL: try -> error', error);
     }
@@ -31,7 +36,7 @@ export default class LibraryApiService {
   async getLikedAlbums() {
     try {
       const path = '/api/like/article';
-      return await privateRequest(BASE_URL.get, path, {});
+      return await privateRequest(BASE_URL.get, path, { per_page: 50 });
     } catch (error) {
       console.log('TCL: try -> error', error);
     }

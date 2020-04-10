@@ -48,7 +48,7 @@ export default class PlaylistComponent extends Component {
             <FlatList
               ListHeaderComponent={this.renderPlaylistHeader()}
               showsVerticalScrollIndicator={false}
-              data={rootStore.libraryStore.playlists}
+              data={[...rootStore.libraryStore.playlists]}
               keyExtractor={(item, index) => index.toString()}
               renderItem={this.renderPlaylist}
             />

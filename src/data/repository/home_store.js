@@ -48,7 +48,6 @@ export const HomeStore = types
       fetchHomeData: flow(function* fetchHomeData() {
         const homeTrackIds: Array = yield apiService.commonApiService.getHomeTrackIds();
         const homePlaylist: Array = yield apiService.commonApiService.getHomePlaylists();
-        console.log('homePlaylist', homePlaylist);
 
         //Get full home track info
         if (homeTrackIds?.status == 200) {
@@ -57,13 +56,16 @@ export const HomeStore = types
           const homeTracks: Array = yield apiService.commonApiService.getTracks(
             ids,
           );
+
           if (homeTracks?.status == 200) {
             homeTracks?.data.forEach(async data => {
               let fullTrack = await getTrackFullDetail(data.id);
+
               fullTrack = { ...data, ...fullTrack };
               fullTrack = {
                 ...fullTrack,
-                articleId: fullTrack.article.id,
+                articleId:
+                  fullTrack.article !== null ? fullTrack.article.id : 0,
                 artistId: fullTrack.artists[0]?.id ?? 0,
                 artists: fullTrack.artists.map(a => a.name),
               };
@@ -109,7 +111,6 @@ export const HomeStore = types
           const likedTracks: Array = yield apiService.commonApiService.getLikedTracks();
           const likedArtists: Array = yield apiService.libraryApiService.getLikedArtists();
           const likedAlbums: Array = yield apiService.libraryApiService.getLikedAlbums();
-          console.log('likedTracks', likedTracks);
 
           if (likedTracks?.status == 200) {
             const preparedData = likedTracks.data.map(track => track.entity_id);

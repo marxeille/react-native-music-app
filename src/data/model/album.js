@@ -1,5 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { subLongStr } from '../../utils';
+import { BASE_API_URL } from '../../constant/constant';
 
 export const Album = types
   .model('Album', {
@@ -42,7 +43,7 @@ export const createAlbumFromApiJson = data => {
   return Album.create({
     id: data.id.toString(),
     name: data.name ?? '',
-    thumb: data.thumb ?? '',
+    thumb: data.cover_path ? BASE_API_URL + data.cover_path : '',
     owner: data.artists ? data.artists.map(a => a.name).join(', ') : '',
     tracks: data.tracks ?? [],
     type: 'article',

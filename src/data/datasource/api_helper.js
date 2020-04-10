@@ -58,13 +58,18 @@ export async function getTrackFullDetail(trackId) {
 }
 
 export async function getArtistInfo(ids) {
-  const artist = await Promise.all(
-    ids.map(async id => {
-      const artistInfo = await apiService.trackApiService.getArtistInfo(id);
-      return artistInfo?.data;
-    }),
-  );
-  return artist;
+  // const artists = await Promise.all(
+  //   ids.map(async id => {
+  //     const artistInfo = await apiService.trackApiService.getArtistInfo(id);
+  //     return artistInfo?.data;
+  //   }),
+  // );
+  let artists = [];
+  const response = await apiService.libraryApiService.getArtists(ids);
+  if (response?.status == 200) {
+    artists = response.data;
+  }
+  return artists;
 }
 
 export async function getPlaylistCover(tracks) {
@@ -87,6 +92,7 @@ export async function getPlaylistCover(tracks) {
     if (trackArtistInfo.status == 200) {
       const ids = trackArtistInfo?.data.map(r => r.artist_id);
       artists = await getArtistInfo(ids);
+      console.log('artists', artists);
     }
   }
 

@@ -99,14 +99,8 @@ BASE_URL.addAsyncResponseTransform(async response => {
             response.params,
             responseJson.data.access_token,
           );
-          // console.log('refreshResponse', refreshResponse);
-          // data = refreshResponse.data;
-          // console.log('it get here first', { ...data });
+          //Re-assign expried response with new one
           Object.assign(response, refreshResponse);
-
-          // return Promise.resolve({
-          //   ...data,
-          // });
         } else {
           //  DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native
           // Link to this article: https://stackoverflow.com/questions/29807664/cyclic-dependency-returns-empty-object-in-react-native

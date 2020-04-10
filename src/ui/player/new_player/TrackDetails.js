@@ -13,6 +13,7 @@ const TrackDetails = ({ title, artist, onSharePress, onArtistPress }) => {
     [...rootStore?.likedTracks],
     Number(rootStore?.playerStore?.currentSong?.id),
   );
+
   const [like, setLike] = useState(idExist >= 0);
 
   const onReactionSuccess = useCallback((type, data) => {
