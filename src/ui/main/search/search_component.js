@@ -167,7 +167,7 @@ export default class SearchComponent extends Component {
         colors={['#291048', '#1a0732', '#130727', '#110426']}
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
-        <View cls="fullView">
+        <View style={{ paddingBottom: 175 }}>
           <ImageBackground cls="fullView" source={Images.bg2}>
             {this.renderSearchSection()}
             {this.viewmodel.state == 'loading' ? (
@@ -185,8 +185,7 @@ export default class SearchComponent extends Component {
                   keyExtractor={(item, index) => index.toString()}
                 />
                 {keyword == '' || keyword == null || keyword == undefined ? (
-                  <View
-                    style={{ position: 'absolute', right: 12, bottom: 215 }}>
+                  <View style={{ position: 'absolute', right: 12, bottom: 75 }}>
                     <TouchableOpacity onPress={() => this.clearRecently()}>
                       <View
                         cls="ba pa2 pt1 pb1 br5"

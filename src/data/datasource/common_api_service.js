@@ -50,9 +50,9 @@ export default class CommonApiService {
     }
   }
 
-  async getLikedTracks() {
+  async getLikedTracks(ids) {
     try {
-      const path = '/api/like/track';
+      const path = '/api/like/track?ids=' + ids;
       return await privateRequest(BASE_URL.get, path, { per_page: 50 });
     } catch (error) {
       console.log('TCL: try -> error', error);
@@ -104,6 +104,21 @@ export default class CommonApiService {
     try {
       const path = `/api/articles/${id}`;
       return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
+  async register({ email, password }) {
+    try {
+      const path = '/api/users';
+      const params = {
+        name: email,
+        fullname: email,
+        password: password,
+        // dob: null,
+      };
+      return await BASE_URL.post(path, params);
     } catch (error) {
       console.log('TCL: try -> error', error);
     }

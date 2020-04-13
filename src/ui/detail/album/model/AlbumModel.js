@@ -4,6 +4,7 @@ import { apiService } from '../../../../data/context/api_context';
 import { Song, createSongFromJsonApi } from '../../../../data/model/song';
 import { rootStore } from '../../../../data/context/root_context';
 import { getTrackFullDetail } from '../../../../data/datasource/api_helper';
+import { remove, cloneDeep } from 'lodash';
 
 export const AlbumModel = types
   .model('AlbumModel', {
@@ -11,6 +12,7 @@ export const AlbumModel = types
     songs: types.optional(types.map(Song), {}),
     selectedSong: types.maybeNull(types.reference(Song)),
     stats: types.number,
+    likedPlaylist: types.array(types.number),
   })
   .actions(self => {
     return {
@@ -28,10 +30,35 @@ export const AlbumModel = types
       setSelectedSong(song) {
         self.selectedSong = song.id;
       },
+      //Liked artist
+      setLikedPlaylist(playlist) {
+        self.likedPlaylist = playlist;
+      },
+      addLikedAlbum(playlistId) {
+        const tmpLikedPlaylist = cloneDeep(self.likedPlaylist);
+        tmpLikedPlaylist.push(playlistId);
+        self.setLikedPlaylist([...tmpLikedPlaylist]);
+      },
+      removeLikedAlbum(playlistId) {
+        const tmpLikedPlaylist = cloneDeep(self.likedPlaylist);
+        remove(tmpLikedPlaylist, p => p == playlistId);
+        self.setLikedPlaylist([...tmpLikedPlaylist]);
+      },
       getItemDetail: flow(function* getItemDetail(id) {
         const article = yield apiService.commonApiService.getArticleInfo(id);
         if (article.status == 200) {
           rootStore?.updateAlbum(article.data);
+        }
+      }),
+      getLikedPlaylist: flow(function* getLikedPlaylist(id) {
+        const likedPlaylists = yield apiService.libraryApiService.getLikedAlbums(
+          id,
+        );
+        if (likedPlaylists.status == 200) {
+          const preparedData = likedPlaylists.data.map(
+            track => track.entity_id,
+          );
+          self.setLikedPlaylist(preparedData);
         }
       }),
       getAlbumTracks: flow(function* getAlbumTracks(ids) {

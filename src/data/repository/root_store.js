@@ -102,33 +102,33 @@ export const RootStore = types
         self.setLikedTracks([...tmpLikedTracks]);
       },
 
-      // Artists reaction
-      setLikedArtists(artists) {
-        self.likedArtists = artists;
-      },
-      addLikedArtist(artistId) {
-        const tmpLikedArtists = cloneDeep(self.likedArtists);
-        tmpLikedArtists.push(artistId);
-        self.setLikedArtists([...tmpLikedArtists]);
-      },
-      removeLikedArtist(artistId) {
-        const tmpLikedArtists = cloneDeep(self.likedArtists);
-        remove(tmpLikedArtists, a => a == artistId);
-        self.setLikedArtists([...tmpLikedArtists]);
-      },
-      // Articles reaction
-      setLikedAlbums(albums) {
-        self.likedAlbums = albums;
-      },
-      addLikedAlbum(albumId) {
-        const tmpLikedAlbums = cloneDeep(self.likedAlbums);
-        tmpLikedAlbums.push(albumId);
-        self.setLikedAlbums([...tmpLikedAlbums]);
-      },
-      removeLikedAlbum(albumId) {
-        const tmpLikedAlbums = cloneDeep(self.likedAlbums);
-        remove(tmpLikedAlbums, a => a == albumId);
-        self.setLikedAlbums([...tmpLikedAlbums]);
-      },
+      // // Artists reaction
+      // setLikedArtists(artists) {
+      //   self.likedArtists = artists;
+      // },
+      // addLikedArtist(artistId) {
+      //   const tmpLikedArtists = cloneDeep(self.likedArtists);
+      //   tmpLikedArtists.push(artistId);
+      //   self.setLikedArtists([...tmpLikedArtists]);
+      // },
+      // removeLikedArtist(artistId) {
+      //   const tmpLikedArtists = cloneDeep(self.likedArtists);
+      //   remove(tmpLikedArtists, a => a == artistId);
+      //   self.setLikedArtists([...tmpLikedArtists]);
+      // },
+      // // Articles reaction
+      // setLikedAlbums(albums) {
+      //   self.likedAlbums = albums;
+      // },
+      // addLikedAlbum(albumId) {
+      //   const tmpLikedAlbums = cloneDeep(self.likedAlbums);
+      //   tmpLikedAlbums.push(albumId);
+      //   self.setLikedAlbums([...tmpLikedAlbums]);
+      // },
+      // removeLikedAlbum(albumId) {
+      //   const tmpLikedAlbums = cloneDeep(self.likedAlbums);
+      //   remove(tmpLikedAlbums, a => a == albumId);
+      //   self.setLikedAlbums([...tmpLikedAlbums]);
+      // },
     };
   });

@@ -34,7 +34,7 @@ export default class ArtistDetail extends Component {
       artist: {},
       following:
         indexOf(
-          [...rootStore?.likedArtists],
+          [...this.viewModel?.likedArtists],
           Number(
             typeof props.route.params.artist == 'number'
               ? props.route.params.artist
@@ -64,14 +64,16 @@ export default class ArtistDetail extends Component {
           Number(typeof artist == 'number' ? artist : artist.id),
         )
         .then(ids => {
-          this.setState({ ids: ids });
+          this.setState({
+            ids: ids,
+          });
         }),
     );
   }
 
-  componentWillUnmount() {
-    // this.cancelablePromise.cancel();
-  }
+  // componentWillUnmount() {
+  //   this.cancelablePromise.cancel();
+  // }
 
   _showModal = song => {
     if (this.modalSong && this.modalSong.current) {
@@ -88,14 +90,17 @@ export default class ArtistDetail extends Component {
 
   onReactionSuccess = (type, data) => {
     const { artist } = this.props.route.params;
-    const idExist = indexOf([...rootStore?.likedArtists], Number(artist.id));
+    const idExist = indexOf(
+      [...this.viewModel?.likedArtists],
+      Number(artist.id),
+    );
     if (type == 'like') {
       if (idExist < 0) {
-        rootStore?.addLikedArtist(data);
+        this.viewModel?.addLikedArtist(data);
       }
     } else {
       if (idExist >= 0) {
-        rootStore?.removeLikedArtist(data);
+        this.viewModel?.removeLikedArtist(data);
       }
     }
   };
@@ -125,8 +130,15 @@ export default class ArtistDetail extends Component {
   };
 
   reaction = () => {
-    const { following } = this.state;
-    this.setState({ following: !following });
+    const following =
+      indexOf(
+        [...this.viewModel?.likedArtists],
+        Number(
+          typeof this.props.route.params.artist == 'number'
+            ? this.props.route.params.artist
+            : this.props.route.params.artist.id,
+        ),
+      ) >= 0;
     !following ? this.followArtist() : this.unfollowArtist();
   };
 
@@ -189,7 +201,15 @@ export default class ArtistDetail extends Component {
   });
 
   renderMiddleSection = wrap(() => {
-    const { following } = this.state;
+    const following =
+      indexOf(
+        [...this.viewModel?.likedArtists],
+        Number(
+          typeof this.props.route.params.artist == 'number'
+            ? this.props.route.params.artist
+            : this.props.route.params.artist.id,
+        ),
+      ) >= 0;
     return (
       <>
         <View cls="pb3">
@@ -244,6 +264,7 @@ export default class ArtistDetail extends Component {
         <ArtistItem
           index={item.index}
           item={item.item}
+          model={this.viewModel}
           openModal={this._showModal}
         />
       </View>

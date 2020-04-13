@@ -38,7 +38,7 @@ export default class AlbumDetail extends Component {
       ids: [],
       following:
         indexOf(
-          [...rootStore?.likedAlbums],
+          [...this.viewModel?.likedPlaylist],
           Number(props.route.params.item.id),
         ) >= 0,
     };
@@ -75,6 +75,7 @@ export default class AlbumDetail extends Component {
     );
     this.cancelablePromise = makeCancelable(
       this.viewModel.getStats(item.getType(), item.id),
+      this.viewModel.getLikedPlaylist(item.id),
       this.viewModel.getAlbumTracks(
         //if item.id = 0, it's liked tracks playlist, so just get the list right in the rootStore. Otherwise, it's normal playlist
         item.id == 0 ? [...rootStore?.likedTracks] : ids,
@@ -99,14 +100,17 @@ export default class AlbumDetail extends Component {
 
   onReactionSuccess = (type, data) => {
     const { item } = this.props.route?.params;
-    const idExist = indexOf([...rootStore?.likedAlbums], Number(item.id));
+    const idExist = indexOf(
+      [...this.viewModel?.likedPlaylist],
+      Number(item.id),
+    );
     if (type == 'like') {
       if (idExist < 0) {
-        rootStore?.addLikedAlbum(data);
+        this.viewModel?.addLikedAlbum(data);
       }
     } else {
       if (idExist >= 0) {
-        rootStore?.removeLikedAlbum(data);
+        this.viewModel?.removeLikedAlbum(data);
       }
     }
   };
@@ -136,7 +140,15 @@ export default class AlbumDetail extends Component {
   };
 
   reaction = () => {
-    const { following } = this.state;
+    const following =
+      indexOf(
+        [...this.viewModel?.likedPlaylist],
+        Number(
+          typeof this.props.route.params.item == 'number'
+            ? this.props.route.params.item
+            : this.props.route.params.item.id,
+        ),
+      ) >= 0;
     this.setState({ following: !following });
     !following ? this.follow() : this.unfollow();
   };
@@ -166,6 +178,7 @@ export default class AlbumDetail extends Component {
 
   renderHeaderSection = wrap(() => {
     let { item } = this.props.route?.params;
+    console.log('item', item);
 
     if (typeof item == 'number') {
       item = this.state.article;
@@ -212,7 +225,15 @@ export default class AlbumDetail extends Component {
   });
 
   renderMiddleSection = wrap(() => {
-    const { following } = this.state;
+    const following =
+      indexOf(
+        [...this.viewModel?.likedPlaylist],
+        Number(
+          typeof this.props.route.params.item == 'number'
+            ? this.props.route.params.item
+            : this.props.route.params.item.id,
+        ),
+      ) >= 0;
     return (
       <>
         <View>

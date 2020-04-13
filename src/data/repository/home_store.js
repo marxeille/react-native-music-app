@@ -21,7 +21,7 @@ export const HomeStore = types
       fetchData() {
         self.state = 'loading';
         self.fetchHomeData();
-        self.fetchLikedStuff();
+        // self.fetchLikedStuff();
         self.state = 'success';
       },
       //#endregion
@@ -52,6 +52,15 @@ export const HomeStore = types
         //Get full home track info
         if (homeTrackIds?.status == 200) {
           let ids = homeTrackIds?.data.map(ht => ht.id).join(',');
+
+          const likedTracks: Array = yield apiService.commonApiService.getLikedTracks(
+            ids,
+          );
+
+          if (likedTracks?.status == 200) {
+            const preparedData = likedTracks.data.map(track => track.entity_id);
+            getParent(self).setLikedTracks(preparedData);
+          }
 
           const homeTracks: Array = yield apiService.commonApiService.getTracks(
             ids,
@@ -106,30 +115,30 @@ export const HomeStore = types
       }),
       // #endregion
       //fetch liked stuff refactor
-      fetchLikedStuff: flow(function* fetchLikedStuff() {
-        try {
-          const likedTracks: Array = yield apiService.commonApiService.getLikedTracks();
-          const likedArtists: Array = yield apiService.libraryApiService.getLikedArtists();
-          const likedAlbums: Array = yield apiService.libraryApiService.getLikedAlbums();
+      // fetchLikedStuff: flow(function* fetchLikedStuff() {
+      //   try {
+      //     // const likedTracks: Array = yield apiService.commonApiService.getLikedTracks();
+      //     // const likedArtists: Array = yield apiService.libraryApiService.getLikedArtists();
+      //     // const likedAlbums: Array = yield apiService.libraryApiService.getLikedAlbums();
 
-          if (likedTracks?.status == 200) {
-            const preparedData = likedTracks.data.map(track => track.entity_id);
-            getParent(self).setLikedTracks(preparedData);
-          }
-          if (likedArtists?.status == 200) {
-            const preparedData = likedArtists.data.map(
-              artist => artist.entity_id,
-            );
-            getParent(self).setLikedArtists(preparedData);
-          }
-          if (likedAlbums?.status == 200) {
-            const preparedData = likedAlbums.data.map(album => album.entity_id);
-            getParent(self).setLikedAlbums(preparedData);
-          }
-        } catch (err) {
-          console.log('err ', err);
-        }
-      }),
+      //     // if (likedTracks?.status == 200) {
+      //     //   const preparedData = likedTracks.data.map(track => track.entity_id);
+      //     //   getParent(self).setLikedTracks(preparedData);
+      //     // }
+      //     if (likedArtists?.status == 200) {
+      //       const preparedData = likedArtists.data.map(
+      //         artist => artist.entity_id,
+      //       );
+      //       getParent(self).setLikedArtists(preparedData);
+      //     }
+      //     if (likedAlbums?.status == 200) {
+      //       const preparedData = likedAlbums.data.map(album => album.entity_id);
+      //       getParent(self).setLikedAlbums(preparedData);
+      //     }
+      //   } catch (err) {
+      //     console.log('err ', err);
+      //   }
+      // }),
 
       //Add tracks to playlist
       addTracksToPlaylist: flow(function* addTracksToPlaylist(playlist) {

@@ -24,18 +24,18 @@ export default class LibraryApiService {
     }
   }
 
-  async getLikedArtists() {
+  async getLikedArtists(ids) {
     try {
-      const path = '/api/like/artist';
+      const path = '/api/like/artist?ids=' + ids;
       return await privateRequest(BASE_URL.get, path, { per_page: 50 });
     } catch (error) {
       console.log('TCL: try -> error', error);
     }
   }
 
-  async getLikedAlbums() {
+  async getLikedAlbums(ids) {
     try {
-      const path = '/api/like/article';
+      const path = '/api/like/article?ids=' + ids;
       return await privateRequest(BASE_URL.get, path, { per_page: 50 });
     } catch (error) {
       console.log('TCL: try -> error', error);

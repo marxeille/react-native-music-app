@@ -1,4 +1,4 @@
-import React, { Component, useState, useCallback } from 'react';
+import React, { Component, useState, useCallback, useEffect } from 'react';
 
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Images from '../../../assets/icons/icons';
@@ -15,6 +15,10 @@ const TrackDetails = ({ title, artist, onSharePress, onArtistPress }) => {
   );
 
   const [like, setLike] = useState(idExist >= 0);
+
+  useEffect(() => {
+    setLike(idExist >= 0);
+  }, [idExist]);
 
   const onReactionSuccess = useCallback((type, data) => {
     if (type == 'like') {
@@ -54,6 +58,7 @@ const TrackDetails = ({ title, artist, onSharePress, onArtistPress }) => {
     setLike(!like);
     !like ? likeTrack() : unlikeTrack();
   });
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={reaction}>

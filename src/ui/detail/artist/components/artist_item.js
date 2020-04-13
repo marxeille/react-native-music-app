@@ -8,26 +8,28 @@ import {
   likeHelper,
   unlikeHelper,
 } from '../../../../data/datasource/api_helper';
-import { rootStore } from '../../../../data/context/root_context';
 import { indexOf } from 'lodash';
 
 const ArtistItem = observer(
   wrap(props => {
-    const idExist = indexOf([...rootStore?.likedTracks], Number(props.item.id));
+    const idExist = indexOf(
+      [...props.model?.likedTracks],
+      Number(props.item.id),
+    );
     const [like, setLike] = useState(idExist >= 0);
 
     useEffect(() => {
       setLike(idExist >= 0);
-    }, [[...rootStore?.likedTracks]]);
+    }, [[...props.model?.likedTracks]]);
 
     const onReactionSuccess = useCallback((type, data) => {
       if (type == 'like') {
         if (idExist < 0) {
-          rootStore?.addLikedTrack(data);
+          props.model?.addLikedTrack(data);
         }
       } else {
         if (idExist >= 0) {
-          rootStore?.removeLikedTrack(data);
+          props.model?.removeLikedTrack(data);
         }
       }
     });

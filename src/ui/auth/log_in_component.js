@@ -56,7 +56,7 @@ export default class LogInComponent extends Component {
         }),
       );
     } else {
-      Alert.alert(response.data.msg);
+      Alert.alert('Đăng nhập không thành công, vui lòng thử lại.');
       // Alert.alert('Có lỗi xảy ra, vui lòng thử lại');
     }
   };
