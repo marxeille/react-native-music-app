@@ -68,7 +68,7 @@ export default class PlaylistComponent extends Component {
 
   render() {
     return (
-      <View style={{ marginBottom: 195 }}>
+      <View style={{ marginBottom: 200 }}>
         <View cls="pt3">
           <SearchComponent />
         </View>
@@ -87,11 +87,13 @@ export default class PlaylistComponent extends Component {
         </View>
         <BottomModal
           ref={this.modalPlaylist}
-          title={'Tạo Playlist'}
+          headerNone={true}
           justifyCenterModal
-          rightComponent={this.renderRightAction()}
           containerCls="">
-          <CreatePlayListModal />
+          <CreatePlayListModal
+            renderRightAction={this.renderRightAction}
+            _hideModal={this._hideModal}
+          />
         </BottomModal>
       </View>
     );

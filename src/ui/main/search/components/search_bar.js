@@ -17,16 +17,16 @@ export default class SearchBar extends Component {
   }
 
   render() {
-    const { keyword, onChangeKeyword, onFocus } = this.props;
+    const { keyword, onChangeKeyword, onFocus, placeHolder } = this.props;
 
     return (
       <View cls="fullWidth pt3 pb3 flx-row aic">
-        <View cls="pa3 bg-#4B3277 flx-i" style={[styles.inputGroup]}>
+        <View cls="pa3 flx-i" style={[styles.inputGroup]}>
           <Image source={Images.ic_search} />
           <TextInput
             secureTextEntry={false}
             placeholderTextColor="#fff"
-            placeholder={'Nghệ sĩ, bài hát hoặc popcast'}
+            placeholder={placeHolder ?? 'Nghệ sĩ, bài hát hoặc popcast'}
             style={[styles.inputText]}
             value={keyword}
             onFocus={() => onFocus()}
