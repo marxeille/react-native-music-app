@@ -69,9 +69,10 @@ export const AlbumModel = types
             let fullTrack = await getTrackFullDetail(track.id);
 
             fullTrack = { ...track, ...fullTrack };
+
             fullTrack = {
               ...fullTrack,
-              articleId: fullTrack.article.id,
+              articleId: fullTrack.article ? fullTrack.article.id : 0,
               artistId: fullTrack.artists[0]?.id ?? 0,
               artists: fullTrack.artists.map(a => a.name),
             };

@@ -46,7 +46,6 @@ export default class AlbumDetail extends Component {
 
   async componentDidMount() {
     let { item } = this.props.route?.params;
-
     if (typeof item == 'number') {
       await this.viewModel.getItemDetail(item);
       item = rootStore?.albums.get(item);
@@ -73,6 +72,7 @@ export default class AlbumDetail extends Component {
     let ids = orderBy([...item.tracks.values()], ['position', 'asc']).map(
       track => track.track_id,
     );
+
     this.cancelablePromise = makeCancelable(
       this.viewModel.getStats(item.getType(), item.id),
       this.viewModel.getLikedPlaylist(item.id),
@@ -178,7 +178,6 @@ export default class AlbumDetail extends Component {
 
   renderHeaderSection = wrap(() => {
     let { item } = this.props.route?.params;
-    console.log('item', item);
 
     if (typeof item == 'number') {
       item = this.state.article;

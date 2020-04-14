@@ -13,6 +13,10 @@ export const mapValue = (object, iteratee) => {
   return result;
 };
 
+export function isTextEmpty(value) {
+  return !value || value.length === 0;
+}
+
 /**
  *
  * @param {object} ref - reference of the conponent

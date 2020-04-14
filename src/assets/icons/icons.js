@@ -13,6 +13,7 @@ const Images = {
   ic_artist2: require('./ic_artist2.png'),
   ic_back_white: require('./ic_back_white.png'),
   ic_barcode: require('./ic_barcode.png'),
+  ic_camera: require('./ic_camera.png'),
   ic_checked: require('./ic_checked.png'),
   ic_checked_circle: require('./ic_checked_circle.png'),
   ic_circle: require('./ic_circle.png'),
@@ -41,6 +42,7 @@ const Images = {
   ic_pause_large: require('./ic_pause_large.png'),
   ic_play: require('./ic_play.png'),
   ic_play_large: require('./ic_play_large.png'),
+  ic_plus: require('./ic_plus.png'),
   ic_prev: require('./ic_prev.png'),
   ic_repeat: require('./ic_repeat.png'),
   ic_search: require('./ic_search.png'),
@@ -56,6 +58,7 @@ const Images = {
   logo: require('./logo.png'),
   logo_signin: require('./logo_signin.png'),
   pass: require('./pass.png'),
+  sNg: require('./sNg.png'),
   setting: require('./setting.png'),
   wave: require('./wave.png'),
   wave2: require('./wave2.png')

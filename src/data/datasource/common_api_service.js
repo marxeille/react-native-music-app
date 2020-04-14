@@ -52,7 +52,10 @@ export default class CommonApiService {
 
   async getLikedTracks(ids) {
     try {
-      const path = '/api/like/track?ids=' + ids;
+      let path = '/api/like/track';
+      if (ids) {
+        path += '?ids=' + ids;
+      }
       return await privateRequest(BASE_URL.get, path, { per_page: 50 });
     } catch (error) {
       console.log('TCL: try -> error', error);

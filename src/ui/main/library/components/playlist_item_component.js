@@ -18,38 +18,33 @@ export default class PlaylistItem extends Component {
 
     return (
       <>
-        <TouchableOpacity
-          onPress={() => {
-            item ? navigate('album_detail', { id: item.id, item: item }) : null;
-          }}>
-          <View cls="flx-row aic pb3">
-            <Image
-              cls="widthFn-90 heightFn-82"
-              source={
-                item !== undefined &&
-                item.getThumb() !== null &&
-                item.getThumb() !== ''
-                  ? {
-                      uri: item.getThumb(),
-                    }
-                  : require('../../../../assets/images/add_playlist.png')
-              }
-            />
+        <View cls="flx-row aic pb3">
+          <Image
+            cls="widthFn-90 heightFn-82"
+            source={
+              item !== undefined &&
+              item.getThumb() !== null &&
+              item.getThumb() !== ''
+                ? {
+                    uri: item.getThumb(),
+                  }
+                : require('../../../../assets/images/add_playlist.png')
+            }
+          />
 
-            <View cls="pl2">
-              <Text cls="white fw7 f6 pl2 lightFont">
-                {item !== undefined
-                  ? subLongStr(item.title(), 20)
-                  : 'Tạo playlist'}
+          <View cls="pl2">
+            <Text cls="white fw7 f6 pl2 lightFont">
+              {item !== undefined
+                ? subLongStr(item.title(), 20)
+                : 'Tạo playlist'}
+            </Text>
+            {item !== undefined ? (
+              <Text cls="primaryPurple f7 pl2 pt1 lightFont">
+                của {item.subTitle()}
               </Text>
-              {item !== undefined ? (
-                <Text cls="primaryPurple f7 pl2 pt1 lightFont">
-                  của {item.subTitle()}
-                </Text>
-              ) : null}
-            </View>
+            ) : null}
           </View>
-        </TouchableOpacity>
+        </View>
       </>
     );
   }
