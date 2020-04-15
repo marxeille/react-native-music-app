@@ -14,13 +14,16 @@ import LinearGradientText from '../../main/library/components/LinearGradientText
 import LinearGradient from 'react-native-linear-gradient';
 import { rootStore } from '../../../data/context/root_context';
 import { cloneDeep } from 'lodash';
+import CreatePlaylist from '../../components/add_playlist_modal';
 
 @observer
 @wrap
 export default class AddPlayListModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      createPlaylist: false,
+    };
   }
 
   _renderItem = item => {
@@ -42,8 +45,18 @@ export default class AddPlayListModal extends Component {
     rootStore?.homeStore?.addTracksToPlaylist(playlist);
   };
 
+  onClosePress = () => {
+    this.setState({ createPlaylist: false });
+  };
+
   render() {
-    return (
+    const { createPlaylist } = this.state;
+    return createPlaylist ? (
+      <CreatePlaylist
+        onClosePress={this.onClosePress}
+        _hideModal={this.onClosePress}
+      />
+    ) : (
       <View>
         <View cls="pv2 flx-row aic bg-#280f46">
           <View cls="aifs jcc flx-i">
@@ -67,7 +80,10 @@ export default class AddPlayListModal extends Component {
           <View cls="flx-i" />
         </View>
         <View cls="aic jcc pt3">
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({ createPlaylist: true });
+            }}>
             <LinearGradient
               cls="ba br5 b--#321A54"
               colors={['#4A3278', '#8B659D', '#DDA5CB']}

@@ -161,7 +161,11 @@ const CreatePlaylistModal = observer(
         } else {
           Alert.alert('Vui lòng thử lại');
         }
-        props._hideModal();
+        if (typeof props.onClosePress == 'function') {
+          props.onClosePress();
+        } else {
+          props._hideModal();
+        }
       } else {
         Alert.alert('Vui lòng nhập tên playlist.');
       }
@@ -187,7 +191,11 @@ const CreatePlaylistModal = observer(
             <View cls="pv2 flx-row aic">
               <View cls="aifs jcc flx-i">
                 <TouchableOpacity
-                  onPress={() => props._hideModal()}
+                  onPress={() => {
+                    typeof props.onClosePress == 'function'
+                      ? props.onClosePress()
+                      : props._hideModal();
+                  }}
                   cls="jcc pv1 ph3 aic">
                   <Image source={Images.ic_delete} />
                 </TouchableOpacity>
