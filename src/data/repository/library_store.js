@@ -33,6 +33,10 @@ export const LibraryStore = types
         self.albums.push(album.id);
       },
 
+      updatePlayList(pl) {
+        self.playlists.push(pl.id);
+      },
+
       fetchLikedTracksPlaylist() {
         const likedTracks = getParent(self).likedTracks;
         const playlistTracks = likedTracks.map((trackId, i) => {

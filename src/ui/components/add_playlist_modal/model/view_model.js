@@ -9,6 +9,7 @@ export const CreatePlaylistModel = types
     state: Result,
     name: types.string,
     description: types.maybeNull(types.string),
+    public: types.optional(types.boolean, false),
     songs: types.optional(types.map(Song), {}),
     searchResult: types.optional(types.map(Song), {}),
   })
@@ -19,6 +20,9 @@ export const CreatePlaylistModel = types
       },
       setPlaylistDescription(description) {
         self.description = description;
+      },
+      setPublicState(state) {
+        self.public = state;
       },
       putSong(song) {
         if (self.songs.get(song.id)) {

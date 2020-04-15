@@ -19,6 +19,8 @@ import ImagePicker from 'react-native-image-picker';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
 import { apiService } from '../../../data/context/api_context';
+import { getPlaylistCover } from '../../../data/datasource/api_helper';
+import { rootStore } from '../../../data/context/root_context';
 
 const options = () => ({
   title: 'Chọn ảnh',
@@ -42,7 +44,7 @@ const CreatePlaylistModal = observer(
     const [description, setDescription] = useState(
       viewModel.current.description,
     );
-    const [publicState, setPublic] = useState(false);
+    const [publicState, setPublic] = useState(viewModel.current.public);
     const [img, setImg] = useState('');
 
     const resolveResponse = response => {
@@ -115,6 +117,7 @@ const CreatePlaylistModal = observer(
               style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
               onValueChange={value => {
                 setPublic(value);
+                viewModel.current.setPublicState(value);
               }}
             />
           </View>
@@ -138,12 +141,22 @@ const CreatePlaylistModal = observer(
           return { position: i, track_id: song.id };
         });
 
-        const createPl = await apiService.commonApiService.createPlaylist({
+        const playlistData = {
           name: name,
           private: !publicState,
           tracks: tracks,
-        });
+        };
+
+        const createPl = await apiService.commonApiService.createPlaylist(
+          playlistData,
+        );
+
         if (createPl.status == 201) {
+          const cover = await getPlaylistCover(tracks);
+          const playlistFullInfo = { ...createPl.data, ...cover };
+          rootStore.updatePlayList(playlistFullInfo);
+          rootStore.libraryStore?.updatePlayList(playlistFullInfo);
+          rootStore.homeStore?.addPopular(playlistFullInfo);
           Alert.alert('Tạo thành công');
         } else {
           Alert.alert('Vui lòng thử lại');
