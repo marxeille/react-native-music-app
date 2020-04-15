@@ -167,7 +167,7 @@ export default class ArtistDetail extends Component {
         <ImageBackground
           cls={`jcsb pa3 heightFn-300`}
           // style={{ height: '60%' }}
-          source={require('../../../assets/images/khabanh2.png')}>
+          source={require('../../../assets/images/khabanh2.jpg')}>
           <View
             cls="flx-row aic jcsb"
             style={{ paddingTop: getStatusBarHeight() }}>
