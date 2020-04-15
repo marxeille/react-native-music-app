@@ -60,6 +60,7 @@ const Images = {
   login: require('./login.png'),
   logo: require('./logo.png'),
   logo_signin: require('./logo_signin.png'),
+  nN: require('./nN.png'),
   pass: require('./pass.png'),
   sNg: require('./sNg.png'),
   setting: require('./setting.png'),

@@ -185,9 +185,9 @@ export default class AlbumDetail extends Component {
     return (
       <>
         <ImageBackground
-          cls={`jcsb pa3 heightFn-300`}
+          cls={`jcsb pa3 heightFn-370`}
           // style={{ height: '60%' }}
-          source={{ uri: 'https://picsum.photos/300' }}>
+          source={Images.nN}>
           <View
             cls="flx-row aic jcsb"
             style={{ paddingTop: getStatusBarHeight() }}>
@@ -201,6 +201,13 @@ export default class AlbumDetail extends Component {
               <Image source={Images.ic_menu_white} />
             </TouchableOpacity>
           </View>
+          <Image
+            cls="squareFn-180 asc"
+            source={
+              item.getThumb() !== '' ? { uri: item.getThumb() } : Images.bAAlbum
+            }
+          />
+
           <View cls="aic jcc">
             <Text cls="white fw8 f3 pb2 avertaFont">
               {typeof item.title == 'function'
