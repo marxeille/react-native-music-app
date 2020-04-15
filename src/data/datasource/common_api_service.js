@@ -127,6 +127,15 @@ export default class CommonApiService {
     }
   }
 
+  async createPlaylist(playlist) {
+    try {
+      const path = `/api/playlists`;
+      return await privateRequest(BASE_URL.post, path, { ...playlist });
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   getSongsOfAlBum(index) {
     return new Promise(resolve => {
       resolve([

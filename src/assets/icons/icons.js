@@ -34,6 +34,7 @@ const Images = {
   ic_menu: require('./ic_menu.png'),
   ic_menu_white: require('./ic_menu_white.png'),
   ic_mess: require('./ic_mess.png'),
+  ic_minus: require('./ic_minus.png'),
   ic_more: require('./ic_more.png'),
   ic_move: require('./ic_move.png'),
   ic_next: require('./ic_next.png'),

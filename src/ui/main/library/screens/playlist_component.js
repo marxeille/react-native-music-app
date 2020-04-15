@@ -36,16 +36,6 @@ export default class PlaylistComponent extends Component {
     }
   };
 
-  renderRightAction = () => {
-    return (
-      <View cls="jcc pv1 ph3 aic">
-        <TouchableOpacity onPress={this._hideModal}>
-          <Image source={Images.ic_v} />
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
   renderPlaylistHeader = () => {
     return (
       <TouchableOpacity onPress={() => this._showModal()}>
@@ -90,10 +80,7 @@ export default class PlaylistComponent extends Component {
           headerNone={true}
           justifyCenterModal
           containerCls="">
-          <CreatePlayListModal
-            renderRightAction={this.renderRightAction}
-            _hideModal={this._hideModal}
-          />
+          <CreatePlayListModal _hideModal={this._hideModal} />
         </BottomModal>
       </View>
     );

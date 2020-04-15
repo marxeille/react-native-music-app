@@ -9,14 +9,16 @@ import {
   Switch,
   Alert,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
-import { D_WIDTH, isTextEmpty } from '../../../utils';
+import { D_WIDTH, isTextEmpty, subLongStr } from '../../../utils';
 import ImagePicker from 'react-native-image-picker';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
+import { apiService } from '../../../data/context/api_context';
 
 const options = () => ({
   title: 'Chọn ảnh',
@@ -35,8 +37,13 @@ const options = () => ({
 
 const CreatePlaylistModal = observer(
   wrap(props => {
-    const [description, setDescription] = useState('');
+    let viewModel = props.viewModel;
+    const [name, setName] = useState(viewModel.current.name);
+    const [description, setDescription] = useState(
+      viewModel.current.description,
+    );
     const [publicState, setPublic] = useState(false);
+    const [img, setImg] = useState('');
 
     const resolveResponse = response => {
       const { onCancel, onError, onCustomButton, onSuccess } = props;
@@ -49,11 +56,27 @@ const CreatePlaylistModal = observer(
       } else {
         onSuccess && onSuccess(response);
         //If success, handle the response
+        setImg(response.data);
       }
     };
 
+    const removeSong = useCallback(song => {
+      viewModel.current.removeSong(song);
+    });
+
+    const setPlName = useCallback(name => {
+      setName(name);
+      viewModel.current.setPlaylistName(name);
+    });
+
+    const setPlDescription = useCallback(des => {
+      setDescription(des);
+      viewModel.current.setPlaylistDescription(des);
+    });
+
     const _handleImagePickerOpen = e => {
-      const { onSuccess, maxImages, onlyPhoto, onlyCamera } = props;
+      let { onSuccess, maxImages, onlyPhoto, onlyCamera } = props;
+      onlyPhoto = true;
       if (onlyCamera) {
         return ImagePicker.launchCamera(options(), response => {
           if (!isTextEmpty(response.error)) {
@@ -99,6 +122,48 @@ const CreatePlaylistModal = observer(
       );
     });
 
+    const renderItem = useCallback(
+      wrap(item => {
+        return (
+          <View cls="fullWidth">
+            <SearchItem item={item.item} removeSong={removeSong} />
+          </View>
+        );
+      }),
+    );
+
+    const createPlaylist = useCallback(async () => {
+      if (!isTextEmpty(name)) {
+        const tracks = [...viewModel.current.songs.values()].map((song, i) => {
+          return { position: i, track_id: song.id };
+        });
+
+        const createPl = await apiService.commonApiService.createPlaylist({
+          name: name,
+          private: !publicState,
+          tracks: tracks,
+        });
+        if (createPl.status == 201) {
+          Alert.alert('Tạo thành công');
+        } else {
+          Alert.alert('Vui lòng thử lại');
+        }
+        props._hideModal();
+      } else {
+        Alert.alert('Vui lòng nhập tên playlist.');
+      }
+    });
+
+    const renderRightAction = useCallback(() => {
+      return (
+        <View cls="jcc pv1 ph3 aic">
+          <TouchableOpacity onPress={createPlaylist}>
+            <Image source={Images.ic_v} />
+          </TouchableOpacity>
+        </View>
+      );
+    });
+
     const renderHeader = useCallback(
       wrap(() => {
         return (
@@ -125,7 +190,7 @@ const CreatePlaylistModal = observer(
                   }}
                 />
               </View>
-              {props.renderRightAction()}
+              {renderRightAction()}
             </View>
           </LinearGradient>
         );
@@ -140,7 +205,11 @@ const CreatePlaylistModal = observer(
             <TouchableWithoutFeedback onPress={() => _handleImagePickerOpen()}>
               <Image
                 style={{ width: 101, height: 101 }}
-                source={Images.ic_camera}
+                source={
+                  !isTextEmpty(img)
+                    ? { uri: `data:image/gif;base64,${img}` }
+                    : Images.ic_camera
+                }
               />
             </TouchableWithoutFeedback>
           </View>
@@ -151,9 +220,9 @@ const CreatePlaylistModal = observer(
                 placeholderTextColor="#9166cc"
                 placeholder={'Tên Playlist'}
                 style={[styles.inputText]}
-                value={''}
+                value={name}
                 textAlign={'center'}
-                onChangeText={txt => console.log('txt', txt)}
+                onChangeText={txt => setPlName(txt)}
                 autoCorrect={false}
               />
             </View>
@@ -168,7 +237,7 @@ const CreatePlaylistModal = observer(
               style={[styles.inputText]}
               textAlignVertical={'top'}
               value={description}
-              onChangeText={txt => setDescription(txt)}
+              onChangeText={txt => setPlDescription(txt)}
               autoCorrect={false}
               multiline={true}
             />
@@ -192,19 +261,44 @@ const CreatePlaylistModal = observer(
             </View>
           </TouchableWithoutFeedback>
         </View>
+        <FlatList
+          data={[...viewModel.current.songs.values()]}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     );
   }),
 );
 
 export default CreatePlaylistModal;
+const SearchItem = observer(
+  wrap(props => (
+    <View cls="jcsb flx-row aic pb2 pt2 pa3 fullWidth">
+      <View cls="flx-row">
+        <Image cls="squareFn-50" source={{ uri: props.item.getThumb() }} />
+        <View cls="jcc pl3">
+          <Text cls="white fw7 f6 lightFont">
+            {subLongStr(props.item.getName(), 20)}
+          </Text>
+          <Text cls="primaryPurple lightFont">{props.item.getSubTitle()}</Text>
+        </View>
+      </View>
+      <View>
+        <TouchableOpacity onPress={() => props.removeSong(props.item)}>
+          <Image source={Images.ic_minus} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  )),
+);
 const styles = StyleSheet.create({
   inputGroup: {
     borderWidth: 1,
     borderColor: '#100024',
     borderRadius: 7,
     flexDirection: 'row',
-    height: 40,
+    height: 45,
     alignItems: 'center',
     marginBottom: 5,
     width: '100%',

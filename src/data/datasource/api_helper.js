@@ -92,7 +92,6 @@ export async function getPlaylistCover(tracks) {
     if (trackArtistInfo.status == 200) {
       const ids = trackArtistInfo?.data.map(r => r.artist_id);
       artists = await getArtistInfo(ids);
-      console.log('artists', artists);
     }
   }
 

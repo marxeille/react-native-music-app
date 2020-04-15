@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { Text, View, TouchableOpacity, Image, FlatList } from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
@@ -8,20 +8,26 @@ import LinearGradient from 'react-native-linear-gradient';
 import SearchBar from '../../main/search/components/search_bar';
 import { subLongStr } from '../../../utils';
 import { rootStore } from '../../../data/context/root_context';
+import Loading from '../../components/loading';
 
 const AddSongPlaylist = observer(
   wrap(props => {
-    let timeout = 0;
+    let timeout = useRef(null);
+    let viewModel = props.viewModel;
     const [keyword, setKeyword] = useState('');
     const onChangeKeyword = keyword => {
       setKeyword(keyword);
-      if (timeout) clearTimeout(timeout);
-      timeout = setTimeout(() => {
+      if (timeout.current) clearTimeout(timeout.current);
+      timeout.current = setTimeout(() => {
         //search function
-        if (keyword !== '') console.log('keyword', keyword);
+        if (keyword !== '') viewModel.current.searchByKeyword(keyword);
       }, 1300);
     };
+
     const onFocus = useCallback(() => {});
+    const addSong = useCallback(song => {
+      viewModel.current.putSong(song);
+    });
     const renderEmptyContainer = useCallback(
       wrap(() => (
         <View cls="aic jcc pt3">
@@ -33,7 +39,7 @@ const AddSongPlaylist = observer(
       wrap(item => {
         return (
           <View cls="fullWidth">
-            <SearchItem item={item.item} />
+            <SearchItem item={item.item} addSong={addSong} />
           </View>
         );
       }),
@@ -70,6 +76,7 @@ const AddSongPlaylist = observer(
         );
       }),
     );
+
     return (
       <View cls="pb5">
         {renderHeader()}
@@ -81,12 +88,20 @@ const AddSongPlaylist = observer(
             onFocus={onFocus}
           />
         </View>
-        <FlatList
-          data={[...rootStore?.homeStore?.popularSongs]}
-          renderItem={renderItem}
-          ListEmptyComponent={renderEmptyContainer}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        {viewModel.state == 'loading' ? (
+          <Loading />
+        ) : (
+          <FlatList
+            data={
+              keyword == ''
+                ? [...rootStore?.homeStore?.popularSongs]
+                : [...viewModel.current.searchResult.values()]
+            }
+            renderItem={renderItem}
+            ListEmptyComponent={renderEmptyContainer}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        )}
       </View>
     );
   }),
@@ -108,7 +123,7 @@ const SearchItem = observer(
         </View>
       </View>
       <View>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => props.addSong(props.item)}>
           <Image source={Images.ic_plus} />
         </TouchableOpacity>
       </View>
