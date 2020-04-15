@@ -299,7 +299,7 @@ const SearchItem = observer(
       </View>
       <View>
         <TouchableOpacity onPress={() => props.removeSong(props.item)}>
-          <Image source={Images.ic_minus} />
+          <Image source={Images.ic_del_song} />
         </TouchableOpacity>
       </View>
     </View>

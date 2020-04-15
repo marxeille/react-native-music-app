@@ -15,6 +15,10 @@ const AddSongPlaylist = observer(
     let timeout = useRef(null);
     let viewModel = props.viewModel;
     const [keyword, setKeyword] = useState('');
+    const trackIds = [...viewModel.current.songs.values()].map(
+      track => track.id,
+    );
+
     const onChangeKeyword = keyword => {
       setKeyword(keyword);
       if (timeout.current) clearTimeout(timeout.current);
@@ -39,7 +43,11 @@ const AddSongPlaylist = observer(
       wrap(item => {
         return (
           <View cls="fullWidth">
-            <SearchItem item={item.item} addSong={addSong} />
+            <SearchItem
+              item={item.item}
+              addSong={addSong}
+              checked={trackIds.includes(item.item.id)}
+            />
           </View>
         );
       }),
@@ -124,7 +132,9 @@ const SearchItem = observer(
       </View>
       <View>
         <TouchableOpacity onPress={() => props.addSong(props.item)}>
-          <Image source={Images.ic_plus} />
+          <Image
+            source={props.checked ? Images.ic_checked_song : Images.ic_plus}
+          />
         </TouchableOpacity>
       </View>
     </View>
