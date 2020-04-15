@@ -4,6 +4,7 @@ import { wrap } from '../../../../themes';
 import { observer } from 'mobx-react';
 import { navigate } from '../../../../navigation/navigation_service';
 import { subLongStr } from '../../../../utils';
+import Images from '../../../../assets/icons/icons';
 
 @observer
 @wrap
@@ -29,7 +30,7 @@ export default class ArtistItem extends Component {
                   ? {
                       uri: item.getThumb(),
                     }
-                  : require('../../../../assets/images/add_playlist.png')
+                  : Images.bAAlbum
               }
             />
 

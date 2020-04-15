@@ -112,7 +112,11 @@ const ActionItem = wrap(({ item }) => {
       <View cls="flx-row aic pb3">
         <Image
           cls="widthFn-90 heightFn-82"
-          source={{ uri: item?.getThumb() }}
+          source={
+            item && item.getThumb() !== ''
+              ? { uri: item?.getThumb() }
+              : Images.bAAlbum
+          }
         />
 
         <View cls="pl2">

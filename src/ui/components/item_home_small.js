@@ -5,6 +5,7 @@ import { wrap } from '../../themes';
 import { rootStore } from '../../data/context/root_context';
 import { useNavigation } from '@react-navigation/native';
 import { navigate } from '../../navigation/navigation_service';
+import Images from '../../assets/icons/icons';
 
 @observer
 @wrap
@@ -25,7 +26,11 @@ export default class ItemHomeSmall extends Component {
         <View cls="widthFn-130 pl3 mr3">
           <Image
             cls="heightFn-130 widthFn-130"
-            source={{ uri: item?.getThumb() }}
+            source={
+              item && item.getThumb() !== ''
+                ? { uri: item?.getThumb() }
+                : Images.bAAlbum
+            }
           />
           <Text cls="white pt2 fw6 lightFont">
             {item?.getName() ?? 'Default'}

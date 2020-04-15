@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { wrap } from '../../themes';
 import { rootStore } from '../../data/context/root_context';
 import { navigate } from '../../navigation/navigation_service';
+import Images from '../../assets/icons/icons';
 
 @observer
 @wrap
@@ -22,7 +23,7 @@ export default class ItemHome extends Component {
           source={
             item.getThumb() !== null && item.getThumb() !== ''
               ? { uri: item?.getThumb() }
-              : require('../../assets/images/add_playlist.png')
+              : Images.bAAlbum
           }
         />
         <Text cls="white pt2 fw6 lightFont">

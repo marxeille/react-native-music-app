@@ -129,13 +129,21 @@ export default class Player extends Component {
           cls="fullWidth jcc"
           resizeMode="cover"
           blurRadius={15}
-          source={{
-            uri: rootStore.playerStore?.currentSong?.getThumb(),
-          }}>
+          source={
+            rootStore.playerStore?.currentSong?.getThumb() !== ''
+              ? {
+                  uri: rootStore.playerStore?.currentSong?.getThumb(),
+                }
+              : Images.bAAlbum
+          }>
           <View cls="flx-row pa3">
             <Image
               cls="widthFn-150 heightFn-150"
-              source={{ uri: rootStore.playerStore?.currentSong?.getThumb() }}
+              source={
+                rootStore.playerStore?.currentSong?.getThumb() !== ''
+                  ? { uri: rootStore.playerStore?.currentSong?.getThumb() }
+                  : Images.bAAlbum
+              }
             />
             <View cls="pl3  jcc">
               <Text cls="white fw7 f6">

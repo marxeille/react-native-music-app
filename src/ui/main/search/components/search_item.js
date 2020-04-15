@@ -62,7 +62,7 @@ export default class SearchItem extends Component {
                   ? {
                       uri: item.getThumb(),
                     }
-                  : require('../../../../assets/images/add_playlist.png')
+                  : Images.bAAlbum
               }
             />
             <View>

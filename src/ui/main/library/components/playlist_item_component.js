@@ -3,7 +3,8 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../../themes';
 import { observer } from 'mobx-react';
 import { navigate } from '../../../../navigation/navigation_service';
-import { subLongStr } from '../../../../utils';
+import { subLongStr, isTextEmpty } from '../../../../utils';
+import Images from '../../../../assets/icons/icons';
 
 @observer
 @wrap
@@ -15,19 +16,18 @@ export default class PlaylistItem extends Component {
 
   render() {
     const { item } = this.props;
-
     return (
       <>
         <View cls="flx-row aic pb3">
           <Image
             cls="widthFn-90 heightFn-82"
             source={
-              item !== undefined &&
-              item.getThumb() !== null &&
-              item.getThumb() !== ''
+              item !== undefined && item.getThumb() !== ''
                 ? {
                     uri: item.getThumb(),
                   }
+                : item && isTextEmpty(item.getThumb())
+                ? Images.bAAlbum
                 : require('../../../../assets/images/add_playlist.png')
             }
           />

@@ -5,6 +5,7 @@ import { rootStore } from '../../../../data/context/root_context';
 import { observer } from 'mobx-react';
 import { subLongStr } from '../../../../utils';
 import { navigate } from '../../../../navigation/navigation_service';
+import Images from '../../../../assets/icons/icons';
 
 @observer
 @wrap
@@ -32,7 +33,7 @@ export default class AlbumItem extends Component {
                 ? {
                     uri: item.getThumb(),
                   }
-                : require('../../../../assets/images/add_playlist.png')
+                : Images.bAAlbum
             }
           />
           <View>

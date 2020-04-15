@@ -297,7 +297,14 @@ const SearchItem = observer(
   wrap(props => (
     <View cls="jcsb flx-row aic pb2 pt2 pa3 fullWidth">
       <View cls="flx-row">
-        <Image cls="squareFn-50" source={{ uri: props.item.getThumb() }} />
+        <Image
+          cls="squareFn-50"
+          source={
+            props.item.getThumb() !== ''
+              ? { uri: props.item.getThumb() }
+              : Images.bAAlbum
+          }
+        />
         <View cls="jcc pl3">
           <Text cls="white fw7 f6 lightFont">
             {subLongStr(props.item.getName(), 20)}

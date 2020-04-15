@@ -1,4 +1,5 @@
 const Images = {
+  bAAlbum: require('./bAAlbum.png'),
   bc_tabbottom: require('./bc_tabbottom.png'),
   bg: require('./bg.png'),
   bg2: require('./bg2.png'),

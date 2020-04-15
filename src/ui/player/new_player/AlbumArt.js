@@ -1,26 +1,21 @@
 import React, { Component } from 'react';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableHighlight,
-  TouchableOpacity,
-  Dimensions,
-  ImageBackground,
-} from 'react-native';
+import { View, StyleSheet, Image, Dimensions } from 'react-native';
 import { standardPadding } from '../../../utils';
+import Images from '../../../assets/icons/icons';
 
 const AlbumArt = ({ url, onPress }) => (
   <View style={styles.container}>
-    <Image style={styles.image} source={{ uri: url }} />
+    <Image
+      style={styles.image}
+      source={url !== '' ? { uri: url } : Images.bAAlbum}
+    />
   </View>
 );
 
 export default AlbumArt;
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const imageSize = width - standardPadding();
 
 const styles = StyleSheet.create({
