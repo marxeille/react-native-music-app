@@ -14,7 +14,7 @@ import LinearGradientText from '../../main/library/components/LinearGradientText
 import { rootStore } from '../../../data/context/root_context';
 import AddPlayListModal from './add_playlist_modal';
 import { navigate } from '../../../navigation/navigation_service';
-import { subLongStr } from '../../../utils';
+import { subLongStr, isTextEmpty } from '../../../utils';
 
 @observer
 @wrap
@@ -71,11 +71,13 @@ export default class SongMenu extends Component {
             cls="widthFn-283 heightFn-283 aic jcc"
             source={Images.ic_barcode}>
             <Image
-              source={{
-                uri:
-                  song?.artwork ??
-                  rootStore.playerStore?.currentSong?.getThumb(),
-              }}
+              source={
+                !isTextEmpty(song?.artwork)
+                  ? {
+                      uri: song?.artwork,
+                    }
+                  : Images.bAAlbum
+              }
               cls="circleFn-185"
             />
           </ImageBackground>

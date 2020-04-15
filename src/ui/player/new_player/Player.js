@@ -21,7 +21,12 @@ import Images from '../../../assets/icons/icons';
 import BottomModal from '../../components/modal/BottomModal';
 import * as _ from 'lodash';
 import { wrap } from '../../../themes';
-import { isMeidumDevice, isSmallDevice, subLongStr } from '../../../utils';
+import {
+  isMeidumDevice,
+  isSmallDevice,
+  subLongStr,
+  isTextEmpty,
+} from '../../../utils';
 import { ShareDialog } from 'react-native-fbsdk';
 import SongMenu from '../components/song_menu';
 import GestureRecognizer, {
@@ -130,9 +135,9 @@ export default class Player extends Component {
           resizeMode="cover"
           blurRadius={15}
           source={
-            rootStore.playerStore?.currentSong?.getThumb() !== ''
+            !isTextEmpty(rootStore.playerStore?.currentSong?.artwork)
               ? {
-                  uri: rootStore.playerStore?.currentSong?.getThumb(),
+                  uri: rootStore.playerStore?.currentSong?.artwork,
                 }
               : Images.bAAlbum
           }>
@@ -140,8 +145,8 @@ export default class Player extends Component {
             <Image
               cls="widthFn-150 heightFn-150"
               source={
-                rootStore.playerStore?.currentSong?.getThumb() !== ''
-                  ? { uri: rootStore.playerStore?.currentSong?.getThumb() }
+                !isTextEmpty(rootStore.playerStore?.currentSong?.artwork)
+                  ? { uri: rootStore.playerStore?.currentSong?.artwork }
                   : Images.bAAlbum
               }
             />

@@ -10,7 +10,11 @@ import {
 } from 'react-native';
 // import SongOfAlBumStore from '../../../data/repository/song_of_album_store';
 import { observer } from 'mobx-react';
-import { makeCancelable, getStatusBarHeight } from '../../../utils';
+import {
+  makeCancelable,
+  getStatusBarHeight,
+  isTextEmpty,
+} from '../../../utils';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
 import { rootStore } from '../../../data/context/root_context';
@@ -182,10 +186,11 @@ export default class AlbumDetail extends Component {
     if (typeof item == 'number') {
       item = this.state.article;
     }
+
     return (
       <>
         <ImageBackground
-          cls={`jcsb pa3 heightFn-370`}
+          cls={`jcsb pa3 heightFn-400`}
           // style={{ height: '60%' }}
           source={Images.nN}>
           <View
@@ -204,7 +209,9 @@ export default class AlbumDetail extends Component {
           <Image
             cls="squareFn-180 asc"
             source={
-              item.getThumb() !== '' ? { uri: item.getThumb() } : Images.bAAlbum
+              !isTextEmpty(item.getThumb())
+                ? { uri: item.getThumb() }
+                : Images.bAAlbum
             }
           />
 

@@ -7,6 +7,7 @@ import { standardPadding } from '../../../utils';
 import { indexOf } from 'lodash';
 import { rootStore } from '../../../data/context/root_context';
 import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
+import TextTicker from 'react-native-text-ticker';
 
 const TrackDetails = ({ title, artist, onSharePress, onArtistPress }) => {
   const idExist = indexOf(
@@ -68,7 +69,7 @@ const TrackDetails = ({ title, artist, onSharePress, onArtistPress }) => {
         />
       </TouchableOpacity>
       <View style={styles.detailsWrapper}>
-        <LinearGradientText
+        {/* <LinearGradientText
           text={title}
           end={{ x: 0.7, y: 0 }}
           styles={{
@@ -76,14 +77,37 @@ const TrackDetails = ({ title, artist, onSharePress, onArtistPress }) => {
             fontSize: 25,
             fontFamily: 'Averta-ExtraBold',
           }}
-        />
-        <Text style={styles.artist} onPress={onArtistPress}>
-          {artist}
-        </Text>
+        /> */}
+        {/* Test */}
+        <TextTicker
+          style={{ fontSize: 25 }}
+          duration={3000}
+          loop
+          bounce
+          repeatSpacer={150}
+          scrollSpeed={400}
+          bounceSpeed={400}
+          marqueeDelay={800}>
+          <Text style={styles.title}>{title}</Text>
+        </TextTicker>
+        {/* end test */}
+        <TextTicker
+          style={{ fontSize: 25 }}
+          duration={3000}
+          loop
+          bounce
+          repeatSpacer={150}
+          scrollSpeed={400}
+          bounceSpeed={400}
+          marqueeDelay={800}>
+          <Text style={styles.artist} onPress={onArtistPress}>
+            {artist}
+          </Text>
+        </TextTicker>
       </View>
       <TouchableOpacity onPress={() => onSharePress(false)}>
         <View>
-          <Image source={Images.ic_share} />
+          <Image style={{ marginLeft: 20 }} source={Images.ic_share} />
         </View>
       </TouchableOpacity>
     </View>
@@ -105,10 +129,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
+    color: '#daa3c9',
+    fontSize: 25,
+    fontFamily: 'Averta-ExtraBold',
   },
   artist: {
     fontSize: 15,
@@ -118,6 +141,7 @@ const styles = StyleSheet.create({
   },
   button: {
     opacity: 0.72,
+    marginRight: 20,
   },
   moreButton: {
     borderColor: 'rgb(255, 255, 255)',

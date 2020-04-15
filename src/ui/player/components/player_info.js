@@ -9,7 +9,7 @@ import {
 import { observer } from 'mobx-react';
 import { rootStore } from '../../../data/context/root_context';
 import { wrap } from '../../../themes';
-import { isSmallDevice, subLongStr } from '../../../utils';
+import { isSmallDevice, subLongStr, isTextEmpty } from '../../../utils';
 import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import BottomModal from '../../components/modal/BottomModal';
@@ -42,9 +42,13 @@ export default class PlayerInfo extends Component {
           cls="fullWidth jcc"
           resizeMode="cover"
           style={{ opacity: 0.8 }}
-          source={{
-            uri: rootStore.playerStore?.currentSong?.getThumb(),
-          }}>
+          source={
+            !isTextEmpty(rootStore.playerStore?.currentSong?.getThumb())
+              ? {
+                  uri: rootStore.playerStore?.currentSong?.getThumb(),
+                }
+              : Images.bAAlbum
+          }>
           <View cls="flx-row pa3">
             <Image
               cls="widthFn-150 heightFn-150"

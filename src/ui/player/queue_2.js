@@ -13,7 +13,7 @@ import Images from '../../assets/icons/icons';
 import QueueChild from './components/queue_child';
 import LinearGradient from 'react-native-linear-gradient';
 import { rootStore } from '../../data/context/root_context';
-import { subLongStr, D_HEIGHT } from '../../utils';
+import { subLongStr, D_HEIGHT, isTextEmpty } from '../../utils';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import LinearGradientText from '../main/library/components/LinearGradientText';
 import * as _ from 'lodash';
@@ -37,9 +37,13 @@ class Queue2 extends Component {
           source={Images.bg_player}>
           <View cls="flx-row aic">
             <Image
-              source={{
-                uri: rootStore.playerStore.currentSong?.getThumb(),
-              }}
+              source={
+                !isTextEmpty(rootStore.playerStore.currentSong?.getThumb())
+                  ? {
+                      uri: rootStore.playerStore.currentSong?.getThumb(),
+                    }
+                  : Images.bAAlbum
+              }
               cls="widthFn-52 heightFn-52 mr3"
             />
             <View>

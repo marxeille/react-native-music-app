@@ -20,8 +20,8 @@ export const Song = types
       getName() {
         return self.title;
       },
-      getSubTitle() {
-        return subLongStr(self.artist, 25);
+      getSubTitle(limit = true) {
+        return limit ? subLongStr(self.artist, 25) : self.artist;
       },
       isFavorite() {
         return self.favorite == true; // for case undefine

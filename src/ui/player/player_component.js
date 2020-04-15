@@ -18,6 +18,7 @@ import { navigate } from '../../navigation/navigation_service';
 import SeekBar from './new_player/SeekBar';
 import { indexOf } from 'lodash';
 import { likeHelper, unlikeHelper } from '../../data/datasource/api_helper';
+import { isTextEmpty } from '../../utils';
 
 @observer
 @wrap
@@ -136,9 +137,15 @@ export default class PlayerComponent extends Component {
                 />
                 <View cls="flx-row fullWidth">
                   <Image
-                    source={{
-                      uri: rootStore.playerStore.currentSong?.getThumb(),
-                    }}
+                    source={
+                      !isTextEmpty(
+                        rootStore.playerStore.currentSong?.getThumb(),
+                      )
+                        ? {
+                            uri: rootStore.playerStore.currentSong?.getThumb(),
+                          }
+                        : Images.bAAlbum
+                    }
                     cls="widthFn-54 heightFn-54"
                   />
 
