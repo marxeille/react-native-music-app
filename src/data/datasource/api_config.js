@@ -119,13 +119,20 @@ BASE_URL.addAsyncResponseTransform(async response => {
   }
 });
 
-export const login = async (name, password) => {
+export const login = async (name, password, fb_token) => {
   try {
     const path = '/api/login';
-    const params = {
-      name,
-      password,
-    };
+    const params = !fb_token
+      ? {
+          name,
+          password,
+        }
+      : {
+          name: '',
+          password: '',
+          provider_access_token: fb_token,
+          provider_name: 'facebook',
+        };
     return await BASE_URL.post(path, params);
   } catch (error) {
     console.log('TCL: try -> error', error);

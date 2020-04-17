@@ -68,17 +68,27 @@ export default class LogInComponent extends Component {
   };
 
   handleLoginWithFacebook = () => {
+    let value = this.context;
     LoginManager.logInWithPermissions(['public_profile']).then(
       function(result) {
         if (result.isCancelled) {
-          alert('Login was cancelled');
+          alert('Đã huỷ');
         } else {
-          alert(
-            'Login was successful with permissions: ' +
-              result.grantedPermissions.toString(),
-          );
-          AccessToken.getCurrentAccessToken().then(data => {
-            console.log('token', data.accessToken.toString());
+          AccessToken.getCurrentAccessToken().then(async data => {
+            const response = await login('', '', data.accessToken.toString());
+
+            if (response.status == 200) {
+              value.userStore.storeUserInfo(
+                new UserInfo({
+                  name: 'facebook',
+                  uid: 'facebook',
+                  access_token: response.data.access_token,
+                  refresh_token: response.data.refresh_token,
+                }),
+              );
+            } else {
+              Alert.alert('Đăng nhập không thành công, vui lòng thử lại.');
+            }
           });
         }
       },
