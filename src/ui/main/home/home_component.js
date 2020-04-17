@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ImageBackground, ActivityIndicator, Text, View } from 'react-native';
+import { ImageBackground, ActivityIndicator, View } from 'react-native';
 import { wrap } from '../../../themes';
 import { ScrollView } from 'react-native-gesture-handler';
 

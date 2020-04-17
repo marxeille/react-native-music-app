@@ -18,6 +18,8 @@ export const AuthState = types.enumeration('AuthState', [
 export const UserStore = types
   .model('UserStore', {
     authState: AuthState,
+    user_id: types.optional(types.number, 0),
+    name: types.maybeNull(types.string),
     playlists: types.maybeNull(types.array(types.reference(PlayList))),
     artists: types.maybeNull(types.array(types.reference(Artist))),
     albums: types.maybeNull(types.array(types.reference(Album))),
@@ -74,6 +76,13 @@ export const UserStore = types
         } else {
           self.authState = 'not_auth';
         }
+      }),
+
+      getUserInfo: flow(function* getUserInfo() {
+        const userInfoString = yield AsyncStorage.getItem(
+          AsyncStorageKey.USERINFO,
+        );
+        return userInfoString;
       }),
 
       fetchPlayListOfUser: flow(function* fetchPlayListOfUser() {

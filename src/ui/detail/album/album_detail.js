@@ -28,6 +28,7 @@ import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
 import { indexOf, orderBy } from 'lodash';
 import Loading from '../../components/loading';
 import { navigate } from '../../../navigation/navigation_service';
+import MenuConcept from '../../components/playlist_menu_concept';
 
 @observer
 @wrap
@@ -35,6 +36,7 @@ export default class AlbumDetail extends Component {
   constructor(props) {
     super(props);
     this.modalSong = React.createRef();
+    this.modalPlaylist = React.createRef();
     this.viewModel = AlbumModel.create({ state: 'loading', stats: 0 });
     this.state = {
       download: false,
@@ -99,6 +101,18 @@ export default class AlbumDetail extends Component {
   _hideModal = () => {
     if (this.modalSong && this.modalSong.current) {
       this.modalSong.current._hideModal();
+    }
+  };
+
+  _showModalPlaylist = () => {
+    if (this.modalPlaylist && this.modalPlaylist.current) {
+      this.modalPlaylist.current._showModal();
+    }
+  };
+
+  _hideModalPlaylist = () => {
+    if (this.modalPlaylist && this.modalPlaylist.current) {
+      this.modalPlaylist.current._hideModal();
     }
   };
 
@@ -202,7 +216,7 @@ export default class AlbumDetail extends Component {
                 source={Images.ic_back_white}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this._showModalPlaylist}>
               <Image source={Images.ic_menu_white} />
             </TouchableOpacity>
           </View>
@@ -335,6 +349,12 @@ export default class AlbumDetail extends Component {
   });
 
   render() {
+    let { item } = this.props.route?.params;
+    if (typeof item == 'number') {
+      item = this.state.article;
+    }
+    console.log('songs0', [...this.viewModel.songs.values()]);
+
     return this.viewModel.state == 'loading' ? (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}
@@ -362,6 +382,17 @@ export default class AlbumDetail extends Component {
               <SongMenu
                 song={this.viewModel.selectedSong}
                 _hideModal={this._hideModal}
+              />
+            </BottomModal>
+            <BottomModal
+              headerNone
+              justifyCenterModal
+              forceInsetBottom="never"
+              containerCls=""
+              ref={this.modalPlaylist}>
+              <MenuConcept
+                item={item}
+                songs={[...this.viewModel.songs.values()]}
               />
             </BottomModal>
           </ImageBackground>
