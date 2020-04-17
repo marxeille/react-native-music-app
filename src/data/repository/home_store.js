@@ -6,6 +6,7 @@ import { Album } from '../model/album';
 import { Song } from '../model/song';
 import { Alert } from 'react-native';
 import { getTrackFullDetail, getPlaylistCover } from '../datasource/api_helper';
+import { findIndex } from 'lodash';
 
 export const HomeStore = types
   .model('HomeStore', {
@@ -42,6 +43,14 @@ export const HomeStore = types
         if (!playlistExist) {
           self.popular.push(playlist.id);
         }
+      },
+
+      removePlaylist(playlistId) {
+        const plIndex = findIndex(
+          [...self.popular],
+          pl => Number(pl.id) == Number(playlistId),
+        );
+        self.popular.splice(plIndex, 1);
       },
 
       //#region Handle Fect Popular Success

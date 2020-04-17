@@ -7,6 +7,7 @@ import {
   Switch,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 // import SongOfAlBumStore from '../../../data/repository/song_of_album_store';
 import { observer } from 'mobx-react';
@@ -29,6 +30,7 @@ import { indexOf, orderBy, findIndex } from 'lodash';
 import Loading from '../../components/loading';
 import { navigate } from '../../../navigation/navigation_service';
 import MenuConcept from '../../components/playlist_menu_concept';
+import { apiService } from '../../../data/context/api_context';
 
 @observer
 @wrap
@@ -38,6 +40,55 @@ export default class AlbumDetail extends Component {
     this.modalSong = React.createRef();
     this.modalPlaylist = React.createRef();
     this.viewModel = AlbumModel.create({ state: 'loading', stats: 0 });
+    this.settingItems = [
+      {
+        title: 'Đổi ảnh bìa',
+        action: () => {},
+        icon: Images.ic_pic,
+        imgStyle: 'widthFn-20 heightFn-18',
+      },
+      {
+        title: 'Đổi tên',
+        action: () => {},
+        icon: Images.ic_pen,
+      },
+      {
+        title: 'Sửa playlist',
+        action: () => {
+          setMenu(false);
+        },
+        icon: Images.ic_list,
+      },
+      {
+        title: 'Public playlist',
+        action: () => {},
+        icon: Images.ic_lock,
+        imgStyle: 'widthFn-17 heightFn-20',
+      },
+      {
+        title: 'Xoá playlist',
+        action: async () => {
+          const { item } = this.props.route?.params;
+
+          const response = await apiService.trackApiService.deletePlaylist(
+            typeof item == 'number' ? item : item.id,
+          );
+          if (response.status == 200) {
+            Alert.alert('Xoá thành công');
+            rootStore.homeStore?.removePlaylist(
+              typeof item == 'number' ? item : item.id,
+            );
+            rootStore.libraryStore?.removePlaylist(
+              typeof item == 'number' ? item : item.id,
+            );
+            this.props.navigation.goBack();
+          } else {
+            Alert.alert('Vui lòng thử lại');
+          }
+        },
+        icon: Images.ic_circle_minus,
+      },
+    ];
     this.state = {
       download: false,
       article: {},
@@ -413,6 +464,7 @@ export default class AlbumDetail extends Component {
                 item={item}
                 songs={songs}
                 changeOrder={this.changeOrder}
+                settingItems={this.settingItems}
               />
             </BottomModal>
           </ImageBackground>

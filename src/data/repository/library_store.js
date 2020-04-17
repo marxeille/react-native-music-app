@@ -6,6 +6,7 @@ import { Album } from '../model/album';
 import { Artist } from '../model/artist';
 import { apiService } from '../context/api_context';
 import { getPlaylistCover } from '../datasource/api_helper';
+import { findIndex } from 'lodash';
 
 export const LibraryStore = types
   .model('LibraryStore', {
@@ -35,6 +36,13 @@ export const LibraryStore = types
 
       updatePlayList(pl) {
         self.playlists.push(pl.id);
+      },
+      removePlaylist(playlistId) {
+        const plIndex = findIndex(
+          [...self.playlists],
+          pl => Number(pl.id) == Number(playlistId),
+        );
+        self.playlists.splice(plIndex, 1);
       },
 
       fetchLikedTracksPlaylist() {

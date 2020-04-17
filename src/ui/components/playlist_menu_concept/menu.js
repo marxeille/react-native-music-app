@@ -14,39 +14,7 @@ import Images from '../../../assets/icons/icons';
 import ListItem from './list_item';
 
 const PlaylistMenuConcept = observer(
-  wrap(({ item, setMenu }) => {
-    const settingItems = [
-      {
-        title: 'Đổi ảnh bìa',
-        action: () => {},
-        icon: Images.ic_pic,
-        imgStyle: 'widthFn-20 heightFn-18',
-      },
-      {
-        title: 'Đổi tên',
-        action: () => {},
-        icon: Images.ic_pen,
-      },
-      {
-        title: 'Sửa playlist',
-        action: () => {
-          setMenu(false);
-        },
-        icon: Images.ic_list,
-      },
-      {
-        title: 'Public playlist',
-        action: () => {},
-        icon: Images.ic_lock,
-        imgStyle: 'widthFn-17 heightFn-20',
-      },
-      {
-        title: 'Xoá playlist',
-        action: () => {},
-        icon: Images.ic_circle_minus,
-      },
-    ];
-
+  wrap(({ item, setMenu, settingItems }) => {
     const renderItem = useCallback(item => {
       return <ListItem item={item.item} />;
     });
@@ -92,4 +60,3 @@ const PlaylistMenuConcept = observer(
 );
 
 export default PlaylistMenuConcept;
-const styles = StyleSheet.create({});

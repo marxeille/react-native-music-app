@@ -63,4 +63,13 @@ export default class TrackApiService {
       console.log('TCL: try -> error', error);
     }
   }
+
+  async deletePlaylist(playlistId) {
+    try {
+      const path = `/api/playlists/${playlistId}`;
+      return await privateRequest(BASE_URL.delete, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
 }
