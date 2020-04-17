@@ -20,6 +20,8 @@ import UserInfo from '../../data/model/user_info';
 import Images from '../../assets/icons/icons';
 import { navigate } from '../../navigation/navigation_service';
 import { observer } from 'mobx-react';
+const FBSDK = require('react-native-fbsdk');
+const { LoginManager, AccessToken } = FBSDK;
 
 @observer
 @wrap
@@ -65,7 +67,26 @@ export default class LogInComponent extends Component {
     navigate('sign-up');
   };
 
-  handleLoginWithFacebook = () => {};
+  handleLoginWithFacebook = () => {
+    LoginManager.logInWithPermissions(['public_profile']).then(
+      function(result) {
+        if (result.isCancelled) {
+          alert('Login was cancelled');
+        } else {
+          alert(
+            'Login was successful with permissions: ' +
+              result.grantedPermissions.toString(),
+          );
+          AccessToken.getCurrentAccessToken().then(data => {
+            console.log('token', data.accessToken.toString());
+          });
+        }
+      },
+      function(error) {
+        alert('Login failed with error: ' + error);
+      },
+    );
+  };
 
   handleLoginWithGoogle = () => {};
 
@@ -135,7 +156,7 @@ export default class LogInComponent extends Component {
 
               <View cls="fullWidth pa5 pt0 aic">
                 <View cls="pt3">
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={this.handleLoginWithFacebook}>
                     <View cls="aic ba b--#321A54 pt3 bg-#323277 br5 widthFn-220 heightFn-50">
                       <Text cls="white latoHeavyFont">
                         Đăng Nhập bằng Facebook

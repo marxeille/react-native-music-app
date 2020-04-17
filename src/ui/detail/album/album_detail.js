@@ -25,7 +25,7 @@ import SongMenu from '../../player/components/song_menu';
 import BottomModal from '../../components/modal/BottomModal';
 import { AlbumModel } from './model/AlbumModel';
 import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
-import { indexOf, orderBy } from 'lodash';
+import { indexOf, orderBy, findIndex } from 'lodash';
 import Loading from '../../components/loading';
 import { navigate } from '../../../navigation/navigation_service';
 import MenuConcept from '../../components/playlist_menu_concept';
@@ -172,9 +172,10 @@ export default class AlbumDetail extends Component {
   };
 
   playSong = song => {
-    const ids = [...this.viewModel.songs.values()].map(song => {
-      return song.id;
-    });
+    // const ids = [...this.viewModel.songs.values()].map(song => {
+    //   return song.id;
+    // });
+    const { ids } = this.state;
 
     if (ids.length > 0) {
       const randomId = ids[Math.floor(Math.random() * ids.length)];
@@ -348,12 +349,30 @@ export default class AlbumDetail extends Component {
     );
   });
 
+  changeOrder = orders => {
+    rootStore.playlistSongStore?.addList(orders);
+
+    const newIndex = findIndex(
+      rootStore.playlistSongStore.getSongs(),
+      song => song.id == rootStore.playerStore?.currentSong.id,
+    );
+    rootStore.playerStore?.setTrackIndex(newIndex);
+    this.setState({ ids: orders });
+  };
+
   render() {
     let { item } = this.props.route?.params;
+    const { ids } = this.state;
     if (typeof item == 'number') {
       item = this.state.article;
     }
-    console.log('songs0', [...this.viewModel.songs.values()]);
+
+    const songs = [];
+    ids.map(id => {
+      [...this.viewModel.songs.values()].map(song => {
+        if (Number(song.id) == id) songs.push(song);
+      });
+    });
 
     return this.viewModel.state == 'loading' ? (
       <LinearGradient
@@ -373,7 +392,7 @@ export default class AlbumDetail extends Component {
           <ImageBackground cls="fullView" source={Images.bg2}>
             <FlatList
               ListHeaderComponent={this._renderListHeaderContent()}
-              data={[...this.viewModel.songs.values()]}
+              data={songs}
               showsVerticalScrollIndicator={false}
               renderItem={this._renderItem}
               keyExtractor={(item, index) => index.toString()}
@@ -392,7 +411,8 @@ export default class AlbumDetail extends Component {
               ref={this.modalPlaylist}>
               <MenuConcept
                 item={item}
-                songs={[...this.viewModel.songs.values()]}
+                songs={songs}
+                changeOrder={this.changeOrder}
               />
             </BottomModal>
           </ImageBackground>

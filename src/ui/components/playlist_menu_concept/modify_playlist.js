@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TouchableOpacity, Image, Alert } from 'react-native';
 import { wrap } from '../../../themes';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
@@ -7,16 +7,41 @@ import Images from '../../../assets/icons/icons';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import ModifyItem from './modify_item';
 import { remove, cloneDeep } from 'lodash';
+import { apiService } from '../../../data/context/api_context';
 
-const Modifyplaylist = wrap(({ setMenu, item, songs }) => {
-  console.log('songs', songs);
-
+const Modifyplaylist = wrap(({ setMenu, item, songs, changeOrder }) => {
   const [songsState, setSongs] = useState(songs);
   const renderRightAction = useCallback(() => {
     return (
       <View cls="jcc pv1 ph3 aic">
         <TouchableOpacity
           onPress={() => {
+            const plTracks = songsState.map((song, i) => {
+              return {
+                track_id: song.id,
+                position: i,
+              };
+            });
+            const newPlaylist = {
+              id: item.id,
+              name: item.name,
+              private: item.private,
+              tracks: plTracks,
+            };
+            apiService.trackApiService
+              .editPlaylist(newPlaylist)
+              .then(res => {
+                if (res.status == 200) {
+                  changeOrder(songsState.map(song => Number(song.id)));
+                  Alert.alert('Sửa thành công');
+                } else {
+                  Alert.alert('Vui lòng thử lại');
+                }
+              })
+              .catch(err => {
+                console.log('err => ', err);
+                Alert.alert('Vui lòng thử lại');
+              });
             setMenu(true);
           }}>
           <Image source={Images.ic_v} />
@@ -33,7 +58,6 @@ const Modifyplaylist = wrap(({ setMenu, item, songs }) => {
       return s.id == song.id;
     });
     setSongs(cloneSongs);
-    console.log(';cloneSongs', cloneSongs);
   });
   const renderItem = useCallback(({ item, index, drag, isActive }) => {
     return (

@@ -15,8 +15,6 @@ const SongOfAlPlaylistStore = types
         self.songs = [];
       },
       addList(ids) {
-        console.log('ids', ids);
-
         self.clearListSongs();
         self.songs.push(...ids);
       },
