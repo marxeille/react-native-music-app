@@ -20,7 +20,7 @@ const ModifyItem = wrap(({ item, isActive, drag, removeSong }) => {
             {subLongStr(item?.title, 30) ?? 'Queue Child'}
           </Text>
           <Text cls={`primaryPurple pt1 latoFont`}>
-            {item?.artist ?? 'Queue Child'}
+            {subLongStr(item?.artist, 30) ?? 'Queue Child'}
           </Text>
         </View>
       </View>

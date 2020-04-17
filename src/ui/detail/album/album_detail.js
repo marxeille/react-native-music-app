@@ -55,13 +55,15 @@ export default class AlbumDetail extends Component {
       {
         title: 'Sửa playlist',
         action: () => {
-          setMenu(false);
+          this.setState({ showMenuEdit: true });
         },
         icon: Images.ic_list,
       },
       {
         title: 'Public playlist',
-        action: () => {},
+        action: () => {
+          this.editPlaylist();
+        },
         icon: Images.ic_lock,
         imgStyle: 'widthFn-17 heightFn-20',
       },
@@ -93,6 +95,7 @@ export default class AlbumDetail extends Component {
       download: false,
       article: {},
       ids: [],
+      showMenuEdit: false,
       following:
         indexOf(
           [...this.viewModel?.likedPlaylist],
@@ -124,6 +127,18 @@ export default class AlbumDetail extends Component {
 
     this.getTracks(item);
   }
+
+  editPlaylist = () => {
+    let { item } = this.props.route?.params;
+
+    if (typeof item == 'number') {
+      item = this.state.article;
+    }
+  };
+
+  changeShowMenuEdit = state => {
+    this.setState({ showMenuEdit: state });
+  };
 
   getTracks = item => {
     let ids = orderBy([...item.tracks.values()], ['position', 'asc']).map(
@@ -405,7 +420,7 @@ export default class AlbumDetail extends Component {
 
     const newIndex = findIndex(
       rootStore.playlistSongStore.getSongs(),
-      song => song.id == rootStore.playerStore?.currentSong.id,
+      song => song.id == rootStore.playerStore?.currentSong?.id,
     );
     rootStore.playerStore?.setTrackIndex(newIndex);
     this.setState({ ids: orders });
@@ -465,6 +480,8 @@ export default class AlbumDetail extends Component {
                 songs={songs}
                 changeOrder={this.changeOrder}
                 settingItems={this.settingItems}
+                showMenuEdit={this.state.showMenuEdit}
+                changeShowMenuEdit={this.changeShowMenuEdit}
               />
             </BottomModal>
           </ImageBackground>
