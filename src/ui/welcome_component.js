@@ -40,12 +40,9 @@ export default class WelcomeComponent extends Component {
             <KeyboardAvoidingView behavior="padding">
               <View cls="fullView">
                 <ImageBackground cls="fullView aic jcsb" source={Images.bg5}>
-                  <View cls="aic pt5">
-                    <Image style={styles.icon} source={Images.logo_signin} />
-                  </View>
-                
-                  <View cls="fullWidth aic">
-                    
+                  <View cls="fullWidth pt5 pl3">
+                  <Image cls="aifs" style={styles.iconBack} source={Images.ic_back_white} />
+                    <Image cls="widthFn-200 heightFn-134 asc" source={Images.logo_signin} />
                   </View>
 
                   <View cls="fullWidth">
@@ -75,20 +72,16 @@ export default class WelcomeComponent extends Component {
                         </TouchableOpacity>
                     </View>
         
-                    <View cls="fullWidth pa4 pt3 aic">
+                    <View cls="fullWidth pa4 pt3 aic" >
                         <View cls="pt3">
                             <TouchableOpacity onPress={this.handleSignUp}>
-                                <LinearGradient
-                                cls="ba br5 b--#321A54"
-                                colors={['#4A3278', '#8B659D', '#DDA5CB']}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}>
-                                <Text
-                                    cls="white f6 avertaFont"
-                                    style={styles.regisButton}>
-                                    Đăng Ký
-                                </Text>
-                                </LinearGradient>
+                                <View cls="br5 ba aic flx-row" style={{ borderColor: '#d29dc5' }}>
+                                    <Text
+                                        cls="white f6 avertaFont"
+                                        style={styles.regisButton}>
+                                        Đăng Ký
+                                    </Text>
+                                </View>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -103,7 +96,7 @@ export default class WelcomeComponent extends Component {
 }
 
 const styles = StyleSheet.create({
-    icon: { width: 160, height: 110 },
+    iconBack: {width: 16, height: 29},
     inputGroup: {
       borderWidth: 1,
       borderColor: '#4B3277',
