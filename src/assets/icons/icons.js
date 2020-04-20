@@ -5,6 +5,7 @@ const Images = {
   bg2: require('./bg2.png'),
   bg3: require('./bg3.png'),
   bg4: require('./bg4.png'),
+  bg5: require('./bg5.png'),
   bg_player: require('./bg_player.png'),
   bg_wave: require('./bg_wave.png'),
   e_cover: require('./e_cover.png'),
