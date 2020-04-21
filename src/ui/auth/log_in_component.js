@@ -122,22 +122,25 @@ export default class LogInComponent extends Component {
               {/* <View cls="pa4 pb4">
                 <Image style={styles.icon} source={Images.logo_signin} />
               </View> */}
-            
+
               <View cls="fullWidth pa4 pb4 mt5">
-                <Image cls="fullWidth asc aic heightFn-100" source={Images.wave}/>
-                <View cls="aic asc" style={{position: 'absolute'}}>
-                    <Image style={styles.icon} source={Images.logo_signin} />
+                <Image
+                  cls="fullWidth asc aic heightFn-100"
+                  source={Images.wave}
+                />
+                <View cls="aic asc" style={{ position: 'absolute' }}>
+                  <Image style={styles.icon} source={Images.logo_signin} />
                 </View>
               </View>
               {/* Text Input group */}
               <View cls="fullWidth pt4 pl3 pr3">
                 <LinearGradient
-                    colors={['#4E357A', '#9069A0', '#D39DC5']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }} 
-                    cls="mb3"
-                    style={{borderRadius: 10, height: 57, padding: 1}}>
-                  <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
+                  colors={['#4E357A', '#9069A0', '#D39DC5']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  cls="mb3"
+                  style={{ borderRadius: 10, height: 57, padding: 1 }}>
+                  <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
                     <TextInput
                       secureTextEntry={false}
                       placeholderTextColor="#fff"
@@ -147,33 +150,39 @@ export default class LogInComponent extends Component {
                       onChange={event => this.onChangeText(event, 'loginName')}
                       autoCorrect={false}
                     />
-                    <Image cls="widthFn-25 heightFn-25" source={Images.ic_pass} />
+                    <Image
+                      cls="widthFn-25 heightFn-25"
+                      source={Images.ic_pass}
+                    />
                   </View>
                 </LinearGradient>
                 <LinearGradient
-                    colors={['#4E357A', '#9069A0', '#D39DC5']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }} 
-                    cls="mt3"
-                    style={{borderRadius: 10, height: 57, padding: 1}}>
-                    <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
-                      <TextInput
-                        secureTextEntry={true}
-                        placeholderTextColor="#fff"
-                        placeholder={'Mật Khẩu'}
-                        style={[styles.inputText]}
-                        value={pass}
-                        onChange={event => this.onChangeText(event, 'pass')}
-                        autoCorrect={false}
-                      />
-                      <Image cls="widthFn-25 heightFn-25" source={Images.pass} />
-                    </View>
+                  colors={['#4E357A', '#9069A0', '#D39DC5']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  cls="mt3"
+                  style={{ borderRadius: 10, height: 57, padding: 1 }}>
+                  <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
+                    <TextInput
+                      secureTextEntry={true}
+                      placeholderTextColor="#fff"
+                      placeholder={'Mật Khẩu'}
+                      style={[styles.inputText]}
+                      value={pass}
+                      onChange={event => this.onChangeText(event, 'pass')}
+                      autoCorrect={false}
+                    />
+                    <Image cls="widthFn-25 heightFn-25" source={Images.pass} />
+                  </View>
                 </LinearGradient>
               </View>
-              <View cls="fullWidth pl4 pr4 pb4 pt3">
+              <View cls="fullWidth pl3 pr4 pb4 pt3">
                 <View cls="pl3">
-                  <Text cls="ml3" style={{color:'#9166cc', fontFamily: "lato-regular"}} cls="f8">
-                      Quên mật khẩu?
+                  <Text
+                    cls="ml3"
+                    style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
+                    cls="f8">
+                    Quên mật khẩu?
                   </Text>
                 </View>
               </View>
@@ -198,18 +207,39 @@ export default class LogInComponent extends Component {
               </View>
 
               <View cls="fullWidth flx-row mt3">
-                <Image cls="aic asc" source={Images.sNg} style={{width: Dimensions.get('window').width/2 - 25, height: 10}}/>
-                <Text cls="f8 asc aic ml2 mr2" style={{color:'#9166cc', fontFamily: "lato-regular"}}>hoặc</Text>
-                <Image cls="aic asc" source={Images.sNg} style={{width: Dimensions.get('window').width/2, height: 10}}/>
+                <Image
+                  cls="aic asc"
+                  source={Images.sNg}
+                  style={{
+                    width: Dimensions.get('window').width / 2 - 25,
+                    height: 10,
+                  }}
+                />
+                <Text
+                  cls="f8 asc aic ml2 mr2"
+                  style={{ color: '#9166cc', fontFamily: 'lato-regular' }}>
+                  hoặc
+                </Text>
+                <Image
+                  cls="aic asc"
+                  source={Images.sNg}
+                  style={{
+                    width: Dimensions.get('window').width / 2,
+                    height: 10,
+                  }}
+                />
               </View>
 
-              <View cls="fullWidth pa5 pt0 mt4 aic">
+              <View cls="fullWidth pa3 pt0 mt4 aic">
                 <View cls="pt3">
                   <TouchableOpacity onPress={this.handleLoginWithFacebook}>
-                    <View cls="aic ba b--#321A54 pt3 bg-#323277 br5 widthFn-220 heightFn-50">
-                      <Text cls="white latoHeavyFont f6">
-                        Facebook
-                      </Text>
+                    <View
+                      cls="aic ba b--#321A54 bg-#323277 br5 widthFn-220 heightFn-50"
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text cls="white f6 avertaFont">Facebook</Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -223,7 +253,7 @@ export default class LogInComponent extends Component {
 }
 
 const styles = StyleSheet.create({
-  iconBack: {width: 16, height: 29},
+  iconBack: { width: 16, height: 29 },
   icon: { width: 160, height: 110 },
   inputGroup: {
     borderWidth: 1,
