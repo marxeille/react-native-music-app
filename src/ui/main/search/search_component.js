@@ -125,12 +125,14 @@ export default class SearchComponent extends Component {
   });
 
   renderSearchItem = wrap(item => {
+    const { keyword } = this.state;
     return (
       <>
         <SearchItem
           item={item.item}
           _showModal={this._showModal}
           model={this.viewmodel}
+          local={keyword == '' || keyword == null || keyword == undefined}
         />
       </>
     );
