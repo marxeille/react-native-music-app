@@ -1,5 +1,4 @@
-import { observable } from 'mobx';
-import { types, onSnapshot, flow, getParent } from 'mobx-state-tree';
+import { types, flow, getParent } from 'mobx-state-tree';
 import { Song } from '../model/song';
 // import TrackPlayer from 'react-native-track-player';
 import * as _ from 'lodash';
@@ -112,6 +111,9 @@ export const PlayerStore = types
               );
               track = songs[self.trackIndex];
               self.startNewSong(track.id);
+            } else {
+              //if this is the last track, set state to pause
+              self.setState('pause');
             }
           }
         } else {

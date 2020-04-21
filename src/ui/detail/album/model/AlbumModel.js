@@ -62,8 +62,6 @@ export const AlbumModel = types
         }
       }),
       getAlbumTracks: flow(function* getAlbumTracks(ids) {
-        console.log('ids', ids);
-
         const tracks: Array = yield apiService.commonApiService.getTracks(ids);
 
         if (tracks?.status == 200) {
