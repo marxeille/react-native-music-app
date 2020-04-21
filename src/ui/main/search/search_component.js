@@ -61,7 +61,7 @@ export default class SearchComponent extends Component {
     this.timeout = setTimeout(() => {
       //search function
       if (keyword !== '') this.viewmodel.searchByKeyword(keyword);
-    }, 1300);
+    }, 700);
   };
 
   onFocus = () => {
@@ -143,7 +143,7 @@ export default class SearchComponent extends Component {
   ));
 
   clearRecently = () => {
-    rootStore.playerStore.clearSong();
+    // rootStore.playerStore.clearSong();
     this.viewmodel.removeAllRecently();
   };
 

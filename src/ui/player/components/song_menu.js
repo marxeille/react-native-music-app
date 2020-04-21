@@ -81,7 +81,7 @@ export default class SongMenu extends Component {
               cls="circleFn-185"
             />
           </ImageBackground>
-          <View cls="aic jcc pt3">
+          <View cls="aic jcc pb0 pa3">
             <LinearGradientText
               text={song?.getName() ?? 'Chưa xác định'}
               end={{ x: 0.7, y: 0 }}

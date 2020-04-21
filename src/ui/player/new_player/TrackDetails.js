@@ -81,11 +81,11 @@ const TrackDetails = ({ title, artist, onSharePress, onArtistPress }) => {
         {/* Test */}
         <TextTicker
           style={{ fontSize: 25 }}
-          duration={3000}
+          duration={6000}
           loop
           bounce
           repeatSpacer={150}
-          scrollSpeed={400}
+          scrollSpeed={100}
           bounceSpeed={400}
           marqueeDelay={800}>
           <Text style={styles.title}>{title}</Text>
@@ -93,7 +93,7 @@ const TrackDetails = ({ title, artist, onSharePress, onArtistPress }) => {
         {/* end test */}
         <TextTicker
           style={{ fontSize: 25 }}
-          duration={3000}
+          duration={6000}
           loop
           bounce
           repeatSpacer={150}
