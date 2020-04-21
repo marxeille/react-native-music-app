@@ -18,7 +18,7 @@ import { login } from '../../data/datasource/api_config';
 import { RootContext } from '../../data/context/root_context';
 import UserInfo from '../../data/model/user_info';
 import Images from '../../assets/icons/icons';
-import { navigate } from '../../navigation/navigation_service';
+import { navigate, pop } from '../../navigation/navigation_service';
 import { observer } from 'mobx-react';
 const FBSDK = require('react-native-fbsdk');
 const { LoginManager, AccessToken } = FBSDK;
@@ -109,12 +109,21 @@ export default class LogInComponent extends Component {
         end={{ x: 1, y: 1 }}>
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
-            <ImageBackground cls="fullView" source={Images.bg4}>
-            <View cls="fullWidth pt5 pl3">
-                  <Image cls="aifs" style={styles.iconBack} source={Images.ic_back_white} />
+            <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
+              <View cls="asfs pa3 pb0">
+                <TouchableOpacity onPress={pop}>
+                  <Image
+                    cls="widthFn-14 heightFn-24"
+                    style={styles.iconBack}
+                    source={Images.ic_back_white}
+                  />
+                </TouchableOpacity>
               </View>
-              <View cls="fullView aic jcc">
-              <View cls="fullWidth mb4">
+              {/* <View cls="pa4 pb4">
+                <Image style={styles.icon} source={Images.logo_signin} />
+              </View> */}
+            
+              <View cls="fullWidth pa4 pb4 mt5">
                 <Image cls="fullWidth asc aic heightFn-100" source={Images.wave}/>
                 <View cls="aic asc" style={{position: 'absolute'}}>
                     <Image style={styles.icon} source={Images.logo_signin} />
@@ -204,7 +213,6 @@ export default class LogInComponent extends Component {
                     </View>
                   </TouchableOpacity>
                 </View>
-              </View>
               </View>
             </ImageBackground>
           </View>

@@ -45,6 +45,13 @@ export const LibraryStore = types
         self.playlists.splice(plIndex, 1);
       },
 
+      clearLibraryData() {
+        self.albums.length = 0;
+        self.playlists.length = 0;
+        self.artists.length = 0;
+        self.state = 'loading';
+      },
+
       fetchLikedTracksPlaylist() {
         const likedTracks = getParent(self).likedTracks;
         const playlistTracks = likedTracks.map((trackId, i) => {

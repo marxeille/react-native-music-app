@@ -92,12 +92,20 @@ export default class SignUpComponent extends Component {
         end={{ x: 1, y: 1 }}>
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
-            <ImageBackground cls="fullView" source={Images.bg4}>
-              <View cls="fullWidth pt5 pl3">
-                  <Image cls="aifs" style={styles.iconBack} source={Images.ic_back_white} />
+            <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
+              <View cls="asfs pa3 pb0">
+                <TouchableOpacity onPress={pop}>
+                  <Image
+                    cls="widthFn-14 heightFn-24"
+                    style={styles.iconBack}
+                    source={Images.ic_back_white}
+                  />
+                </TouchableOpacity>
               </View>
-              <View cls="fullView aic jcc">
-              <View cls="fullWidth mb4">
+              {/* <View cls="pa4 pb3">
+                <Image style={styles.icon} source={Images.logo_signin} />
+              </View> */}
+              <View cls="fullWidth pa4 pb3 mt5">
                 <Image cls="fullWidth asc aic heightFn-100" source={Images.wave}/>
                 <View cls="aic asc" style={{position: 'absolute'}}>
                     <Image style={styles.icon} source={Images.logo_signin} />
@@ -201,7 +209,6 @@ export default class SignUpComponent extends Component {
                     </View>
                   </TouchableOpacity>
                 </View>
-              </View>
               </View>
             </ImageBackground>
           </View>

@@ -26,7 +26,7 @@ import SongMenu from '../../player/components/song_menu';
 import BottomModal from '../../components/modal/BottomModal';
 import { AlbumModel } from './model/AlbumModel';
 import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
-import { indexOf, orderBy, findIndex } from 'lodash';
+import { indexOf, orderBy, findIndex, isEmpty } from 'lodash';
 import Loading from '../../components/loading';
 import { navigate } from '../../../navigation/navigation_service';
 import MenuConcept from '../../components/playlist_menu_concept';
@@ -268,6 +268,8 @@ export default class AlbumDetail extends Component {
       item = this.state.article;
     }
 
+    console.log('item', item);
+
     return (
       <>
         <ImageBackground
@@ -290,8 +292,8 @@ export default class AlbumDetail extends Component {
           <Image
             cls="squareFn-180 asc"
             source={
-              !isTextEmpty(item.getThumb())
-                ? { uri: item.getThumb() }
+              !isEmpty(item) && !isTextEmpty(item?.getThumb())
+                ? { uri: item?.getThumb() }
                 : Images.bAAlbum
             }
           />

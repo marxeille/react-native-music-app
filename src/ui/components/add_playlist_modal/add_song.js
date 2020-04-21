@@ -86,7 +86,7 @@ const AddSongPlaylist = observer(
     );
 
     return (
-      <View cls="pb5">
+      <View cls="pb8">
         {renderHeader()}
         <View cls="pa3 pb0 aic">
           <SearchBar
