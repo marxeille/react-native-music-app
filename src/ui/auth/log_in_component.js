@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
+  Dimensions,
   Image,
   TextInput,
   StyleSheet,
@@ -109,95 +109,102 @@ export default class LogInComponent extends Component {
         end={{ x: 1, y: 1 }}>
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
-            <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
-              <View cls="pa4 pb4">
-                <Image style={styles.icon} source={Images.logo_signin} />
+            <ImageBackground cls="fullView" source={Images.bg4}>
+            <View cls="fullWidth pt5 pl3">
+                  <Image cls="aifs" style={styles.iconBack} source={Images.ic_back_white} />
+              </View>
+              <View cls="fullView aic jcc">
+              <View cls="fullWidth mb4">
+                <Image cls="fullWidth asc aic heightFn-100" source={Images.wave}/>
+                <View cls="aic asc" style={{position: 'absolute'}}>
+                    <Image style={styles.icon} source={Images.logo_signin} />
+                </View>
               </View>
               {/* Text Input group */}
-              <View cls="fullWidth pa4">
-                <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
-                  <TextInput
-                    secureTextEntry={false}
-                    placeholderTextColor="#fff"
-                    placeholder={'Tên Đăng Nhập'}
-                    style={[styles.inputText]}
-                    value={loginName}
-                    onChange={event => this.onChangeText(event, 'loginName')}
-                    autoCorrect={false}
-                  />
-                  <Image source={Images.ic_pass} />
-                </View>
-                <View cls="pt3">
+              <View cls="fullWidth pt4 pl3 pr3">
+                <LinearGradient
+                    colors={['#4E357A', '#9069A0', '#D39DC5']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }} 
+                    cls="mb3"
+                    style={{borderRadius: 10, height: 57, padding: 1}}>
                   <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
                     <TextInput
-                      secureTextEntry={true}
+                      secureTextEntry={false}
                       placeholderTextColor="#fff"
-                      placeholder={'Mật Khẩu'}
+                      placeholder={'Tên Đăng Nhập'}
                       style={[styles.inputText]}
-                      value={pass}
-                      onChange={event => this.onChangeText(event, 'pass')}
+                      value={loginName}
+                      onChange={event => this.onChangeText(event, 'loginName')}
                       autoCorrect={false}
                     />
-                    <Image cls="widthFn-20 heightFn-25" source={Images.pass} />
+                    <Image cls="widthFn-25 heightFn-25" source={Images.ic_pass} />
                   </View>
+                </LinearGradient>
+                <LinearGradient
+                    colors={['#4E357A', '#9069A0', '#D39DC5']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }} 
+                    cls="mt3"
+                    style={{borderRadius: 10, height: 57, padding: 1}}>
+                    <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
+                      <TextInput
+                        secureTextEntry={true}
+                        placeholderTextColor="#fff"
+                        placeholder={'Mật Khẩu'}
+                        style={[styles.inputText]}
+                        value={pass}
+                        onChange={event => this.onChangeText(event, 'pass')}
+                        autoCorrect={false}
+                      />
+                      <Image cls="widthFn-25 heightFn-25" source={Images.pass} />
+                    </View>
+                </LinearGradient>
+              </View>
+              <View cls="fullWidth pl4 pr4 pb4 pt3">
+                <View cls="pl3">
+                  <Text cls="ml3" style={{color:'#9166cc', fontFamily: "lato-regular"}} cls="f8">
+                      Quên mật khẩu?
+                  </Text>
                 </View>
               </View>
 
               {/* Button Group */}
-              <ImageBackground cls="fullWidth" source={Images.wave}>
-                <View cls="fullWidth pa3 pb0 aic">
-                  <TouchableOpacity onPress={this.handleLogin}>
-                    <LinearGradient
-                      cls="ba br5 b--#321A54"
-                      colors={['#4A3278', '#8B659D', '#DDA5CB']}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 0 }}>
-                      <Text
-                        cls="white f6 pl5 pr5 avertaFont"
-                        style={{
-                          paddingVertical: 12,
-                        }}>
-                        Đăng Nhập
-                      </Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                </View>
-              </ImageBackground>
+              <View cls="fullWidth pa3 pb0 aic mb4 mt3">
+                <TouchableOpacity onPress={this.handleLogin}>
+                  <LinearGradient
+                    cls="ba br5 b--#321A54"
+                    colors={['#4A3278', '#8B659D', '#DDA5CB']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}>
+                    <Text
+                      cls="white f6 pl5 pr5 avertaFont"
+                      style={{
+                        paddingVertical: 12,
+                      }}>
+                      Đăng Nhập
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
 
-              <View cls="fullWidth pa5 pt0 aic">
+              <View cls="fullWidth flx-row mt3">
+                <Image cls="aic asc" source={Images.sNg} style={{width: Dimensions.get('window').width/2 - 25, height: 10}}/>
+                <Text cls="f8 asc aic ml2 mr2" style={{color:'#9166cc', fontFamily: "lato-regular"}}>hoặc</Text>
+                <Image cls="aic asc" source={Images.sNg} style={{width: Dimensions.get('window').width/2, height: 10}}/>
+              </View>
+
+              <View cls="fullWidth pa5 pt0 mt4 aic">
                 <View cls="pt3">
                   <TouchableOpacity onPress={this.handleLoginWithFacebook}>
                     <View cls="aic ba b--#321A54 pt3 bg-#323277 br5 widthFn-220 heightFn-50">
-                      <Text cls="white latoHeavyFont">
-                        Đăng Nhập bằng Facebook
+                      <Text cls="white latoHeavyFont f6">
+                        Facebook
                       </Text>
                     </View>
                   </TouchableOpacity>
                 </View>
-                <View cls="pt3">
-                  <TouchableOpacity>
-                    <View cls="aic ba b--#321A54 pt3 bg-#A52222 br5 widthFn-220 heightFn-50">
-                      <Text cls="white latoHeavyFont">
-                        Đăng Nhập bằng Google
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-                <View cls="pt3">
-                  <TouchableOpacity onPress={this.handleSignUp}>
-                    <LinearGradient
-                      cls="ba br5 b--#321A54"
-                      colors={['#4A3278', '#8B659D', '#DDA5CB']}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 0 }}>
-                      <Text
-                        cls="white f6 avertaFont"
-                        style={styles.regisButton}>
-                        Đăng Ký
-                      </Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                </View>
+              </View>
               </View>
             </ImageBackground>
           </View>
@@ -208,6 +215,7 @@ export default class LogInComponent extends Component {
 }
 
 const styles = StyleSheet.create({
+  iconBack: {width: 16, height: 29},
   icon: { width: 160, height: 110 },
   inputGroup: {
     borderWidth: 1,
