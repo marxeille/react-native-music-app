@@ -141,6 +141,7 @@ class Settings extends Component {
               <TouchableOpacity
                 onPress={() => {
                   rootStore?.playerStore?.clearSong();
+                  rootStore?.libraryStore?.clearLibraryData();
                   this.context.userStore.removeUserInfo();
                 }}
                 cls="jcc pv1 ph3 aic">

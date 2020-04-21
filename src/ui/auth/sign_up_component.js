@@ -93,6 +93,15 @@ export default class SignUpComponent extends Component {
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
             <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
+              <View cls="asfs pa4 pb0">
+                <TouchableOpacity onPress={pop}>
+                  <Image
+                    cls="widthFn-14 heightFn-24"
+                    style={styles.iconBack}
+                    source={Images.ic_back_white}
+                  />
+                </TouchableOpacity>
+              </View>
               <View cls="pa4 pb3">
                 <Image style={styles.icon} source={Images.logo_signin} />
               </View>

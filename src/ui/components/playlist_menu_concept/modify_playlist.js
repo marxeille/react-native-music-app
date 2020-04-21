@@ -13,43 +13,43 @@ import { rootStore } from '../../../data/context/root_context';
 const Modifyplaylist = wrap(
   ({ setMenu, item, songs, changeOrder, changeShowMenuEdit }) => {
     const [songsState, setSongs] = useState(songs);
+    const handleModify = useCallback(() => {
+      const plTracks = songsState.map((song, i) => {
+        return {
+          track_id: song.id,
+          position: i,
+        };
+      });
+      const newPlaylist = {
+        id: item.id,
+        name: item.name,
+        private: item.private,
+        tracks: plTracks,
+      };
+      apiService.trackApiService
+        .editPlaylist(newPlaylist)
+        .then(res => {
+          if (res.status == 200) {
+            songs.map(song => {
+              rootStore.createSongRef(song);
+            });
+            changeOrder(songsState.map(song => Number(song.id)));
+            Alert.alert('Sửa thành công');
+          } else {
+            Alert.alert('Vui lòng thử lại');
+          }
+        })
+        .catch(err => {
+          console.log('err => ', err);
+          Alert.alert('Vui lòng thử lại');
+        });
+      setMenu(true);
+      changeShowMenuEdit(false);
+    });
     const renderRightAction = useCallback(() => {
       return (
         <View cls="jcc pv1 ph3 aic">
-          <TouchableOpacity
-            onPress={() => {
-              const plTracks = songsState.map((song, i) => {
-                return {
-                  track_id: song.id,
-                  position: i,
-                };
-              });
-              const newPlaylist = {
-                id: item.id,
-                name: item.name,
-                private: item.private,
-                tracks: plTracks,
-              };
-              apiService.trackApiService
-                .editPlaylist(newPlaylist)
-                .then(res => {
-                  if (res.status == 200) {
-                    songs.map(song => {
-                      rootStore.createSongRef(song);
-                    });
-                    changeOrder(songsState.map(song => Number(song.id)));
-                    Alert.alert('Sửa thành công');
-                  } else {
-                    Alert.alert('Vui lòng thử lại');
-                  }
-                })
-                .catch(err => {
-                  console.log('err => ', err);
-                  Alert.alert('Vui lòng thử lại');
-                });
-              setMenu(true);
-              changeShowMenuEdit(false);
-            }}>
+          <TouchableOpacity onPress={handleModify}>
             <Image source={Images.ic_v} />
           </TouchableOpacity>
         </View>

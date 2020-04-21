@@ -18,7 +18,7 @@ import { login } from '../../data/datasource/api_config';
 import { RootContext } from '../../data/context/root_context';
 import UserInfo from '../../data/model/user_info';
 import Images from '../../assets/icons/icons';
-import { navigate } from '../../navigation/navigation_service';
+import { navigate, pop } from '../../navigation/navigation_service';
 import { observer } from 'mobx-react';
 const FBSDK = require('react-native-fbsdk');
 const { LoginManager, AccessToken } = FBSDK;
@@ -110,6 +110,15 @@ export default class LogInComponent extends Component {
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
             <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
+              <View cls="asfs pa4 pb0">
+                <TouchableOpacity onPress={pop}>
+                  <Image
+                    cls="widthFn-14 heightFn-24"
+                    style={styles.iconBack}
+                    source={Images.ic_back_white}
+                  />
+                </TouchableOpacity>
+              </View>
               <View cls="pa4 pb4">
                 <Image style={styles.icon} source={Images.logo_signin} />
               </View>
