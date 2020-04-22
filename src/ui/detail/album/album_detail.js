@@ -299,17 +299,17 @@ export default class AlbumDetail extends Component {
                 ? item.title().toUpperCase()
                 : '...'}
             </Text>
-            <Text cls="white f8 latoFont">
+            <Text cls="f9 primaryPurple latoFont">
+              {`${this.viewModel.stats
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} Người theo dõi`}
+            </Text>
+            <Text cls="white f8 latoFont pt2">
               {`Idol khÁ ${
                 typeof item.subTitle == 'function'
                   ? item.getDescription()
                   : '...'
               } bẢnH is on top of the Vinahey hey hey!`}
-            </Text>
-            <Text cls="f9 primaryPurple latoFont pt2">
-              {`${this.viewModel.stats
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} Người theo dõi`}
             </Text>
           </View>
         </ImageBackground>
@@ -399,7 +399,7 @@ export default class AlbumDetail extends Component {
       <>
         {this.renderHeaderSection()}
         {this.renderMiddleSection()}
-        {this.renderDownloadSection()}
+        {/* {this.renderDownloadSection()} */}
       </>
     );
   });
