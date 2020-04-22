@@ -80,12 +80,13 @@ export const HomeStore = types
               let fullTrack = await getTrackFullDetail(data.id);
 
               fullTrack = { ...data, ...fullTrack };
+
               fullTrack = {
                 ...fullTrack,
                 articleId:
                   fullTrack.article !== null ? fullTrack.article.id : 0,
-                artistId: fullTrack.artists[0]?.id ?? 0,
-                artists: fullTrack.artists.map(a => a.name),
+                artistId: fullTrack.credit_info[0]?.artist.id ?? 0,
+                artists: fullTrack.credit_info.map(a => a.artist.name),
               };
 
               if (fullTrack?.track_url) {

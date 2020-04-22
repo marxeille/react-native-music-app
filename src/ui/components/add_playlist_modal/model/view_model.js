@@ -60,8 +60,8 @@ export const CreatePlaylistModel = types
                     ...fullTrack,
                     id: fullTrack.id.toString(),
                     articleId: fullTrack.article ? fullTrack.article.id : 0,
-                    artistId: fullTrack.artists[0]?.id ?? 0,
-                    artists: fullTrack.artists.map(a => a.name),
+                    artistId: fullTrack.credit_info[0]?.artist.id ?? 0,
+                    artists: fullTrack.credit_info.map(a => a.artist.name),
                     artwork: '',
                   };
                   self.setResultSong(fullTrack);

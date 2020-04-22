@@ -73,6 +73,7 @@ export const SearchModel = types
       removeRecentlySong(id) {
         self.recentlySong.delete(id);
       },
+
       removeModelData(type, id) {
         if (type == 'song') {
           self.recentlySong.delete(id);
@@ -84,7 +85,7 @@ export const SearchModel = types
       },
 
       removeLocalData: flow(function* removeLocalData(type, id) {
-        let key =
+        const key =
           type == 'song'
             ? AsyncStorageKey.RECENTLYSEARCH.SONGS
             : type == 'artist'
@@ -171,8 +172,8 @@ export const SearchModel = types
                     ...fullTrack,
                     id: fullTrack.id.toString(),
                     articleId: fullTrack.article ? fullTrack.article.id : 0,
-                    artistId: fullTrack.artists[0]?.id ?? 0,
-                    artists: fullTrack.artists.map(a => a.name),
+                    artistId: fullTrack.credit_info[0]?.artist.id ?? 0,
+                    artists: fullTrack.credit_info.map(a => a.artist.name),
                     artwork: '',
                   };
 
