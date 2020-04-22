@@ -64,6 +64,7 @@ export default class BottomModal extends React.Component {
       containerStyle,
       leftIcon = 'close',
       forceInsetBottom = 'always',
+      forceInsetTop = 'always',
       rightComponent,
       avoidKeyboard = false,
       justifyCenterModal = false,
@@ -89,7 +90,7 @@ export default class BottomModal extends React.Component {
         // }
         deviceWidth={Dimensions.get('window').height}>
         <SafeAreaView
-          forceInset={{ top: 'always', bottom: forceInsetBottom }}
+          forceInset={{ top: forceInsetTop, bottom: forceInsetBottom }}
           cls="jcfe">
           {/* <View cls="bg-white fullView" style={[style]}> */}
           <LinearGradient

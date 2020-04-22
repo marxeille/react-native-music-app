@@ -283,6 +283,8 @@ export default class Player extends Component {
           title={'Chia sẻ'}
           // onModalShow={this._showModal}
           justifyCenterModal
+          forceInsetTop={'never'}
+          forceInsetBottom={'never'}
           headerNone={showPlayMenu}
           // onModalHide={this._hideModal}
           containerCls="">
