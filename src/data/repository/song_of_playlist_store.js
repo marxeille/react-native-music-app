@@ -6,6 +6,7 @@ import { indexOf, map } from 'lodash';
 const SongOfAlPlaylistStore = types
   .model('SongOfAlPlaylistStore', {
     id: types.maybeNull(types.string),
+    name: types.maybeNull(types.string),
     state: types.maybeNull(Result),
     songs: types.optional(types.array(types.reference(Song)), []),
   })
@@ -28,6 +29,10 @@ const SongOfAlPlaylistStore = types
         songs.map(song => {
           self.addSong(song);
         });
+      },
+      setPlaylist(playlist) {
+        self.id = playlist.id;
+        self.name = playlist.name;
       },
     };
   })

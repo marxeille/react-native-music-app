@@ -273,9 +273,9 @@ const CreatePlaylistModal = observer(
         </TouchableWithoutFeedback>
         <View>
           <Image
-            resizeMode="stretch"
-            style={{ height: 28 }}
-            source={Images.sNg}
+            resizeMode="contain"
+            style={{ height: 50, width: D_WIDTH }}
+            source={Images.pl_wave}
           />
         </View>
         <View cls="pa3">

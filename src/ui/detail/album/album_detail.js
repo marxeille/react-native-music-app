@@ -7,6 +7,7 @@ import {
   Switch,
   FlatList,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Alert,
 } from 'react-native';
 // import SongOfAlBumStore from '../../../data/repository/song_of_album_store';
@@ -15,6 +16,7 @@ import {
   makeCancelable,
   getStatusBarHeight,
   isTextEmpty,
+  D_WIDTH,
 } from '../../../utils';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
@@ -96,6 +98,7 @@ export default class AlbumDetail extends Component {
       article: {},
       ids: [],
       showMenuEdit: false,
+      playing: false,
       following:
         indexOf(
           [...this.viewModel?.likedPlaylist],
@@ -111,6 +114,10 @@ export default class AlbumDetail extends Component {
       item = rootStore?.albums.get(item);
       this.setState({ article: item });
     }
+
+    this.setState({
+      playing: rootStore.playlistSongStore?.id == item.id,
+    });
 
     this.getTracks(item);
   }
@@ -239,6 +246,11 @@ export default class AlbumDetail extends Component {
 
   playSong = song => {
     const { ids } = this.state;
+    let { item } = this.props.route?.params;
+
+    if (typeof item == 'number') {
+      item = this.state.article;
+    }
 
     if (ids.length > 0) {
       const randomId = ids[Math.floor(Math.random() * ids.length)];
@@ -247,13 +259,20 @@ export default class AlbumDetail extends Component {
       });
 
       rootStore.playlistSongStore?.addList(ids);
+      rootStore.playlistSongStore?.setPlaylist(item);
       rootStore?.queueStore?.removeSongs([
         song ? song.id.toString() : randomId.toString(),
       ]);
-      if (randomId == rootStore?.playerStore?.currentSong?.id) {
-        navigate('player');
+      this.setState({ playing: !this.state.playing });
+      if (!this.state.playing) {
+        if (randomId == rootStore?.playerStore?.currentSong?.id) {
+          navigate('player');
+        } else {
+          navigate('player', { trackId: song ? song.id : randomId });
+        }
+        rootStore.playerStore?.setState('play');
       } else {
-        navigate('player', { trackId: song ? song.id : randomId });
+        rootStore.playerStore?.setState('pause');
       }
     }
   };
@@ -266,58 +285,69 @@ export default class AlbumDetail extends Component {
     }
 
     return (
-      <>
+      <View cls="pb5">
         <ImageBackground
-          cls={`jcsb pa3 heightFn-400`}
-          // style={{ height: '60%' }}
-          source={Images.nN}>
-          <View
-            cls="flx-row aic jcsb"
-            style={{ paddingTop: getStatusBarHeight() }}>
-            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-              <Image
-                cls="widthFn-10 heightFn-20"
-                source={Images.ic_back_white}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this._showModalPlaylist}>
-              <Image source={Images.ic_menu_white} />
-            </TouchableOpacity>
-          </View>
-          <Image
-            cls="squareFn-180 asc"
-            source={
-              !isEmpty(item) && !isTextEmpty(item?.getThumb())
-                ? { uri: item?.getThumb() }
-                : Images.bAAlbum
-            }
-          />
+          cls={`jcsb`}
+          resizeMode="cover"
+          style={{ opacity: 0.9 }}
+          blurRadius={40}
+          source={
+            !isEmpty(item) && !isTextEmpty(item?.getThumb())
+              ? { uri: item?.getThumb() }
+              : Images.bAAlbum
+          }>
+          <View cls="pa3">
+            <View
+              cls="flx-row aic jcsb"
+              style={{ paddingTop: getStatusBarHeight() }}>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                <Image
+                  cls="widthFn-10 heightFn-20"
+                  source={Images.ic_back_white}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this._showModalPlaylist}>
+                <Image source={Images.ic_menu_white} />
+              </TouchableOpacity>
+            </View>
+            <Image
+              cls="squareFn-195 asc"
+              source={
+                !isEmpty(item) && !isTextEmpty(item?.getThumb())
+                  ? { uri: item?.getThumb() }
+                  : Images.bAAlbum
+              }
+            />
 
-          <View cls="aic jcc">
-            <Text cls="white fw8 f3 pb2 avertaFont">
-              {typeof item.title == 'function'
-                ? item.title().toUpperCase()
-                : '...'}
-            </Text>
-            <Text cls="f9 primaryPurple latoFont">
-              {`${this.viewModel.stats
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} Người theo dõi`}
-            </Text>
-            <Text cls="white f8 latoFont pt2">
-              {`Idol khÁ ${
-                typeof item.subTitle == 'function'
-                  ? item.getDescription()
-                  : '...'
-              } bẢnH is on top of the Vinahey hey hey!`}
-            </Text>
+            <View cls="aic jcc pt2">
+              <Text cls="white fw8 f3 pb2 avertaFont">
+                {typeof item.title == 'function'
+                  ? item.title().toUpperCase()
+                  : '...'}
+              </Text>
+              <Text cls="f9 primaryPurple latoFont">
+                {`${this.viewModel.stats
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} Người theo dõi`}
+              </Text>
+              <Text cls="white f8 latoFont pt2 pb4">
+                {`Idol khÁ ${
+                  typeof item.subTitle == 'function'
+                    ? item.getDescription()
+                    : '...'
+                } bẢnH is on top of the Vinahey hey hey!`}
+              </Text>
+            </View>
+          </View>
+          <View style={{ position: 'absolute', bottom: -23 }}>
+            {this.renderActionSection(item)}
           </View>
         </ImageBackground>
-      </>
+      </View>
     );
   });
 
-  renderMiddleSection = wrap(() => {
+  renderActionSection = wrap(item => {
     const following =
       indexOf(
         [...this.viewModel?.likedPlaylist],
@@ -328,77 +358,126 @@ export default class AlbumDetail extends Component {
         ),
       ) >= 0;
     return (
-      <>
-        <View>
-          <View cls="pt2 aic pb2">
-            <TouchableOpacity onPress={this.reaction}>
-              <View
-                cls={`widthFn-140 aic ba br5 pa3 pt2 pb2 ${
-                  following ? ' bg-#835db8' : ''
-                }`}
-                style={{ borderColor: '#d7a0c8' }}>
-                <Text cls="white f11 fw6 lightFont">
-                  {`${following ? 'Đang' : ''} theo dõi`.toUpperCase()}
-                </Text>
-              </View>
+      <ImageBackground
+        style={{ width: D_WIDTH, height: 50 }}
+        cls="aic jcc"
+        resizeMode="contain"
+        source={Images.pl_wave}>
+        <View cls="flx-row">
+          <View cls="pa3 pr0">
+            <TouchableWithoutFeedback onPress={this.reaction}>
+              <Image
+                cls="widthFn-50 heightFn-50"
+                source={following ? Images.ic_btn_like : Images.ic_btn_like_on}
+              />
+            </TouchableWithoutFeedback>
+          </View>
+          <View cls="pa3 pl0 pr0">
+            <TouchableOpacity onPress={() => this.playSong()}>
+              <Image
+                resizeMode="contain"
+                cls="widthFn-150 heightFn-50"
+                source={
+                  this.state.playing ? Images.ic_btn_pause : Images.ic_btn_play
+                }
+              />
             </TouchableOpacity>
           </View>
-          <View>
-            <ImageBackground
-              cls="heightFn-70 aic pt3"
-              style={{ width: '100%' }}
-              source={Images.wave}>
-              <TouchableOpacity onPress={() => this.playSong()}>
-                <LinearGradient
-                  cls="ba br5 b--#321A54"
-                  colors={['#4A3278', '#8B659D', '#DDA5CB']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}>
-                  <Text cls="white f6 fw7 pa2 pl4 pr4 avertaFont">
-                    Phát trộn bài
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </ImageBackground>
+          <View cls="pa3 pl0">
+            <TouchableWithoutFeedback onPress={() => {}}>
+              <Image
+                cls="widthFn-50 heightFn-50"
+                source={Images.ic_btn_download}
+              />
+            </TouchableWithoutFeedback>
           </View>
         </View>
-      </>
+      </ImageBackground>
     );
   });
 
-  renderDownloadSection = wrap(() => {
-    return (
-      <>
-        <View cls="pa3 pb2 pt0 fullWidth">
-          <View cls="flx-row jcsb aic">
-            <LinearGradientText
-              text={'Tải xuống'}
-              end={{ x: 0.6, y: 0 }}
-              styles={{
-                justifyContent: 'center',
-                fontSize: 18,
-                fontFamily: 'Averta-ExtraBold',
-              }}
-            />
-            <Switch
-              value={this.state.download}
-              trackColor={{ true: '#d59fc6', false: 'grey' }}
-              style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
-              onValueChange={value => {
-                this.setState({ download: value });
-              }}
-            />
-          </View>
-        </View>
-      </>
-    );
-  });
+  // renderMiddleSection = wrap(() => {
+  //   const following =
+  //     indexOf(
+  //       [...this.viewModel?.likedPlaylist],
+  //       Number(
+  //         typeof this.props.route.params.item == 'number'
+  //           ? this.props.route.params.item
+  //           : this.props.route.params.item.id,
+  //       ),
+  //     ) >= 0;
+  //   return (
+  //     <>
+  //       <View>
+  //         <View cls="pt2 aic pb2">
+  //           <TouchableOpacity onPress={this.reaction}>
+  //             <View
+  //               cls={`widthFn-140 aic ba br5 pa3 pt2 pb2 ${
+  //                 following ? ' bg-#835db8' : ''
+  //               }`}
+  //               style={{ borderColor: '#d7a0c8' }}>
+  //               <Text cls="white f11 fw6 lightFont">
+  //                 {`${following ? 'Đang' : ''} theo dõi`.toUpperCase()}
+  //               </Text>
+  //             </View>
+  //           </TouchableOpacity>
+  //         </View>
+  //         <View>
+  //           <ImageBackground
+  //             cls="heightFn-70 aic pt3"
+  //             style={{ width: '100%' }}
+  //             source={Images.wave}>
+  //             <TouchableOpacity onPress={() => this.playSong()}>
+  //               <LinearGradient
+  //                 cls="ba br5 b--#321A54"
+  //                 colors={['#4A3278', '#8B659D', '#DDA5CB']}
+  //                 start={{ x: 0, y: 0 }}
+  //                 end={{ x: 1, y: 0 }}>
+  //                 <Text cls="white f6 fw7 pa2 pl4 pr4 avertaFont">
+  //                   Phát trộn bài
+  //                 </Text>
+  //               </LinearGradient>
+  //             </TouchableOpacity>
+  //           </ImageBackground>
+  //         </View>
+  //       </View>
+  //     </>
+  //   );
+  // });
+
+  // renderDownloadSection = wrap(() => {
+  //   return (
+  //     <>
+  //       <View cls="pa3 pb2 pt0 fullWidth">
+  //         <View cls="flx-row jcsb aic">
+  //           <LinearGradientText
+  //             text={'Tải xuống'}
+  //             end={{ x: 0.6, y: 0 }}
+  //             styles={{
+  //               justifyContent: 'center',
+  //               fontSize: 18,
+  //               fontFamily: 'Averta-ExtraBold',
+  //             }}
+  //           />
+  //           <Switch
+  //             value={this.state.download}
+  //             trackColor={{ true: '#d59fc6', false: 'grey' }}
+  //             style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
+  //             onValueChange={value => {
+  //               this.setState({ download: value });
+  //             }}
+  //           />
+  //         </View>
+  //       </View>
+  //     </>
+  //   );
+  // });
 
   _renderListHeaderContent = wrap(() => {
     return (
       <>
         {this.renderHeaderSection()}
-        {this.renderMiddleSection()}
+        {/* {this.renderMiddleSection()} */}
         {/* {this.renderDownloadSection()} */}
       </>
     );

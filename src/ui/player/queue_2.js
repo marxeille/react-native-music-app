@@ -170,7 +170,7 @@ class Queue2 extends Component {
       data.push({
         flag: 'header',
         title: 'Playlist : ',
-        subTitle: 'Best Remix',
+        subTitle: rootStore.playlistSongStore.name,
         order: 2,
       });
       [...rootStore.playlistSongStore.songs].map(song => data.push(song));
