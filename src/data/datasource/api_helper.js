@@ -26,7 +26,7 @@ export async function unlikeHelper(type, id, onSuccess, onError) {
 //End Reaction refactor
 
 export async function getTrackFullDetail(trackId) {
-  const [trackUrl, trackArtist] = await Promise.all([
+  const [trackUrl] = await Promise.all([
     new Promise(async resolve => {
       try {
         const result = await apiService.trackApiService.getTrackUrl(trackId);
@@ -35,35 +35,12 @@ export async function getTrackFullDetail(trackId) {
         reject();
       }
     }),
-    new Promise(async resolve => {
-      try {
-        const result = await apiService.trackApiService.getTrackArtistInfo(
-          trackId,
-        );
-        let artists;
-        if (result?.status == 200) {
-        }
-        const ids = result?.data.map(r => r.artist_id);
-
-        artists = await getArtistInfo(ids);
-
-        resolve(artists || null);
-      } catch (error) {
-        resolve(null);
-      }
-    }),
   ]);
 
-  return { ...trackUrl, artists: [...trackArtist] };
+  return { ...trackUrl };
 }
 
 export async function getArtistInfo(ids) {
-  // const artists = await Promise.all(
-  //   ids.map(async id => {
-  //     const artistInfo = await apiService.trackApiService.getArtistInfo(id);
-  //     return artistInfo?.data;
-  //   }),
-  // );
   let artists = [];
   const response = await apiService.libraryApiService.getArtists(ids);
   if (response?.status == 200) {
@@ -80,6 +57,7 @@ export async function getPlaylistCover(tracks) {
     const trackCover = await apiService.trackApiService.getTrackInfo(
       tracks[0].track_id,
     );
+
     const trackArtistInfo = await apiService.trackApiService.getTrackArtistInfo(
       tracks[0].track_id,
     );

@@ -14,7 +14,11 @@ export default class SearchItem extends Component {
   }
 
   handleOnActionPress = () => {
-    const { item, model, _showModal } = this.props;
+    const { item, model, _showModal, local } = this.props;
+    if (local) {
+      model.removeLocalData(item.getType(), item?.id);
+      return;
+    }
     if (item.getType() == 'song') {
       if (typeof _showModal == 'function') _showModal(item);
       return;
@@ -40,15 +44,16 @@ export default class SearchItem extends Component {
   };
 
   render() {
-    const { item } = this.props;
+    const { item, local } = this.props;
 
-    const icon =
+    let icon =
       item.getType() == 'song'
         ? Images.ic_menu
         : item.getType() == 'artist'
         ? Images.ic_more
         : Images.ic_delete;
 
+    if (local) icon = Images.ic_delete;
     return (
       <View cls="flx-row aic pt4 jcsb">
         <TouchableOpacity onPress={this.handleOnItemPress}>

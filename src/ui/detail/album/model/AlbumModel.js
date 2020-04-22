@@ -73,8 +73,8 @@ export const AlbumModel = types
             fullTrack = {
               ...fullTrack,
               articleId: fullTrack.article ? fullTrack.article.id : 0,
-              artistId: fullTrack.artists[0]?.id ?? 0,
-              artists: fullTrack.artists.map(a => a.name),
+              artistId: fullTrack.credit_info[0]?.artist.id ?? 0,
+              artists: fullTrack.credit_info.map(a => a.artist.name),
             };
 
             self.setSongs(fullTrack);

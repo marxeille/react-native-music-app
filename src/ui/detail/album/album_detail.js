@@ -301,7 +301,9 @@ export default class AlbumDetail extends Component {
             </Text>
             <Text cls="white f8 latoFont">
               {`Idol khÁ ${
-                typeof item.subTitle == 'function' ? item.subTitle() : '...'
+                typeof item.subTitle == 'function'
+                  ? item.getDescription()
+                  : '...'
               } bẢnH is on top of the Vinahey hey hey!`}
             </Text>
             <Text cls="f9 primaryPurple latoFont pt2">

@@ -11,6 +11,7 @@ import { Artist, createArtistFromApiJson } from '../../../data/model/artist';
 import { Album } from '../../../data/model/album';
 import { getTrackFullDetail } from '../../../data/datasource/api_helper';
 import { AsyncStorageKey } from '../../../constant/constant';
+import { remove } from 'lodash';
 
 export const SearchModel = types
   .model('SearchModel', {
@@ -72,6 +73,30 @@ export const SearchModel = types
       removeRecentlySong(id) {
         self.recentlySong.delete(id);
       },
+
+      removeModelData(type, id) {
+        if (type == 'song') {
+          self.recentlySong.delete(id);
+        } else if (type == 'artist') {
+          self.recentlyArtist.delete(id);
+        } else {
+          self.recentlyAlbum.delete(id);
+        }
+      },
+
+      removeLocalData: flow(function* removeLocalData(type, id) {
+        const key =
+          type == 'song'
+            ? AsyncStorageKey.RECENTLYSEARCH.SONGS
+            : type == 'artist'
+            ? AsyncStorageKey.RECENTLYSEARCH.ARTISTS
+            : AsyncStorageKey.RECENTLYSEARCH.ALBUMS;
+        const localData = yield AsyncStorage.getItem(key);
+        const localDataJson = JSON.parse(localData);
+        remove(localDataJson, data => data.id == id);
+        AsyncStorage.setItem(key, JSON.stringify(localDataJson));
+        self.removeModelData(type, id);
+      }),
 
       removeAllRecently: flow(function* removeAllRecently() {
         yield AsyncStorage.removeItem(AsyncStorageKey.RECENTLYSEARCH.SONGS);
@@ -147,8 +172,8 @@ export const SearchModel = types
                     ...fullTrack,
                     id: fullTrack.id.toString(),
                     articleId: fullTrack.article ? fullTrack.article.id : 0,
-                    artistId: fullTrack.artists[0]?.id ?? 0,
-                    artists: fullTrack.artists.map(a => a.name),
+                    artistId: fullTrack.credit_info[0]?.artist.id ?? 0,
+                    artists: fullTrack.credit_info.map(a => a.artist.name),
                     artwork: '',
                   };
 
