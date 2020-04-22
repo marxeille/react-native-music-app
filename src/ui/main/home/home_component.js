@@ -19,6 +19,7 @@ export default class HomeComponent extends Component {
 
   async componentDidMount() {
     rootStore.homeStore.fetchData();
+    rootStore.userStore.fetchUserData();
   }
 
   render() {

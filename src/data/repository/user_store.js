@@ -20,6 +20,7 @@ export const UserStore = types
     authState: AuthState,
     user_id: types.optional(types.number, 0),
     name: types.maybeNull(types.string),
+    avatar: types.maybeNull(types.string),
     playlists: types.maybeNull(types.array(types.reference(PlayList))),
     artists: types.maybeNull(types.array(types.reference(Artist))),
     albums: types.maybeNull(types.array(types.reference(Album))),
@@ -83,6 +84,19 @@ export const UserStore = types
           AsyncStorageKey.USERINFO,
         );
         return userInfoString;
+      }),
+
+      setUserInfo(user) {
+        self.name = user.fullname;
+        self.avatar = user.avatar_path;
+        self.id = user.id;
+      },
+
+      fetchUserData: flow(function* fetchUserData() {
+        const userData = yield apiService.commonApiService.getUserInfo();
+        if (userData.status == 200) {
+          self.setUserInfo(userData.data);
+        }
       }),
 
       fetchPlayListOfUser: flow(function* fetchPlayListOfUser() {

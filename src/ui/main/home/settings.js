@@ -62,7 +62,7 @@ class Settings extends Component {
   }
 
   async componentDidMount() {
-    const userInfo = await rootStore?.userStore?.getUserInfo();
+    await rootStore?.userStore?.getUserInfo();
   }
 
   renderHeader = wrap(() => {

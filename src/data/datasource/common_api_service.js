@@ -5,6 +5,15 @@ import {
 } from './api_config';
 //Hanle data từ Api Services
 export default class CommonApiService {
+  async getUserInfo() {
+    try {
+      const path = '/api/my';
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   async getPlaylists() {
     try {
       const path = '/api/playlists';
