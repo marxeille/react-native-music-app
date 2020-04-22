@@ -38,7 +38,9 @@ const Images = {
   ic_favorited: require('./ic_favorited.png'),
   ic_fb: require('./ic_fb.png'),
   ic_filter: require('./ic_filter.png'),
+  ic_home: require('./ic_home.png'),
   ic_info: require('./ic_info.png'),
+  ic_insta: require('./ic_insta.png'),
   ic_library: require('./ic_library.png'),
   ic_like: require('./ic_like.png'),
   ic_like_checked: require('./ic_like_checked.png'),
@@ -47,6 +49,7 @@ const Images = {
   ic_link: require('./ic_link.png'),
   ic_list: require('./ic_list.png'),
   ic_lock: require('./ic_lock.png'),
+  ic_logo: require('./ic_logo.png'),
   ic_menu: require('./ic_menu.png'),
   ic_menu_white: require('./ic_menu_white.png'),
   ic_mess: require('./ic_mess.png'),
@@ -77,6 +80,7 @@ const Images = {
   ic_uncheck: require('./ic_uncheck.png'),
   ic_uncheck_circle: require('./ic_uncheck_circle.png'),
   ic_v: require('./ic_v.png'),
+  ic_zalo: require('./ic_zalo.png'),
   login: require('./login.png'),
   logo: require('./logo.png'),
   logo_signin: require('./logo_signin.png'),
@@ -86,6 +90,6 @@ const Images = {
   sNg: require('./sNg.png'),
   setting: require('./setting.png'),
   wave: require('./wave.png'),
-  wave2: require('./wave2.png')
-}
-export default Images
+  wave2: require('./wave2.png'),
+};
+export default Images;

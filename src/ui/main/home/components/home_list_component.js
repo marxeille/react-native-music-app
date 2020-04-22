@@ -41,11 +41,11 @@ export default class HomeListComponent extends Component {
   });
 
   render() {
-    const { type, title, cate, rightIcon, data } = this.props;
+    const { type, title, cate, data } = this.props;
 
     return (
-      <View cls={`fullWidth pb3 bb b--#4B3277 ${rightIcon ? 'pt4' : ''}`}>
-        <View cls="flx-row pa3 pb3 aic jcsb">
+      <View cls="fullWidth">
+        <View cls="flx-row pa3 pb3 pt0 pr0 aic">
           <MaskedView
             maskElement={
               <Text style={{ fontWeight: '700', fontSize: 22 }}>{title}</Text>
@@ -66,11 +66,17 @@ export default class HomeListComponent extends Component {
               </Text>
             </LinearGradient>
           </MaskedView>
-          {rightIcon ? (
+          {/* {rightIcon ? (
             <TouchableOpacity onPress={() => navigate('setting')}>
               <Image cls="widthFn-24 heightFn-24" source={Images.ic_setting} />
             </TouchableOpacity>
-          ) : null}
+          ) : null} */}
+          <Image
+            source={Images.sNg}
+            cls="fullWidth heightFn-30"
+            resizeMode="contain"
+            style={{ flex: 1 }}
+          />
         </View>
         <View cls="fullWidth">
           <FlatList

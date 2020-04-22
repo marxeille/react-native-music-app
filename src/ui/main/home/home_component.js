@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { ImageBackground, ActivityIndicator, View } from 'react-native';
+import {
+  ImageBackground,
+  ActivityIndicator,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { wrap } from '../../../themes';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { navigate } from '../../../navigation/navigation_service';
 import HomeListComponent from './components/home_list_component';
 import { rootStore } from '../../../data/context/root_context';
 import { observer } from 'mobx-react';
@@ -40,7 +47,29 @@ export default class HomeComponent extends Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
-          <ImageBackground cls="fullView aic" source={Images.bg3}>
+          <ImageBackground cls="fullView" source={Images.bg3}>
+            <TouchableOpacity cls="pt4 pb2" onPress={() => navigate('setting')}>
+              <View cls="pa3 pb1 flx-row-reverse aic">
+                <LinearGradient
+                  colors={['#4E357A', '#9069A0', '#D39DC5']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ padding: 1 }}
+                  cls="flx-row-reverse aic br5">
+                  <View cls="flx-row-reverse aic pl2 pr2 pt1 pb1 br5 bg-#2C184A">
+                    <Image
+                      cls="widthFn-24 heightFn-24"
+                      source={Images.ic_setting}
+                    />
+                    <Text
+                      cls="f8 mr1"
+                      style={{ color: '#9166cc', fontFamily: 'lato-heavy' }}>
+                      text fix cứng
+                    </Text>
+                  </View>
+                </LinearGradient>
+              </View>
+            </TouchableOpacity>
             <ScrollView
               style={{ width: '100%' }}
               showsVerticalScrollIndicator={false}>
@@ -48,7 +77,6 @@ export default class HomeComponent extends Component {
                 cate="1"
                 type={'small'}
                 data={[...rootStore?.homeStore?.popularSongs]}
-                rightIcon
                 title="Mới phát gần đây"
               />
               <HomeListComponent
