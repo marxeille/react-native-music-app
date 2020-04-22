@@ -10,6 +10,8 @@ export const PlayList = types
     owner: types.string,
     owner_id: types.number,
     private: types.boolean,
+    short_biography: types.string,
+    bio: types.string,
     tracks: types.maybe(
       types.array(
         types.frozen({ track_id: types.string, position: types.integer }),
@@ -51,6 +53,8 @@ export const createPlaylistFromApiJson = data => {
     owner_id: data.owner_id ?? 0,
     private: data.private ?? false,
     tracks: data.tracks ?? [],
+    short_biography: data.short_biography ?? '',
+    bio: data.biography ?? '',
     type: 'playlist',
   });
 };

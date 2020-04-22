@@ -61,7 +61,7 @@ export default class SearchComponent extends Component {
     this.timeout = setTimeout(() => {
       //search function
       if (keyword !== '') this.viewmodel.searchByKeyword(keyword);
-    }, 1300);
+    }, 700);
   };
 
   onFocus = () => {
@@ -125,12 +125,14 @@ export default class SearchComponent extends Component {
   });
 
   renderSearchItem = wrap(item => {
+    const { keyword } = this.state;
     return (
       <>
         <SearchItem
           item={item.item}
           _showModal={this._showModal}
           model={this.viewmodel}
+          local={keyword == '' || keyword == null || keyword == undefined}
         />
       </>
     );
@@ -143,7 +145,7 @@ export default class SearchComponent extends Component {
   ));
 
   clearRecently = () => {
-    rootStore.playerStore.clearSong();
+    // rootStore.playerStore.clearSong();
     this.viewmodel.removeAllRecently();
   };
 

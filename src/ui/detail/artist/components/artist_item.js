@@ -63,23 +63,21 @@ const ArtistItem = observer(
 
     return (
       <View cls="jcsb flx-row aic pr3" style={{ backgroundColor: '#321a54' }}>
-        <TouchableOpacity>
-          <View cls="flx-row pa3 pb2 pt2">
-            <View cls="squareFn-50 aic jcc">
-              <Text cls="white lightFont f5">
-                {props.index < 9 ? '0' : ''}
-                {props.index + 1}
-              </Text>
-            </View>
-
-            <View cls="jcc pl3">
-              <Text cls="white fw7 f5 lightFont">
-                {subLongStr(props.item.getName(), 13)}
-              </Text>
-              <Text cls="primaryPurple lightFont">123.456.789</Text>
-            </View>
+        <View cls="flx-row pa3 pb2 pt2">
+          <View cls="squareFn-50 aic jcc">
+            <Text cls="white lightFont f5">
+              {props.index < 9 ? '0' : ''}
+              {props.index + 1}
+            </Text>
           </View>
-        </TouchableOpacity>
+
+          <View cls="jcc pl3">
+            <Text cls="white fw7 f5 lightFont">
+              {subLongStr(props.item.getName(), 13)}
+            </Text>
+            <Text cls="primaryPurple lightFont">123.456.789</Text>
+          </View>
+        </View>
         <View cls="flx-row">
           <TouchableOpacity cls="pr3" onPress={reaction}>
             <Image

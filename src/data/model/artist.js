@@ -7,6 +7,7 @@ export const Artist = types
     name: types.string,
     thumb: types.string,
     short_biography: types.string,
+    bio: types.string,
     type: types.string,
   })
   .views(self => {
@@ -47,6 +48,7 @@ export const createArtistFromApiJson = data => {
     name: data.name ?? '',
     thumb: data.avatar_thumb_path ? BASE_API_URL + data.avatar_thumb_path : '',
     short_biography: data.short_biography ?? '',
+    bio: data.biography ?? '',
     type: 'artist',
   });
 };

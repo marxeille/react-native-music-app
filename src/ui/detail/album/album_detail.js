@@ -238,9 +238,6 @@ export default class AlbumDetail extends Component {
   };
 
   playSong = song => {
-    // const ids = [...this.viewModel.songs.values()].map(song => {
-    //   return song.id;
-    // });
     const { ids } = this.state;
 
     if (ids.length > 0) {
@@ -267,8 +264,6 @@ export default class AlbumDetail extends Component {
     if (typeof item == 'number') {
       item = this.state.article;
     }
-
-    console.log('item', item);
 
     return (
       <>
@@ -430,12 +425,18 @@ export default class AlbumDetail extends Component {
 
   render() {
     let { item } = this.props.route?.params;
-    const { ids } = this.state;
+    let { ids } = this.state;
     if (typeof item == 'number') {
       item = this.state.article;
     }
 
+    if (item.id == 0) {
+      this.viewModel.getAlbumTracks([...rootStore?.likedTracks]);
+      ids = [...rootStore?.likedTracks];
+    }
+
     const songs = [];
+
     ids.map(id => {
       [...this.viewModel.songs.values()].map(song => {
         if (Number(song.id) == id) songs.push(song);

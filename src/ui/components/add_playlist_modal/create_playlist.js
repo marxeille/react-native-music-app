@@ -10,6 +10,7 @@ import {
   Alert,
   TouchableOpacity,
   FlatList,
+  Keyboard,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
@@ -221,52 +222,55 @@ const CreatePlaylistModal = observer(
     return (
       <View cls="fullView">
         {renderHeader()}
-        <View cls="pa3 pt4 aic">
-          <View cls="pb3">
-            <TouchableWithoutFeedback onPress={() => _handleImagePickerOpen()}>
-              <Image
-                style={{ width: 101, height: 101 }}
-                source={
-                  !isTextEmpty(img)
-                    ? { uri: `data:image/gif;base64,${img}` }
-                    : Images.ic_camera
-                }
-              />
-            </TouchableWithoutFeedback>
-          </View>
-          <View cls="pb3">
-            <View cls="pa3 bg-#100024" style={[styles.inputGroup]}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View cls="pa3 pt4 aic">
+            <View cls="pb3">
+              <TouchableWithoutFeedback
+                onPress={() => _handleImagePickerOpen()}>
+                <Image
+                  style={{ width: 101, height: 101 }}
+                  source={
+                    !isTextEmpty(img)
+                      ? { uri: `data:image/gif;base64,${img}` }
+                      : Images.ic_camera
+                  }
+                />
+              </TouchableWithoutFeedback>
+            </View>
+            <View cls="pb3">
+              <View cls="pa3 bg-#100024" style={[styles.inputGroup]}>
+                <TextInput
+                  secureTextEntry={false}
+                  placeholderTextColor="#9166cc"
+                  placeholder={'Tên Playlist'}
+                  style={[styles.inputText]}
+                  value={name}
+                  textAlign={'center'}
+                  onChangeText={txt => setPlName(txt)}
+                  autoCorrect={false}
+                />
+              </View>
+            </View>
+            <View
+              cls="pa3 bg-#100024"
+              style={[styles.inputGroup, styles.inputGroup2]}>
               <TextInput
                 secureTextEntry={false}
                 placeholderTextColor="#9166cc"
-                placeholder={'Tên Playlist'}
+                placeholder={'Viết mô tả'}
                 style={[styles.inputText]}
-                value={name}
-                textAlign={'center'}
-                onChangeText={txt => setPlName(txt)}
+                textAlignVertical={'top'}
+                value={description}
+                onChangeText={txt => setPlDescription(txt)}
                 autoCorrect={false}
+                multiline={true}
               />
             </View>
+            <View cls="pt3" style={styles.fullWidth}>
+              {renderPublicSection()}
+            </View>
           </View>
-          <View
-            cls="pa3 bg-#100024"
-            style={[styles.inputGroup, styles.inputGroup2]}>
-            <TextInput
-              secureTextEntry={false}
-              placeholderTextColor="#9166cc"
-              placeholder={'Viết mô tả'}
-              style={[styles.inputText]}
-              textAlignVertical={'top'}
-              value={description}
-              onChangeText={txt => setPlDescription(txt)}
-              autoCorrect={false}
-              multiline={true}
-            />
-          </View>
-          <View cls="pt3" style={styles.fullWidth}>
-            {renderPublicSection()}
-          </View>
-        </View>
+        </TouchableWithoutFeedback>
         <View>
           <Image
             resizeMode="stretch"
@@ -326,7 +330,7 @@ const styles = StyleSheet.create({
     borderColor: '#100024',
     borderRadius: 7,
     flexDirection: 'row',
-    height: 45,
+    height: 55,
     alignItems: 'center',
     marginBottom: 5,
     width: '100%',
