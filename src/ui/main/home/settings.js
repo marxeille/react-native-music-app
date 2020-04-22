@@ -15,7 +15,7 @@ import { navigate, pop } from '../../../navigation/navigation_service';
 import { rootStore, RootContext } from '../../../data/context/root_context';
 import LinearGradient from 'react-native-linear-gradient';
 import LinearGradientText from '../library/components/LinearGradientText';
-import { getStatusBarHeight } from '../../../utils';
+import { getStatusBarHeight, D_WIDTH } from '../../../utils';
 import ListItem from '../../components/playlist_menu_concept/list_item';
 
 @observer
@@ -119,15 +119,22 @@ class Settings extends Component {
                 <View cls="pt4">
                   <Image
                     cls="widthFn-150 heightFn-150 asc"
-                    source={Images.bAAlbum}
+                    source={rootStore.userStore?.avatar ?? Images.bAAlbum}
                   />
                   <View style={styles.abs}>
-                    <Image resizeMode="repeat" source={Images.sNg} />
+                    <Image
+                      resizeMode="contain"
+                      cls="heightFn-50"
+                      style={{ width: D_WIDTH }}
+                      source={Images.sNg}
+                    />
                   </View>
                 </View>
               </View>
               <View cls="aic jcc pt3 pb2">
-                <Text cls="avertaFont white f3">Idol khÁ bẢnH</Text>
+                <Text cls="avertaFont white f3">
+                  {rootStore.userStore?.name}
+                </Text>
               </View>
               <View cls="fullWidth">
                 <FlatList
