@@ -8,6 +8,8 @@ export const Album = types
     name: types.string,
     thumb: types.string,
     owner: types.string,
+    short_biography: types.string,
+    description: types.string,
     tracks: types.maybe(
       types.array(
         types.frozen({ track_id: types.string, position: types.integer }),
@@ -29,6 +31,9 @@ export const Album = types
       getType() {
         return self.type;
       },
+      getDescription() {
+        return self.description;
+      },
     };
   })
   .actions(self => {
@@ -45,6 +50,8 @@ export const createAlbumFromApiJson = data => {
     name: data.name ?? '',
     thumb: data.cover_path ? BASE_API_URL + data.cover_path : '',
     owner: data.artists ? data.artists.map(a => a.name).join(', ') : '',
+    short_biography: data.short_biography ?? '',
+    description: data.description ?? '',
     tracks: data.tracks ?? [],
     type: 'article',
   });
