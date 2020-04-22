@@ -51,7 +51,7 @@ function getBottomTabNavigator() {
           tabBarIcon: props => (
             <Image
               style={[Styles.icon, { tintColor: props.color }]}
-              source={Images.logo}
+              source={Images.ic_home}
             />
           ),
           backgroundColor: '#00FFFFFFF',
@@ -78,7 +78,7 @@ function getBottomTabNavigator() {
           tabBarIcon: props => (
             <Image
               style={[Styles.icon, { tintColor: props.color }]}
-              source={Images.ic_library}
+              source={Images.ic_logo}
             />
           ),
         }}
