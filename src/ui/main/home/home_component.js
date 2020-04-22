@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { wrap } from '../../../themes';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { navigate } from '../../../navigation/navigation_service';
 import HomeListComponent from './components/home_list_component';
 import { rootStore } from '../../../data/context/root_context';
 import { observer } from 'mobx-react';
@@ -55,7 +55,7 @@ export default class HomeComponent extends Component {
                   end={{ x: 1, y: 0 }}
                   style={{ padding: 1 }}
                   cls="flx-row-reverse aic br5">
-                  <View cls="flx-row-reverse aic pl2 pr2 pt1 pb1 br5 bg-#2C184A">
+                  <View cls="flx-row-reverse aic pl2 pr2 pt1 br5 bg-#2C184A">
                     <Image
                       cls="widthFn-24 heightFn-24"
                       source={Images.ic_setting}
