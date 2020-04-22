@@ -131,7 +131,7 @@ export default class Player extends Component {
     ) : (
       <View cls="jcc pt3">
         <ImageBackground
-          cls="fullWidth jcc"
+          cls="fullWidth jcsb"
           resizeMode="cover"
           blurRadius={15}
           source={
@@ -141,50 +141,86 @@ export default class Player extends Component {
                 }
               : Images.bAAlbum
           }>
-          <View cls="flx-row pa3">
-            <Image
-              cls="widthFn-150 heightFn-150"
-              source={
-                !isTextEmpty(rootStore.playerStore?.currentSong?.artwork)
-                  ? { uri: rootStore.playerStore?.currentSong?.artwork }
-                  : Images.bAAlbum
-              }
-            />
-            <View cls="pl3  jcc">
-              <Text cls="white fw7 f6">
-                {subLongStr(rootStore.playerStore?.currentSong?.getName(), 18)}
-              </Text>
-              <Text cls="white pt1">
-                {rootStore.playerStore?.currentSong?.getSubTitle()}
-              </Text>
+          <View cls="fullWidth jcc">
+            <View cls="aic pt4 pb4">
+              <Image
+                cls="widthFn-200 heightFn-200"
+                source={
+                  !isTextEmpty(rootStore.playerStore?.currentSong?.artwork)
+                    ? { uri: rootStore.playerStore?.currentSong?.artwork }
+                    : Images.bAAlbum
+                }
+              />
+              <View cls="jcc aic">
+                <Text cls="white fw7 f5 mt2 avertaFont">
+                  {subLongStr(
+                    rootStore.playerStore?.currentSong?.getName(),
+                    18,
+                  )}
+                </Text>
+                <Text cls="white f7 pt1" style={{ fontFamily: 'lato-regular' }}>
+                  {rootStore.playerStore?.currentSong?.getSubTitle()}
+                </Text>
+              </View>
             </View>
           </View>
+
+          <View
+            cls="fullWidth aife asfe"
+            style={{ position: 'absolute', bottom: -24, height: 50 }}>
+            <Image cls="fullWidth" resizeMode="contain" source={Images.sNg} />
+          </View>
         </ImageBackground>
-        <View cls="pa3 pt4 jcc">
-          {/* <TouchableOpacity>
-            <View cls="flx-row aic pt3">
-              <Image source={Images.ic_mess} />
-              <Text cls="fw7 f6 primaryPurple pl3">Tin nhắn</Text>
+
+        <View cls="pa3 mt4 jcc">
+          <TouchableOpacity>
+            <View
+              cls="flx-row aic pt2 pb2 pl3 pr3 ba br5"
+              style={{ borderColor: '#d29dc5' }}>
+              <Image style={[styles.icon]} source={Images.ic_mess} />
+              <Text cls="fw7 f6 white pl3">Tin nhắn</Text>
             </View>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
           <TouchableOpacity onPress={this.shareLinkWithShareDialog.bind(this)}>
-            <View cls="flx-row aic pt5">
-              <Image source={Images.ic_fb} />
-              <Text cls="fw7 f6 primaryPurple pl3">Facebook</Text>
+            <View
+              cls="flx-row aic pt2 pb2 pl3 pr3 mt3 ba br5"
+              style={{ borderColor: '#d29dc5' }}>
+              <Image style={[styles.icon]} source={Images.ic_fb} />
+              <Text cls="fw7 f6 white pl3">Facebook</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <View cls="flx-row aic pt5">
-              <Image source={Images.ic_link} />
-              <Text cls="fw7 f6 primaryPurple pl3">Sao chép liên kết</Text>
+            <View
+              cls="flx-row aic aic pt2 pb2 pl3 pr3 mt3 ba br5"
+              style={{ borderColor: '#d29dc5' }}>
+              <Image style={[styles.icon]} source={Images.ic_link} />
+              <Text cls="fw7 f6 white pl3">Sao chép liên kết</Text>
             </View>
           </TouchableOpacity>
-          {/* <TouchableOpacity>
-            <View cls="flx-row aic pt5">
-              <Image source={Images.ic_menu} />
-              <Text cls="fw7 f6 primaryPurple pl3">Thêm nữa</Text>
+          <TouchableOpacity>
+            <View
+              cls="flx-row aic aic pt2 pb2 pl3 pr3 mt3 ba br5"
+              style={{ borderColor: '#d29dc5' }}>
+              <Image style={[styles.icon]} source={Images.ic_insta} />
+              <Text cls="fw7 f6 white pl3">Instagram</Text>
             </View>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View
+              cls="flx-row aic aic pt2 pb2 pl3 pr3 mt3 ba br5"
+              style={{ borderColor: '#d29dc5' }}>
+              <Image style={[styles.icon]} source={Images.ic_zalo} />
+              <Text cls="fw7 f6 white pl3">Zalo</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View
+              cls="flx-row aic aic pt2 pb2 pl3 pr3 mt3 ba br5"
+              style={{ borderColor: '#d29dc5' }}>
+              <Image style={[styles.icon]} source={Images.ic_menu} />
+              <Text cls="fw7 f6 white pl3">Thêm nữa</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -258,6 +294,11 @@ export default class Player extends Component {
 }
 
 const styles = StyleSheet.create({
+  icon: {
+    width: 25,
+    height: 25,
+    tintColor: '#FFF',
+  },
   container: {
     flex: 1,
   },

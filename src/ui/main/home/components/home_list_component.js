@@ -45,7 +45,7 @@ export default class HomeListComponent extends Component {
 
     return (
       <View cls="fullWidth">
-        <View cls="flx-row pa3 pb3 pt0 aic">
+        <View cls="flx-row pa3 pb3 pt0 pr0 aic">
           <MaskedView
             maskElement={
               <Text style={{ fontWeight: '700', fontSize: 22 }}>{title}</Text>
@@ -71,7 +71,12 @@ export default class HomeListComponent extends Component {
               <Image cls="widthFn-24 heightFn-24" source={Images.ic_setting} />
             </TouchableOpacity>
           ) : null} */}
-          <Image source={Images.sNg} style={{ height: 10 }} />
+          <Image
+            source={Images.sNg}
+            cls="fullWidth heightFn-30"
+            resizeMode="contain"
+            style={{ flex: 1 }}
+          />
         </View>
         <View cls="fullWidth">
           <FlatList
