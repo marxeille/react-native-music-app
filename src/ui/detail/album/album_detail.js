@@ -4,13 +4,11 @@ import {
   Text,
   ImageBackground,
   Image,
-  Switch,
   FlatList,
   TouchableOpacity,
   TouchableWithoutFeedback,
   Alert,
 } from 'react-native';
-// import SongOfAlBumStore from '../../../data/repository/song_of_album_store';
 import { observer } from 'mobx-react';
 import {
   makeCancelable,
@@ -22,7 +20,6 @@ import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
 import { rootStore } from '../../../data/context/root_context';
 import LinearGradient from 'react-native-linear-gradient';
-import LinearGradientText from '../../main/library/components/LinearGradientText';
 import AlbumItem from './components/album_item';
 import SongMenu from '../../player/components/song_menu';
 import BottomModal from '../../components/modal/BottomModal';
@@ -328,7 +325,7 @@ export default class AlbumDetail extends Component {
               <Text cls="f9 primaryPurple latoFont">
                 {`${this.viewModel.stats
                   .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} Người theo dõi`}
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} lượt thích`}
               </Text>
               <Text cls="white f8 latoFont pt2 pb4">
                 {`Idol khÁ ${
@@ -396,98 +393,19 @@ export default class AlbumDetail extends Component {
     );
   });
 
-  // renderMiddleSection = wrap(() => {
-  //   const following =
-  //     indexOf(
-  //       [...this.viewModel?.likedPlaylist],
-  //       Number(
-  //         typeof this.props.route.params.item == 'number'
-  //           ? this.props.route.params.item
-  //           : this.props.route.params.item.id,
-  //       ),
-  //     ) >= 0;
-  //   return (
-  //     <>
-  //       <View>
-  //         <View cls="pt2 aic pb2">
-  //           <TouchableOpacity onPress={this.reaction}>
-  //             <View
-  //               cls={`widthFn-140 aic ba br5 pa3 pt2 pb2 ${
-  //                 following ? ' bg-#835db8' : ''
-  //               }`}
-  //               style={{ borderColor: '#d7a0c8' }}>
-  //               <Text cls="white f11 fw6 lightFont">
-  //                 {`${following ? 'Đang' : ''} theo dõi`.toUpperCase()}
-  //               </Text>
-  //             </View>
-  //           </TouchableOpacity>
-  //         </View>
-  //         <View>
-  //           <ImageBackground
-  //             cls="heightFn-70 aic pt3"
-  //             style={{ width: '100%' }}
-  //             source={Images.wave}>
-  //             <TouchableOpacity onPress={() => this.playSong()}>
-  //               <LinearGradient
-  //                 cls="ba br5 b--#321A54"
-  //                 colors={['#4A3278', '#8B659D', '#DDA5CB']}
-  //                 start={{ x: 0, y: 0 }}
-  //                 end={{ x: 1, y: 0 }}>
-  //                 <Text cls="white f6 fw7 pa2 pl4 pr4 avertaFont">
-  //                   Phát trộn bài
-  //                 </Text>
-  //               </LinearGradient>
-  //             </TouchableOpacity>
-  //           </ImageBackground>
-  //         </View>
-  //       </View>
-  //     </>
-  //   );
-  // });
-
-  // renderDownloadSection = wrap(() => {
-  //   return (
-  //     <>
-  //       <View cls="pa3 pb2 pt0 fullWidth">
-  //         <View cls="flx-row jcsb aic">
-  //           <LinearGradientText
-  //             text={'Tải xuống'}
-  //             end={{ x: 0.6, y: 0 }}
-  //             styles={{
-  //               justifyContent: 'center',
-  //               fontSize: 18,
-  //               fontFamily: 'Averta-ExtraBold',
-  //             }}
-  //           />
-  //           <Switch
-  //             value={this.state.download}
-  //             trackColor={{ true: '#d59fc6', false: 'grey' }}
-  //             style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
-  //             onValueChange={value => {
-  //               this.setState({ download: value });
-  //             }}
-  //           />
-  //         </View>
-  //       </View>
-  //     </>
-  //   );
-  // });
-
   _renderListHeaderContent = wrap(() => {
-    return (
-      <>
-        {this.renderHeaderSection()}
-        {/* {this.renderMiddleSection()} */}
-        {/* {this.renderDownloadSection()} */}
-      </>
-    );
+    return <>{this.renderHeaderSection()}</>;
   });
 
   _renderItem = wrap(item => {
     return (
       <TouchableOpacity onPress={() => this.playSong(item.item)}>
         <View cls="pa3 pt0">
-          <AlbumItem item={item.item} openModal={this._showModal} />
+          <AlbumItem
+            item={item.item}
+            openModal={this._showModal}
+            model={this.viewModel}
+          />
         </View>
       </TouchableOpacity>
     );

@@ -75,7 +75,6 @@ const ArtistItem = observer(
             <Text cls="white fw7 f5 lightFont">
               {subLongStr(props.item.getName(), 13)}
             </Text>
-            <Text cls="primaryPurple lightFont">123.456.789</Text>
           </View>
         </View>
         <View cls="flx-row">

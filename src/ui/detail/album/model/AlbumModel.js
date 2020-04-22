@@ -13,6 +13,7 @@ export const AlbumModel = types
     selectedSong: types.maybeNull(types.reference(Song)),
     stats: types.number,
     likedPlaylist: types.array(types.number),
+    likedTracks: types.array(types.number),
   })
   .actions(self => {
     return {
@@ -29,6 +30,20 @@ export const AlbumModel = types
       },
       setSelectedSong(song) {
         self.selectedSong = song.id;
+      },
+      //Liked tracks
+      setLikedTracks(tracks) {
+        self.likedTracks = tracks;
+      },
+      addLikedTrack(trackId) {
+        const tmpLikedTracks = cloneDeep(self.likedTracks);
+        tmpLikedTracks.push(trackId);
+        self.setLikedTracks([...tmpLikedTracks]);
+      },
+      removeLikedTrack(trackId) {
+        const tmpLikedTracks = cloneDeep(self.likedTracks);
+        remove(tmpLikedTracks, track => track == trackId);
+        self.setLikedTracks([...tmpLikedTracks]);
       },
       //Liked artist
       setLikedPlaylist(playlist) {
@@ -63,7 +78,16 @@ export const AlbumModel = types
       }),
       getAlbumTracks: flow(function* getAlbumTracks(ids) {
         const tracks: Array = yield apiService.commonApiService.getTracks(ids);
+        const likedTracks = yield apiService.commonApiService.getLikedTracks(
+          ids,
+        );
 
+        if (likedTracks?.status == 200) {
+          const preparedTrackData = likedTracks.data.map(
+            track => track.entity_id,
+          );
+          self.setLikedTracks(preparedTrackData);
+        }
         if (tracks?.status == 200) {
           tracks?.data?.map(async track => {
             let fullTrack = await getTrackFullDetail(track.id);
