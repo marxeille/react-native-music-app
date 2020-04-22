@@ -140,7 +140,7 @@ export default class LogInComponent extends Component {
                   end={{ x: 1, y: 0 }}
                   cls="mb3"
                   style={{ borderRadius: 10, height: 57, padding: 1 }}>
-                  <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
+                  <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
                     <TextInput
                       secureTextEntry={false}
                       placeholderTextColor="#fff"
@@ -162,7 +162,7 @@ export default class LogInComponent extends Component {
                   end={{ x: 1, y: 0 }}
                   cls="mt3"
                   style={{ borderRadius: 10, height: 57, padding: 1 }}>
-                  <View cls="pa3 bg-#4B3277" style={[styles.inputGroup]}>
+                  <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
                     <TextInput
                       secureTextEntry={true}
                       placeholderTextColor="#fff"
@@ -176,7 +176,7 @@ export default class LogInComponent extends Component {
                   </View>
                 </LinearGradient>
               </View>
-              <View cls="fullWidth pl4 pr4 pb4 pt3">
+              <View cls="fullWidth pl3 pr4 pb4 pt3">
                 <View cls="pl3">
                   <Text
                     cls="ml3"
@@ -230,11 +230,16 @@ export default class LogInComponent extends Component {
                 />
               </View>
 
-              <View cls="fullWidth pa5 pt0 mt4 aic">
+              <View cls="fullWidth pa3 pt0 mt4 aic">
                 <View cls="pt3">
                   <TouchableOpacity onPress={this.handleLoginWithFacebook}>
-                    <View cls="aic ba b--#321A54 pt3 bg-#323277 br5 widthFn-220 heightFn-50">
-                      <Text cls="white latoHeavyFont f6">Facebook</Text>
+                    <View
+                      cls="aic ba b--#321A54 bg-#323277 br5 widthFn-220 heightFn-50"
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text cls="white f6 avertaFont">Facebook</Text>
                     </View>
                   </TouchableOpacity>
                 </View>
