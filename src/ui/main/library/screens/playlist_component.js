@@ -8,7 +8,6 @@ import { rootStore } from '../../../../data/context/root_context';
 import { observer } from 'mobx-react';
 import { navigate } from '../../../../navigation/navigation_service';
 import BottomModal from '../../../components/modal/BottomModal';
-import Images from '../../../../assets/icons/icons';
 import CreatePlayListModal from '../../../components/add_playlist_modal';
 
 @observer

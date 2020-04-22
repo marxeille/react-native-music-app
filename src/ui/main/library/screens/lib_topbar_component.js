@@ -6,7 +6,11 @@ import LinearGradientText from '../components/LinearGradientText';
 import Playlist from './playlist_component';
 import Artist from './artist_component';
 import Album from './album_component';
+import Loading from '../../../components/loading';
+import { rootStore } from '../../../../data/context/root_context';
+import { observer } from 'mobx-react';
 
+@observer
 @wrap
 export default class LibraryTabView extends React.Component {
   state = {
@@ -62,6 +66,13 @@ export default class LibraryTabView extends React.Component {
   });
 
   render() {
+    // if (rootStore.libraryStore.state == 'loading') {
+    //   return (
+    //     <View cls=" fullView aic jcc">
+    //       <Loading />
+    //     </View>
+    //   );
+    // }
     return (
       <TabView
         navigationState={this.state}

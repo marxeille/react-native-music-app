@@ -20,6 +20,7 @@ export const LibraryStore = types
       fetchData() {
         self.state = 'loading';
         self.fetchTabsData();
+        self.state = 'success';
       },
 
       fetchTabsData: flow(function* fetchTabsData() {
@@ -27,7 +28,6 @@ export const LibraryStore = types
         self.fetchLikedTracksPlaylist();
         self.fetchArtists();
         self.fetchAlbums();
-        self.state = 'success';
       }),
 
       setAlbum(album) {

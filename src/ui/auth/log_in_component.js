@@ -10,6 +10,7 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   Alert,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { wrap } from '../../themes';
@@ -177,14 +178,16 @@ export default class LogInComponent extends Component {
                 </LinearGradient>
               </View>
               <View cls="fullWidth pl3 pr4 pb4 pt3">
-                <View cls="pl3">
-                  <Text
-                    cls="ml3"
-                    style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
-                    cls="f8">
-                    Quên mật khẩu?
-                  </Text>
-                </View>
+                <TouchableWithoutFeedback>
+                  <View cls="pl3">
+                    <Text
+                      cls="ml3"
+                      style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
+                      cls="f8">
+                      Quên mật khẩu?
+                    </Text>
+                  </View>
+                </TouchableWithoutFeedback>
               </View>
 
               {/* Button Group */}
