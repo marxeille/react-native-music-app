@@ -3,7 +3,7 @@ import {
   View,
   Text,
   Image,
-  TextInput,
+  TextStyle,
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
@@ -16,10 +16,11 @@ import Images from '../../assets/icons/icons';
 import { pop } from '../../navigation/navigation_service';
 import { observer } from 'mobx-react';
 import LinearGradientText from '../main/library/components/LinearGradientText';
+import OtpInputs from 'react-native-otp-inputs';
 
 @observer
 @wrap
-export default class ForgotComponent extends Component {
+export default class VerifyCodeComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,7 +76,7 @@ export default class ForgotComponent extends Component {
 
               <View cls="fullWidth aic pl3 pr3">
                 <LinearGradientText
-                  text={'Quên mật khẩu'}
+                  text={'Mã xác nhận'}
                   end={{ x: 0.7, y: 0 }}
                   styles={{
                     alignItems: 'center',
@@ -89,54 +90,47 @@ export default class ForgotComponent extends Component {
                 <Text
                   style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
                   cls="f8 pt1">
-                  Hãy điền địa chỉ email của bạn. Bạn sẽ nhận được một liên kết
-                  để tạo một mật khẩu mới qua email.
+                  Vui lòng nhập mã xác minh được gửi tới địa chỉ email.
                 </Text>
               </View>
 
               {/* Text Input group */}
-              <View cls="fullWidth pt4 pl3 pr3">
-                <LinearGradient
-                  colors={['#4E357A', '#9069A0', '#D39DC5']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  cls="mb3"
-                  style={{ borderRadius: 10, height: 57, padding: 1 }}>
-                  <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
-                    <TextInput
-                      secureTextEntry={false}
-                      placeholderTextColor="#fff"
-                      placeholder={'Email'}
-                      style={[styles.inputText]}
-                      value={email}
-                      onChange={event => this.onChangeText(event, 'email')}
-                      autoCorrect={false}
-                    />
-                    <Image
-                      cls="widthFn-25 heightFn-25"
-                      source={Images.ic_pass}
-                    />
-                  </View>
-                </LinearGradient>
+              <View cls="fullWidth pt4 pl3 pr3 flx-row">
+                <OtpInputs
+                  keyboardType="phone-pad"
+                  handleChange={code => console.log(code)}
+                  selectTextOnFocus={true}
+                  numberOfInputs={4}
+                  inputContainerStyles={{
+                    backgroundColor: '#2C184A',
+                    width: 60,
+                    height: 75,
+                    borderWidth: 1,
+                    borderColor: '#9166cc',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 3,
+                  }}
+                  inputStyles={{
+                    color: '#FFF',
+                    fontSize: 32,
+                    fontFamily: 'Averta-ExtraBold',
+                  }}
+                />
               </View>
 
               {/* Button Group */}
               <View cls="fullWidth pa3 pb0 aic mb4 mt3">
-                <TouchableOpacity>
-                  <LinearGradient
-                    cls="ba br5 b--#321A54 widthFn-220 heightFn-50 aic jcc"
-                    colors={['#4A3278', '#8B659D', '#DDA5CB']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}>
-                    <Text
-                      cls="white f6 pl5 pr5 avertaFont"
-                      style={{
-                        paddingVertical: 12,
-                      }}>
-                      Gửi
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
+                <Text
+                  style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
+                  cls="f8 pt1">
+                  Không nhận được mã?
+                </Text>
+                <Text
+                  style={{ color: '#FFF', fontFamily: 'lato-regular' }}
+                  cls="f8 pt2">
+                  Gửi lại ngay
+                </Text>
               </View>
             </ImageBackground>
           </View>

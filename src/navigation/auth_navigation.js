@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LogInComponent from '../ui/auth/log_in_component';
 import SignUpComponent from '../ui/auth/sign_up_component';
-import ForgorComponent from '../ui/auth/forgot_component';
+import ForgorPassWordComponent from '../ui/auth/forgot_pass_component';
 import Welcome from '../ui/auth/welcome_component';
-import ForgotComponent from '../ui/auth/forgot_component';
+import ReEnterPassWordComponent from '../ui/auth/re_enter_pass_component';
+import VerifyCodeComponent from '../ui/auth/verify_code_component';
 const Stack = createStackNavigator();
 
 export default function authContainer() {
@@ -13,7 +14,9 @@ export default function authContainer() {
       <Stack.Screen name="welcome" component={Welcome} />
       <Stack.Screen name="sign-in" component={LogInComponent} />
       <Stack.Screen name="sign-up" component={SignUpComponent} />
-      <Stack.Screen name="forgot" component={ForgotComponent} />
+      <Stack.Screen name="forgot-pass" component={ForgorPassWordComponent} />
+      <Stack.Screen name="verify-code" component={VerifyCodeComponent} />
+      <Stack.Screen name="re-enter-pass" component={ReEnterPassWordComponent} />
     </Stack.Navigator>
   );
 }

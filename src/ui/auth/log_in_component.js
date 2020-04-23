@@ -65,7 +65,7 @@ export default class LogInComponent extends Component {
   };
 
   handleForgot = () => {
-    navigate('forgot');
+    navigate('forgot-pass');
   };
 
   handleSignUp = () => {
