@@ -69,6 +69,7 @@ export default class BottomModal extends React.Component {
       avoidKeyboard = false,
       justifyCenterModal = false,
       headerNone = false,
+      closeBottomNone = false,
     } = this.props;
 
     return (
@@ -130,7 +131,7 @@ export default class BottomModal extends React.Component {
 
               <View style={[containerStyle]}>{children}</View>
 
-              {headerNone ? (
+              {headerNone && !closeBottomNone ? (
                 <View cls="aic jcc pt0">
                   <TouchableOpacity
                     onPress={this._hideModal}

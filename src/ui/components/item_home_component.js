@@ -17,7 +17,7 @@ export default class ItemHome extends Component {
   render() {
     const item = rootStore.playlist.get(this.props.id);
     return (
-      <View cls="widthFn-150 pl3 mr3">
+      <View cls="widthFn-150 pl3 mr3 pb4">
         <Image
           cls="heightFn-150 widthFn-150"
           source={
