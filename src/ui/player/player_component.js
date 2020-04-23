@@ -6,6 +6,7 @@ import {
   TouchableNativeFeedback,
   StyleSheet,
   TouchableWithoutFeedback,
+  ImageBackground,
 } from 'react-native';
 import Images from '../../assets/icons/icons';
 import { rootStore } from '../../data/context/root_context';
@@ -120,7 +121,7 @@ export default class PlayerComponent extends Component {
       ) >= 0;
     if (rootStore.playerStore.currentSong) {
       return (
-        <>
+        <View cls="fullWidth">
           <GestureRecognizer
             onSwipe={this.onSwipe}
             onSwipeUp={this.onSwipeUp}
@@ -128,65 +129,72 @@ export default class PlayerComponent extends Component {
             onSwipeLeft={this.onSwipeLeft}
             onSwipeRight={this.onSwipeRight}
             config={config}>
-            <TouchableWithoutFeedback onPress={() => navigate('player')}>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                navigate('player');
+              }}>
               <View style={styles.container}>
-                <SeekBar
-                  slider={false}
-                  trackLength={rootStore?.playerStore?.duration}
-                  currentPosition={rootStore?.playerStore?.position}
-                />
-                <View cls="flx-row fullWidth">
-                  <Image
-                    source={
-                      !isTextEmpty(
-                        rootStore.playerStore.currentSong?.getThumb(),
-                      )
-                        ? {
-                            uri: rootStore.playerStore.currentSong?.getThumb(),
-                          }
-                        : Images.bAAlbum
-                    }
-                    cls="widthFn-54 heightFn-54"
+                <ImageBackground cls="fullWidth" source={Images.bg_mini_player}>
+                  <SeekBar
+                    slider={false}
+                    trackLength={rootStore?.playerStore?.duration}
+                    currentPosition={rootStore?.playerStore?.position}
                   />
+                  <View cls="flx-row fullWidth">
+                    <Image
+                      source={
+                        !isTextEmpty(
+                          rootStore.playerStore.currentSong?.getThumb(),
+                        )
+                          ? {
+                              uri: rootStore.playerStore.currentSong?.getThumb(),
+                            }
+                          : Images.bAAlbum
+                      }
+                      cls="widthFn-54 heightFn-56"
+                    />
 
-                  <View style={styles.infoSection}>
-                    <Text cls="white fw7 lightFont">
-                      {rootStore.playerStore.currentSong?.getName()}
-                    </Text>
-                    <Text cls="primaryPurple f10 fw4 lightFont">
-                      {rootStore.playerStore.currentSong?.getSubTitle()}
-                    </Text>
+                    <View style={styles.infoSection}>
+                      <Text cls="white fw7 lightFont">
+                        {rootStore.playerStore.currentSong?.getName()}
+                      </Text>
+                      <Text cls="primaryPurple f10 fw4 lightFont">
+                        {rootStore.playerStore.currentSong?.getSubTitle()}
+                      </Text>
+                    </View>
+                    <TouchableWithoutFeedback
+                      onPress={() => {
+                        rootStore.playerStore.toggleStatus();
+                      }}
+                      background={TouchableNativeFeedback.SelectableBackground()}>
+                      <View cls="pa3 pr2">
+                        <Image
+                          source={
+                            rootStore.playerStore.statusPlayer == 'pause'
+                              ? Images.ic_play
+                              : Images.ic_pause
+                          }
+                          cls
+                        />
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={this.reaction}>
+                      <View cls="pa3">
+                        <Image
+                          source={
+                            like
+                              ? Images.ic_like_checked
+                              : Images.ic_like_uncheck
+                          }
+                        />
+                      </View>
+                    </TouchableWithoutFeedback>
                   </View>
-                  <TouchableWithoutFeedback
-                    onPress={() => {
-                      rootStore.playerStore.toggleStatus();
-                    }}
-                    background={TouchableNativeFeedback.SelectableBackground()}>
-                    <View cls="pa3 pr2">
-                      <Image
-                        source={
-                          rootStore.playerStore.statusPlayer == 'pause'
-                            ? Images.ic_play
-                            : Images.ic_pause
-                        }
-                        cls
-                      />
-                    </View>
-                  </TouchableWithoutFeedback>
-                  <TouchableWithoutFeedback onPress={this.reaction}>
-                    <View cls="pa3">
-                      <Image
-                        source={
-                          like ? Images.ic_like_checked : Images.ic_like_uncheck
-                        }
-                      />
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
+                </ImageBackground>
               </View>
             </TouchableWithoutFeedback>
           </GestureRecognizer>
-        </>
+        </View>
       );
     } else {
       return null;
@@ -195,7 +203,7 @@ export default class PlayerComponent extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    height: 56,
+    height: 54,
     backgroundColor: '#110027',
   },
   infoSection: {

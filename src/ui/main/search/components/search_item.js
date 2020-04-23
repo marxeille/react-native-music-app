@@ -34,6 +34,9 @@ export default class SearchItem extends Component {
     if (item.getType() == 'song') {
       rootStore.createSongRef(item);
       model.addRecentlySong(item);
+      if (rootStore.playerStore?.currentSong?.id == item.id) {
+        return navigate('player');
+      }
       return navigate('player', { trackId: item.id });
     } else if (item.getType() == 'artist') {
       model.addRecentlyArtist(item);

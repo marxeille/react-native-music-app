@@ -316,6 +316,8 @@ export default class AlbumDetail extends Component {
               source={
                 !isEmpty(item) && !isTextEmpty(item?.getThumb())
                   ? { uri: item?.getThumb() }
+                  : item?.id == 0
+                  ? Images.ic_heart_cover
                   : Images.bAAlbum
               }
             />
@@ -326,20 +328,30 @@ export default class AlbumDetail extends Component {
                   ? item.title().toUpperCase()
                   : '...'}
               </Text>
-              <Text cls="f9 primaryPurple latoFont">
-                {`${this.viewModel.stats
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} lượt thích`}
-              </Text>
-              <Text cls="white f8 latoFont pt2 pb4">
-                {hasSong
-                  ? `Idol khÁ ${
-                      typeof item.subTitle == 'function'
-                        ? item.getDescription()
-                        : '...'
-                    } bẢnH is on top of the Vinahey hey hey!`
-                  : 'Hãy cùng tìm kiếm vài bài hát cho playlist của bạn'}
-              </Text>
+              {item?.id == 0 ? (
+                <View cls="pb4">
+                  <Text cls="f9 primaryPurple lightFont">
+                    {rootStore?.userStore?.name}
+                  </Text>
+                </View>
+              ) : (
+                <>
+                  <Text cls="f9 primaryPurple lightFont">
+                    {`${this.viewModel.stats
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} lượt thích`}
+                  </Text>
+                  <Text cls="white f8 lightFont pt2 pb4">
+                    {hasSong
+                      ? `Idol khÁ ${
+                          typeof item.subTitle == 'function'
+                            ? item.getDescription()
+                            : '...'
+                        } bẢnH is on top of the Vinahey hey hey!`
+                      : 'Hãy cùng tìm kiếm vài bài hát cho playlist của bạn'}
+                  </Text>
+                </>
+              )}
             </View>
           </View>
           <View style={{ position: 'absolute', bottom: -23 }}>
@@ -367,7 +379,7 @@ export default class AlbumDetail extends Component {
         resizeMode="contain"
         source={Images.pl_wave}>
         <View cls="flx-row">
-          {hasSong ? (
+          {hasSong || item?.id == 0 ? (
             <>
               <View cls="pa3 pr0">
                 <TouchableWithoutFeedback
@@ -376,7 +388,7 @@ export default class AlbumDetail extends Component {
                       ? this.addSong
                       : this.reaction
                   }>
-                  {rootStore.userStore.id == item.owner_id ? (
+                  {rootStore.userStore.id == item?.owner_id || item?.id == 0 ? (
                     <Image
                       cls="widthFn-50 heightFn-50"
                       source={Images.ic_btn_plus}
