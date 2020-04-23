@@ -43,8 +43,9 @@ export default class WelcomeComponent extends Component {
                   source={Images.ic_back_white}
                 /> */}
                 <Image
-                  cls="widthFn-200 heightFn-134 asc"
-                  source={Images.logo_signin}
+                  cls="widthFn-180 heightFn-110 asc"
+                  resizeMode={'contain'}
+                  source={Images.new_logo}
                 />
               </View>
 

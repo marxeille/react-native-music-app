@@ -265,7 +265,7 @@ export default class ArtistDetail extends Component {
     return (
       <>
         {this.renderHeaderSection()}
-        {this.renderMiddleSection()}
+        {/* {this.renderMiddleSection()} */}
       </>
     );
   });

@@ -23,6 +23,7 @@ const Images = {
   ic_btn_like_on: require('./ic_btn_like_on.png'),
   ic_btn_pause: require('./ic_btn_pause.png'),
   ic_btn_play: require('./ic_btn_play.png'),
+  ic_btn_plus: require('./ic_btn_plus.png'),
   ic_camera: require('./ic_camera.png'),
   ic_checked: require('./ic_checked.png'),
   ic_checked_circle: require('./ic_checked_circle.png'),
@@ -85,11 +86,12 @@ const Images = {
   logo: require('./logo.png'),
   logo_signin: require('./logo_signin.png'),
   nN: require('./nN.png'),
+  new_logo: require('./new_logo.png'),
   pass: require('./pass.png'),
   pl_wave: require('./pl_wave.png'),
   sNg: require('./sNg.png'),
   setting: require('./setting.png'),
   wave: require('./wave.png'),
-  wave2: require('./wave2.png'),
-};
-export default Images;
+  wave2: require('./wave2.png')
+}
+export default Images

@@ -111,7 +111,11 @@ export default class SignUpComponent extends Component {
                   source={Images.wave}
                 />
                 <View cls="aic asc" style={{ position: 'absolute' }}>
-                  <Image style={styles.icon} source={Images.logo_signin} />
+                  <Image
+                    style={styles.icon}
+                    resizeMode={'contain'}
+                    source={Images.new_logo}
+                  />
                 </View>
               </View>
               {/* Text Input group */}
@@ -245,7 +249,7 @@ export default class SignUpComponent extends Component {
 
 const styles = StyleSheet.create({
   iconBack: { width: 16, height: 29 },
-  icon: { width: 160, height: 110 },
+  icon: { width: 180, height: 110 },
   inputGroup: {
     borderWidth: 1,
     borderColor: '#4B3277',

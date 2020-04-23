@@ -63,7 +63,7 @@ export default class HomeComponent extends Component {
                     />
                     <Text
                       cls="f8 mr1"
-                      style={{ color: '#9166cc', fontFamily: 'lato-heavy' }}>
+                      style={{ color: '#fff', fontFamily: 'lato-heavy' }}>
                       {rootStore.userStore?.name}
                     </Text>
                   </View>
