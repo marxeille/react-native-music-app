@@ -13,6 +13,7 @@ export const ArtistModel = types
     selectedSong: types.maybeNull(types.reference(Song)),
     likedTracks: types.array(types.number),
     likedArtists: types.array(types.number),
+    stats: types.optional(types.number, 0),
   })
   .actions(self => {
     return {
@@ -71,6 +72,15 @@ export const ArtistModel = types
           ids = artistTrackIds?.data.map(track => track.track_id);
         }
         return ids;
+      }),
+      getStats: flow(function* getStats(id) {
+        const stats: Array = yield apiService.commonApiService.getStats(
+          'artist',
+          id,
+        );
+        if (stats?.status == 200) {
+          self.stats = stats.data.count;
+        }
       }),
       getArtistTracks: flow(function* getArtistTracks(id) {
         const ids = yield self.getArtistTrackIds(id);

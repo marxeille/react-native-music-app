@@ -9,6 +9,7 @@ import {
   unlikeHelper,
 } from '../../../../data/datasource/api_helper';
 import { indexOf } from 'lodash';
+import { apiService } from '../../../../data/context/api_context';
 
 const ArtistItem = observer(
   wrap(props => {
@@ -16,10 +17,16 @@ const ArtistItem = observer(
       [...props.model?.likedTracks],
       Number(props.item.id),
     );
+    const [stats, setStats] = useState(0);
     const [like, setLike] = useState(idExist >= 0);
-
     useEffect(() => {
       setLike(idExist >= 0);
+      apiService.commonApiService
+        .getStats('track', props.item.id)
+        .then(res => {
+          if (res.status == 200) setStats(res.data.count);
+        })
+        .catch(err => console.log(err));
     }, [[...props.model?.likedTracks]]);
 
     const onReactionSuccess = useCallback((type, data) => {
@@ -64,16 +71,12 @@ const ArtistItem = observer(
     return (
       <View cls="jcsb flx-row aic pr3" style={{ backgroundColor: '#321a54' }}>
         <View cls="flx-row pa3 pb2 pt2">
-          <View cls="squareFn-50 aic jcc">
-            <Text cls="white lightFont f5">
-              {props.index < 9 ? '0' : ''}
-              {props.index + 1}
-            </Text>
-          </View>
-
           <View cls="jcc pl3">
-            <Text cls="white fw7 f5 lightFont">
+            <Text cls="white fw7 f6 lightFont">
               {subLongStr(props.item.getName(), 13)}
+            </Text>
+            <Text cls="primaryPurple f9 lightFont pt1">
+              {`${stats.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} `}
             </Text>
           </View>
         </View>
