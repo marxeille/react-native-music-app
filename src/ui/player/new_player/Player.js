@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  FlatList,
 } from 'react-native';
 import Header from './Header';
 import AlbumArt from './AlbumArt';
@@ -95,7 +96,7 @@ export default class Player extends Component {
     }
   }
 
-  shareLinkWithShareDialog() {
+  shareLinkWithShareDialog = () => {
     var tmp = this;
     ShareDialog.canShow(this.state.shareLinkContent)
       .then(function(canShow) {
@@ -115,14 +116,70 @@ export default class Player extends Component {
           Alert.alert('Chia sẻ thất bại: ' + error);
         },
       );
-  }
+  };
 
   onSwipeDown = () => {
     pop();
   };
 
+  renderShareItem = wrap(({ item }) => {
+    return (
+      <View cls="pt2">
+        <TouchableOpacity onPress={() => item.action()} cls="jcc pv1 ph3 aic">
+          <View
+            cls="br5 ba pa2 fullWidth aic flx-row"
+            style={{ borderColor: '#d29dc5' }}>
+            <View cls="pl2">
+              <Image
+                cls="widthFn-18 heightFn-18"
+                style={{ tintColor: '#FFF' }}
+                source={item.icon}
+              />
+            </View>
+            <Text cls="white lightFont pl3">{item.title}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  });
+
   _renderModalContent = wrap(() => {
     const { showPlayMenu } = this.state;
+
+    const shareItems = [
+      {
+        icon: Images.ic_mess,
+        title: 'Tin nhắn',
+        action: () => {},
+      },
+      {
+        icon: Images.ic_fb,
+        title: 'Facebook',
+        action: () => {
+          this.shareLinkWithShareDialog();
+        },
+      },
+      {
+        icon: Images.ic_link,
+        title: 'Sao chép liên kết',
+        action: () => {},
+      },
+      {
+        icon: Images.ic_insta,
+        title: 'Instagram',
+        action: () => {},
+      },
+      {
+        icon: Images.ic_zalo,
+        title: 'Zalo',
+        action: () => {},
+      },
+      {
+        icon: Images.ic_menu,
+        title: 'Thêm nữa',
+        action: () => {},
+      },
+    ];
 
     return showPlayMenu ? (
       <SongMenu
@@ -130,12 +187,10 @@ export default class Player extends Component {
         _hideModal={this._hideModal}
       />
     ) : (
-      <ScrollView
-        style={{ width: '100%', height: '100%' }}
-        showsVerticalScrollIndicator={false}>
-        <View cls="fullHeight jcc pt3">
+      <View cls="fullView">
+        <View cls="fullHeight">
           <ImageBackground
-            cls="fullWidth jcsb"
+            cls="fullWidth"
             resizeMode="cover"
             blurRadius={15}
             source={
@@ -146,8 +201,8 @@ export default class Player extends Component {
                 : Images.bAAlbum
             }>
             <View cls="fullWidth jcc">
-              <View cls="flx-row aic pt3 jcsb">
-                <View cls="aifs jcc">
+              <View cls="pv2 flx-row aic">
+                <View cls="aifs jcc flx-i">
                   <TouchableOpacity onPress={this._hideModal} cls="jcc aic">
                     <Image
                       cls="widthFn-20 heightFn-20 ml3"
@@ -156,7 +211,7 @@ export default class Player extends Component {
                     />
                   </TouchableOpacity>
                 </View>
-                <View cls="aic jcc mr3">
+                <View cls="aic jcc flexFn-5">
                   <Text
                     style={{
                       color: '#FFF',
@@ -167,7 +222,7 @@ export default class Player extends Component {
                     Chia sẻ
                   </Text>
                 </View>
-                <View />
+                <View cls="flx-i" />
               </View>
               <View cls="aic pt4 pb4">
                 <Image
@@ -179,7 +234,7 @@ export default class Player extends Component {
                   }
                 />
                 <View cls="jcc aic">
-                  <Text cls="white fw7 f5 mt2 avertaFont">
+                  <Text cls="white fw7 f5 pt2 avertaFont">
                     {subLongStr(
                       rootStore.playerStore?.currentSong?.getName(),
                       18,
@@ -201,96 +256,15 @@ export default class Player extends Component {
             </View>
           </ImageBackground>
 
-          <View cls="fullWidth mt4 jcc">
-            <TouchableOpacity cls="jcc pv1 ph3 aic">
-              <View
-                cls="br5 ba pa2 fullWidth aic flx-row"
-                style={{ borderColor: '#d29dc5' }}>
-                <View cls="pl2">
-                  <Image
-                    cls="widthFn-18 heightFn-18"
-                    style={{ tintColor: '#FFF' }}
-                    source={Images.ic_mess}
-                  />
-                </View>
-                <Text cls="white lightFont pl3">Tin nhắn</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.shareLinkWithShareDialog.bind(this)}
-              cls="jcc pv1 ph3 aic mt3">
-              <View
-                cls="br5 ba pa2 fullWidth aic flx-row"
-                style={{ borderColor: '#d29dc5' }}>
-                <View cls="pl2">
-                  <Image
-                    cls="widthFn-18 heightFn-18"
-                    style={{ tintColor: '#FFF' }}
-                    source={Images.ic_fb}
-                  />
-                </View>
-                <Text cls="white lightFont pl3">Facebook</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity cls="jcc pv1 ph3 aic mt3">
-              <View
-                cls="br5 ba pa2 fullWidth aic flx-row"
-                style={{ borderColor: '#d29dc5' }}>
-                <View cls="pl2">
-                  <Image
-                    cls="widthFn-18 heightFn-18"
-                    style={{ tintColor: '#FFF' }}
-                    source={Images.ic_link}
-                  />
-                </View>
-                <Text cls="white lightFont pl3">Sao chép liên kết</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity cls="jcc pv1 ph3 aic mt3">
-              <View
-                cls="br5 ba pa2 fullWidth aic flx-row"
-                style={{ borderColor: '#d29dc5' }}>
-                <View cls="pl2">
-                  <Image
-                    cls="widthFn-18 heightFn-18"
-                    style={{ tintColor: '#FFF' }}
-                    source={Images.ic_insta}
-                  />
-                </View>
-                <Text cls="white lightFont pl3">Instagram</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity cls="jcc pv1 ph3 aic mt3">
-              <View
-                cls="br5 ba pa2 fullWidth aic flx-row"
-                style={{ borderColor: '#d29dc5' }}>
-                <View cls="pl2">
-                  <Image
-                    cls="widthFn-18 heightFn-18"
-                    style={{ tintColor: '#FFF' }}
-                    source={Images.ic_zalo}
-                  />
-                </View>
-                <Text cls="white lightFont pl3">Zalo</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity cls="jcc pv1 ph3 aic mt3">
-              <View
-                cls="br5 ba pa2 fullWidth aic flx-row"
-                style={{ borderColor: '#d29dc5' }}>
-                <View cls="pl2">
-                  <Image
-                    cls="widthFn-18 heightFn-18"
-                    style={{ tintColor: '#FFF' }}
-                    source={Images.ic_menu}
-                  />
-                </View>
-                <Text cls="white lightFont pl3">Thêm nữa</Text>
-              </View>
-            </TouchableOpacity>
+          <View cls="fullWidth pt4">
+            <FlatList
+              data={shareItems}
+              renderItem={this.renderShareItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
           </View>
         </View>
-      </ScrollView>
+      </View>
     );
   });
 
@@ -351,10 +325,10 @@ export default class Player extends Component {
           title={'Chia sẻ'}
           // onModalShow={this._showModal}
           justifyCenterModal
-          forceInsetTop={'never'}
+          // forceInsetTop={'never'}
           forceInsetBottom={'never'}
           headerNone={true}
-          closeBottomNone={true}
+          closeBottomNone={!showPlayMenu}
           // onModalHide={this._hideModal}
           containerCls="">
           {this._renderModalContent()}
