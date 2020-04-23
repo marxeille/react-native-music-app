@@ -20,6 +20,7 @@ import { PlayerContext } from '../../../data/context/player_context';
 import Images from '../../../assets/icons/icons';
 import BottomModal from '../../components/modal/BottomModal';
 import * as _ from 'lodash';
+import { ScrollView } from 'react-native-gesture-handler';
 import { wrap } from '../../../themes';
 import {
   isMeidumDevice,
@@ -129,100 +130,167 @@ export default class Player extends Component {
         _hideModal={this._hideModal}
       />
     ) : (
-      <View cls="jcc pt3">
-        <ImageBackground
-          cls="fullWidth jcsb"
-          resizeMode="cover"
-          blurRadius={15}
-          source={
-            !isTextEmpty(rootStore.playerStore?.currentSong?.artwork)
-              ? {
-                  uri: rootStore.playerStore?.currentSong?.artwork,
-                }
-              : Images.bAAlbum
-          }>
-          <View cls="fullWidth jcc">
-            <View cls="aic pt4 pb4">
-              <Image
-                cls="widthFn-200 heightFn-200"
-                source={
-                  !isTextEmpty(rootStore.playerStore?.currentSong?.artwork)
-                    ? { uri: rootStore.playerStore?.currentSong?.artwork }
-                    : Images.bAAlbum
-                }
-              />
-              <View cls="jcc aic">
-                <Text cls="white fw7 f5 mt2 avertaFont">
-                  {subLongStr(
-                    rootStore.playerStore?.currentSong?.getName(),
-                    18,
-                  )}
-                </Text>
-                <Text cls="white f7 pt1" style={{ fontFamily: 'lato-regular' }}>
-                  {rootStore.playerStore?.currentSong?.getSubTitle()}
-                </Text>
+      <ScrollView
+        style={{ width: '100%', height: '100%' }}
+        showsVerticalScrollIndicator={false}>
+        <View cls="fullHeight jcc pt3">
+          <ImageBackground
+            cls="fullWidth jcsb"
+            resizeMode="cover"
+            blurRadius={15}
+            source={
+              !isTextEmpty(rootStore.playerStore?.currentSong?.artwork)
+                ? {
+                    uri: rootStore.playerStore?.currentSong?.artwork,
+                  }
+                : Images.bAAlbum
+            }>
+            <View cls="fullWidth jcc">
+              <View cls="flx-row aic pt3 jcsb">
+                <View cls="aifs jcc">
+                  <TouchableOpacity onPress={this._hideModal} cls="jcc aic">
+                    <Image
+                      cls="widthFn-20 heightFn-20 ml3"
+                      style={{ tintColor: '#FFF' }}
+                      source={Images.ic_delete}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View cls="aic jcc mr3">
+                  <Text
+                    style={{
+                      color: '#FFF',
+                      justifyContent: 'center',
+                      fontSize: 23,
+                      fontFamily: 'Averta-ExtraBold',
+                    }}>
+                    Chia sẻ
+                  </Text>
+                </View>
+                <View />
+              </View>
+              <View cls="aic pt4 pb4">
+                <Image
+                  cls="widthFn-200 heightFn-200"
+                  source={
+                    !isTextEmpty(rootStore.playerStore?.currentSong?.artwork)
+                      ? { uri: rootStore.playerStore?.currentSong?.artwork }
+                      : Images.bAAlbum
+                  }
+                />
+                <View cls="jcc aic">
+                  <Text cls="white fw7 f5 mt2 avertaFont">
+                    {subLongStr(
+                      rootStore.playerStore?.currentSong?.getName(),
+                      18,
+                    )}
+                  </Text>
+                  <Text
+                    cls="white f7 pt1"
+                    style={{ fontFamily: 'lato-regular' }}>
+                    {rootStore.playerStore?.currentSong?.getSubTitle()}
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
 
-          <View
-            cls="fullWidth aife asfe"
-            style={{ position: 'absolute', bottom: -24, height: 50 }}>
-            <Image cls="fullWidth" resizeMode="contain" source={Images.sNg} />
-          </View>
-        </ImageBackground>
+            <View
+              cls="fullWidth aife asfe"
+              style={{ position: 'absolute', bottom: -24, height: 50 }}>
+              <Image cls="fullWidth" resizeMode="contain" source={Images.sNg} />
+            </View>
+          </ImageBackground>
 
-        <View cls="pa3 mt4 jcc">
-          <TouchableOpacity>
-            <View
-              cls="flx-row aic pt2 pb2 pl3 pr3 ba br5"
-              style={{ borderColor: '#d29dc5' }}>
-              <Image style={[styles.icon]} source={Images.ic_mess} />
-              <Text cls="fw7 f6 white pl3">Tin nhắn</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.shareLinkWithShareDialog.bind(this)}>
-            <View
-              cls="flx-row aic pt2 pb2 pl3 pr3 mt3 ba br5"
-              style={{ borderColor: '#d29dc5' }}>
-              <Image style={[styles.icon]} source={Images.ic_fb} />
-              <Text cls="fw7 f6 white pl3">Facebook</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View
-              cls="flx-row aic aic pt2 pb2 pl3 pr3 mt3 ba br5"
-              style={{ borderColor: '#d29dc5' }}>
-              <Image style={[styles.icon]} source={Images.ic_link} />
-              <Text cls="fw7 f6 white pl3">Sao chép liên kết</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View
-              cls="flx-row aic aic pt2 pb2 pl3 pr3 mt3 ba br5"
-              style={{ borderColor: '#d29dc5' }}>
-              <Image style={[styles.icon]} source={Images.ic_insta} />
-              <Text cls="fw7 f6 white pl3">Instagram</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View
-              cls="flx-row aic aic pt2 pb2 pl3 pr3 mt3 ba br5"
-              style={{ borderColor: '#d29dc5' }}>
-              <Image style={[styles.icon]} source={Images.ic_zalo} />
-              <Text cls="fw7 f6 white pl3">Zalo</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View
-              cls="flx-row aic aic pt2 pb2 pl3 pr3 mt3 ba br5"
-              style={{ borderColor: '#d29dc5' }}>
-              <Image style={[styles.icon]} source={Images.ic_menu} />
-              <Text cls="fw7 f6 white pl3">Thêm nữa</Text>
-            </View>
-          </TouchableOpacity>
+          <View cls="fullWidth mt4 jcc">
+            <TouchableOpacity cls="jcc pv1 ph3 aic">
+              <View
+                cls="br5 ba pa2 fullWidth aic flx-row"
+                style={{ borderColor: '#d29dc5' }}>
+                <View cls="pl2">
+                  <Image
+                    cls="widthFn-18 heightFn-18"
+                    style={{ tintColor: '#FFF' }}
+                    source={Images.ic_mess}
+                  />
+                </View>
+                <Text cls="white lightFont pl3">Tin nhắn</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.shareLinkWithShareDialog.bind(this)}
+              cls="jcc pv1 ph3 aic mt3">
+              <View
+                cls="br5 ba pa2 fullWidth aic flx-row"
+                style={{ borderColor: '#d29dc5' }}>
+                <View cls="pl2">
+                  <Image
+                    cls="widthFn-18 heightFn-18"
+                    style={{ tintColor: '#FFF' }}
+                    source={Images.ic_fb}
+                  />
+                </View>
+                <Text cls="white lightFont pl3">Facebook</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity cls="jcc pv1 ph3 aic mt3">
+              <View
+                cls="br5 ba pa2 fullWidth aic flx-row"
+                style={{ borderColor: '#d29dc5' }}>
+                <View cls="pl2">
+                  <Image
+                    cls="widthFn-18 heightFn-18"
+                    style={{ tintColor: '#FFF' }}
+                    source={Images.ic_link}
+                  />
+                </View>
+                <Text cls="white lightFont pl3">Sao chép liên kết</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity cls="jcc pv1 ph3 aic mt3">
+              <View
+                cls="br5 ba pa2 fullWidth aic flx-row"
+                style={{ borderColor: '#d29dc5' }}>
+                <View cls="pl2">
+                  <Image
+                    cls="widthFn-18 heightFn-18"
+                    style={{ tintColor: '#FFF' }}
+                    source={Images.ic_insta}
+                  />
+                </View>
+                <Text cls="white lightFont pl3">Instagram</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity cls="jcc pv1 ph3 aic mt3">
+              <View
+                cls="br5 ba pa2 fullWidth aic flx-row"
+                style={{ borderColor: '#d29dc5' }}>
+                <View cls="pl2">
+                  <Image
+                    cls="widthFn-18 heightFn-18"
+                    style={{ tintColor: '#FFF' }}
+                    source={Images.ic_zalo}
+                  />
+                </View>
+                <Text cls="white lightFont pl3">Zalo</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity cls="jcc pv1 ph3 aic mt3">
+              <View
+                cls="br5 ba pa2 fullWidth aic flx-row"
+                style={{ borderColor: '#d29dc5' }}>
+                <View cls="pl2">
+                  <Image
+                    cls="widthFn-18 heightFn-18"
+                    style={{ tintColor: '#FFF' }}
+                    source={Images.ic_menu}
+                  />
+                </View>
+                <Text cls="white lightFont pl3">Thêm nữa</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   });
 
@@ -285,7 +353,8 @@ export default class Player extends Component {
           justifyCenterModal
           forceInsetTop={'never'}
           forceInsetBottom={'never'}
-          headerNone={showPlayMenu}
+          headerNone={true}
+          closeBottomNone={true}
           // onModalHide={this._hideModal}
           containerCls="">
           {this._renderModalContent()}

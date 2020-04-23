@@ -240,12 +240,7 @@ export default class LogInComponent extends Component {
               <View cls="fullWidth pa3 pt0 mt4 aic">
                 <View cls="pt3">
                   <TouchableOpacity onPress={this.handleLoginWithFacebook}>
-                    <View
-                      cls="aic ba b--#321A54 bg-#323277 br5 widthFn-220 heightFn-50"
-                      style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
+                    <View cls="aic ba b--#321A54 bg-#323277 br5 widthFn-220 heightFn-50 aic jcc">
                       <Text cls="white f6 avertaFont">Facebook</Text>
                     </View>
                   </TouchableOpacity>

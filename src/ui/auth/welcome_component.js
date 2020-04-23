@@ -62,33 +62,27 @@ export default class WelcomeComponent extends Component {
                 </View>
                 {/* Button Group */}
                 <View cls="fullWidth pa3 pt0 pb0 aic">
-                  <TouchableOpacity onPress={this.handleLogin}>
+                  <TouchableOpacity onPress={this.handleSignUp}>
                     <LinearGradient
-                      cls="ba br5 b--#321A54"
+                      cls="ba br5 b--#321A54 widthFn-220 heightFn-50 aic jcc"
                       colors={['#4A3278', '#8B659D', '#DDA5CB']}
                       start={{ x: 0, y: 0 }}
                       end={{ x: 1, y: 0 }}>
-                      <Text
-                        cls="white f6 pl5 pr5 avertaFont"
-                        style={{
-                          paddingVertical: 12,
-                        }}>
-                        Đăng Nhập
-                      </Text>
+                      <Text cls="white f6  avertaFont">Đăng Ký</Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 </View>
 
                 <View cls="fullWidth pa4 pt3 aic">
                   <View cls="pt3">
-                    <TouchableOpacity onPress={this.handleSignUp}>
+                    <TouchableOpacity onPress={this.handleLogin}>
                       <View
                         cls="br5 ba aic flx-row"
                         style={{ borderColor: '#d29dc5' }}>
                         <Text
-                          cls="white f6 avertaFont"
+                          cls="white f6 pl5 pr5 avertaFont"
                           style={styles.regisButton}>
-                          Đăng Ký
+                          Đăng nhập
                         </Text>
                       </View>
                     </TouchableOpacity>
