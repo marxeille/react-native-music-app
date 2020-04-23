@@ -133,7 +133,9 @@ export default class Player extends Component {
       <ScrollView
         style={{ width: '100%', height: '100%' }}
         showsVerticalScrollIndicator={false}>
-        <View cls="fullHeight jcc pt3">
+        <View
+          cls="fullHeight jcc pt3"
+          style={{ paddingTop: getStatusBarHeight() + 20 }}>
           <ImageBackground
             cls="fullWidth jcsb"
             resizeMode="cover"

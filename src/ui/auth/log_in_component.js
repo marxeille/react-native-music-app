@@ -64,6 +64,10 @@ export default class LogInComponent extends Component {
     }
   };
 
+  handleForgot = () => {
+    navigate('forgot');
+  };
+
   handleSignUp = () => {
     navigate('sign-up');
   };
@@ -182,7 +186,7 @@ export default class LogInComponent extends Component {
                 </LinearGradient>
               </View>
               <View cls="fullWidth pl3 pr4 pb4 pt3">
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this.handleForgot}>
                   <View cls="pl3">
                     <Text
                       cls="ml3"
