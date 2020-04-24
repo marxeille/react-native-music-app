@@ -69,7 +69,10 @@ export const AlbumModel = types
         const likedPlaylists = yield apiService.libraryApiService.getLikedAlbums(
           id,
         );
+
         if (likedPlaylists.status == 200) {
+          console.log('likedPlaylists.data', likedPlaylists.data);
+
           const preparedData = likedPlaylists.data.map(
             track => track.entity_id,
           );

@@ -57,7 +57,7 @@ export default class AddPlayListModal extends Component {
         _hideModal={this.onClosePress}
       />
     ) : (
-      <View>
+      <View cls="pb8">
         <View cls="pv2 flx-row aic bg-#280f46">
           <View cls="aifs jcc flx-i">
             <TouchableOpacity
@@ -122,7 +122,6 @@ const ActionItem = wrap(({ item }) => {
         <View cls="pl2">
           <Text cls="white fw7 f6 pl2"> {item?.title() ?? 'Default'}</Text>
           <Text cls="primaryPurple f6 pl2 pt1">
-            {' '}
             {item?.subTitle() ?? 'Default'}
           </Text>
         </View>

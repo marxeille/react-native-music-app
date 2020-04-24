@@ -26,6 +26,8 @@ export default class PlaylistItem extends Component {
                 ? {
                     uri: item.getThumb(),
                   }
+                : item?.id == 0
+                ? Images.ic_heart_cover
                 : item && isTextEmpty(item.getThumb())
                 ? Images.bAAlbum
                 : require('../../../../assets/images/add_playlist.png')

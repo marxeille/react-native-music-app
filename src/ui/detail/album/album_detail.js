@@ -6,7 +6,6 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   Alert,
 } from 'react-native';
 import { observer } from 'mobx-react';
@@ -14,7 +13,6 @@ import {
   makeCancelable,
   getStatusBarHeight,
   isTextEmpty,
-  D_WIDTH,
 } from '../../../utils';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
@@ -30,6 +28,7 @@ import Loading from '../../components/loading';
 import { navigate } from '../../../navigation/navigation_service';
 import MenuConcept from '../../components/playlist_menu_concept';
 import { apiService } from '../../../data/context/api_context';
+import ActionGroup from './components/action_group';
 
 @observer
 @wrap
@@ -96,11 +95,6 @@ export default class AlbumDetail extends Component {
       ids: [],
       showMenuEdit: false,
       playing: false,
-      following:
-        indexOf(
-          [...this.viewModel?.likedPlaylist],
-          Number(props.route.params.item.id),
-        ) >= 0,
     };
   }
 
@@ -203,9 +197,7 @@ export default class AlbumDetail extends Component {
     }
   };
 
-  onReactionError = () => {
-    this.setState({ following: !this.state.following });
-  };
+  onReactionError = () => {};
 
   follow = async () => {
     const { item } = this.props.route?.params;
@@ -227,18 +219,10 @@ export default class AlbumDetail extends Component {
     );
   };
 
-  reaction = () => {
-    const following =
-      indexOf(
-        [...this.viewModel?.likedPlaylist],
-        Number(
-          typeof this.props.route.params.item == 'number'
-            ? this.props.route.params.item
-            : this.props.route.params.item.id,
-        ),
-      ) >= 0;
-    this.setState({ following: !following });
-    !following ? this.follow() : this.unfollow();
+  reaction = state => {
+    console.log('state', state);
+
+    !state ? this.follow() : this.unfollow();
   };
 
   playSong = song => {
@@ -276,14 +260,12 @@ export default class AlbumDetail extends Component {
 
   addSong = () => {};
 
-  renderHeaderSection = wrap(songs => {
+  renderHeaderSection = wrap(hasSong => {
     let { item } = this.props.route?.params;
 
     if (typeof item == 'number') {
       item = this.state.article;
     }
-
-    const hasSong = songs.length > 0;
 
     return (
       <View cls="pb5">
@@ -316,6 +298,8 @@ export default class AlbumDetail extends Component {
               source={
                 !isEmpty(item) && !isTextEmpty(item?.getThumb())
                   ? { uri: item?.getThumb() }
+                  : item?.id == 0
+                  ? Images.ic_heart_cover
                   : Images.bAAlbum
               }
             />
@@ -326,122 +310,50 @@ export default class AlbumDetail extends Component {
                   ? item.title().toUpperCase()
                   : '...'}
               </Text>
-              <Text cls="f9 primaryPurple latoFont">
-                {`${this.viewModel.stats
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} lượt thích`}
-              </Text>
-              <Text cls="white f8 latoFont pt2 pb4">
-                {hasSong
-                  ? `Idol khÁ ${
-                      typeof item.subTitle == 'function'
-                        ? item.getDescription()
-                        : '...'
-                    } bẢnH is on top of the Vinahey hey hey!`
-                  : 'Hãy cùng tìm kiếm vài bài hát cho playlist của bạn'}
-              </Text>
+              {item?.id == 0 ? (
+                <View cls="pb4">
+                  <Text cls="f9 primaryPurple lightFont">
+                    {rootStore?.userStore?.name}
+                  </Text>
+                </View>
+              ) : (
+                <>
+                  <Text cls="f9 primaryPurple lightFont">
+                    {`${this.viewModel.stats
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} lượt thích`}
+                  </Text>
+                  <Text cls="white f8 lightFont pt2 pb4">
+                    {hasSong
+                      ? `Idol khÁ ${
+                          typeof item.subTitle == 'function'
+                            ? item.getDescription()
+                            : '...'
+                        } bẢnH is on top of the Vinahey hey hey!`
+                      : 'Hãy cùng tìm kiếm vài bài hát cho playlist của bạn'}
+                  </Text>
+                </>
+              )}
             </View>
           </View>
           <View style={{ position: 'absolute', bottom: -23 }}>
-            {this.renderActionSection(item, hasSong)}
+            <ActionGroup
+              item={item}
+              playSong={this.playSong}
+              playing={this.state.playing}
+              reaction={this.reaction}
+              addSong={this.addSong}
+              hasSong={hasSong}
+              viewModel={this.viewModel}
+            />
           </View>
         </ImageBackground>
       </View>
     );
   });
 
-  renderActionSection = wrap((item, hasSong) => {
-    const following =
-      indexOf(
-        [...this.viewModel?.likedPlaylist],
-        Number(
-          typeof this.props.route.params.item == 'number'
-            ? this.props.route.params.item
-            : this.props.route.params.item.id,
-        ),
-      ) >= 0;
-    return (
-      <ImageBackground
-        style={{ width: D_WIDTH, height: 50 }}
-        cls="aic jcc"
-        resizeMode="contain"
-        source={Images.pl_wave}>
-        <View cls="flx-row">
-          {hasSong ? (
-            <>
-              <View cls="pa3 pr0">
-                <TouchableWithoutFeedback
-                  onPress={
-                    rootStore.userStore.id == item.owner_id
-                      ? this.addSong
-                      : this.reaction
-                  }>
-                  {rootStore.userStore.id == item.owner_id ? (
-                    <Image
-                      cls="widthFn-50 heightFn-50"
-                      source={Images.ic_btn_plus}
-                    />
-                  ) : (
-                    <Image
-                      cls="widthFn-50 heightFn-50"
-                      source={
-                        following ? Images.ic_btn_like : Images.ic_btn_like_on
-                      }
-                    />
-                  )}
-                </TouchableWithoutFeedback>
-              </View>
-              <View cls="pa3 pl0 pr0">
-                <TouchableOpacity onPress={() => this.playSong()}>
-                  <Image
-                    resizeMode="contain"
-                    cls="widthFn-150 heightFn-50"
-                    source={
-                      this.state.playing
-                        ? Images.ic_btn_pause
-                        : Images.ic_btn_play
-                    }
-                  />
-                </TouchableOpacity>
-              </View>
-              <View cls="pa3 pl0">
-                <TouchableWithoutFeedback onPress={() => {}}>
-                  <Image
-                    cls="widthFn-50 heightFn-50"
-                    source={Images.ic_btn_download}
-                  />
-                </TouchableWithoutFeedback>
-              </View>
-            </>
-          ) : (
-            <>
-              <TouchableWithoutFeedback
-                onPress={() => {
-                  this.addSong();
-                }}>
-                <LinearGradient
-                  cls="br5 b--#321A54"
-                  colors={['#4A3278', '#8B659D', '#DDA5CB']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}>
-                  <Text
-                    cls="white f7 pl4 pr4 avertaFont"
-                    style={{
-                      paddingVertical: 8,
-                    }}>
-                    Thêm bài hát
-                  </Text>
-                </LinearGradient>
-              </TouchableWithoutFeedback>
-            </>
-          )}
-        </View>
-      </ImageBackground>
-    );
-  });
-
-  _renderListHeaderContent = wrap(songs => {
-    return <>{this.renderHeaderSection(songs)}</>;
+  _renderListHeaderContent = wrap(hasSong => {
+    return <>{this.renderHeaderSection(hasSong)}</>;
   });
 
   _renderItem = wrap(item => {
@@ -489,6 +401,8 @@ export default class AlbumDetail extends Component {
       });
     });
 
+    const hasSong = songs.length > 0;
+
     return this.viewModel.state == 'loading' ? (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}
@@ -506,7 +420,7 @@ export default class AlbumDetail extends Component {
         <View cls="fullView">
           <ImageBackground cls="fullView" source={Images.bg2}>
             <FlatList
-              ListHeaderComponent={() => this._renderListHeaderContent(songs)}
+              ListHeaderComponent={() => this._renderListHeaderContent(hasSong)}
               data={songs}
               showsVerticalScrollIndicator={false}
               renderItem={this._renderItem}

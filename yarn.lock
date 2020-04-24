@@ -5530,6 +5530,11 @@ react-native-music-control@^0.10.0:
   resolved "https://registry.yarnpkg.com/react-native-music-control/-/react-native-music-control-0.10.8.tgz#72272bf9cb1fc0142dc38c99e5f2142fece3c37a"
   integrity sha512-MRPdHpRwl4E2xS4JP2S+XtlFznGrYhizHERKrqE0GnpF/Osei+0fBtOdjHBVu/PkiYS/cwNeUxWdymmpmyQVpg==
 
+react-native-otp-inputs@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-otp-inputs/-/react-native-otp-inputs-5.0.1.tgz#59362997a9b32c16a15dde1ede52301c304bc9b9"
+  integrity sha512-mJk6cEuJKcQtfkJOCdQHFTfIoQcz5GEVAbQ3C02UWtqHhDrfokLrnJcFapAdxthVdxx6M1g9hCSbhQ8sNwdewA==
+
 react-native-reanimated@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.7.0.tgz#896db2576552ac59d288a1f6c7f00afc171f240c"
