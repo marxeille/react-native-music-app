@@ -17,7 +17,7 @@ export default class ItemHome extends Component {
   render() {
     const item = rootStore.playlist.get(this.props.id);
     return (
-      <View cls="widthFn-150 pl3 mr3 pb4">
+      <View cls="widthFn-150 pl3 mr3 pb2">
         <Image
           cls="heightFn-150 widthFn-150"
           source={
@@ -26,7 +26,10 @@ export default class ItemHome extends Component {
               : Images.bAAlbum
           }
         />
-        <Text cls="white pt2 fw6 lightFont">
+        <Text
+          cls="white pt2 fw6 lightFont"
+          numberOfLines={1}
+          ellipsizeMode="tail">
           {rootStore.playlist.get(this.props.id).title()}
         </Text>
         <Text cls="primaryPurple pt1 lightFont f11">
