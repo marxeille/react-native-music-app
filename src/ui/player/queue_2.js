@@ -5,7 +5,6 @@ import {
   ImageBackground,
   Text,
   TouchableOpacity,
-  FlatList,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../themes';
@@ -17,9 +16,8 @@ import { subLongStr, D_HEIGHT, isTextEmpty } from '../../utils';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import LinearGradientText from '../main/library/components/LinearGradientText';
 import * as _ from 'lodash';
-import GestureRecognizer, {
-  swipeDirections,
-} from 'react-native-swipe-gestures';
+import GestureRecognizer from 'react-native-swipe-gestures';
+import TextTicker from 'react-native-text-ticker';
 
 @observer
 @wrap
@@ -54,11 +52,21 @@ class Queue2 extends Component {
               cls="widthFn-52 heightFn-52 mr3"
             />
             <View>
-              <Text cls="white fw7 f6 latoFont">
-                {currentSong !== null
-                  ? subLongStr(currentSong?.getName(), 25)
-                  : 'Dèfault Title'}
-              </Text>
+              <TextTicker
+                style={{ fontSize: 17 }}
+                duration={6000}
+                loop
+                bounce
+                repeatSpacer={150}
+                scrollSpeed={100}
+                bounceSpeed={400}
+                marqueeDelay={800}>
+                <Text cls="white fw7 f6 latoFont">
+                  {currentSong !== null
+                    ? currentSong?.getName()
+                    : 'Dèfault Title'}
+                </Text>
+              </TextTicker>
               <Text cls="primaryPurple f9 pt1 latoFont">
                 Idol {currentSong?.getSubTitle()} bẢnH
               </Text>
@@ -66,7 +74,7 @@ class Queue2 extends Component {
           </View>
           <TouchableOpacity onPress={() => toggleStatus()}>
             <Image
-              cls="widthFn-52 heightFn-52"
+              cls="widthFn-52 heightFn-52 pl2"
               source={
                 statusPlayer == 'pause'
                   ? Images.ic_btn_play2
@@ -105,7 +113,7 @@ class Queue2 extends Component {
   shuffeData = queue => {
     if (queue[0].flag == 'header') {
       let sliceIndex = _.findIndex(queue, q => q.order == 2);
-      const queueSongs = _.cloneDeep(queue);
+      let queueSongs = _.cloneDeep(queue);
       if (sliceIndex >= 0) {
         queueSongs = queue.slice(0, sliceIndex);
       }
@@ -159,16 +167,16 @@ class Queue2 extends Component {
         </View>
       </GestureRecognizer>
     ) : (
-      <GestureRecognizer onSwipeRight={this.onSwipeRight} config={this.config}>
-        <QueueChild
-          item={item}
-          onSongCheck={this.onSongCheck}
-          checked={_.indexOf(this.state.checkedSongs, item.id) >= 0}
-          drag={drag}
-          isActive={isActive}
-          key={item.id.toString()}
-        />
-      </GestureRecognizer>
+      <QueueChild
+        item={item}
+        onSwipeRight={this.onSwipeRight}
+        onSongCheck={this.onSongCheck}
+        checked={_.indexOf(this.state.checkedSongs, item.id) >= 0}
+        drag={drag}
+        config={this.config}
+        isActive={isActive}
+        key={item.id.toString()}
+      />
     );
   });
 

@@ -89,7 +89,11 @@ export default class PlayerTabView extends React.Component {
             <Image
               blurRadius={30}
               style={styles.bg}
-              source={{ uri: rootStore.playerStore?.currentSong?.artwork }}
+              source={
+                rootStore.playerStore?.currentSong?.artwork
+                  ? { uri: rootStore.playerStore?.currentSong?.artwork }
+                  : Images.bAAlbum
+              }
             />
           ) : null}
           <TabView
