@@ -204,16 +204,33 @@ class Queue2 extends Component {
       <ImageBackground cls="jcsb fullView pt2" source={Images.bg3}>
         {this.renderQueuePlayer()}
         <View cls="pa3" style={{ height: D_HEIGHT - 112, paddingBottom: 56 }}>
-          <DraggableFlatList
-            data={data}
-            // ListHeaderComponent={this.renderQueuePlayer()}
-            showsVerticalScrollIndicator={false}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => `draggable-item-${index}`}
-            onDragEnd={({ data }) => {
-              this.shuffeData(data);
-            }}
-          />
+          {data.length == 1 ? (
+            <GestureRecognizer
+              onSwipeRight={this.onSwipeRight}
+              config={this.config}>
+              <DraggableFlatList
+                data={data}
+                // ListHeaderComponent={this.renderQueuePlayer()}
+                showsVerticalScrollIndicator={false}
+                renderItem={this.renderItem}
+                keyExtractor={(item, index) => `draggable-item-${index}`}
+                onDragEnd={({ data }) => {
+                  this.shuffeData(data);
+                }}
+              />
+            </GestureRecognizer>
+          ) : (
+            <DraggableFlatList
+              data={data}
+              // ListHeaderComponent={this.renderQueuePlayer()}
+              showsVerticalScrollIndicator={false}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => `draggable-item-${index}`}
+              onDragEnd={({ data }) => {
+                this.shuffeData(data);
+              }}
+            />
+          )}
         </View>
         <View
           cls="heightFn-56 fullWidth"

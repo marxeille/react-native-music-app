@@ -14,17 +14,19 @@ export default class ItemHomeSmall extends Component {
     this.state = {};
   }
 
+  playSong = () => {
+    rootStore?.playlistSongStore?.clearListSongs();
+    if (rootStore.playerStore?.currentSong?.id == this.props.id) {
+      return this.props.navigate('player');
+    }
+    this.props.navigate('player', { trackId: this.props.id });
+  };
+
   render() {
     const { item } = this.props.item;
 
     return (
-      <TouchableOpacity
-        onPress={() => {
-          if (rootStore.playerStore?.currentSong?.id == this.props.id) {
-            return this.props.navigate('player');
-          }
-          this.props.navigate('player', { trackId: this.props.id });
-        }}>
+      <TouchableOpacity onPress={this.playSong}>
         <View cls="widthFn-130 pl3 mr3 pb2">
           <Image
             cls="heightFn-130 widthFn-130"
