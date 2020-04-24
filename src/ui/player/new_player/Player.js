@@ -32,6 +32,7 @@ import {
   isTextEmpty,
 } from '../../../utils';
 import { ShareDialog } from 'react-native-fbsdk';
+import ZaloShare from 'react-native-zalo-share';
 import SongMenu from '../components/song_menu';
 import GestureRecognizer, {
   swipeDirections,
@@ -136,6 +137,20 @@ export default class Player extends Component {
     Toast.showWithGravity('Đã sao chép liên kết', Toast.LONG, Toast.BOTTOM);
   };
 
+  onShareZalo = () => {
+    var config = {
+      msg: 'message',
+      link: rootStore.playerStore?.currentSong?.url,
+      linkTitle: '',
+      linkSource: '',
+      linkThumb: '',
+      appName: 'PlayerProject',
+    };
+    ZaloShare.shareMessage(config)
+      .then(console.log(' 👉🏼 send data to zalo success'))
+      .catch(error => console.log(' 👉🏼 error message', error.message));
+  };
+
   renderShareItem = wrap(({ item }) => {
     return (
       <View cls="pt2">
@@ -190,7 +205,9 @@ export default class Player extends Component {
       {
         icon: Images.ic_zalo,
         title: 'Zalo',
-        action: () => {},
+        action: () => {
+          this.onShareZalo();
+        },
       },
       {
         icon: Images.ic_menu,
