@@ -11,6 +11,7 @@ import {
   Clipboard,
   Alert,
   FlatList,
+  Platform,
 } from 'react-native';
 import Header from './Header';
 import AlbumArt from './AlbumArt';
@@ -38,6 +39,7 @@ import GestureRecognizer, {
   swipeDirections,
 } from 'react-native-swipe-gestures';
 import Toast from 'react-native-simple-toast';
+import Share from 'react-native-share';
 import { pop } from '../../../navigation/navigation_service';
 
 @observer
@@ -147,8 +149,37 @@ export default class Player extends Component {
       appName: 'PlayerProject',
     };
     ZaloShare.shareMessage(config)
-      .then(console.log(' 👉🏼 send data to zalo success'))
-      .catch(error => console.log(' 👉🏼 error message', error.message));
+      .then(console.log('send data to zalo success'))
+      .catch(error => console.log('error message', error.message));
+  };
+
+  onShareOther = async () => {
+    var url = rootStore.playerStore?.currentSong?.url;
+    var title = '';
+    var options = Platform.select({
+      ios: {
+        activityItemSources: [
+          {
+            // For sharing url with custom title.
+            placeholderItem: { type: 'url', content: url },
+            item: {
+              default: { type: 'url', content: url },
+            },
+            subject: {
+              default: title,
+            },
+            linkMetadata: { originalUrl: url, url, title },
+          },
+        ],
+      },
+    });
+    try {
+      const ShareResponse = await Share.open(options);
+      console.log(JSON.stringify(ShareResponse, null, 2));
+    } catch (error) {
+      console.log('Error =>', error);
+      console.log('error: '.concat(getErrorString(error)));
+    }
   };
 
   renderShareItem = wrap(({ item }) => {
@@ -212,7 +243,9 @@ export default class Player extends Component {
       {
         icon: Images.ic_menu,
         title: 'Thêm nữa',
-        action: () => {},
+        action: () => {
+          this.onShareOther();
+        },
       },
     ];
 
