@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Linking,
+  Clipboard,
   Alert,
 } from 'react-native';
 import Header from './Header';
@@ -34,6 +35,7 @@ import SongMenu from '../components/song_menu';
 import GestureRecognizer, {
   swipeDirections,
 } from 'react-native-swipe-gestures';
+import Toast from 'react-native-simple-toast';
 import { pop } from '../../../navigation/navigation_service';
 
 @observer
@@ -125,6 +127,12 @@ export default class Player extends Component {
   onShareSms = () => {
     var url = rootStore.playerStore?.currentSong?.url;
     Linking.openURL(`sms:/open?addresses=null&body=${url}`);
+  };
+
+  onCopyToClipboard = async () => {
+    var url = rootStore.playerStore?.currentSong?.url;
+    await Clipboard.setString(url);
+    Toast.showWithGravity('Đã sao chép liên kết', Toast.LONG, Toast.BOTTOM);
   };
 
   _renderModalContent = wrap(() => {
@@ -240,7 +248,9 @@ export default class Player extends Component {
                 <Text cls="white lightFont pl3">Facebook</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity cls="jcc pv1 ph3 aic mt3">
+            <TouchableOpacity
+              onPress={this.onCopyToClipboard.bind(this)}
+              cls="jcc pv1 ph3 aic mt3">
               <View
                 cls="br5 ba pa2 fullWidth aic flx-row"
                 style={{ borderColor: '#d29dc5' }}>
