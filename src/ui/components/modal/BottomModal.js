@@ -62,6 +62,7 @@ export default class BottomModal extends React.Component {
       children,
       style,
       containerStyle,
+      customGradient,
       leftIcon = 'close',
       forceInsetBottom = 'always',
       forceInsetTop = 'always',
@@ -94,8 +95,11 @@ export default class BottomModal extends React.Component {
           forceInset={{ top: forceInsetTop, bottom: forceInsetBottom }}
           cls="jcfe">
           {/* <View cls="bg-white fullView" style={[style]}> */}
+          {/*['#000', '#1a0632', '#000', '#13151A'] */}
           <LinearGradient
-            colors={['#291047', '#1a0632', '#110926', '#110926']}
+            colors={
+              customGradient ?? ['#291047', '#1a0632', '#110926', '#110926']
+            }
             start={{ x: 1, y: 0 }}
             end={{ x: 1, y: 1 }}>
             <ImageBackground cls="fullView" style={[style]} source={Images.bg2}>

@@ -16,6 +16,9 @@ import ListItem from './list_item';
 const PlaylistMenuConcept = observer(
   wrap(({ item, setMenu, settingItems }) => {
     const renderItem = useCallback(item => {
+      if (item.item.hidden) {
+        return null;
+      }
       return <ListItem item={item.item} />;
     });
     return (

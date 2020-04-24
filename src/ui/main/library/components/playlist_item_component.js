@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import { navigate } from '../../../../navigation/navigation_service';
 import { subLongStr, isTextEmpty } from '../../../../utils';
 import Images from '../../../../assets/icons/icons';
+import { rootStore } from '../../../../data/context/root_context';
 
 @observer
 @wrap
@@ -42,7 +43,7 @@ export default class PlaylistItem extends Component {
             </Text>
             {item !== undefined ? (
               <Text cls="primaryPurple f7 pl2 pt1 lightFont">
-                của {item.subTitle()}
+                {item?.id == 0 ? rootStore.userStore?.name : item.subTitle()}
               </Text>
             ) : null}
           </View>

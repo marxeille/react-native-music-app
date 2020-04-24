@@ -17,12 +17,19 @@ import { subLongStr, D_HEIGHT, isTextEmpty } from '../../utils';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import LinearGradientText from '../main/library/components/LinearGradientText';
 import * as _ from 'lodash';
+import GestureRecognizer, {
+  swipeDirections,
+} from 'react-native-swipe-gestures';
 
 @observer
 @wrap
 class Queue2 extends Component {
   constructor(props) {
     super(props);
+    this.config = {
+      velocityThreshold: 0.3,
+      directionalOffsetThreshold: 80,
+    };
     this.state = {
       checkedSongs: [],
     };
@@ -62,8 +69,8 @@ class Queue2 extends Component {
               cls="widthFn-52 heightFn-52"
               source={
                 statusPlayer == 'pause'
-                  ? Images.ic_play_large
-                  : Images.ic_pause_large
+                  ? Images.ic_btn_play2
+                  : Images.ic_btn_pause2
               }
             />
           </TouchableOpacity>
@@ -132,40 +139,49 @@ class Queue2 extends Component {
 
   renderItem = wrap(({ item, index, drag, isActive }) => {
     return item.flag == 'header' ? (
-      <View cls={item.order == 1 ? '' : `bt b--#7351a1`}>
-        <View cls={item.order == 1 ? 'flx-row' : `pt3 flx-row`}>
-          <LinearGradientText
-            text={item.title}
-            end={{ x: 0.6, y: 0 }}
-            styles={{
-              justifyContent: 'center',
-              fontSize: 20,
-              fontFamily: 'Averta-ExtraBold',
-            }}
-          />
+      <GestureRecognizer onSwipeRight={this.onSwipeRight} config={this.config}>
+        <View cls={item.order == 1 ? '' : `bt b--#7351a1`}>
+          <View cls={item.order == 1 ? 'flx-row' : `pt3 flx-row`}>
+            <LinearGradientText
+              text={item.title}
+              end={{ x: 0.6, y: 0 }}
+              styles={{
+                justifyContent: 'center',
+                fontSize: 20,
+                fontFamily: 'Averta-ExtraBold',
+              }}
+            />
 
-          <View style={{ paddingTop: 2 }}>
-            <Text cls="primaryPurple fw7 f6 avertaFont">{item.subTitle}</Text>
+            <View style={{ paddingTop: 2 }}>
+              <Text cls="primaryPurple fw7 f6 avertaFont">{item.subTitle}</Text>
+            </View>
           </View>
         </View>
-      </View>
+      </GestureRecognizer>
     ) : (
-      <QueueChild
-        item={item}
-        onSongCheck={this.onSongCheck}
-        checked={_.indexOf(this.state.checkedSongs, item.id) >= 0}
-        drag={drag}
-        isActive={isActive}
-        key={item.id.toString()}
-      />
+      <GestureRecognizer onSwipeRight={this.onSwipeRight} config={this.config}>
+        <QueueChild
+          item={item}
+          onSongCheck={this.onSongCheck}
+          checked={_.indexOf(this.state.checkedSongs, item.id) >= 0}
+          drag={drag}
+          isActive={isActive}
+          key={item.id.toString()}
+        />
+      </GestureRecognizer>
     );
   });
+
+  onSwipeRight = () => {
+    this.props._handleIndexChange(0);
+  };
 
   render() {
     const data = [
       { flag: 'header', title: 'Danh sách chờ', order: 1 },
       ...rootStore.queueStore.songs,
     ];
+
     if ([...rootStore.playlistSongStore.songs].length > 0) {
       data.push({
         flag: 'header',
@@ -177,7 +193,6 @@ class Queue2 extends Component {
     }
 
     return (
-      //   <View cls="jcsb fullView">
       <ImageBackground cls="jcsb fullView pt2" source={Images.bg3}>
         {this.renderQueuePlayer()}
         <View cls="pa3" style={{ height: D_HEIGHT - 112, paddingBottom: 56 }}>
@@ -198,7 +213,6 @@ class Queue2 extends Component {
           {this.renderBottomBar()}
         </View>
       </ImageBackground>
-      //   </View>
     );
   }
 }

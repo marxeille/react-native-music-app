@@ -268,6 +268,10 @@ export default class Player extends Component {
     );
   });
 
+  onSwipeLeft = () => {
+    this.props._handleIndexChange(1);
+  };
+
   render() {
     const { currentSong } = rootStore?.playerStore;
     const { showPlayMenu } = this.state;
@@ -276,10 +280,13 @@ export default class Player extends Component {
       directionalOffsetThreshold: 80,
     };
     return (
-      <ImageBackground source={Images.bg3} style={styles.container}>
+      <ImageBackground source={Images.bg2} style={styles.container}>
         <StatusBar hidden={true} />
-        <Header _showModal={this._showModal} message="Playing From Charts" />
-        <GestureRecognizer onSwipeDown={this.onSwipeDown} config={config}>
+        <GestureRecognizer
+          onSwipeDown={this.onSwipeDown}
+          onSwipeLeft={this.onSwipeLeft}
+          config={config}>
+          <Header message="Playing From Charts" />
           <AlbumArt url={currentSong?.artwork} />
           <TrackDetails
             title={currentSong?.getName()}

@@ -28,8 +28,6 @@ const ActionGroup = wrap(
       reaction(following);
     });
 
-    console.log('following', [...viewModel?.likedPlaylist], item.id, following);
-
     return (
       <ImageBackground
         style={{ width: D_WIDTH, height: 50 }}
@@ -42,7 +40,9 @@ const ActionGroup = wrap(
               <View cls="pa3 pr0">
                 <TouchableWithoutFeedback
                   onPress={
-                    rootStore.userStore.id == item.owner_id ? addSong : follow
+                    rootStore.userStore.id == item?.owner_id || item?.id == 0
+                      ? addSong
+                      : follow
                   }>
                   {rootStore.userStore.id == item?.owner_id || item?.id == 0 ? (
                     <Image

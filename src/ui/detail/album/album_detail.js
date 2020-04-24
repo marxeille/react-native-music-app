@@ -38,57 +38,6 @@ export default class AlbumDetail extends Component {
     this.modalSong = React.createRef();
     this.modalPlaylist = React.createRef();
     this.viewModel = AlbumModel.create({ state: 'loading', stats: 0 });
-    this.settingItems = [
-      {
-        title: 'Đổi ảnh bìa',
-        action: () => {},
-        icon: Images.ic_pic,
-        imgStyle: 'widthFn-20 heightFn-18',
-      },
-      {
-        title: 'Đổi tên',
-        action: () => {},
-        icon: Images.ic_pen,
-      },
-      {
-        title: 'Sửa playlist',
-        action: () => {
-          this.setState({ showMenuEdit: true });
-        },
-        icon: Images.ic_list,
-      },
-      {
-        title: 'Public playlist',
-        action: () => {
-          this.editPlaylist();
-        },
-        icon: Images.ic_lock,
-        imgStyle: 'widthFn-17 heightFn-20',
-      },
-      {
-        title: 'Xoá playlist',
-        action: async () => {
-          const { item } = this.props.route?.params;
-
-          const response = await apiService.trackApiService.deletePlaylist(
-            typeof item == 'number' ? item : item.id,
-          );
-          if (response.status == 200) {
-            Alert.alert('Xoá thành công');
-            rootStore.homeStore?.removePlaylist(
-              typeof item == 'number' ? item : item.id,
-            );
-            rootStore.libraryStore?.removePlaylist(
-              typeof item == 'number' ? item : item.id,
-            );
-            this.props.navigation.goBack();
-          } else {
-            Alert.alert('Vui lòng thử lại');
-          }
-        },
-        icon: Images.ic_circle_minus,
-      },
-    ];
     this.state = {
       download: false,
       article: {},
@@ -220,8 +169,6 @@ export default class AlbumDetail extends Component {
   };
 
   reaction = state => {
-    console.log('state', state);
-
     !state ? this.follow() : this.unfollow();
   };
 
@@ -370,6 +317,26 @@ export default class AlbumDetail extends Component {
     );
   });
 
+  deletePlaylist = async () => {
+    const { item } = this.props.route?.params;
+
+    const response = await apiService.trackApiService.deletePlaylist(
+      typeof item == 'number' ? item : item.id,
+    );
+    if (response.status == 200) {
+      Alert.alert('Xoá thành công');
+      rootStore.homeStore?.removePlaylist(
+        typeof item == 'number' ? item : item.id,
+      );
+      rootStore.libraryStore?.removePlaylist(
+        typeof item == 'number' ? item : item.id,
+      );
+      this.props.navigation.goBack();
+    } else {
+      Alert.alert('Vui lòng thử lại');
+    }
+  };
+
   changeOrder = orders => {
     rootStore.playlistSongStore?.addList(orders);
 
@@ -402,6 +369,80 @@ export default class AlbumDetail extends Component {
     });
 
     const hasSong = songs.length > 0;
+
+    const settingItems = [
+      {
+        title: 'Đổi ảnh bìa',
+        action: () => {},
+        icon: Images.ic_pic,
+        imgStyle: 'widthFn-20 heightFn-18',
+        hidden: rootStore.userStore?.id !== item.owner_id,
+      },
+      {
+        title: 'Đổi tên',
+        action: () => {},
+        icon: Images.ic_pen,
+        hidden: rootStore.userStore?.id !== item.owner_id,
+      },
+      {
+        title: 'Sửa playlist',
+        action: () => {
+          this.setState({ showMenuEdit: true });
+        },
+        icon: Images.ic_list,
+        hidden: rootStore.userStore?.id !== item.owner_id,
+      },
+      {
+        title: 'Public playlist',
+        action: () => {
+          this.editPlaylist();
+        },
+        hidden: rootStore.userStore?.id !== item.owner_id,
+        icon: Images.ic_lock,
+        imgStyle: 'widthFn-17 heightFn-20',
+      },
+      {
+        title: 'Xoá playlist',
+        hidden: rootStore.userStore?.id !== item.owner_id,
+        action: () => this.deletePlaylist(),
+        icon: Images.ic_circle_minus,
+      },
+      {
+        title: 'Tải xuống',
+        action: () => {},
+        hidden: rootStore.userStore?.id == item.owner_id,
+        icon: Images.ic_download_white,
+        imgStyle: 'widthFn-20 heightFn-24',
+      },
+      {
+        title: 'Thêm vào playlist',
+        action: () => {},
+        hidden: rootStore.userStore?.id == item.owner_id,
+        icon: Images.ic_add_pl,
+        imgStyle: 'widthFn-20 heightFn-24',
+      },
+      {
+        title: 'Thêm vào danh sách chờ',
+        action: () => {},
+        hidden: rootStore.userStore?.id == item.owner_id,
+        icon: Images.ic_add_queue,
+        imgStyle: 'widthFn-20 heightFn-20',
+      },
+      {
+        title: 'Chia sẻ',
+        action: () => {},
+        hidden: rootStore.userStore?.id == item.owner_id,
+        icon: Images.ic_share_white,
+        imgStyle: 'widthFn-20 heightFn-24',
+      },
+      {
+        title: 'Xem nghệ sĩ',
+        action: () => {},
+        hidden: rootStore.userStore?.id == item.owner_id,
+        icon: Images.ic_person,
+        imgStyle: 'widthFn-20 heightFn-24',
+      },
+    ];
 
     return this.viewModel.state == 'loading' ? (
       <LinearGradient
@@ -437,12 +478,13 @@ export default class AlbumDetail extends Component {
               justifyCenterModal
               forceInsetBottom="never"
               containerCls=""
+              customGradient={['#000', '#1a0632', '#000', '#13151A']}
               ref={this.modalPlaylist}>
               <MenuConcept
                 item={item}
                 songs={songs}
                 changeOrder={this.changeOrder}
-                settingItems={this.settingItems}
+                settingItems={settingItems}
                 showMenuEdit={this.state.showMenuEdit}
                 changeShowMenuEdit={this.changeShowMenuEdit}
               />

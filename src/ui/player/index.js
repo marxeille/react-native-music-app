@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Text,
   ImageBackground,
 } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
@@ -13,9 +14,12 @@ import Player2 from './new_player/App';
 import Queue from './queue_2';
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
-import { getStatusBarHeight } from '../../utils';
+import { getStatusBarHeight, D_WIDTH, D_HEIGHT } from '../../utils';
 import LinearGradient from 'react-native-linear-gradient';
+import { rootStore } from '../../data/context/root_context';
+import { observer } from 'mobx-react';
 
+@observer
 @wrap
 export default class PlayerTabView extends React.Component {
   state = {
@@ -23,7 +27,9 @@ export default class PlayerTabView extends React.Component {
     routes: [{ key: 'player' }, { key: 'queue' }],
   };
 
-  _handleIndexChange = index => this.setState({ index });
+  _handleIndexChange = index => {
+    this.setState({ index });
+  };
 
   _renderTabBar = wrap(props => {
     return (
@@ -57,9 +63,16 @@ export default class PlayerTabView extends React.Component {
   _renderScene = ({ route }) => {
     switch (route.key) {
       case 'player':
-        return <Player2 {...this.props} />;
+        return (
+          <Player2
+            {...this.props}
+            _handleIndexChange={this._handleIndexChange}
+          />
+        );
       case 'queue':
-        return <Queue {...this.props} />;
+        return (
+          <Queue {...this.props} _handleIndexChange={this._handleIndexChange} />
+        );
       default:
         return null;
     }
@@ -72,6 +85,13 @@ export default class PlayerTabView extends React.Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
+          {this.state.index == 0 ? (
+            <Image
+              blurRadius={30}
+              style={styles.bg}
+              source={{ uri: rootStore.playerStore?.currentSong?.artwork }}
+            />
+          ) : null}
           <TabView
             navigationState={this.state}
             renderScene={this._renderScene}
@@ -87,6 +107,13 @@ export default class PlayerTabView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  bg: {
+    width: D_WIDTH,
+    height: D_HEIGHT / 2 - 50,
+    position: 'absolute',
+    top: 0,
+    zIndex: -1,
   },
   tabBar: {
     flexDirection: 'row',

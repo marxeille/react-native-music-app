@@ -79,18 +79,22 @@ export default class HomeComponent extends Component {
                 data={[...rootStore?.homeStore?.popularSongs]}
                 title="Mới phát gần đây"
               />
-              <HomeListComponent
-                cate="1"
-                type={'small'}
-                data={[...rootStore?.homeStore?.popularSongs]}
-                title="Bài hát phổ biến"
-              />
-              <HomeListComponent
-                type={'large'}
-                title="Playlist phổ biến"
-                data={[...rootStore?.homeStore?.popular]}
-                cate="2"
-              />
+              <View cls="pt3">
+                <HomeListComponent
+                  cate="1"
+                  type={'small'}
+                  data={[...rootStore?.homeStore?.popularSongs]}
+                  title="Bài hát phổ biến"
+                />
+              </View>
+              <View cls="pt3">
+                <HomeListComponent
+                  type={'large'}
+                  title="Playlist phổ biến"
+                  data={[...rootStore?.homeStore?.popular]}
+                  cate="2"
+                />
+              </View>
               <HomeListComponent
                 type={'large'}
                 data={[...rootStore?.homeStore?.popular]}
