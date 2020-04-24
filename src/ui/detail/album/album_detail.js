@@ -29,6 +29,7 @@ import { navigate } from '../../../navigation/navigation_service';
 import MenuConcept from '../../components/playlist_menu_concept';
 import { apiService } from '../../../data/context/api_context';
 import ActionGroup from './components/action_group';
+import AddSongPlaylist from '../../components/add_playlist_modal/add_song';
 
 @observer
 @wrap
@@ -37,6 +38,7 @@ export default class AlbumDetail extends Component {
     super(props);
     this.modalSong = React.createRef();
     this.modalPlaylist = React.createRef();
+    this.modalAddSong = React.createRef();
     this.viewModel = AlbumModel.create({ state: 'loading', stats: 0 });
     this.state = {
       download: false,
@@ -129,6 +131,18 @@ export default class AlbumDetail extends Component {
     }
   };
 
+  _showModalAddSong = () => {
+    if (this.modalAddSong && this.modalAddSong.current) {
+      this.modalAddSong.current._showModal();
+    }
+  };
+
+  _hideModalAddSong = () => {
+    if (this.modalAddSong && this.modalAddSong.current) {
+      this.modalAddSong.current._hideModal();
+    }
+  };
+
   onReactionSuccess = (type, data) => {
     const { item } = this.props.route?.params;
     const idExist = indexOf(
@@ -200,12 +214,16 @@ export default class AlbumDetail extends Component {
         }
         rootStore.playerStore?.setState('play');
       } else {
+        rootStore.playlistSongStore?.setPlaylist({});
+        rootStore.playerStore?.clearSong();
         rootStore.playerStore?.setState('pause');
       }
     }
   };
 
-  addSong = () => {};
+  addSong = () => {
+    this._showModalAddSong();
+  };
 
   renderHeaderSection = wrap(hasSong => {
     let { item } = this.props.route?.params;
@@ -488,6 +506,13 @@ export default class AlbumDetail extends Component {
                 showMenuEdit={this.state.showMenuEdit}
                 changeShowMenuEdit={this.changeShowMenuEdit}
               />
+            </BottomModal>
+            <BottomModal
+              headerNone
+              justifyCenterModal
+              containerCls=""
+              ref={this.modalAddSong}>
+              <AddSongPlaylist toggleAddSong={this._hideModalAddSong} />
             </BottomModal>
           </ImageBackground>
         </View>
