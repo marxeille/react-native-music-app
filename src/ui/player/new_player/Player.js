@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
+  Linking,
   Alert,
 } from 'react-native';
 import Header from './Header';
@@ -121,6 +122,11 @@ export default class Player extends Component {
     pop();
   };
 
+  onShareSms = () => {
+    var url = rootStore.playerStore?.currentSong?.url;
+    Linking.openURL(`sms:/open?addresses=null&body=${url}`);
+  };
+
   _renderModalContent = wrap(() => {
     const { showPlayMenu } = this.state;
 
@@ -133,9 +139,7 @@ export default class Player extends Component {
       <ScrollView
         style={{ width: '100%', height: '100%' }}
         showsVerticalScrollIndicator={false}>
-        <View
-          cls="fullHeight jcc pt3"
-          style={{ paddingTop: getStatusBarHeight() + 20 }}>
+        <View cls="fullHeight jcc pt3">
           <ImageBackground
             cls="fullWidth jcsb"
             resizeMode="cover"
@@ -204,7 +208,9 @@ export default class Player extends Component {
           </ImageBackground>
 
           <View cls="fullWidth mt4 jcc">
-            <TouchableOpacity cls="jcc pv1 ph3 aic">
+            <TouchableOpacity
+              onPress={this.onShareSms.bind(this)}
+              cls="jcc pv1 ph3 aic">
               <View
                 cls="br5 ba pa2 fullWidth aic flx-row"
                 style={{ borderColor: '#d29dc5' }}>
