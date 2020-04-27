@@ -6,10 +6,10 @@ import {
   getTrackFullDetail,
   getPlaylistCover,
 } from '../../../../data/datasource/api_helper';
-import { Alert } from 'react-native';
 import { rootStore } from '../../../../data/context/root_context';
 import { uploadImage } from '../../../../data/datasource/api_config';
 import { isTextEmpty } from '../../../../utils';
+import Toast from 'react-native-simple-toast';
 
 export const CreatePlaylistModel = types
   .model('CreatePlaylistModel', {
@@ -67,9 +67,9 @@ export const CreatePlaylistModel = types
           rootStore.updatePlayList(playlistFullInfo);
           rootStore.libraryStore?.updatePlayList(playlistFullInfo);
           rootStore.homeStore?.addPopular(playlistFullInfo);
-          Alert.alert('Tạo thành công');
+          Toast.showWithGravity('Tạo thành công', Toast.LONG, Toast.BOTTOM);
         } else {
-          Alert.alert('Vui lòng thử lại');
+          Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
         }
       }),
       //

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Text, View, TouchableOpacity, Image, Alert } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { wrap } from '../../../themes';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
@@ -9,6 +9,7 @@ import ModifyItem from './modify_item';
 import { remove, cloneDeep } from 'lodash';
 import { apiService } from '../../../data/context/api_context';
 import { rootStore } from '../../../data/context/root_context';
+import Toast from 'react-native-simple-toast';
 
 const Modifyplaylist = wrap(
   ({ setMenu, item, songs, changeOrder, changeShowMenuEdit }) => {
@@ -34,14 +35,14 @@ const Modifyplaylist = wrap(
               rootStore.createSongRef(song);
             });
             changeOrder(songsState.map(song => Number(song.id)));
-            Alert.alert('Sửa thành công');
+            Toast.showWithGravity('Sửa thành công', Toast.LONG, Toast.BOTTOM);
           } else {
-            Alert.alert('Vui lòng thử lại');
+            Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
           }
         })
         .catch(err => {
           console.log('err => ', err);
-          Alert.alert('Vui lòng thử lại');
+          Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
         });
       setMenu(true);
       changeShowMenuEdit(false);

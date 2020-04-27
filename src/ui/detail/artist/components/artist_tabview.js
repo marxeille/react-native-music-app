@@ -79,7 +79,7 @@ export default class ArtistTabView extends Component {
           <View cls="asc pa3 pt2 pb4">
             <Text cls="white latoFont">
               {readMore
-                ? artist.getBio()
+                ? artist?.short_biography
                 : `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean feugiat neque nec ipsum venenatis lacinia. Maecenas euismod volutpat risus non fermentum. Fusce dui felis, posuere eget volutpat vel, interdum non nibh. Cras vitae rutrum libero. Curabitur venenatis interdum nisl nec gravida. Etiam dui nunc, faucibus eu pellentesque a, sagittis quis quam. Fusce sed euismod odio. Ut in rutrum diam. Mauris viverra vulputate elit.`}
             </Text>
             <TouchableOpacity

@@ -3,8 +3,7 @@ import Video from 'react-native-video';
 import { observer } from 'mobx-react';
 import { rootStore } from '../../../data/context/root_context';
 import { PlayerContext } from '../../../data/context/player_context';
-import { Alert } from 'react-native';
-
+import Toast from 'react-native-simple-toast';
 @observer
 class PlayerAudio extends React.Component {
   static contextType = PlayerContext;
@@ -37,7 +36,11 @@ class PlayerAudio extends React.Component {
   };
 
   videoError = () => {
-    Alert.alert('Có lỗi xảy ra khi load bài hát, vui lòng thử lại');
+    Toast.showWithGravity(
+      'Có lỗi xảy ra khi load bài hát, vui lòng thử lại sau.',
+      Toast.LONG,
+      Toast.BOTTOM,
+    );
   };
 
   render() {

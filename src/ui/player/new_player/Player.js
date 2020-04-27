@@ -7,8 +7,6 @@ import {
   StyleSheet,
   Linking,
   Clipboard,
-  Alert,
-  FlatList,
   Platform,
 } from 'react-native';
 import Header from './Header';
@@ -22,14 +20,8 @@ import { PlayerContext } from '../../../data/context/player_context';
 import Images from '../../../assets/icons/icons';
 import BottomModal from '../../components/modal/BottomModal';
 import * as _ from 'lodash';
-import { ScrollView } from 'react-native-gesture-handler';
 import { wrap } from '../../../themes';
-import {
-  isMeidumDevice,
-  isSmallDevice,
-  subLongStr,
-  isTextEmpty,
-} from '../../../utils';
+import { isMeidumDevice, isSmallDevice } from '../../../utils';
 import { ShareDialog } from 'react-native-fbsdk';
 import ZaloShare from 'react-native-zalo-share';
 import SongMenu from '../components/song_menu';
@@ -112,13 +104,21 @@ export default class Player extends Component {
       .then(
         function(result) {
           if (result.isCancelled) {
-            Alert.alert('Đã huỷ');
+            Toast.showWithGravity('Đã huỷ', Toast.LONG, Toast.BOTTOM);
           } else {
-            Alert.alert('Chia sẻ thành công với id: ' + result.postId);
+            Toast.showWithGravity(
+              'Chia sẻ thành công',
+              Toast.LONG,
+              Toast.BOTTOM,
+            );
           }
         },
         function(error) {
-          Alert.alert('Chia sẻ thất bại: ' + error);
+          Toast.showWithGravity(
+            'Chia sẻ thất bại: ' + error,
+            Toast.LONG,
+            Toast.BOTTOM,
+          );
         },
       );
   };
@@ -176,7 +176,6 @@ export default class Player extends Component {
       const ShareResponse = await Share.open(options);
       console.log(JSON.stringify(ShareResponse, null, 2));
     } catch (error) {
-      console.log('Error =>', error);
       console.log('error: '.concat(getErrorString(error)));
     }
   };

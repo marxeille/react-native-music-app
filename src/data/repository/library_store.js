@@ -1,4 +1,3 @@
-import { Alert } from 'react-native';
 import { types, flow, getParent } from 'mobx-state-tree';
 import { Result } from './result';
 import { PlayList } from '../model/playlist';
@@ -7,6 +6,7 @@ import { Artist } from '../model/artist';
 import { apiService } from '../context/api_context';
 import { getPlaylistCover } from '../datasource/api_helper';
 import { findIndex } from 'lodash';
+import Toast from 'react-native-simple-toast';
 
 export const LibraryStore = types
   .model('LibraryStore', {
@@ -85,7 +85,7 @@ export const LibraryStore = types
               self.playlists.push(pl.id);
             });
           } else {
-            Alert.alert(playlist.data.msg);
+            Toast.showWithGravity(playlist.data.msg, Toast.LONG, Toast.BOTTOM);
           }
         } catch (err) {
           console.log('err ', err);
@@ -101,7 +101,7 @@ export const LibraryStore = types
               self.artists.push(ar.id);
             });
           } else {
-            Alert.alert(artists.data.msg);
+            Toast.showWithGravity(artists.data.msg, Toast.LONG, Toast.BOTTOM);
           }
         } catch (err) {
           console.log('err ', err);
@@ -118,7 +118,7 @@ export const LibraryStore = types
               self.setAlbum(al);
             });
           } else {
-            Alert.alert(albums.data.msg);
+            Toast.showWithGravity(albums.data.msg, Toast.LONG, Toast.BOTTOM);
           }
         } catch (err) {
           console.log('err ', err);

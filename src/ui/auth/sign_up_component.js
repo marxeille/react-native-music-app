@@ -9,18 +9,16 @@ import {
   TouchableOpacity,
   ImageBackground,
   KeyboardAvoidingView,
-  Alert,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { wrap } from '../../themes';
-import { RootStore } from '../../data/repository/root_store';
-import { RootContext, rootStore } from '../../data/context/root_context';
-import UserInfo from '../../data/model/user_info';
+import { RootContext } from '../../data/context/root_context';
 import Images from '../../assets/icons/icons';
 import CheckBox from 'react-native-check-box';
 import { observer } from 'mobx-react';
-import { navigate, pop } from '../../navigation/navigation_service';
+import { pop } from '../../navigation/navigation_service';
 import { apiService } from '../../data/context/api_context';
+import Toast from 'react-native-simple-toast';
 
 @observer
 @wrap
@@ -48,16 +46,29 @@ export default class SignUpComponent extends Component {
 
   handleSignUp = async () => {
     const { email, pass, rePass } = this.state;
-    if (pass !== rePass) return Alert.alert('Mật khẩu phải giống nhau');
+    if (pass !== rePass)
+      return Toast.showWithGravity(
+        'Mật khẩu phải giống nhau',
+        Toast.LONG,
+        Toast.BOTTOM,
+      );
     const response = await apiService.commonApiService.register({
       email,
       password: pass,
     });
     if (response.status == 201) {
-      Alert.alert('Đăng ký thành công, bạn có thể đăng nhập');
+      Toast.showWithGravity(
+        'Đăng ký thành công, bạn có thể đăng nhập',
+        Toast.LONG,
+        Toast.BOTTOM,
+      );
       pop();
     } else {
-      Alert.alert('Đăng ký thất bại, vui lòng thử lại');
+      Toast.showWithGravity(
+        'Đăng ký thất bại, vui lòng thử lại',
+        Toast.LONG,
+        Toast.BOTTOM,
+      );
     }
   };
 

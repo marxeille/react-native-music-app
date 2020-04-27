@@ -6,7 +6,6 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import {
@@ -30,6 +29,7 @@ import MenuConcept from '../../components/playlist_menu_concept';
 import { apiService } from '../../../data/context/api_context';
 import ActionGroup from './components/action_group';
 import AddSongPlaylist from '../../components/add_playlist_modal/add_song';
+import Toast from 'react-native-simple-toast';
 
 @observer
 @wrap
@@ -342,7 +342,7 @@ export default class AlbumDetail extends Component {
       typeof item == 'number' ? item : item.id,
     );
     if (response.status == 200) {
-      Alert.alert('Xoá thành công');
+      Toast.showWithGravity('Xoá thành công', Toast.LONG, Toast.BOTTOM);
       rootStore.homeStore?.removePlaylist(
         typeof item == 'number' ? item : item.id,
       );
@@ -351,7 +351,7 @@ export default class AlbumDetail extends Component {
       );
       this.props.navigation.goBack();
     } else {
-      Alert.alert('Vui lòng thử lại');
+      Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
     }
   };
 

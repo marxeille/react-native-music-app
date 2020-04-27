@@ -7,7 +7,6 @@ import {
   TextInput,
   StyleSheet,
   Switch,
-  Alert,
   TouchableOpacity,
   FlatList,
   Keyboard,
@@ -19,6 +18,7 @@ import { D_WIDTH, isTextEmpty, subLongStr } from '../../../utils';
 import ImagePicker from 'react-native-image-picker';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
+import Toast from 'react-native-simple-toast';
 
 const options = () => ({
   title: 'Chọn ảnh',
@@ -82,7 +82,7 @@ const CreatePlaylistModal = observer(
       if (onlyCamera) {
         return ImagePicker.launchCamera(options(), response => {
           if (!isTextEmpty(response.error)) {
-            Alert.alert(response.error);
+            Toast.showWithGravity(response.error, Toast.LONG, Toast.BOTTOM);
           } else {
             resolveResponse(response);
           }
@@ -91,7 +91,7 @@ const CreatePlaylistModal = observer(
       if (onlyPhoto) {
         return ImagePicker.launchImageLibrary(options(), response => {
           if (!isTextEmpty(response.error)) {
-            Alert.alert(response.error);
+            Toast.showWithGravity(response.error, Toast.LONG, Toast.BOTTOM);
           } else {
             resolveResponse(response);
           }
@@ -99,7 +99,7 @@ const CreatePlaylistModal = observer(
       }
       ImagePicker.showImagePicker(options(), response => {
         if (!isTextEmpty(response.error)) {
-          Alert.alert(response.error);
+          Toast.showWithGravity(response.error, Toast.LONG, Toast.BOTTOM);
         } else {
           resolveResponse(response);
         }
@@ -156,7 +156,11 @@ const CreatePlaylistModal = observer(
           props._hideModal();
         }
       } else {
-        Alert.alert('Vui lòng nhập tên playlist.');
+        Toast.showWithGravity(
+          'Vui lòng nhập tên playlist',
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
       }
     });
 

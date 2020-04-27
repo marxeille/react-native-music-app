@@ -9,12 +9,10 @@ import {
   TouchableOpacity,
   ImageBackground,
   KeyboardAvoidingView,
-  Alert,
   TouchableWithoutFeedback,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { wrap } from '../../themes';
-import { RootStore } from '../../data/repository/root_store';
 import { login } from '../../data/datasource/api_config';
 import { RootContext } from '../../data/context/root_context';
 import UserInfo from '../../data/model/user_info';
@@ -23,6 +21,7 @@ import { navigate, pop } from '../../navigation/navigation_service';
 import { observer } from 'mobx-react';
 const FBSDK = require('react-native-fbsdk');
 const { LoginManager, AccessToken } = FBSDK;
+import Toast from 'react-native-simple-toast';
 
 @observer
 @wrap
@@ -59,8 +58,11 @@ export default class LogInComponent extends Component {
         }),
       );
     } else {
-      Alert.alert('Đăng nhập không thành công, vui lòng thử lại.');
-      // Alert.alert('Có lỗi xảy ra, vui lòng thử lại');
+      Toast.showWithGravity(
+        'Đăng nhập không thành công, vui lòng thử lại.',
+        Toast.LONG,
+        Toast.BOTTOM,
+      );
     }
   };
 
@@ -77,7 +79,7 @@ export default class LogInComponent extends Component {
     LoginManager.logInWithPermissions(['public_profile']).then(
       function(result) {
         if (result.isCancelled) {
-          alert('Đã huỷ');
+          Toast.showWithGravity('Đã huỷ', Toast.LONG, Toast.BOTTOM);
         } else {
           AccessToken.getCurrentAccessToken().then(async data => {
             const response = await login('', '', data.accessToken.toString());
@@ -92,13 +94,22 @@ export default class LogInComponent extends Component {
                 }),
               );
             } else {
-              Alert.alert('Đăng nhập không thành công, vui lòng thử lại.');
+              Toast.showWithGravity(
+                'Đăng nhập không thành công, vui lòng thử lại.',
+                Toast.LONG,
+                Toast.BOTTOM,
+              );
             }
           });
         }
       },
       function(error) {
-        alert('Login failed with error: ' + error);
+        // alert('Login failed with error: ' + error);
+        Toast.showWithGravity(
+          'Đăng nhập thất bại: ' + error,
+          Toast.LONG,
+          Toast.BOTTOM,
+        );
       },
     );
   };

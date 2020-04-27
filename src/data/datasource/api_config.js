@@ -1,10 +1,10 @@
 import { create } from 'apisauce';
-import { Alert } from 'react-native';
 import { BASE_API_URL } from '../../constant/constant';
 import AsyncStorage from '@react-native-community/async-storage';
 import UserInfo from '../model/user_info';
 import { AsyncStorageKey } from '../../constant/constant';
 import { getRandomNumber } from '../../utils';
+import Toast from 'react-native-simple-toast';
 
 export const injectBearer = (token, configs) => {
   if (!configs) {
@@ -42,7 +42,7 @@ export const privateRequest = async (request, url, data, configs) => {
     );
   } catch (error) {
     console.log('error', error);
-    // Alert.alert('Có lỗi xảy ra vui lòng thử lại: ');
+    Toast.showWithGravity('Lỗi hệ thống.', Toast.LONG, Toast.BOTTOM);
   }
 };
 
@@ -56,7 +56,7 @@ export const privateRequestWithToken = async (
   try {
     return request(url, data, injectBearer(token, configs));
   } catch (error) {
-    Alert.alert('Cõ lỗi xảy ra vui lòng thử lại: ');
+    Toast.showWithGravity('Lỗi hệ thống.', Toast.LONG, Toast.BOTTOM);
   }
 };
 

@@ -1,12 +1,12 @@
-import { types, getEnv, flow, getParent } from 'mobx-state-tree';
+import { types, flow, getParent } from 'mobx-state-tree';
 import { Result } from './result';
-import { PlayList, createPlaylistFromApiJson } from '../model/playlist';
+import { PlayList } from '../model/playlist';
 import { apiService } from '../context/api_context';
 import { Album } from '../model/album';
 import { Song } from '../model/song';
-import { Alert } from 'react-native';
 import { getTrackFullDetail, getPlaylistCover } from '../datasource/api_helper';
 import { findIndex } from 'lodash';
+import Toast from 'react-native-simple-toast';
 
 export const HomeStore = types
   .model('HomeStore', {
@@ -95,12 +95,22 @@ export const HomeStore = types
               }
             });
           } else {
-            homeTracks?.data ? Alert.alert(homeTracks?.data?.msg) : null;
-            // Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
+            homeTracks?.data
+              ? Toast.showWithGravity(
+                  homeTracks?.data?.msg,
+                  Toast.LONG,
+                  Toast.BOTTOM,
+                )
+              : null;
           }
         } else {
-          homeTrackIds?.data ? Alert.alert(homeTrackIds?.data.msg) : null;
-          // Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
+          homeTrackIds?.data
+            ? Toast.showWithGravity(
+                homeTrackIds?.data.msg,
+                Toast.LONG,
+                Toast.BOTTOM,
+              )
+            : null;
         }
 
         if (homePlaylist?.status == 200) {
@@ -117,38 +127,18 @@ export const HomeStore = types
 
               self.addPopular(playlistFullInfo);
             } else {
-              playlistInfo?.data ? Alert.alert(playlistInfo?.data.msg) : null;
-              // Alert.alert('Có lỗi xảy ra khi tải dữ liệu, vui lòng thử lại.');
+              playlistInfo?.data
+                ? Toast.showWithGravity(
+                    playlistInfo?.data.msg,
+                    Toast.LONG,
+                    Toast.BOTTOM,
+                  )
+                : null;
             }
           });
         }
       }),
       // #endregion
-      //fetch liked stuff refactor
-      // fetchLikedStuff: flow(function* fetchLikedStuff() {
-      //   try {
-      //     // const likedTracks: Array = yield apiService.commonApiService.getLikedTracks();
-      //     // const likedArtists: Array = yield apiService.libraryApiService.getLikedArtists();
-      //     // const likedAlbums: Array = yield apiService.libraryApiService.getLikedAlbums();
-
-      //     // if (likedTracks?.status == 200) {
-      //     //   const preparedData = likedTracks.data.map(track => track.entity_id);
-      //     //   getParent(self).setLikedTracks(preparedData);
-      //     // }
-      //     if (likedArtists?.status == 200) {
-      //       const preparedData = likedArtists.data.map(
-      //         artist => artist.entity_id,
-      //       );
-      //       getParent(self).setLikedArtists(preparedData);
-      //     }
-      //     if (likedAlbums?.status == 200) {
-      //       const preparedData = likedAlbums.data.map(album => album.entity_id);
-      //       getParent(self).setLikedAlbums(preparedData);
-      //     }
-      //   } catch (err) {
-      //     console.log('err ', err);
-      //   }
-      // }),
 
       //Add tracks to playlist
       addTracksToPlaylist: flow(function* addTracksToPlaylist(playlist) {
@@ -159,7 +149,7 @@ export const HomeStore = types
 
           if (newPlaylist?.status == 200) {
             getParent(self).updatePlayList(newPlaylist.data);
-            Alert.alert('Thêm thành công');
+            Toast.showWithGravity('Thêm thành công', Toast.LONG, Toast.BOTTOM);
           }
         } catch (err) {
           console.log('err ', err);
