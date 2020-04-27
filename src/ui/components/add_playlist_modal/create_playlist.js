@@ -19,9 +19,6 @@ import { D_WIDTH, isTextEmpty, subLongStr } from '../../../utils';
 import ImagePicker from 'react-native-image-picker';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
-import { apiService } from '../../../data/context/api_context';
-import { getPlaylistCover } from '../../../data/datasource/api_helper';
-import { rootStore } from '../../../data/context/root_context';
 
 const options = () => ({
   title: 'Chọn ảnh',
@@ -47,6 +44,7 @@ const CreatePlaylistModal = observer(
     );
     const [publicState, setPublic] = useState(viewModel.current.public);
     const [img, setImg] = useState('');
+    const [path, setPathToImg] = useState('');
 
     const resolveResponse = response => {
       const { onCancel, onError, onCustomButton, onSuccess } = props;
@@ -60,6 +58,7 @@ const CreatePlaylistModal = observer(
         onSuccess && onSuccess(response);
         //If success, handle the response
         setImg(response.data);
+        setPathToImg(response.uri);
       }
     };
 
@@ -143,25 +142,14 @@ const CreatePlaylistModal = observer(
         });
 
         const playlistData = {
+          cover: path,
           name: name,
           private: !publicState,
           tracks: tracks,
         };
 
-        const createPl = await apiService.commonApiService.createPlaylist(
-          playlistData,
-        );
+        viewModel.current.createPlaylist(playlistData);
 
-        if (createPl.status == 201) {
-          const cover = await getPlaylistCover(tracks);
-          const playlistFullInfo = { ...createPl.data, ...cover };
-          rootStore.updatePlayList(playlistFullInfo);
-          rootStore.libraryStore?.updatePlayList(playlistFullInfo);
-          rootStore.homeStore?.addPopular(playlistFullInfo);
-          Alert.alert('Tạo thành công');
-        } else {
-          Alert.alert('Vui lòng thử lại');
-        }
         if (typeof props.onClosePress == 'function') {
           props.onClosePress();
         } else {

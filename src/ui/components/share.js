@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  StyleSheet,
   ImageBackground,
 } from 'react-native';
 import { wrap } from '../../themes';
@@ -61,15 +62,7 @@ const ShareModal = wrap(({ shareItems, _hideModal }) => {
                 </TouchableOpacity>
               </View>
               <View cls="aic jcc flexFn-5">
-                <Text
-                  style={{
-                    color: '#FFF',
-                    justifyContent: 'center',
-                    fontSize: 23,
-                    fontFamily: 'Averta-ExtraBold',
-                  }}>
-                  Chia sẻ
-                </Text>
+                <Text style={styles.title}>Chia sẻ</Text>
               </View>
               <View cls="flx-i" />
             </View>
@@ -86,16 +79,14 @@ const ShareModal = wrap(({ shareItems, _hideModal }) => {
                 <Text cls="white fw7 f5 pt2 avertaFont">
                   {rootStore.playerStore?.currentSong?.getName()}
                 </Text>
-                <Text cls="white f7 pt1" style={{ fontFamily: 'lato-regular' }}>
+                <Text cls="white f7 pt1 latoFont">
                   {rootStore.playerStore?.currentSong?.getSubTitle()}
                 </Text>
               </View>
             </View>
           </View>
 
-          <View
-            cls="fullWidth aife asfe"
-            style={{ position: 'absolute', bottom: -24, height: 50 }}>
+          <View cls="fullWidth aife asfe" style={styles.underWave}>
             <Image cls="fullWidth" resizeMode="contain" source={Images.sNg} />
           </View>
         </ImageBackground>
@@ -113,3 +104,12 @@ const ShareModal = wrap(({ shareItems, _hideModal }) => {
 });
 
 export default ShareModal;
+const styles = StyleSheet.create({
+  underWave: { position: 'absolute', bottom: -24, height: 50 },
+  title: {
+    color: '#FFF',
+    justifyContent: 'center',
+    fontSize: 23,
+    fontFamily: 'Averta-ExtraBold',
+  },
+});

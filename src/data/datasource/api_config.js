@@ -4,6 +4,7 @@ import { BASE_API_URL } from '../../constant/constant';
 import AsyncStorage from '@react-native-community/async-storage';
 import UserInfo from '../model/user_info';
 import { AsyncStorageKey } from '../../constant/constant';
+import { getRandomNumber } from '../../utils';
 
 export const injectBearer = (token, configs) => {
   if (!configs) {
@@ -134,6 +135,25 @@ export const login = async (name, password, fb_token) => {
           provider_name: 'facebook',
         };
     return await BASE_URL.post(path, params);
+  } catch (error) {
+    console.log('TCL: try -> error', error);
+  }
+};
+
+export const uploadImage = async (path, pathToImageOnFilesystem, name) => {
+  try {
+    const data = new FormData();
+    data.append('cover', {
+      name: `diijam${getRandomNumber()}.jpg`,
+      uri: pathToImageOnFilesystem,
+      type: 'image/jpg',
+    });
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+      Accept: 'multipart/form-data',
+    };
+
+    return await privateRequest(BASE_URL.post, path, data, { headers });
   } catch (error) {
     console.log('TCL: try -> error', error);
   }

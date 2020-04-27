@@ -454,20 +454,19 @@ export default class AlbumDetail extends Component {
         imgStyle: 'widthFn-20 heightFn-24',
       },
       {
-        title: 'Xem nghệ sĩ',
+        title: 'Xem người tạo ra playlist',
         action: () => {},
         hidden: rootStore.userStore?.id == item.owner_id,
         icon: Images.ic_person,
         imgStyle: 'widthFn-20 heightFn-24',
       },
     ];
-
     return this.viewModel.state == 'loading' ? (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
-        <View cls="fullView">
+        <View cls="fullView aic jcc">
           <Loading />
         </View>
       </LinearGradient>

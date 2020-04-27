@@ -242,3 +242,11 @@ export const makeCancelable = promise => {
     },
   };
 };
+
+function getRndInteger(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+export const getRandomNumber = () => {
+  return getRndInteger(1, 99) + Date.now();
+};
