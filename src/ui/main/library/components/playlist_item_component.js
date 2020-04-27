@@ -19,7 +19,7 @@ export default class PlaylistItem extends Component {
     const { item } = this.props;
     return (
       <>
-        <View cls="flx-i pb3 pr3">
+        <View cls="flx-i pb3 pr2">
           <Image
             cls="widthFn-108 heightFn-108"
             source={
