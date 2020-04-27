@@ -2,7 +2,14 @@ import { types, flow } from 'mobx-state-tree';
 import { Result } from '../../../../data/repository/result';
 import { Song, createSongFromJsonApi } from '../../../../data/model/song';
 import { apiService } from '../../../../data/context/api_context';
-import { getTrackFullDetail } from '../../../../data/datasource/api_helper';
+import {
+  getTrackFullDetail,
+  getPlaylistCover,
+} from '../../../../data/datasource/api_helper';
+import { Alert } from 'react-native';
+import { rootStore } from '../../../../data/context/root_context';
+import { uploadImage } from '../../../../data/datasource/api_config';
+import { isTextEmpty } from '../../../../utils';
 
 export const CreatePlaylistModel = types
   .model('CreatePlaylistModel', {
@@ -42,6 +49,30 @@ export const CreatePlaylistModel = types
         const newSong = createSongFromJsonApi(song);
         self.searchResult.put(newSong);
       },
+      //Create playlist
+      createPlaylist: flow(function* createPlaylist(playlist) {
+        const createPl = yield apiService.commonApiService.createPlaylist(
+          playlist,
+        );
+        if (createPl.status == 201) {
+          if (!isTextEmpty(playlist.cover)) {
+            yield uploadImage(
+              `/api/playlists/${createPl.data.id}/cover`,
+              playlist.cover,
+              'cover',
+            );
+          }
+          const cover = yield getPlaylistCover(playlist.tracks);
+          const playlistFullInfo = { ...createPl.data, ...cover };
+          rootStore.updatePlayList(playlistFullInfo);
+          rootStore.libraryStore?.updatePlayList(playlistFullInfo);
+          rootStore.homeStore?.addPopular(playlistFullInfo);
+          Alert.alert('Tạo thành công');
+        } else {
+          Alert.alert('Vui lòng thử lại');
+        }
+      }),
+      //
       searchByKeyword: flow(function* searchByKeyword(keyword) {
         try {
           self.state = 'loading';
