@@ -79,6 +79,7 @@ export default class PlaylistComponent extends Component {
               data={[PlayList, ...rootStore.libraryStore.playlists]}
               keyExtractor={(item, index) => index.toString()}
               numColumns={3}
+              horizontal={false}
               renderItem={this.renderPlaylist}
             />
           )}

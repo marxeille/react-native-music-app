@@ -25,7 +25,7 @@ export default class AlbumItem extends Component {
         }}>
         <View cls="pb3 pr3">
           <Image
-            cls="widthFn-100 heightFn-82"
+            cls="widthFn-108 heightFn-108"
             source={
               item !== undefined &&
               item.getThumb() !== null &&
