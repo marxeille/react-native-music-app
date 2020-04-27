@@ -9,11 +9,14 @@ import SearchBar from '../../main/search/components/search_bar';
 import { subLongStr } from '../../../utils';
 import { rootStore } from '../../../data/context/root_context';
 import Loading from '../../components/loading';
+import { CreatePlaylistModel } from './model/view_model';
 
 const AddSongPlaylist = observer(
   wrap(props => {
     let timeout = useRef(null);
-    let viewModel = props.viewModel;
+    let viewModel =
+      props.viewModel ??
+      useRef(CreatePlaylistModel.create({ state: 'success', name: '' }));
     const [keyword, setKeyword] = useState('');
     const trackIds = [...viewModel.current.songs.values()].map(
       track => track.id,

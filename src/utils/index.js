@@ -215,11 +215,11 @@ export const isMeidumDevice = () => {
 export const standardPadding = () => {
   let padding;
   if (isMeidumDevice()) {
-    padding = 80;
+    padding = 130;
   } else if (isSmallDevice()) {
-    padding = 112;
+    padding = 162;
   } else {
-    padding = 48;
+    padding = 98;
   }
 
   return padding;

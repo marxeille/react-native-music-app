@@ -77,10 +77,7 @@ class Settings extends Component {
           <View cls="aifs jcc flx-i">
             <TouchableOpacity onPress={() => pop()} cls="jcc pv1 ph3 aic">
               <View>
-                <Image
-                  cls="widthFn-12 heightFn-20"
-                  source={Images.ic_back_nav}
-                />
+                <Image cls="widthFn-22 heightFn-13" source={Images.ic_down} />
               </View>
             </TouchableOpacity>
           </View>

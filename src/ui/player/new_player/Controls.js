@@ -10,57 +10,62 @@ import {
 } from 'react-native';
 import Images from '../../../assets/icons/icons';
 import { standardPadding } from '../../../utils';
+import { wrap } from '../../../themes';
 
-const Controls = ({
-  paused,
-  shuffleOn,
-  repeatOn,
-  onPressPlay,
-  onPressPause,
-  onBack,
-  onForward,
-  onPressShuffle,
-  onPressRepeat,
-  forwardDisabled,
-}) => (
-  <View style={styles.container}>
-    <TouchableOpacity activeOpacity={0.0} onPress={onPressShuffle}>
-      <Image
-        style={[styles.secondaryControl, shuffleOn ? [] : styles.off]}
-        source={Images.ic_shuffle}
-      />
-    </TouchableOpacity>
-    <View style={{ width: 40 }} />
-    <TouchableOpacity onPress={onBack}>
-      <Image style={styles.changeButton} source={Images.ic_prev} />
-    </TouchableOpacity>
-    <View style={{ width: 15 }} />
-    {!paused ? (
-      <TouchableWithoutFeedback onPress={onPressPause}>
-        <View>
-          <Image source={Images.ic_pause_large} />
-        </View>
-      </TouchableWithoutFeedback>
-    ) : (
-      <TouchableWithoutFeedback onPress={onPressPlay}>
-        <Image source={Images.ic_play_large} />
-      </TouchableWithoutFeedback>
-    )}
-    <View style={{ width: 15 }} />
-    <TouchableOpacity onPress={onForward} disabled={forwardDisabled}>
-      <Image
-        style={[styles.changeButton, forwardDisabled && { opacity: 0.3 }]}
-        source={Images.ic_next}
-      />
-    </TouchableOpacity>
-    <View style={{ width: 40 }} />
-    <TouchableOpacity activeOpacity={0.0} onPress={onPressRepeat}>
-      <Image
-        style={[styles.secondaryControl, repeatOn ? [] : styles.off]}
-        source={Images.ic_repeat}
-      />
-    </TouchableOpacity>
-  </View>
+const Controls = wrap(
+  ({
+    paused,
+    shuffleOn,
+    repeatOn,
+    onPressPlay,
+    onPressPause,
+    onBack,
+    onForward,
+    onPressShuffle,
+    onPressRepeat,
+    forwardDisabled,
+  }) => (
+    <View style={styles.container}>
+      <TouchableOpacity activeOpacity={0.0} onPress={onPressShuffle}>
+        <Image
+          cls="widthFn-22"
+          style={[styles.secondaryControl, shuffleOn ? [] : styles.off]}
+          source={Images.ic_shuffle}
+        />
+      </TouchableOpacity>
+      <View style={{ width: 40 }} />
+      <TouchableOpacity onPress={onBack}>
+        <Image style={styles.changeButton} source={Images.ic_prev} />
+      </TouchableOpacity>
+      <View style={{ width: 15 }} />
+      {!paused ? (
+        <TouchableWithoutFeedback onPress={onPressPause}>
+          <View>
+            <Image source={Images.ic_btn_pause2} />
+          </View>
+        </TouchableWithoutFeedback>
+      ) : (
+        <TouchableWithoutFeedback onPress={onPressPlay}>
+          <Image source={Images.ic_btn_play2} />
+        </TouchableWithoutFeedback>
+      )}
+      <View style={{ width: 15 }} />
+      <TouchableOpacity onPress={onForward} disabled={forwardDisabled}>
+        <Image
+          style={[styles.changeButton, forwardDisabled && { opacity: 0.3 }]}
+          source={Images.ic_next}
+        />
+      </TouchableOpacity>
+      <View style={{ width: 40 }} />
+      <TouchableOpacity activeOpacity={0.0} onPress={onPressRepeat}>
+        <Image
+          cls="widthFn-22"
+          style={[styles.secondaryControl, repeatOn ? [] : styles.off]}
+          source={Images.ic_repeat}
+        />
+      </TouchableOpacity>
+    </View>
+  ),
 );
 
 export default Controls;
@@ -71,7 +76,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: 16 / standardPadding(),
-    paddingHorizontal: standardPadding() / 2,
+    paddingHorizontal: 16,
   },
   playButton: {
     height: 72,
@@ -83,14 +88,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   secondaryControl: {
-    height: 18,
-    width: 18,
+    tintColor: '#fff',
+    resizeMode: 'contain',
   },
   changeButton: {
-    height: 32,
-    width: 32,
+    height: 24,
+    width: 24,
   },
   off: {
-    opacity: 0.3,
+    opacity: 0.9,
+    tintColor: '#9166cc',
   },
 });
