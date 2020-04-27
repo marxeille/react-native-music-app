@@ -176,7 +176,7 @@ export default class Player extends Component {
       const ShareResponse = await Share.open(options);
       console.log(JSON.stringify(ShareResponse, null, 2));
     } catch (error) {
-      console.log('error: '.concat(getErrorString(error)));
+      console.log('error: '.concat(JSON.stringify(error)));
     }
   };
 
@@ -250,6 +250,7 @@ export default class Player extends Component {
     return showPlayMenu ? (
       <SongMenu
         song={rootStore.playerStore?.currentSong}
+        toggleShareMenu={() => this.setState({ showPlayMenu: false })}
         _hideModal={this._hideModal}
       />
     ) : (

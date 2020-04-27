@@ -48,7 +48,7 @@ export default class LogInComponent extends Component {
     let value = this.context;
     const response = await login(loginName, pass);
 
-    if (response.status == 200) {
+    if (response?.status == 200) {
       value.userStore.storeUserInfo(
         new UserInfo({
           name: loginName,
