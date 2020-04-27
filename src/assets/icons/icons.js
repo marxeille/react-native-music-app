@@ -36,6 +36,7 @@ const Images = {
   ic_checked_song: require('./ic_checked_song.png'),
   ic_circle: require('./ic_circle.png'),
   ic_circle_minus: require('./ic_circle_minus.png'),
+  ic_cover: require('./ic_cover.png'),
   ic_del_song: require('./ic_del_song.png'),
   ic_delete: require('./ic_delete.png'),
   ic_delete_white: require('./ic_delete_white.png'),

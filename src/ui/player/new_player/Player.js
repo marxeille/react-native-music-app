@@ -64,6 +64,7 @@ export default class Player extends Component {
   }
 
   _showModal = (playMenu = false) => {
+    console.log(playMenu);
     this.setState({ showPlayMenu: playMenu }, () => {
       if (this.modalShare && this.modalShare.current) {
         this.modalShare.current._showModal();
@@ -249,6 +250,7 @@ export default class Player extends Component {
     return showPlayMenu ? (
       <SongMenu
         song={rootStore.playerStore?.currentSong}
+        toggleShareMenu={() => this.setState({ showPlayMenu: false })}
         _hideModal={this._hideModal}
       />
     ) : (

@@ -14,6 +14,7 @@ import LinearGradientText from '../../main/library/components/LinearGradientText
 import { rootStore } from '../../../data/context/root_context';
 import AddPlayListModal from './add_playlist_modal';
 import { navigate } from '../../../navigation/navigation_service';
+import { ScrollView } from 'react-native-gesture-handler';
 import { subLongStr, isTextEmpty } from '../../../utils';
 
 @observer
@@ -69,7 +70,7 @@ export default class SongMenu extends Component {
         <View cls="aic jcc pt3 pb2">
           <ImageBackground
             cls="widthFn-283 heightFn-283 aic jcc"
-            source={Images.ic_barcode}>
+            source={Images.ic_cover}>
             <Image
               source={
                 !isTextEmpty(song?.artwork)
@@ -78,7 +79,7 @@ export default class SongMenu extends Component {
                     }
                   : Images.bAAlbum
               }
-              cls="circleFn-185"
+              cls="circleFn-160"
             />
           </ImageBackground>
           <View cls="aic jcc pb0 pa3">
@@ -91,32 +92,39 @@ export default class SongMenu extends Component {
                 fontFamily: 'Averta-ExtraBold',
               }}
             />
-            <Text cls="white fw5 f7 pt1 latoFont">
+            <Text cls="white fw5 f7 pt1 latoHeavyFont">
               {song?.getSubTitle() ?? 'Chưa rõ'}
             </Text>
           </View>
         </View>
         <View cls="pa3">
-          <ActionItem
-            onPress={() => this.addPlaylist(true)}
-            icon={'ic_add_playlist'}
-            title={'Thêm vào playlist'}
-          />
-          <ActionItem
-            onPress={() => this.addToQueue()}
-            icon={'ic_add_song'}
-            title={'Thêm vào danh sách chờ'}
-          />
-          <ActionItem
-            onPress={this.navigateToAlbum}
-            icon={'ic_album'}
-            title={'Xem album'}
-          />
-          <ActionItem
-            onPress={this.navigateToArtist}
-            icon={'ic_artist'}
-            title={'Xem nghệ sĩ'}
-          />
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <ActionItem
+              onPress={() => this.addPlaylist(true)}
+              icon={'ic_add_playlist'}
+              title={'Thêm vào playlist'}
+            />
+            <ActionItem
+              onPress={() => this.addToQueue()}
+              icon={'ic_add_song'}
+              title={'Thêm vào danh sách chờ'}
+            />
+            <ActionItem
+              onPress={() => this.props.toggleShareMenu()}
+              icon={'ic_btn_share'}
+              title={'Chia sẻ'}
+            />
+            <ActionItem
+              onPress={this.navigateToAlbum}
+              icon={'ic_album'}
+              title={'Thông tin album'}
+            />
+            <ActionItem
+              onPress={this.navigateToArtist}
+              icon={'ic_artist'}
+              title={'Xem nghệ sĩ'}
+            />
+          </ScrollView>
         </View>
       </>
     );
@@ -126,10 +134,21 @@ export default class SongMenu extends Component {
 const ActionItem = wrap(props => {
   return (
     <>
-      <TouchableOpacity onPress={props.onPress}>
-        <View cls="flx-row aic pt3 pb2">
+      <TouchableOpacity onPress={props.onPress} cls="mb3">
+        {/* <View cls="flx-row aic pt3 pb2">
           <Image source={Images[props.icon]} />
           <Text cls="primaryPurple pl3 fw7 f6 lightFont">{props.title}</Text>
+        </View> */}
+        <View
+          cls="br5 ba pa2 fullWidth aic flx-row"
+          style={{ borderColor: '#d29dc5' }}>
+          <View cls="pl2">
+            <Image
+              cls="widthFn-24 heightFn-24 tint-#FFF"
+              source={Images[props.icon]}
+            />
+          </View>
+          <Text cls="white lightFont pl3">{props.title}</Text>
         </View>
       </TouchableOpacity>
     </>
