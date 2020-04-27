@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  TextInput,
 } from 'react-native';
 import { wrap } from '../../themes';
 import { observer } from 'mobx-react';
@@ -93,11 +94,21 @@ export default class AccountComponent extends Component {
                 </ImageBackground>
               </View>
               <View
-                cls="aic jcc mt3 mb2 ba br2 ml3 mr3 pa2 bg-#2C184A"
+                cls="jcc mt3 mb2 ba br2 ml3 mr3 pa2 bg-#2C184A"
                 style={{ borderColor: '#9166cc' }}>
-                <Text cls="avertaFont white f4">
-                  {rootStore.userStore?.name}
-                </Text>
+                <View cls="aic jcc">
+                  <TextInput
+                    cls="avertaFont white f4"
+                    value={rootStore.userStore?.name}
+                    editable={false}
+                  />
+                </View>
+                <View cls="absolute asfe pr2">
+                  <Image
+                    cls="widthFn-30 heightFn-30"
+                    source={Images.ic_insta}
+                  />
+                </View>
               </View>
 
               <View cls="fullWidth pl3 pr3 aic jcc mt4">
