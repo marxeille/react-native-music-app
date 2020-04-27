@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   StatusBar,
   ImageBackground,
   Image,
-  TouchableOpacity,
   StyleSheet,
   Alert,
-  FlatList,
 } from 'react-native';
 import Header from './Header';
 import AlbumArt from './AlbumArt';
@@ -187,7 +184,10 @@ export default class Player extends Component {
       directionalOffsetThreshold: 80,
     };
     return (
-      <ImageBackground source={Images.bg2} style={styles.container}>
+      <ImageBackground
+        blurRadius={15}
+        source={Images.bg2}
+        style={styles.container}>
         <StatusBar hidden={true} />
         <GestureRecognizer
           onSwipeDown={this.onSwipeDown}

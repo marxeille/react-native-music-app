@@ -71,8 +71,6 @@ export const AlbumModel = types
         );
 
         if (likedPlaylists.status == 200) {
-          console.log('likedPlaylists.data', likedPlaylists.data);
-
           const preparedData = likedPlaylists.data.map(
             track => track.entity_id,
           );
@@ -94,9 +92,7 @@ export const AlbumModel = types
         if (tracks?.status == 200) {
           tracks?.data?.map(async track => {
             let fullTrack = await getTrackFullDetail(track.id);
-
             fullTrack = { ...track, ...fullTrack };
-
             fullTrack = {
               ...fullTrack,
               articleId: fullTrack.article ? fullTrack.article.id : 0,
