@@ -55,14 +55,20 @@ export const CreatePlaylistModel = types
           playlist,
         );
         if (createPl.status == 201) {
+          let cover = yield getPlaylistCover(
+            playlist.tracks,
+            !isTextEmpty(playlist.cover),
+          );
           if (!isTextEmpty(playlist.cover)) {
-            yield uploadImage(
+            const plCover = yield uploadImage(
               `/api/playlists/${createPl.data.id}/cover`,
               playlist.cover,
               'cover',
             );
+            if (plCover.status == 201) {
+              cover = { ...cover, playlistCover: plCover.data.cover_path };
+            }
           }
-          const cover = yield getPlaylistCover(playlist.tracks);
           const playlistFullInfo = { ...createPl.data, ...cover };
           rootStore.updatePlayList(playlistFullInfo);
           rootStore.libraryStore?.updatePlayList(playlistFullInfo);

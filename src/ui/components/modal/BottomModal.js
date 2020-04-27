@@ -139,9 +139,9 @@ export default class BottomModal extends React.Component {
                 <View cls="aic jcc pt0">
                   <TouchableOpacity
                     onPress={this._hideModal}
-                    cls="jcc pv1 ph3 aic">
+                    cls="jcc pv1 ph3 aic jcc">
                     <View
-                      cls="br5 ba pa1 pl4 pr4"
+                      cls="br5 ba pa1 pl4 pr4 asc"
                       style={{ borderColor: '#d29dc5' }}>
                       <Text cls="white fw6 f9">Đóng</Text>
                     </View>

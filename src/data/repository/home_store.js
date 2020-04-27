@@ -120,11 +120,19 @@ export const HomeStore = types
             );
 
             if (playlistInfo.status == 200 && playlistInfo.data) {
-              const cover = await getPlaylistCover(playlistInfo?.data?.tracks);
+              let cover;
+              cover = await getPlaylistCover(
+                playlistInfo?.data?.tracks,
+                playlistInfo.data.cover_path !== null,
+              );
+              if (playlistInfo.data.cover_path !== null) {
+                cover = {
+                  ...cover,
+                  playlistCover: playlistInfo.data.cover_path,
+                };
+              }
               const playlistFullInfo = { ...playlistInfo.data, ...cover };
-
               getParent(self).updatePlayList(playlistFullInfo);
-
               self.addPopular(playlistFullInfo);
             } else {
               playlistInfo?.data

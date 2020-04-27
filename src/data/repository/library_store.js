@@ -112,7 +112,16 @@ export const LibraryStore = types
           const albums: Array = yield apiService.libraryApiService.getAlbums();
           if (albums.status == 200) {
             albums.data.map(async al => {
-              const cover = await getPlaylistCover(al?.tracks);
+              let cover = await getPlaylistCover(
+                al?.tracks,
+                al.cover_path !== null,
+              );
+              if (al.cover_path !== null) {
+                cover = {
+                  ...cover,
+                  playlistCover: al.cover_path,
+                };
+              }
               const albumFullInfo = { ...al, ...cover };
               getParent(self).updateAlbum(albumFullInfo);
               self.setAlbum(al);

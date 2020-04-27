@@ -58,7 +58,6 @@ export default class Player extends Component {
   }
 
   _showModal = (playMenu = false) => {
-    console.log(playMenu);
     this.setState({ showPlayMenu: playMenu }, () => {
       if (this.modalShare && this.modalShare.current) {
         this.modalShare.current._showModal();
@@ -334,6 +333,7 @@ export default class Player extends Component {
           forceInsetBottom={'never'}
           headerNone={true}
           closeBottomNone={!showPlayMenu}
+          customGradient={['#1a0632', '#1a0632', '#000', '#13151A']}
           // onModalHide={this._hideModal}
           containerCls="">
           {this._renderModalContent()}

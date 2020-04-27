@@ -49,24 +49,26 @@ export async function getArtistInfo(ids) {
   return artists;
 }
 
-export async function getPlaylistCover(tracks) {
+export async function getPlaylistCover(tracks, onlyArtist) {
   let artists = [];
   let cover = {};
   // Get first track cover for playlist cover
   if (tracks.length > 0) {
-    const trackCover = await apiService.trackApiService.getTrackInfo(
-      tracks[0].track_id,
-    );
+    if (!onlyArtist) {
+      const trackCover = await apiService.trackApiService.getTrackInfo(
+        tracks[0].track_id,
+      );
+      if (trackCover.status == 200) {
+        cover = {
+          ...cover,
+          playlistCover: trackCover?.data?.cover_path ?? null,
+        };
+      }
+    }
 
     const trackArtistInfo = await apiService.trackApiService.getTrackArtistInfo(
       tracks[0].track_id,
     );
-    if (trackCover.status == 200) {
-      cover = {
-        ...cover,
-        playlistCover: trackCover?.data?.cover_path ?? null,
-      };
-    }
     if (trackArtistInfo.status == 200) {
       const ids = trackArtistInfo?.data.map(r => r.artist_id);
       artists = await getArtistInfo(ids);
