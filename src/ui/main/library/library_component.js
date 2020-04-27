@@ -33,15 +33,6 @@ export default class LibraryComponent extends Component {
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
           <ImageBackground cls="fullView pa3" source={Images.bg3}>
-            <View cls="pt4">
-              <LinearGradientText
-                text={'MYJAM'}
-                styles={{
-                  fontSize: 35,
-                  fontFamily: 'Averta-ExtraBold',
-                }}
-              />
-            </View>
             <View cls="flx-i pt4">
               <LibraryTopBar />
             </View>

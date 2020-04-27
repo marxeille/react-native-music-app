@@ -13,7 +13,7 @@
 
 #import "AppDelegate.h"
   #import <FBSDKCoreKit/FBSDKCoreKit.h>
-
+#import <ZaloSDK/ZaloSDK.h>
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -22,8 +22,8 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
   BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey] ];
-
-  return handled;
+  BOOL handledZalo = [[ZDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:nil annotation:nil];
+  return handled | handledZalo;
 }
   
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -41,6 +41,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [[ZaloSDK sharedInstance] initializeWithAppId:@"1252601790401718793"];
   return YES;
 }
 

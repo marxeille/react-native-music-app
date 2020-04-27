@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { wrap } from '../../../../themes';
 import LinearGradientText from '../components/LinearGradientText';
 import Playlist from './playlist_component';
 import Artist from './artist_component';
 import Album from './album_component';
+import Images from '../../../../assets/icons/icons';
 import Loading from '../../../components/loading';
 import { rootStore } from '../../../../data/context/root_context';
 import { observer } from 'mobx-react';
@@ -26,30 +27,57 @@ export default class LibraryTabView extends React.Component {
 
   _renderTabBar = wrap(props => {
     return (
-      <View style={styles.tabBar}>
+      <View cls="pr2" style={styles.tabBar}>
         {props.navigationState.routes.map((route, i) => {
           return (
             <TouchableOpacity
               key={i.toString()}
               style={styles.tabItem}
               onPress={() => this.setState({ index: i })}>
-              <View cls="pr4">
+              <View cls="fullWidth">
                 {i == this.state.index ? (
-                  <View cls="pr2">
-                    <LinearGradientText
-                      text={route.title}
-                      end={{ x: 0.8, y: 0 }}
-                      borderBottom
-                      styles={{
-                        fontSize: 20,
-                        fontFamily: 'Averta-ExtraBold',
-                      }}
-                    />
+                  <View
+                    cls={[
+                      i == 0
+                        ? 'jcfs aifs asfs'
+                        : i == 1
+                        ? 'aic'
+                        : i == 2
+                        ? 'jcfe asfe aife'
+                        : '',
+                    ]}>
+                    <View cls="jcc asc aic">
+                      <Image
+                        cls="widthFn-30 heightFn-35"
+                        source={Images.ic_logo}
+                      />
+
+                      <LinearGradientText
+                        text={route.title}
+                        end={{ x: 0.8, y: 0 }}
+                        styles={{
+                          fontSize: 20,
+                          fontFamily: 'Averta-ExtraBold',
+                        }}
+                      />
+                    </View>
                   </View>
                 ) : (
-                  <Text cls="white fw7 pr2 avertaFont" style={{ fontSize: 20 }}>
-                    {route.title}
-                  </Text>
+                  <View
+                    cls={[
+                      i == 0
+                        ? ''
+                        : i == 1
+                        ? 'aic jcc'
+                        : i == 2
+                        ? 'aife jcfe'
+                        : '',
+                    ]}>
+                    <View cls="widthFn-30 heightFn-35" />
+                    <Text cls="white fw7 avertaFont" style={{ fontSize: 20 }}>
+                      {route.title}
+                    </Text>
+                  </View>
                 )}
               </View>
             </TouchableOpacity>
@@ -93,6 +121,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   tabItem: {
-    alignItems: 'center',
+    flex: 1,
+    alignItems: 'flex-start',
   },
 });
