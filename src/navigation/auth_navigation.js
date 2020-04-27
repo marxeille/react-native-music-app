@@ -6,6 +6,7 @@ import ForgorPassWordComponent from '../ui/auth/forgot_pass_component';
 import Welcome from '../ui/auth/welcome_component';
 import ReEnterPassWordComponent from '../ui/auth/re_enter_pass_component';
 import VerifyCodeComponent from '../ui/auth/verify_code_component';
+import AccountComponent from '../ui/auth/account_component';
 const Stack = createStackNavigator();
 
 export default function authContainer() {
@@ -17,6 +18,7 @@ export default function authContainer() {
       <Stack.Screen name="forgot-pass" component={ForgorPassWordComponent} />
       <Stack.Screen name="verify-code" component={VerifyCodeComponent} />
       <Stack.Screen name="re-enter-pass" component={ReEnterPassWordComponent} />
+      <Stack.Screen name="account" component={AccountComponent} />
     </Stack.Navigator>
   );
 }

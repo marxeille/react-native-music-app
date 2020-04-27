@@ -9,6 +9,7 @@ import { observer } from 'mobx-react';
 import { navigate } from '../../../../navigation/navigation_service';
 import BottomModal from '../../../components/modal/BottomModal';
 import CreatePlayListModal from '../../../components/add_playlist_modal';
+import { PlayList } from '../../../../data/model/playlist';
 
 @observer
 @wrap
@@ -48,9 +49,17 @@ export default class PlaylistComponent extends Component {
     return (
       <TouchableOpacity
         onPress={() => {
-          item ? navigate('album_detail', { id: item.id, item: item }) : null;
+          pl.index == 0
+            ? this._showModal()
+            : item
+            ? navigate('album_detail', { id: item.id, item: item })
+            : null;
         }}>
-        <PlaylistItem index={pl.index} item={item} />
+        {pl.index == 0 ? (
+          <PlaylistItem />
+        ) : (
+          <PlaylistItem index={pl.index} item={item} />
+        )}
       </TouchableOpacity>
     );
   };
@@ -66,10 +75,10 @@ export default class PlaylistComponent extends Component {
             <Loading />
           ) : (
             <FlatList
-              ListHeaderComponent={this.renderPlaylistHeader()}
               showsVerticalScrollIndicator={false}
-              data={[...rootStore.libraryStore.playlists]}
+              data={[PlayList, ...rootStore.libraryStore.playlists]}
               keyExtractor={(item, index) => index.toString()}
+              numColumns={3}
               renderItem={this.renderPlaylist}
             />
           )}

@@ -5559,6 +5559,16 @@ react-native-screens@^2.0.0-beta.13:
   dependencies:
     debounce "^1.2.0"
 
+react-native-share@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-3.3.0.tgz#07ab21e6e6dc2399a9c4b5517f5bca831907ffa3"
+  integrity sha512-BH/l3UMk+g+JVa/0W4pw9Jr92fOJPg6KyK9sOjPe9SSNxei/NObo+D80MaecZaBoORV9lrktmlCD+ka/ed1JuA==
+
+react-native-simple-toast@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-simple-toast/-/react-native-simple-toast-1.1.2.tgz#007de57e21986e811b4bbc2d3a6de949c0221df9"
+  integrity sha512-p13p6Db9viLBxbAlicVLD6CcrbkmqQoEjP20vY+SxbO3y5cdmY0AOn/FiMC+iuC4eQxk0SFeJm4PFRWby/ntyg==
+
 react-native-swift@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/react-native-swift/-/react-native-swift-1.2.2.tgz#6da9a9b6d8c795a26cda53c1d99ebb5dd1fa0a9b"
@@ -5595,6 +5605,11 @@ react-native-video@5.1.0-alpha6:
     keymirror "^0.1.1"
     prop-types "^15.7.2"
     shaka-player "^2.5.9"
+
+react-native-zalo-share@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-zalo-share/-/react-native-zalo-share-1.0.4.tgz#adcf524509d00065ccaa41b128df5997a187f4f3"
+  integrity sha512-0DupjwGqd5zhFVTW4B6JrO4v7p3Wz/8uz5Oi3hVhQGuGYOm18dVZgtvpq3L1/d7KRVP8lfDKI8LS16N2bq4NlA==
 
 react-native@0.61.5:
   version "0.61.5"

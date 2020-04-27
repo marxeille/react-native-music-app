@@ -49,7 +49,6 @@ export default class ItemHomeSmall extends Component {
               {item?.getName() ?? 'Default'}
             </Text>
           </TextTicker>
-
           <Text cls="primaryPurple pt1 lightFont f10">
             {item?.getSubTitle() ?? 'Default'}
           </Text>
