@@ -58,6 +58,7 @@ export default class Player extends Component {
   }
 
   _showModal = (playMenu = false) => {
+    console.log(playMenu);
     this.setState({ showPlayMenu: playMenu }, () => {
       if (this.modalShare && this.modalShare.current) {
         this.modalShare.current._showModal();
