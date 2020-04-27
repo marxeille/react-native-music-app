@@ -29,36 +29,42 @@ export default class SearchComponent extends Component {
   render() {
     return (
       <View cls="fullWidth pt3 pb3 flx-row aic">
-        <View cls="pa3 bg-#4B3277 flx-i" style={[styles.inputGroup]}>
-          <Image source={Images.ic_search} />
-          <TextInput
-            secureTextEntry={false}
-            placeholderTextColor="#fff"
-            placeholder={'Tìm trong nghệ sĩ'}
-            style={[styles.inputText]}
-            value={this.state.keyword}
-            onChange={event => this.onChangeText(event, 'keyword')}
-            autoCorrect={false}
-          />
-        </View>
-        {/* <TouchableOpacity>
-          <LinearGradient
-            colors={['#4A3278', '#8B659D', '#DDA5CB']}
-            style={[
-              styles.inputGroup,
-              {
-                marginLeft: 15,
-              },
-            ]}
-            cls="pa3 jcc"
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}>
-            <Image
-              style={{ width: 24, height: 25 }}
-              source={Images.ic_filter}
+        <LinearGradient
+          colors={['#4E357A', '#9069A0', '#D39DC5']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          cls="flx-i mr2"
+          style={{ borderRadius: 10, height: 57, padding: 1 }}>
+          <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
+            <Image source={Images.ic_search} />
+            <TextInput
+              secureTextEntry={false}
+              placeholderTextColor="#fff"
+              placeholder={'Tìm trong nghệ sĩ'}
+              style={[styles.inputText]}
+              value={this.state.keyword}
+              onChange={event => this.onChangeText(event, 'keyword')}
+              autoCorrect={false}
             />
+          </View>
+        </LinearGradient>
+        <TouchableOpacity>
+          <LinearGradient
+            colors={['#4E357A', '#9069A0', '#D39DC5']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            cls="flx-i mr2"
+            style={{ borderRadius: 10, height: 57, padding: 1 }}>
+            <View
+              cls="aic jcc bg-#2C184A"
+              style={{ width: 55, height: 55, borderRadius: 10 }}>
+              <Image
+                style={{ width: 25, height: 25 }}
+                source={Images.ic_filter}
+              />
+            </View>
           </LinearGradient>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
     );
   }

@@ -19,9 +19,9 @@ export default class PlaylistItem extends Component {
     const { item } = this.props;
     return (
       <>
-        <View cls="flx-row aic pb3">
+        <View cls="flx-i pb3 pr2">
           <Image
-            cls="widthFn-90 heightFn-82"
+            cls="widthFn-108 heightFn-100"
             source={
               item !== undefined && item.getThumb() !== ''
                 ? {
@@ -35,14 +35,14 @@ export default class PlaylistItem extends Component {
             }
           />
 
-          <View cls="pl2">
-            <Text cls="white fw7 f6 pl2 lightFont">
+          <View cls="pt2">
+            <Text cls="white fw7 f10 lightFont">
               {item !== undefined
                 ? subLongStr(item.title(), 20)
                 : 'Tạo playlist'}
             </Text>
             {item !== undefined ? (
-              <Text cls="primaryPurple f7 pl2 pt1 lightFont">
+              <Text cls="primaryPurple f12 pt1 lightFont">
                 {item?.id == 0 ? rootStore.userStore?.name : item.subTitle()}
               </Text>
             ) : null}
