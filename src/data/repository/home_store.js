@@ -62,12 +62,14 @@ export const HomeStore = types
         if (homeTrackIds?.status == 200) {
           let ids = homeTrackIds?.data.map(ht => ht.id).join(',');
 
-          const likedTracks: Array = yield apiService.commonApiService.getLikedTracks(
+          const likedTracksById: Array = yield apiService.commonApiService.getLikedTracks(
             ids,
           );
+          const likedTracks: Array = yield apiService.commonApiService.getLikedTracks();
 
-          if (likedTracks?.status == 200) {
-            const preparedData = likedTracks.data.map(track => track.entity_id);
+          if (likedTracksById?.status == 200) {
+            const merged = [...likedTracksById.data, ...likedTracks.data];
+            const preparedData = merged.map(track => track.entity_id);
             getParent(self).setLikedTracks(preparedData);
           }
 

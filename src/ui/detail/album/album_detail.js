@@ -4,7 +4,6 @@ import {
   Text,
   ImageBackground,
   Image,
-  FlatList,
   TouchableOpacity,
 } from 'react-native';
 import { observer } from 'mobx-react';
@@ -17,7 +16,6 @@ import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
 import { rootStore } from '../../../data/context/root_context';
 import LinearGradient from 'react-native-linear-gradient';
-import AlbumItem from './components/album_item';
 import SongMenu from '../../player/components/song_menu';
 import BottomModal from '../../components/modal/BottomModal';
 import { AlbumModel } from './model/AlbumModel';
@@ -30,6 +28,7 @@ import { apiService } from '../../../data/context/api_context';
 import ActionGroup from './components/action_group';
 import AddSongPlaylist from '../../components/add_playlist_modal/add_song';
 import Toast from 'react-native-simple-toast';
+import AlbumListItem from './components/list_item';
 
 @observer
 @wrap
@@ -344,20 +343,6 @@ export default class AlbumDetail extends Component {
     return <>{this.renderHeaderSection(hasSong)}</>;
   });
 
-  _renderItem = wrap(item => {
-    return (
-      <TouchableOpacity onPress={() => this.playSong(item.item)}>
-        <View cls="pa3 pt0">
-          <AlbumItem
-            item={item.item}
-            openModal={this._showModal}
-            model={this.viewModel}
-          />
-        </View>
-      </TouchableOpacity>
-    );
-  });
-
   deletePlaylist = async () => {
     const { item } = this.props.route?.params;
 
@@ -397,7 +382,7 @@ export default class AlbumDetail extends Component {
     }
 
     if (item.id == 0) {
-      this.viewModel.getAlbumTracks([...rootStore?.likedTracks]);
+      // this.viewModel.getAlbumTracks([...rootStore?.likedTracks]);
       ids = [...rootStore?.likedTracks];
     }
 
@@ -504,12 +489,13 @@ export default class AlbumDetail extends Component {
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
           <ImageBackground cls="fullView" source={Images.bg2}>
-            <FlatList
-              ListHeaderComponent={() => this._renderListHeaderContent(hasSong)}
-              data={songs}
-              showsVerticalScrollIndicator={false}
-              renderItem={this._renderItem}
-              keyExtractor={(item, index) => index.toString()}
+            <AlbumListItem
+              _renderListHeaderContent={this._renderListHeaderContent}
+              viewModel={this.viewModel}
+              hasSong={hasSong}
+              playSong={this.playSong}
+              songs={songs}
+              _showModal={this._showModal}
             />
             <BottomModal ref={this.modalSong} headerNone>
               <SongMenu

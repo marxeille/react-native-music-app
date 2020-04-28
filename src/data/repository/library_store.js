@@ -62,13 +62,13 @@ export const LibraryStore = types
           const likedTracksPlaylist = {
             id: 0,
             name: 'Bài hát yêu thích',
-            private: null,
+            private: true,
             artists: [{ name: 'bạn' }],
             tracks:
               likedTracks.length > 0
                 ? playlistTracks
                 : [{ track_id: '', position: '' }],
-            playlistCover: null,
+            playlistCover: '',
           };
 
           getParent(self).updatePlayList(likedTracksPlaylist);
