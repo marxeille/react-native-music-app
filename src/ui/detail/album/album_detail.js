@@ -30,6 +30,7 @@ import AddSongPlaylist from '../../components/add_playlist_modal/add_song';
 import Toast from 'react-native-simple-toast';
 import AlbumListItem from './components/list_item';
 import AddPlayListModal from '../../player/components/add_playlist_modal';
+import ShareModal from '../../components/share';
 
 @observer
 @wrap
@@ -46,6 +47,7 @@ export default class AlbumDetail extends Component {
       ids: [],
       showMenuEdit: false,
       showMenuAddToPlaylist: false,
+      showShareModal: false,
       playing: false,
       private: props.route?.params.item.private,
       name: props.route?.params.item.name,
@@ -376,9 +378,19 @@ export default class AlbumDetail extends Component {
     this.setState({ ids: orders });
   };
 
+  addToQueue = songs => {
+    songs.map(song => {
+      if (song.id !== rootStore?.playerStore?.currentSong?.id) {
+        rootStore?.createSongRef(song);
+        rootStore.queueStore.addSong(song);
+      }
+    });
+    Toast.showWithGravity('Thêm thành công', Toast.LONG, Toast.BOTTOM);
+  };
+
   render() {
     let { item } = this.props.route?.params;
-    let { ids } = this.state;
+    let { ids, showMenuAddToPlaylist, showShareModal } = this.state;
     if (typeof item == 'number') {
       item = this.state.article;
     }
@@ -455,14 +467,18 @@ export default class AlbumDetail extends Component {
             },
             {
               title: 'Thêm vào danh sách chờ',
-              action: () => {},
+              action: () => {
+                this.addToQueue(songs);
+              },
               hidden: rootStore.userStore?.id == item.owner_id,
               icon: Images.ic_add_queue,
               imgStyle: 'widthFn-20 heightFn-20',
             },
             {
               title: 'Chia sẻ',
-              action: () => {},
+              action: () => {
+                this.setState({ showShareModal: true });
+              },
               hidden: rootStore.userStore?.id == item.owner_id,
               icon: Images.ic_share_white,
               imgStyle: 'widthFn-20 heightFn-24',
@@ -501,10 +517,20 @@ export default class AlbumDetail extends Component {
               _showModal={this._showModal}
             />
             <BottomModal ref={this.modalSong} headerNone>
-              <SongMenu
-                song={this.viewModel.selectedSong}
-                _hideModal={this._hideModal}
-              />
+              {showShareModal ? (
+                <ShareModal
+                  item={this.viewModel.selectedSong}
+                  _hideModal={() => this.setState({ showShareModal: false })}
+                />
+              ) : (
+                <SongMenu
+                  song={this.viewModel.selectedSong}
+                  _hideModal={this._hideModal}
+                  toggleShareMenu={() =>
+                    this.setState({ showShareModal: true })
+                  }
+                />
+              )}
             </BottomModal>
             <BottomModal
               headerNone
@@ -513,12 +539,17 @@ export default class AlbumDetail extends Component {
               containerCls=""
               customGradient={['#000', '#1a0632', '#000', '#13151A']}
               ref={this.modalPlaylist}>
-              {this.state.showMenuAddToPlaylist ? (
+              {showMenuAddToPlaylist ? (
                 <AddPlayListModal
                   songs={songs}
                   addPlaylist={() =>
                     this.setState({ showMenuAddToPlaylist: false })
                   }
+                />
+              ) : showShareModal ? (
+                <ShareModal
+                  item={item}
+                  _hideModal={() => this.setState({ showShareModal: false })}
                 />
               ) : (
                 <MenuConcept

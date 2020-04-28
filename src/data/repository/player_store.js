@@ -110,7 +110,7 @@ export const PlayerStore = types
                   : Math.floor(Math.random() * Math.floor(self.getQueueSize())),
               );
               track = songs[self.trackIndex];
-              self.startNewSong(track.id);
+              self.startNewSong(track?.id);
             } else {
               //if this is the last track, set state to pause
               self.setState('pause');
