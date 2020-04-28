@@ -105,11 +105,11 @@ export default class SignUpComponent extends Component {
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
             <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
-              <View cls={`asfs pa3 ${isSmallDevice ? 'pt3' : 'pt4'} pb0`}>
+              <View cls={`asfs pa3 ${isSmallDevice() ? 'pt3' : 'pt4'} pb0`}>
                 <TouchableOpacity onPress={pop}>
                   <Image
                     cls={`${
-                      isSmallDevice
+                      isSmallDevice()
                         ? 'widthFn-10 heightFn-18'
                         : 'widthFn-14 heightFn-24'
                     }`}
@@ -127,7 +127,7 @@ export default class SignUpComponent extends Component {
                 }`}>
                 <Image
                   cls={`fullWidth asc aic ${
-                    isSmallDevice ? 'heightFn-60' : 'heightFn-100'
+                    isSmallDevice() ? 'heightFn-60' : 'heightFn-100'
                   }`}
                   source={Images.wave}
                 />
@@ -145,10 +145,10 @@ export default class SignUpComponent extends Component {
                   colors={['#4E357A', '#9069A0', '#D39DC5']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  cls={`${isSmallDevice ? 'mb2 mt2' : 'mb4'}`}
+                  cls={`${isSmallDevice() ? 'mb2 mt2' : 'mb4'}`}
                   style={{
                     borderRadius: 10,
-                    height: isSmallDevice ? 52 : 57,
+                    height: isSmallDevice() ? 52 : 57,
                     padding: 1,
                   }}>
                   <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
@@ -156,7 +156,7 @@ export default class SignUpComponent extends Component {
                       secureTextEntry={false}
                       placeholderTextColor="#fff"
                       placeholder={'Email'}
-                      cls={`${isSmallDevice ? 'f10' : ''}`}
+                      cls={`${isSmallDevice() ? 'f10' : ''}`}
                       style={[styles.inputText]}
                       value={email}
                       onChange={event => this.onChangeText(event, 'email')}
@@ -172,10 +172,10 @@ export default class SignUpComponent extends Component {
                   colors={['#4E357A', '#9069A0', '#D39DC5']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  cls={`${isSmallDevice ? 'mb2 mt2' : 'mb4'}`}
+                  cls={`${isSmallDevice() ? 'mb2 mt2' : 'mb4'}`}
                   style={{
                     borderRadius: 10,
-                    height: isSmallDevice ? 52 : 57,
+                    height: isSmallDevice() ? 52 : 57,
                     padding: 1,
                   }}>
                   <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
@@ -183,7 +183,7 @@ export default class SignUpComponent extends Component {
                       secureTextEntry={true}
                       placeholderTextColor="#fff"
                       placeholder={'Mật khẩu'}
-                      cls={`${isSmallDevice ? 'f10' : ''}`}
+                      cls={`${isSmallDevice() ? 'f10' : ''}`}
                       style={[styles.inputText]}
                       value={pass}
                       onChange={event => this.onChangeText(event, 'pass')}
@@ -196,10 +196,10 @@ export default class SignUpComponent extends Component {
                   colors={['#4E357A', '#9069A0', '#D39DC5']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  cls={`${isSmallDevice ? 'mt2' : ''}`}
+                  cls={`${isSmallDevice() ? 'mt2' : ''}`}
                   style={{
                     borderRadius: 10,
-                    height: isSmallDevice ? 52 : 57,
+                    height: isSmallDevice() ? 52 : 57,
                     padding: 1,
                   }}>
                   <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
@@ -207,7 +207,7 @@ export default class SignUpComponent extends Component {
                       secureTextEntry={true}
                       placeholderTextColor="#fff"
                       placeholder={'Nhập lại mật khẩu'}
-                      cls={`${isSmallDevice ? 'f10' : ''}`}
+                      cls={`${isSmallDevice() ? 'f10' : ''}`}
                       style={[styles.inputText]}
                       value={rePass}
                       onChange={event => this.onChangeText(event, 'rePass')}
@@ -226,7 +226,7 @@ export default class SignUpComponent extends Component {
               {/* Button Group */}
               <View
                 cls={`${
-                  isSmallDevice
+                  isSmallDevice()
                     ? 'fullWidth pa3 pt3 pb0 aic'
                     : 'fullWidth pa3 pt0 pb0 aic'
                 }`}>
@@ -258,7 +258,7 @@ export default class SignUpComponent extends Component {
                   }}
                 />
                 <Text
-                  cls={`${isSmallDevice ? 'f10' : 'f8'} asc aic ml2 mr2`}
+                  cls={`${isSmallDevice() ? 'f10' : 'f8'} asc aic ml2 mr2`}
                   style={{ color: '#9166cc', fontFamily: 'lato-regular' }}>
                   hoặc
                 </Text>
@@ -277,12 +277,14 @@ export default class SignUpComponent extends Component {
                   <TouchableOpacity onPress={this.handleLoginWithFacebook}>
                     <View
                       cls={`ba b--#321A54 bg-#323277 br5 ${
-                        isSmallDevice
+                        isSmallDevice()
                           ? 'widthFn-160 heightFn-40'
                           : 'widthFn-220 heightFn-50'
                       } aic jcc`}>
                       <Text
-                        cls={`${isSmallDevice ? 'f8' : 'f6'} white avertaFont`}>
+                        cls={`${
+                          isSmallDevice() ? 'f8' : 'f6'
+                        } white avertaFont`}>
                         Facebook
                       </Text>
                     </View>
@@ -308,7 +310,7 @@ const styles = StyleSheet.create({
     borderColor: '#4B3277',
     borderRadius: 10,
     flexDirection: 'row',
-    height: isSmallDevice ? 50 : 55,
+    height: isSmallDevice() ? 50 : 55,
     alignItems: 'center',
     marginBottom: 5,
   },

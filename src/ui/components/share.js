@@ -11,16 +11,18 @@ import {
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
 import { rootStore } from '../../data/context/root_context';
-import { isTextEmpty } from '../../utils/index';
+import { isTextEmpty, isSmallDevice } from '../../utils/index';
 
 const ShareModal = wrap(({ shareItems, _hideModal }) => {
   const renderShareItem = useCallback(
     wrap(({ item }) => {
       return (
-        <View cls="pt2">
+        <View cls={`${isSmallDevice() ? 'pt1' : 'pt2'}`}>
           <TouchableOpacity onPress={() => item.action()} cls="jcc pv1 ph3 aic">
             <View
-              cls="br5 ba pa2 fullWidth aic flx-row"
+              cls={`${
+                isSmallDevice() ? 'pa1' : 'pa2'
+              } br5 ba fullWidth aic flx-row`}
               style={{ borderColor: '#d29dc5' }}>
               <View cls="pl2">
                 <Image
@@ -66,9 +68,13 @@ const ShareModal = wrap(({ shareItems, _hideModal }) => {
               </View>
               <View cls="flx-i" />
             </View>
-            <View cls="aic pt4 pb4">
+            <View cls="aic pt3 pb3">
               <Image
-                cls="widthFn-200 heightFn-200"
+                cls={`${
+                  isSmallDevice()
+                    ? 'widthFn-160 heightFn-160'
+                    : 'widthFn-200 heightFn-200'
+                }`}
                 source={
                   !isTextEmpty(rootStore.playerStore?.currentSong?.artwork)
                     ? { uri: rootStore.playerStore?.currentSong?.artwork }
@@ -76,10 +82,14 @@ const ShareModal = wrap(({ shareItems, _hideModal }) => {
                 }
               />
               <View cls="jcc aic">
-                <Text cls="white fw7 f5 pt2 avertaFont">
+                <Text
+                  cls={`${
+                    isSmallDevice() ? 'f7' : 'f5'
+                  } white fw7 pt2 avertaFont`}>
                   {rootStore.playerStore?.currentSong?.getName()}
                 </Text>
-                <Text cls="white f7 pt1 latoFont">
+                <Text
+                  cls={`${isSmallDevice() ? 'f9' : 'f7'} white pt1 avertaFont`}>
                   {rootStore.playerStore?.currentSong?.getSubTitle()}
                 </Text>
               </View>
@@ -91,7 +101,7 @@ const ShareModal = wrap(({ shareItems, _hideModal }) => {
           </View>
         </ImageBackground>
 
-        <View cls="fullWidth pt4">
+        <View cls="fullWidth pt3">
           <FlatList
             data={shareItems}
             renderItem={renderShareItem}
@@ -105,7 +115,7 @@ const ShareModal = wrap(({ shareItems, _hideModal }) => {
 
 export default ShareModal;
 const styles = StyleSheet.create({
-  underWave: { position: 'absolute', bottom: -24, height: 50 },
+  underWave: { position: 'absolute', bottom: 8, height: 20 },
   title: {
     color: '#FFF',
     justifyContent: 'center',

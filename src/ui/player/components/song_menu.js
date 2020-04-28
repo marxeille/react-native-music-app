@@ -16,6 +16,7 @@ import AddPlayListModal from './add_playlist_modal';
 import { navigate } from '../../../navigation/navigation_service';
 import { ScrollView } from 'react-native-gesture-handler';
 import { subLongStr, isTextEmpty } from '../../../utils';
+import { isSmallDevice } from '../../../utils';
 
 @observer
 @wrap
@@ -69,7 +70,11 @@ export default class SongMenu extends Component {
       <>
         <View cls="aic jcc pt4 pb2">
           <ImageBackground
-            cls="widthFn-260 heightFn-260 aic jcc"
+            cls={`${
+              isSmallDevice()
+                ? 'widthFn-200 heightFn-200'
+                : 'widthFn-260 heightFn-260'
+            } aic jcc`}
             source={Images.e_cover}>
             <Image
               source={
@@ -79,7 +84,7 @@ export default class SongMenu extends Component {
                     }
                   : Images.bAAlbum
               }
-              cls="circleFn-140"
+              cls={`${isSmallDevice() ? 'circleFn-80' : 'circleFn-140'}`}
             />
           </ImageBackground>
           <View cls="aic jcc pb0 pa3">
@@ -88,11 +93,14 @@ export default class SongMenu extends Component {
               end={{ x: 0.7, y: 0 }}
               styles={{
                 justifyContent: 'center',
-                fontSize: 25,
+                fontSize: isSmallDevice() ? 20 : 25,
                 fontFamily: 'Averta-ExtraBold',
               }}
             />
-            <Text cls="white fw5 f7 pt1 latoHeavyFont">
+            <Text
+              cls={`${
+                isSmallDevice() ? 'f9' : 'f7'
+              } white fw5 pt1 latoHeavyFont`}>
               {song?.getSubTitle() ?? 'Chưa rõ'}
             </Text>
           </View>
@@ -136,15 +144,21 @@ const ActionItem = wrap(props => {
     <>
       <TouchableOpacity onPress={props.onPress} cls="mb3">
         <View
-          cls="br5 ba pa2 fullWidth aic flx-row"
+          cls={`${
+            isSmallDevice() ? 'pa1' : 'pa2'
+          } br5 ba fullWidth aic flx-row`}
           style={{ borderColor: '#d29dc5' }}>
           <View cls="pl2">
             <Image
-              cls="widthFn-24 heightFn-24 tint-#FFF"
+              cls={`${
+                isSmallDevice()
+                  ? 'widthFn-18 heightFn-18'
+                  : 'widthFn-24 heightFn-24'
+              } tint-#FFF`}
               source={Images[props.icon]}
             />
           </View>
-          <Text cls="white lightFont pl3">{props.title}</Text>
+          <Text cls={`white lightFont pl3`}>{props.title}</Text>
         </View>
       </TouchableOpacity>
     </>

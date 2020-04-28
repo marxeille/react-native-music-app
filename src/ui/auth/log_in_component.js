@@ -127,11 +127,11 @@ export default class LogInComponent extends Component {
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
             <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
-              <View cls={`asfs pa3 ${isSmallDevice ? 'pt1' : 'pt4'} pb0`}>
+              <View cls={`asfs pa3 ${isSmallDevice() ? 'pt1' : 'pt4'} pb0`}>
                 <TouchableOpacity onPress={pop}>
                   <Image
                     cls={`${
-                      isSmallDevice
+                      isSmallDevice()
                         ? 'widthFn-10 heightFn-18'
                         : 'widthFn-14 heightFn-24'
                     }`}
@@ -150,7 +150,7 @@ export default class LogInComponent extends Component {
                 }`}>
                 <Image
                   cls={`fullWidth asc aic ${
-                    isSmallDevice ? 'heightFn-60' : 'heightFn-100'
+                    isSmallDevice() ? 'heightFn-60' : 'heightFn-100'
                   }`}
                   source={Images.wave}
                 />
@@ -168,10 +168,10 @@ export default class LogInComponent extends Component {
                   colors={['#4E357A', '#9069A0', '#D39DC5']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  cls={`${isSmallDevice ? 'mb2 mt2' : 'mb3'}`}
+                  cls={`${isSmallDevice() ? 'mb2 mt2' : 'mb3'}`}
                   style={{
                     borderRadius: 10,
-                    height: isSmallDevice ? 52 : 57,
+                    height: isSmallDevice() ? 52 : 57,
                     padding: 1,
                   }}>
                   <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
@@ -179,7 +179,7 @@ export default class LogInComponent extends Component {
                       secureTextEntry={false}
                       placeholderTextColor="#fff"
                       placeholder={'Tên Đăng Nhập'}
-                      cls={`${isSmallDevice ? 'f10' : ''}`}
+                      cls={`${isSmallDevice() ? 'f10' : ''}`}
                       style={[styles.inputText]}
                       value={loginName}
                       onChange={event => this.onChangeText(event, 'loginName')}
@@ -195,10 +195,10 @@ export default class LogInComponent extends Component {
                   colors={['#4E357A', '#9069A0', '#D39DC5']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  cls={`${isSmallDevice ? 'mt2' : 'mt3'}`}
+                  cls={`${isSmallDevice() ? 'mt2' : 'mt3'}`}
                   style={{
                     borderRadius: 10,
-                    height: isSmallDevice ? 52 : 57,
+                    height: isSmallDevice() ? 52 : 57,
                     padding: 1,
                   }}>
                   <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
@@ -206,7 +206,7 @@ export default class LogInComponent extends Component {
                       secureTextEntry={true}
                       placeholderTextColor="#fff"
                       placeholder={'Mật Khẩu'}
-                      cls={`${isSmallDevice ? 'f10' : ''}`}
+                      cls={`${isSmallDevice() ? 'f10' : ''}`}
                       style={[styles.inputText]}
                       value={pass}
                       onChange={event => this.onChangeText(event, 'pass')}
@@ -218,7 +218,7 @@ export default class LogInComponent extends Component {
               </View>
               <View
                 cls={`${
-                  isSmallDevice
+                  isSmallDevice()
                     ? 'fullWidth pl3 pr4 pb4 pt2'
                     : 'fullWidth pl3 pr4 pb4 pt3'
                 }`}>
@@ -227,7 +227,7 @@ export default class LogInComponent extends Component {
                     <Text
                       cls="ml3"
                       style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
-                      cls={`${isSmallDevice ? 'f10' : 'f8'}`}>
+                      cls={`${isSmallDevice() ? 'f10' : 'f8'}`}>
                       Quên mật khẩu?
                     </Text>
                   </View>
@@ -237,7 +237,7 @@ export default class LogInComponent extends Component {
               {/* Button Group */}
               <View
                 cls={`${
-                  isSmallDevice
+                  isSmallDevice()
                     ? 'fullWidth pa3 pt3 pb0 aic'
                     : 'fullWidth pa3 pt0 pb0 aic'
                 }`}>
@@ -269,7 +269,7 @@ export default class LogInComponent extends Component {
                   }}
                 />
                 <Text
-                  cls={`${isSmallDevice ? 'f10' : 'f8'} asc aic ml2 mr2`}
+                  cls={`${isSmallDevice() ? 'f10' : 'f8'} asc aic ml2 mr2`}
                   style={{ color: '#9166cc', fontFamily: 'lato-regular' }}>
                   hoặc
                 </Text>
@@ -288,12 +288,14 @@ export default class LogInComponent extends Component {
                   <TouchableOpacity onPress={this.handleLoginWithFacebook}>
                     <View
                       cls={`ba b--#321A54 bg-#323277 br5 ${
-                        isSmallDevice
+                        isSmallDevice()
                           ? 'widthFn-160 heightFn-40'
                           : 'widthFn-220 heightFn-50'
                       } aic jcc`}>
                       <Text
-                        cls={`${isSmallDevice ? 'f8' : 'f6'} white avertaFont`}>
+                        cls={`${
+                          isSmallDevice() ? 'f8' : 'f6'
+                        } white avertaFont`}>
                         Facebook
                       </Text>
                     </View>
@@ -319,7 +321,7 @@ const styles = StyleSheet.create({
     borderColor: '#4B3277',
     borderRadius: 10,
     flexDirection: 'row',
-    height: isSmallDevice ? 50 : 55,
+    height: isSmallDevice() ? 50 : 55,
     alignItems: 'center',
     marginBottom: 5,
   },
