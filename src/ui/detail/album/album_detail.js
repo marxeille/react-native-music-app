@@ -29,6 +29,7 @@ import ActionGroup from './components/action_group';
 import AddSongPlaylist from '../../components/add_playlist_modal/add_song';
 import Toast from 'react-native-simple-toast';
 import AlbumListItem from './components/list_item';
+import AddPlayListModal from '../../player/components/add_playlist_modal';
 
 @observer
 @wrap
@@ -44,6 +45,7 @@ export default class AlbumDetail extends Component {
       article: {},
       ids: [],
       showMenuEdit: false,
+      showMenuAddToPlaylist: false,
       playing: false,
       private: props.route?.params.item.private,
       name: props.route?.params.item.name,
@@ -382,7 +384,6 @@ export default class AlbumDetail extends Component {
     }
 
     if (item.id == 0) {
-      // this.viewModel.getAlbumTracks([...rootStore?.likedTracks]);
       ids = [...rootStore?.likedTracks];
     }
 
@@ -445,7 +446,9 @@ export default class AlbumDetail extends Component {
             },
             {
               title: 'Thêm vào playlist',
-              action: () => {},
+              action: () => {
+                this.setState({ showMenuAddToPlaylist: true });
+              },
               hidden: rootStore.userStore?.id == item.owner_id,
               icon: Images.ic_add_pl,
               imgStyle: 'widthFn-20 heightFn-24',
@@ -506,18 +509,27 @@ export default class AlbumDetail extends Component {
             <BottomModal
               headerNone
               justifyCenterModal
-              forceInsetBottom="never"
+              // forceInsetBottom="never"
               containerCls=""
               customGradient={['#000', '#1a0632', '#000', '#13151A']}
               ref={this.modalPlaylist}>
-              <MenuConcept
-                item={item}
-                songs={songs}
-                changeOrder={this.changeOrder}
-                settingItems={settingItems}
-                showMenuEdit={this.state.showMenuEdit}
-                changeShowMenuEdit={this.changeShowMenuEdit}
-              />
+              {this.state.showMenuAddToPlaylist ? (
+                <AddPlayListModal
+                  songs={songs}
+                  addPlaylist={() =>
+                    this.setState({ showMenuAddToPlaylist: false })
+                  }
+                />
+              ) : (
+                <MenuConcept
+                  item={item}
+                  songs={songs}
+                  changeOrder={this.changeOrder}
+                  settingItems={settingItems}
+                  showMenuEdit={this.state.showMenuEdit}
+                  changeShowMenuEdit={this.changeShowMenuEdit}
+                />
+              )}
             </BottomModal>
             <BottomModal
               headerNone

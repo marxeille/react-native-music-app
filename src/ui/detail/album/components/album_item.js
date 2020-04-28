@@ -80,7 +80,7 @@ const AlbumItem = observer(
 
           <View cls="jcc pl3">
             <Text cls="white fw7 f6 lightFont">
-              {subLongStr(props.item.getName(), 18)}
+              {subLongStr(props.item.getName(), 15)}
             </Text>
             <Text cls="primaryPurple lightFont">
               {props.item.getSubTitle()}

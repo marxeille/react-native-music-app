@@ -27,6 +27,13 @@ export const HomeStore = types
       },
       //#endregion
 
+      clearHomeData() {
+        self.recently.length = 0;
+        self.popularSongs.length = 0;
+        self.popular.length = 0;
+        self.state = 'loading';
+      },
+
       addPopularSong(song) {
         const songExist = [...self.popularSongs].find(
           popularSong => popularSong.id == song.id,

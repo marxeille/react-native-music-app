@@ -27,19 +27,23 @@ export default class AddPlayListModal extends Component {
   }
 
   _renderItem = item => {
-    return (
-      <TouchableOpacity onPress={() => this.addTracksToPlaylist(item.item)}>
-        <ActionItem item={item.item} />
-      </TouchableOpacity>
-    );
+    if (item.item.owner_id == rootStore.userStore?.id) {
+      return (
+        <TouchableOpacity onPress={() => this.addTracksToPlaylist(item.item)}>
+          <ActionItem item={item.item} />
+        </TouchableOpacity>
+      );
+    }
   };
 
   addTracksToPlaylist = playlist => {
-    const { song } = this.props;
+    const { songs } = this.props;
     const newTracks = cloneDeep(playlist.tracks);
-    newTracks.push({
-      track_id: Number(song.id),
-      position: [...playlist.tracks].length,
+    songs.map((song, index) => {
+      newTracks.push({
+        track_id: Number(song.id),
+        position: [...playlist.tracks].length + index - 1,
+      });
     });
     playlist = { ...playlist, tracks: newTracks };
     rootStore?.homeStore?.addTracksToPlaylist(playlist);
@@ -57,7 +61,7 @@ export default class AddPlayListModal extends Component {
         _hideModal={this.onClosePress}
       />
     ) : (
-      <View cls="pb8">
+      <View cls="pb7">
         <View cls="pv2 flx-row aic bg-#280f46">
           <View cls="aifs jcc flx-i">
             <TouchableOpacity

@@ -71,6 +71,7 @@ class Settings extends Component {
     const response = await logout();
     if (response?.status == 200) {
       rootStore?.playerStore?.clearSong();
+      rootStore?.homeStore?.clearHomeData();
       rootStore?.libraryStore?.clearLibraryData();
       this.context.userStore.removeUserInfo();
     } else {

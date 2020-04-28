@@ -14,7 +14,7 @@ import Images from '../../../assets/icons/icons';
 import ListItem from './list_item';
 
 const PlaylistMenuConcept = observer(
-  wrap(({ item, setMenu, settingItems }) => {
+  wrap(({ item, settingItems }) => {
     const renderItem = useCallback(item => {
       if (item.item.hidden) {
         return null;

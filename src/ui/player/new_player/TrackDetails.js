@@ -90,7 +90,7 @@ const TrackDetails = wrap(({ title, artist, onSharePress, onArtistPress }) => {
       </View>
       <View style={styles.container}>
         <View style={styles.detailsWrapper}>
-          {title?.length < 24 ? (
+          {title?.length < 20 ? (
             <LinearGradientText
               text={title}
               end={{ x: 0.7, y: 0 }}
