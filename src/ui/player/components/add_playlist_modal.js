@@ -61,33 +61,28 @@ export default class AddPlayListModal extends Component {
         _hideModal={this.onClosePress}
       />
     ) : (
-      <View cls="pb8">
-        <LinearGradient
-          colors={['#291048', '#1f0d36', '#130727', '#110426']}
-          start={{ x: 1, y: 0 }}
-          end={{ x: 1, y: 1 }}>
-          <View cls="pv2 flx-row aic">
-            <View cls="aifs jcc flx-i">
-              <TouchableOpacity
-                onPress={() => this.props.addPlaylist(false)}
-                cls="jcc pv1 ph3 aic">
-                <Image source={Images.ic_delete} />
-              </TouchableOpacity>
-            </View>
-            <View cls="aic jcc flexFn-5 pt2">
-              <LinearGradientText
-                text={`Thêm vào Playlist`}
-                end={{ x: 0.7, y: 0 }}
-                styles={{
-                  justifyContent: 'center',
-                  fontSize: 21,
-                  fontWeight: '800',
-                }}
-              />
-            </View>
-            <View cls="flx-i" />
+      <View cls="pb7">
+        <View cls="pv2 flx-row aic bg-#280f46">
+          <View cls="aifs jcc flx-i">
+            <TouchableOpacity
+              onPress={() => this.props.addPlaylist(false)}
+              cls="jcc pv1 ph3 aic">
+              <Image source={Images.ic_delete} />
+            </TouchableOpacity>
           </View>
-        </LinearGradient>
+          <View cls="aic jcc flexFn-5 pt2">
+            <LinearGradientText
+              text={`Thêm vào Playlist`}
+              end={{ x: 0.7, y: 0 }}
+              styles={{
+                justifyContent: 'center',
+                fontSize: 21,
+                fontWeight: '800',
+              }}
+            />
+          </View>
+          <View cls="flx-i" />
+        </View>
         <View cls="aic jcc pt3">
           <TouchableOpacity
             onPress={() => {
@@ -107,7 +102,6 @@ export default class AddPlayListModal extends Component {
             data={[...rootStore?.homeStore?.popular]}
             showsVerticalScrollIndicator={false}
             renderItem={this._renderItem}
-            numColumns={3}
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
@@ -119,9 +113,9 @@ export default class AddPlayListModal extends Component {
 const ActionItem = wrap(({ item }) => {
   return (
     <>
-      <View cls="flx-i pb3 pr2">
+      <View cls="flx-row aic pb3">
         <Image
-          cls="widthFn-108 heightFn-108"
+          cls="widthFn-90 heightFn-82"
           source={
             item && item.getThumb() !== ''
               ? { uri: item?.getThumb() }
@@ -129,12 +123,9 @@ const ActionItem = wrap(({ item }) => {
           }
         />
 
-        <View cls="pt2">
-          <Text cls="white fw7 f10 lightFont">
-            {' '}
-            {item?.title() ?? 'Default'}
-          </Text>
-          <Text cls="primaryPurple f12 pt1 lightFont">
+        <View cls="pl2">
+          <Text cls="white fw7 f6 pl2"> {item?.title() ?? 'Default'}</Text>
+          <Text cls="primaryPurple f6 pl2 pt1">
             {item?.subTitle() ?? 'Default'}
           </Text>
         </View>
