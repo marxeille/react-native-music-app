@@ -54,7 +54,7 @@ export default class TrackApiService {
       const path = `/api/playlists/${playlist.id}`;
       const params = {
         name: playlist.name,
-        private: true,
+        private: playlist.private ?? true,
         tracks: [...playlist.tracks],
       };
 

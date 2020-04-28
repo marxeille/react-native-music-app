@@ -46,6 +46,8 @@ export default class AlbumDetail extends Component {
       ids: [],
       showMenuEdit: false,
       playing: false,
+      private: props.route?.params.item.private,
+      name: props.route?.params.item.name,
     };
   }
 
@@ -83,6 +85,27 @@ export default class AlbumDetail extends Component {
     if (typeof item == 'number') {
       item = this.state.article;
     }
+
+    const newPlaylist = {
+      ...item,
+      private: !this.state.private,
+    };
+
+    apiService.trackApiService
+      .editPlaylist(newPlaylist)
+      .then(res => {
+        if (res.status == 200) {
+          this.setState({ private: res.data.private });
+          rootStore.updatePlayList(res.data);
+          Toast.showWithGravity('Sửa thành công', Toast.LONG, Toast.BOTTOM);
+        } else {
+          Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
+        }
+      })
+      .catch(err => {
+        console.log('err => ', err);
+        Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
+      });
   };
 
   changeShowMenuEdit = state => {
@@ -388,79 +411,83 @@ export default class AlbumDetail extends Component {
 
     const hasSong = songs.length > 0;
 
-    const settingItems = [
-      {
-        title: 'Đổi ảnh bìa',
-        action: () => {},
-        icon: Images.ic_pic,
-        imgStyle: 'widthFn-20 heightFn-18',
-        hidden: rootStore.userStore?.id !== item.owner_id,
-      },
-      {
-        title: 'Đổi tên',
-        action: () => {},
-        icon: Images.ic_pen,
-        hidden: rootStore.userStore?.id !== item.owner_id,
-      },
-      {
-        title: 'Sửa playlist',
-        action: () => {
-          this.setState({ showMenuEdit: true });
-        },
-        icon: Images.ic_list,
-        hidden: rootStore.userStore?.id !== item.owner_id,
-      },
-      {
-        title: 'Public playlist',
-        action: () => {
-          this.editPlaylist();
-        },
-        hidden: rootStore.userStore?.id !== item.owner_id,
-        icon: Images.ic_lock,
-        imgStyle: 'widthFn-17 heightFn-20',
-      },
-      {
-        title: 'Xoá playlist',
-        hidden: rootStore.userStore?.id !== item.owner_id,
-        action: () => this.deletePlaylist(),
-        icon: Images.ic_circle_minus,
-      },
-      {
-        title: 'Tải xuống',
-        action: () => {},
-        hidden: rootStore.userStore?.id == item.owner_id,
-        icon: Images.ic_download_white,
-        imgStyle: 'widthFn-20 heightFn-24',
-      },
-      {
-        title: 'Thêm vào playlist',
-        action: () => {},
-        hidden: rootStore.userStore?.id == item.owner_id,
-        icon: Images.ic_add_pl,
-        imgStyle: 'widthFn-20 heightFn-24',
-      },
-      {
-        title: 'Thêm vào danh sách chờ',
-        action: () => {},
-        hidden: rootStore.userStore?.id == item.owner_id,
-        icon: Images.ic_add_queue,
-        imgStyle: 'widthFn-20 heightFn-20',
-      },
-      {
-        title: 'Chia sẻ',
-        action: () => {},
-        hidden: rootStore.userStore?.id == item.owner_id,
-        icon: Images.ic_share_white,
-        imgStyle: 'widthFn-20 heightFn-24',
-      },
-      {
-        title: 'Xem người tạo ra playlist',
-        action: () => {},
-        hidden: rootStore.userStore?.id == item.owner_id,
-        icon: Images.ic_person,
-        imgStyle: 'widthFn-20 heightFn-24',
-      },
-    ];
+    const settingItems =
+      item.id == 0
+        ? []
+        : [
+            {
+              title: 'Đổi ảnh bìa',
+              action: () => {},
+              icon: Images.ic_pic,
+              imgStyle: 'widthFn-20 heightFn-18',
+              hidden: rootStore.userStore?.id !== item.owner_id,
+            },
+            {
+              title: 'Đổi tên',
+              action: () => {},
+              icon: Images.ic_pen,
+              hidden: rootStore.userStore?.id !== item.owner_id,
+            },
+            {
+              title: 'Sửa playlist',
+              action: () => {
+                this.setState({ showMenuEdit: true });
+              },
+              icon: Images.ic_list,
+              hidden: rootStore.userStore?.id !== item.owner_id,
+            },
+            {
+              title: `${this.state.private ? 'Public' : 'Private'} playlist`,
+              action: () => {
+                this.editPlaylist();
+              },
+              hidden: rootStore.userStore?.id !== item.owner_id,
+              icon: Images.ic_lock,
+              imgStyle: 'widthFn-17 heightFn-20',
+            },
+            {
+              title: 'Xoá playlist',
+              hidden: rootStore.userStore?.id !== item.owner_id,
+              action: () => this.deletePlaylist(),
+              icon: Images.ic_circle_minus,
+            },
+            {
+              title: 'Tải xuống',
+              action: () => {},
+              hidden: rootStore.userStore?.id == item.owner_id,
+              icon: Images.ic_download_white,
+              imgStyle: 'widthFn-20 heightFn-24',
+            },
+            {
+              title: 'Thêm vào playlist',
+              action: () => {},
+              hidden: rootStore.userStore?.id == item.owner_id,
+              icon: Images.ic_add_pl,
+              imgStyle: 'widthFn-20 heightFn-24',
+            },
+            {
+              title: 'Thêm vào danh sách chờ',
+              action: () => {},
+              hidden: rootStore.userStore?.id == item.owner_id,
+              icon: Images.ic_add_queue,
+              imgStyle: 'widthFn-20 heightFn-20',
+            },
+            {
+              title: 'Chia sẻ',
+              action: () => {},
+              hidden: rootStore.userStore?.id == item.owner_id,
+              icon: Images.ic_share_white,
+              imgStyle: 'widthFn-20 heightFn-24',
+            },
+            {
+              title: 'Xem người tạo ra playlist',
+              action: () => {},
+              hidden: rootStore.userStore?.id == item.owner_id,
+              icon: Images.ic_person,
+              imgStyle: 'widthFn-20 heightFn-24',
+            },
+          ];
+
     return this.viewModel.state == 'loading' ? (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}

@@ -67,7 +67,7 @@ export default class SongMenu extends Component {
       </View>
     ) : (
       <>
-        <View cls="aic jcc pt3 pb2">
+        <View cls="aic jcc pt4 pb2">
           <ImageBackground
             cls="widthFn-260 heightFn-260 aic jcc"
             source={Images.e_cover}>
@@ -97,7 +97,7 @@ export default class SongMenu extends Component {
             </Text>
           </View>
         </View>
-        <View cls="pa3">
+        <View cls="pa3 heightFn-280">
           <ScrollView showsVerticalScrollIndicator={false}>
             <ActionItem
               onPress={() => this.addPlaylist(true)}

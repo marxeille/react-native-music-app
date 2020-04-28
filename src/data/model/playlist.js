@@ -43,6 +43,8 @@ export const PlayList = types
       update(newJson) {
         self.name = newJson.name;
         self.tracks = newJson.tracks;
+        self.private = newJson.private;
+        self.playlistCover = newJson.cover_path ?? self.playlistCover;
       },
     };
   });

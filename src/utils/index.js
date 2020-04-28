@@ -92,66 +92,6 @@ export const isIphoneX = () => {
       dimen.width === 896)
   );
 };
-export const showProvider = attributes => {
-  if (attributes && attributes.length !== 0) {
-    const index = attributes.findIndex(
-      item =>
-        item.transactionAttributeValue === 'VTM' ||
-        item.transactionAttributeValue === 'VNP' ||
-        item.transactionAttributeValue === 'VMS' ||
-        item.transactionAttributeValue === 'GMOBILE' ||
-        item.transactionAttributeValue === 'VNM' ||
-        item.transactionAttributeValue === 'VINPLAY' ||
-        item.transactionAttributeValue === 'ZING' ||
-        item.transactionAttributeValue === 'GARENA' ||
-        item.transactionAttributeValue === 'GATE' ||
-        item.transactionAttributeValue === 'VCOIN' ||
-        item.transactionAttributeValue === 'ONCASH' ||
-        item.transactionAttributeValue === 'ANPAY' ||
-        item.transactionAttributeValue === 'DT_VTM' ||
-        item.transactionAttributeValue === 'DT_VNP' ||
-        item.transactionAttributeValue === 'DT_VMS',
-    );
-    if (index === -1) {
-      return null;
-    }
-    switch (attributes[index].transactionAttributeValue) {
-      case 'VTM':
-        return 'VIETTEL';
-      case 'VNP':
-        return 'VINAPHONE';
-      case 'VMS':
-        return 'MOBIFONE';
-      case 'GMOBILE':
-        return 'GMOBILE';
-      case 'VNM':
-        return 'VNMOBILE';
-      case 'GARENA':
-        return 'GARENA';
-      case 'ZING':
-        return 'ZING';
-      case 'VINPLAY':
-        return 'VINPLAY';
-      case 'GATE':
-        return 'GATE';
-      case 'VCOIN':
-        return 'VTC';
-      case 'ONCASH':
-        return 'ONCASH';
-      case 'ANPAY':
-        return 'ANPAY';
-      case 'DT_VTM':
-        return 'VIETTEL DATA';
-      case 'DT_VNP':
-        return 'VINAPHONE DATA';
-      case 'DT_VMS':
-        return 'MOBIFONE DATA';
-      default:
-        break;
-    }
-  }
-  return '';
-};
 export const normalizeCardNumber = cardNumber =>
   cardNumber.toString().replace(/\s/g, '');
 export const formatCardBankNumber = cardNumber => {
