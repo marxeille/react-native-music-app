@@ -21,7 +21,7 @@ export default class PlaylistItem extends Component {
       <>
         <View cls="flx-i pb3 pr2">
           <Image
-            cls="widthFn-108 heightFn-100"
+            cls="widthFn-108 heightFn-108"
             source={
               item !== undefined && item.getThumb() !== ''
                 ? {

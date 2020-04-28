@@ -23,9 +23,9 @@ export default class AlbumItem extends Component {
         onPress={() => {
           item ? navigate('album_detail', { id: item.id, item: item }) : null;
         }}>
-        <View cls="pb3 pr3">
+        <View cls="pb3 pr2">
           <Image
-            cls="widthFn-100 heightFn-82"
+            cls="widthFn-108 heightFn-108"
             source={
               item !== undefined &&
               item.getThumb() !== null &&
@@ -37,8 +37,8 @@ export default class AlbumItem extends Component {
             }
           />
           <View>
-            <Text cls="white fw7 f8 pt2">{subLongStr(item.title(), 8)}</Text>
-            <Text cls="primaryPurple f8 pt1">
+            <Text cls="white fw7 f10 pt2">{subLongStr(item.title(), 8)}</Text>
+            <Text cls="primaryPurple f12 pt1">
               của {subLongStr(item.subTitle(), 6)}
             </Text>
           </View>
