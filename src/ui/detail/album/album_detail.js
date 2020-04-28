@@ -106,7 +106,7 @@ export default class AlbumDetail extends Component {
         }
       })
       .catch(err => {
-        console.log('err => ', err);
+        console.log('AlbumDetail -> editPlaylist -> err', err);
         Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
       });
   };

@@ -290,8 +290,6 @@ PODS:
     - Toast (~> 4.0.0)
   - react-native-slider (2.0.8):
     - React
-  - react-native-track-player (2.0.0-rc9):
-    - React
   - react-native-video (5.1.0-alpha6):
     - React
     - react-native-video/Video (= 5.1.0-alpha6)
@@ -388,7 +386,6 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
-  - react-native-track-player (from `../node_modules/react-native-track-player`)
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-zalo-share (from `../node_modules/react-native-zalo-share`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -476,8 +473,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-simple-toast"
   react-native-slider:
     :path: "../node_modules/@react-native-community/slider"
-  react-native-track-player:
-    :path: "../node_modules/react-native-track-player"
   react-native-video:
     :path: "../node_modules/react-native-video"
   react-native-zalo-share:
@@ -559,7 +554,6 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-simple-toast: 58b71ef003f01d2c0bf5dcd2fdccc75861dabade
   react-native-slider: 3a1cfd00c9c31068251b536822f7192e8d1d6b6f
-  react-native-track-player: 36e250a77705e5edc34b12020fd526511070971f
   react-native-video: a6813b9edc39fa2d50da565b6475ecc68083cc8e
   react-native-zalo-share: 43018529285557d71fb5beb030868e7da1ed79a1
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76

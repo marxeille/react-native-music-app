@@ -1,16 +1,7 @@
 import * as React from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  Text,
-  ImageBackground,
-} from 'react-native';
-import { TabView, SceneMap } from 'react-native-tab-view';
-import PlayerFullComponent from './player_full_component';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { TabView } from 'react-native-tab-view';
 import Player2 from './new_player/App';
-// import Queue from './queue_component';
 import Queue from './queue_2';
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';

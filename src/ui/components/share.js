@@ -41,14 +41,17 @@ const ShareModal = wrap(({ _hideModal, item }) => {
     const config = {
       msg: 'message',
       link: rootStore.playerStore?.currentSong?.url,
-      linkTitle: '',
+      linkTitle: item?.name,
       linkSource: '',
-      linkThumb: '',
-      appName: 'PlayerProject',
+      linkThumb: item?.getThumb(),
+      appName: 'Diijam',
     };
     ZaloShare.shareMessage(config)
-      .then(console.log('send data to zalo success'))
-      .catch(error => console.log('error message', error.message));
+      .then(Toast.showWithGravity('Đã chia sẻ', Toast.LONG, Toast.BOTTOM))
+      .catch(error => {
+        console.log('onShareZalo -> error', error);
+        Toast.showWithGravity('Chia sẻ thất bại', Toast.LONG, Toast.BOTTOM);
+      });
   });
 
   const onShareOther = useCallback(async () => {
@@ -73,9 +76,13 @@ const ShareModal = wrap(({ _hideModal, item }) => {
     });
     try {
       const ShareResponse = await Share.open(options);
-      console.log(JSON.stringify(ShareResponse, null, 2));
+      console.log(
+        'onShareOther -> ShareResponse ',
+        JSON.stringify(ShareResponse, null, 2),
+      );
     } catch (error) {
-      console.log('error: '.concat(JSON.stringify(error)));
+      console.log('onShareOther -> error: '.concat(JSON.stringify(error)));
+      Toast.showWithGravity('Chia sẻ thất bại', Toast.LONG, Toast.BOTTOM);
     }
   });
 
