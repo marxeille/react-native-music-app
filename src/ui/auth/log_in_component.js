@@ -19,6 +19,7 @@ import UserInfo from '../../data/model/user_info';
 import Images from '../../assets/icons/icons';
 import { navigate, pop } from '../../navigation/navigation_service';
 import { observer } from 'mobx-react';
+import { isSmallDevice } from '../../utils';
 const FBSDK = require('react-native-fbsdk');
 const { LoginManager, AccessToken } = FBSDK;
 import Toast from 'react-native-simple-toast';
@@ -126,10 +127,14 @@ export default class LogInComponent extends Component {
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
             <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
-              <View cls="asfs pa3 pt4 pb0">
+              <View cls={`asfs pa3 ${isSmallDevice ? 'pt1' : 'pt4'} pb0`}>
                 <TouchableOpacity onPress={pop}>
                   <Image
-                    cls="widthFn-14 heightFn-24"
+                    cls={`${
+                      isSmallDevice
+                        ? 'widthFn-10 heightFn-18'
+                        : 'widthFn-14 heightFn-24'
+                    }`}
                     style={styles.iconBack}
                     source={Images.ic_back_white}
                   />
@@ -139,9 +144,14 @@ export default class LogInComponent extends Component {
                 <Image style={styles.icon} source={Images.logo_signin} />
               </View> */}
 
-              <View cls="fullWidth pa4 pb4 mt4">
+              <View
+                cls={`fullWidth ${
+                  isSmallDevice() ? 'pl3 pr3 pt4 mt4' : 'pa4 pb4 mt4'
+                }`}>
                 <Image
-                  cls="fullWidth asc aic heightFn-100"
+                  cls={`fullWidth asc aic ${
+                    isSmallDevice ? 'heightFn-60' : 'heightFn-100'
+                  }`}
                   source={Images.wave}
                 />
                 <View cls="aic asc" style={{ position: 'absolute' }}>
@@ -158,13 +168,18 @@ export default class LogInComponent extends Component {
                   colors={['#4E357A', '#9069A0', '#D39DC5']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  cls="mb3"
-                  style={{ borderRadius: 10, height: 57, padding: 1 }}>
+                  cls={`${isSmallDevice ? 'mb2 mt2' : 'mb3'}`}
+                  style={{
+                    borderRadius: 10,
+                    height: isSmallDevice ? 52 : 57,
+                    padding: 1,
+                  }}>
                   <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
                     <TextInput
                       secureTextEntry={false}
                       placeholderTextColor="#fff"
                       placeholder={'Tên Đăng Nhập'}
+                      cls={`${isSmallDevice ? 'f10' : ''}`}
                       style={[styles.inputText]}
                       value={loginName}
                       onChange={event => this.onChangeText(event, 'loginName')}
@@ -180,13 +195,18 @@ export default class LogInComponent extends Component {
                   colors={['#4E357A', '#9069A0', '#D39DC5']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  cls="mt3"
-                  style={{ borderRadius: 10, height: 57, padding: 1 }}>
+                  cls={`${isSmallDevice ? 'mt2' : 'mt3'}`}
+                  style={{
+                    borderRadius: 10,
+                    height: isSmallDevice ? 52 : 57,
+                    padding: 1,
+                  }}>
                   <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
                     <TextInput
                       secureTextEntry={true}
                       placeholderTextColor="#fff"
                       placeholder={'Mật Khẩu'}
+                      cls={`${isSmallDevice ? 'f10' : ''}`}
                       style={[styles.inputText]}
                       value={pass}
                       onChange={event => this.onChangeText(event, 'pass')}
@@ -196,13 +216,18 @@ export default class LogInComponent extends Component {
                   </View>
                 </LinearGradient>
               </View>
-              <View cls="fullWidth pl3 pr4 pb4 pt3">
+              <View
+                cls={`${
+                  isSmallDevice
+                    ? 'fullWidth pl3 pr4 pb4 pt2'
+                    : 'fullWidth pl3 pr4 pb4 pt3'
+                }`}>
                 <TouchableWithoutFeedback onPress={this.handleForgot}>
                   <View cls="pl3">
                     <Text
                       cls="ml3"
                       style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
-                      cls="f8">
+                      cls={`${isSmallDevice ? 'f10' : 'f8'}`}>
                       Quên mật khẩu?
                     </Text>
                   </View>
@@ -210,18 +235,24 @@ export default class LogInComponent extends Component {
               </View>
 
               {/* Button Group */}
-              <View cls="fullWidth pa3 pb0 aic mb4 mt3">
+              <View
+                cls={`${
+                  isSmallDevice
+                    ? 'fullWidth pa3 pt3 pb0 aic'
+                    : 'fullWidth pa3 pt0 pb0 aic'
+                }`}>
                 <TouchableOpacity onPress={this.handleLogin}>
                   <LinearGradient
-                    cls="ba br5 b--#321A54"
+                    cls={`ba br5 b--#321A54 ${
+                      isSmallDevice()
+                        ? 'widthFn-160 heightFn-40'
+                        : 'widthFn-220 heightFn-50'
+                    } aic jcc`}
                     colors={['#4A3278', '#8B659D', '#DDA5CB']}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}>
                     <Text
-                      cls="white f6 pl5 pr5 avertaFont"
-                      style={{
-                        paddingVertical: 12,
-                      }}>
+                      cls={`white ${isSmallDevice() ? 'f8' : 'f6'} avertaFont`}>
                       Đăng Nhập
                     </Text>
                   </LinearGradient>
@@ -238,7 +269,7 @@ export default class LogInComponent extends Component {
                   }}
                 />
                 <Text
-                  cls="f8 asc aic ml2 mr2"
+                  cls={`${isSmallDevice ? 'f10' : 'f8'} asc aic ml2 mr2`}
                   style={{ color: '#9166cc', fontFamily: 'lato-regular' }}>
                   hoặc
                 </Text>
@@ -252,11 +283,19 @@ export default class LogInComponent extends Component {
                 />
               </View>
 
-              <View cls="fullWidth pa3 pt0 mt4 aic">
+              <View cls="fullWidth pa3 pt0 mt1 aic">
                 <View cls="pt3">
                   <TouchableOpacity onPress={this.handleLoginWithFacebook}>
-                    <View cls="aic ba b--#321A54 bg-#323277 br5 widthFn-220 heightFn-50 aic jcc">
-                      <Text cls="white f6 avertaFont">Facebook</Text>
+                    <View
+                      cls={`ba b--#321A54 bg-#323277 br5 ${
+                        isSmallDevice
+                          ? 'widthFn-160 heightFn-40'
+                          : 'widthFn-220 heightFn-50'
+                      } aic jcc`}>
+                      <Text
+                        cls={`${isSmallDevice ? 'f8' : 'f6'} white avertaFont`}>
+                        Facebook
+                      </Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -271,13 +310,16 @@ export default class LogInComponent extends Component {
 
 const styles = StyleSheet.create({
   iconBack: { width: 16, height: 29 },
-  icon: { width: 180, height: 110 },
+  icon: {
+    width: isSmallDevice() ? 140 : 180,
+    height: isSmallDevice() ? 80 : 110,
+  },
   inputGroup: {
     borderWidth: 1,
     borderColor: '#4B3277',
     borderRadius: 10,
     flexDirection: 'row',
-    height: 55,
+    height: isSmallDevice ? 50 : 55,
     alignItems: 'center',
     marginBottom: 5,
   },
