@@ -17,6 +17,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import LinearGradientText from '../library/components/LinearGradientText';
 import { getStatusBarHeight, D_WIDTH } from '../../../utils';
 import ListItem from '../../components/playlist_menu_concept/list_item';
+import Toast from 'react-native-simple-toast';
+import { logout } from '../../../data/datasource/api_config';
 
 @observer
 @wrap
@@ -64,6 +66,21 @@ class Settings extends Component {
   async componentDidMount() {
     await rootStore?.userStore?.getUserInfo();
   }
+
+  handleLogout = async () => {
+    const response = await logout();
+    if (response?.status == 200) {
+      rootStore?.playerStore?.clearSong();
+      rootStore?.libraryStore?.clearLibraryData();
+      this.context.userStore.removeUserInfo();
+    } else {
+      Toast.showWithGravity(
+        'Đăng xuất thất bại, vui lòng thử lại',
+        Toast.LONG,
+        Toast.BOTTOM,
+      );
+    }
+  };
 
   renderHeader = wrap(() => {
     return (
@@ -143,11 +160,7 @@ class Settings extends Component {
             </View>
             <View style={styles.fixedBottom} cls="aic">
               <TouchableOpacity
-                onPress={() => {
-                  rootStore?.playerStore?.clearSong();
-                  rootStore?.libraryStore?.clearLibraryData();
-                  this.context.userStore.removeUserInfo();
-                }}
+                onPress={this.handleLogout}
                 cls="jcc pv1 ph3 aic">
                 <View
                   cls="br5 ba pa1 pl3 pr3"
