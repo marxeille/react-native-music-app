@@ -46,6 +46,8 @@ export default class AlbumDetail extends Component {
       ids: [],
       showMenuEdit: false,
       playing: false,
+      private: props.route?.params.item.private,
+      name: props.route?.params.item.name,
     };
   }
 
@@ -83,6 +85,27 @@ export default class AlbumDetail extends Component {
     if (typeof item == 'number') {
       item = this.state.article;
     }
+
+    const newPlaylist = {
+      ...item,
+      private: !this.state.private,
+    };
+
+    apiService.trackApiService
+      .editPlaylist(newPlaylist)
+      .then(res => {
+        if (res.status == 200) {
+          this.setState({ private: res.data.private });
+          rootStore.updatePlayList(res.data);
+          Toast.showWithGravity('Sửa thành công', Toast.LONG, Toast.BOTTOM);
+        } else {
+          Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
+        }
+      })
+      .catch(err => {
+        console.log('err => ', err);
+        Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
+      });
   };
 
   changeShowMenuEdit = state => {
@@ -414,7 +437,7 @@ export default class AlbumDetail extends Component {
               hidden: rootStore.userStore?.id !== item.owner_id,
             },
             {
-              title: 'Public playlist',
+              title: `${this.state.private ? 'Public' : 'Private'} playlist`,
               action: () => {
                 this.editPlaylist();
               },
@@ -464,6 +487,7 @@ export default class AlbumDetail extends Component {
               imgStyle: 'widthFn-20 heightFn-24',
             },
           ];
+
     return this.viewModel.state == 'loading' ? (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}

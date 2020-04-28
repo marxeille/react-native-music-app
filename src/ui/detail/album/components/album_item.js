@@ -9,6 +9,7 @@ import {
   unlikeHelper,
 } from '../../../../data/datasource/api_helper';
 import { indexOf } from 'lodash';
+import { rootStore } from '../../../../data/context/root_context';
 
 const AlbumItem = observer(
   wrap(props => {
@@ -27,10 +28,12 @@ const AlbumItem = observer(
       if (type == 'like') {
         if (idExist < 0) {
           props.model?.addLikedTrack(data);
+          rootStore.addLikedTrack(data);
         }
       } else {
         if (idExist >= 0) {
           props.model?.removeLikedTrack(data);
+          rootStore.removeLikedTrack(data);
         }
       }
     });
