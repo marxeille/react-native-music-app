@@ -25,6 +25,7 @@ export const AlbumModel = types
           self.songs.put(song);
         }
       },
+
       setStats(stats) {
         self.stats = stats;
       },

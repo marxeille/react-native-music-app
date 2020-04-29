@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  Image,
-  FlatList,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { wrap } from '../../../themes';
 import { observer } from 'mobx-react';
 import Images from '../../../assets/icons/icons';

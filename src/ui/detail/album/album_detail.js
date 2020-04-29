@@ -31,6 +31,7 @@ import Toast from 'react-native-simple-toast';
 import AlbumListItem from './components/list_item';
 import AddPlayListModal from '../../player/components/add_playlist_modal';
 import ShareModal from '../../components/share';
+import { uploadImage } from '../../../data/datasource/api_config';
 
 @observer
 @wrap
@@ -82,24 +83,51 @@ export default class AlbumDetail extends Component {
     this.getTracks(item);
   }
 
-  editPlaylist = () => {
+  editPlaylist = tracks => {
     let { item } = this.props.route?.params;
+    let orderedTracks = [];
 
     if (typeof item == 'number') {
       item = this.state.article;
     }
 
-    const newPlaylist = {
-      ...item,
-      private: !this.state.private,
-    };
+    if (tracks) {
+      tracks.map((track, i) => {
+        orderedTracks.push({
+          track_id: track.id,
+          position: item.tracks.length + i,
+        });
+      });
+    }
+
+    const newPlaylist = !tracks
+      ? {
+          ...item,
+          private: !this.state.private,
+        }
+      : {
+          ...item,
+          tracks: [...item.tracks, ...orderedTracks],
+        };
 
     apiService.trackApiService
       .editPlaylist(newPlaylist)
       .then(res => {
         if (res.status == 200) {
-          this.setState({ private: res.data.private });
+          !tracks ? this.setState({ private: res.data.private }) : null;
           rootStore.updatePlayList(res.data);
+          if (tracks) {
+            const orders = [];
+            res.data.tracks.map(track => {
+              orders.push(track.track_id);
+            });
+            tracks.map(t => {
+              this.viewModel.setSongs(t);
+            });
+            rootStore.playlistSongStore?.addList(orders);
+            this._hideModalAddSong();
+            this.setState({ ids: orders });
+          }
           Toast.showWithGravity('Sửa thành công', Toast.LONG, Toast.BOTTOM);
         } else {
           Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
@@ -113,6 +141,18 @@ export default class AlbumDetail extends Component {
 
   changeShowMenuEdit = state => {
     this.setState({ showMenuEdit: state });
+  };
+
+  editCover = async (playlist, response) => {
+    const plCover = await uploadImage(
+      `/api/playlists/${playlist.id}/cover`,
+      response.uri,
+      'cover',
+    );
+
+    if (plCover.status == 201) {
+      rootStore.updatePlayList(plCover.data);
+    }
   };
 
   getTracks = item => {
@@ -257,6 +297,8 @@ export default class AlbumDetail extends Component {
     if (typeof item == 'number') {
       item = this.state.article;
     }
+
+    console.log('item render', item);
 
     return (
       <View cls="pb5">
@@ -403,7 +445,9 @@ export default class AlbumDetail extends Component {
 
     ids.map(id => {
       [...this.viewModel.songs.values()].map(song => {
-        if (Number(song.id) == id) songs.push(song);
+        if (Number(song.id) == id) {
+          songs.push(song);
+        }
       });
     });
 
@@ -415,10 +459,13 @@ export default class AlbumDetail extends Component {
         : [
             {
               title: 'Đổi ảnh bìa',
-              action: () => {},
+              action: response => {
+                this.editCover(item, response);
+              },
               icon: Images.ic_pic,
               imgStyle: 'widthFn-20 heightFn-18',
               hidden: rootStore.userStore?.id !== item.owner_id,
+              picker: true,
             },
             {
               title: 'Đổi tên',
@@ -567,7 +614,10 @@ export default class AlbumDetail extends Component {
               justifyCenterModal
               containerCls=""
               ref={this.modalAddSong}>
-              <AddSongPlaylist toggleAddSong={this._hideModalAddSong} />
+              <AddSongPlaylist
+                toggleAddSong={this._hideModalAddSong}
+                handleRightAction={this.editPlaylist}
+              />
             </BottomModal>
           </ImageBackground>
         </View>

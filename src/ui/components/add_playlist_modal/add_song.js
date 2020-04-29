@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, useMemo } from 'react';
 import { Text, View, TouchableOpacity, Image, FlatList } from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
@@ -33,9 +33,13 @@ const AddSongPlaylist = observer(
 
     const onFocus = useCallback(() => {});
     const addSong = useCallback(song => {
-      viewModel.current.putSong(song);
+      if (!viewModel.current.songs.get(song.id)) {
+        viewModel.current.putSong(song);
+      } else {
+        viewModel.current.removeSong(song);
+      }
     });
-    const renderEmptyContainer = useCallback(
+    const renderEmptyContainer = useMemo(
       wrap(() => (
         <View cls="aic jcc pt3">
           <Text cls="lightFont white">Không có dữ liệu</Text>
@@ -55,6 +59,11 @@ const AddSongPlaylist = observer(
         );
       }),
     );
+    const handleCloseAction = useCallback(() => {
+      typeof props.handleRightAction == 'function'
+        ? props.handleRightAction([...viewModel.current.songs.values()])
+        : props.toggleAddSong(false);
+    });
     const renderHeader = useCallback(
       wrap(() => {
         return (
@@ -65,7 +74,7 @@ const AddSongPlaylist = observer(
             <View cls="pv2 flx-row aic">
               <View cls="aifs jcc flx-i">
                 <TouchableOpacity
-                  onPress={() => props.toggleAddSong(false)}
+                  onPress={handleCloseAction}
                   cls="jcc pv1 ph3 aic">
                   <Image source={Images.ic_delete} />
                 </TouchableOpacity>
@@ -142,9 +151,7 @@ const SearchItem = observer(
       </View>
       <View>
         <TouchableOpacity onPress={() => props.addSong(props.item)}>
-          <Image
-            source={props.checked ? Images.ic_checked_song : Images.ic_plus}
-          />
+          <Image source={props.checked ? Images.ic_del_song : Images.ic_plus} />
         </TouchableOpacity>
       </View>
     </View>

@@ -12,12 +12,26 @@ import { wrap } from '../../../themes';
 import { isTextEmpty, isSmallDevice } from '../../../utils';
 import Images from '../../../assets/icons/icons';
 import ListItem from './list_item';
+import SelectImageBtn from '../select_image_btn';
 
 const PlaylistMenuConcept = observer(
   wrap(({ item, settingItems }) => {
+    const onError = useCallback(response => {
+      console.log('response picker', response);
+    });
     const renderItem = useCallback(item => {
       if (item.item.hidden) {
         return null;
+      }
+      if (item.item.picker) {
+        return (
+          <SelectImageBtn
+            onSuccess={res => item.item.action(res)}
+            onError={onError}
+            onlyPhoto>
+            <ListItem item={item.item} />
+          </SelectImageBtn>
+        );
       }
       return <ListItem item={item.item} />;
     });

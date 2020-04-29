@@ -4,7 +4,6 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Images from '../../../assets/icons/icons';
 import { pop } from '../../../navigation/navigation_service';
 import { wrap } from '../../../themes';
-import { standardPadding } from '../../../utils';
 
 const Header = wrap(({ message, onMessagePress }) => (
   <View style={styles.container} cls="aic jcsb">

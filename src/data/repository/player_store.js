@@ -1,6 +1,5 @@
 import { types, flow, getParent } from 'mobx-state-tree';
 import { Song } from '../model/song';
-// import TrackPlayer from 'react-native-track-player';
 import * as _ from 'lodash';
 import MusicControl from 'react-native-music-control';
 
@@ -93,6 +92,7 @@ export const PlayerStore = types
         const songs = self.getSongs();
         let track;
         if (trackStatus == 'next') {
+          // Check if there is a queue, and play it first
           if ([...getParent(self).queueStore.getSongs()].length > 0) {
             track = songs[getParent(self).queueStore.queueIndex];
             getParent(self).queueStore.removeSongs([track.id]);
@@ -102,12 +102,12 @@ export const PlayerStore = types
             return;
           } else {
             //Case 2: next track (with shuffle or not)
+            //Check if it's the last track of queue
             if (self.trackIndex < songs.length - 1) {
-              //Check if it is the last track of queue
               self.setTrackIndex(
                 !self.shuffle
-                  ? self.trackIndex + 1
-                  : Math.floor(Math.random() * Math.floor(self.getQueueSize())),
+                  ? self.trackIndex + 1 // With no shuffle
+                  : Math.floor(Math.random() * Math.floor(self.getQueueSize())), // with shuffle on
               );
               track = songs[self.trackIndex];
               self.startNewSong(track?.id);

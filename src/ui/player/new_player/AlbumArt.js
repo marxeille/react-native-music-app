@@ -4,7 +4,7 @@ import { View, StyleSheet, Image, Dimensions } from 'react-native';
 import { standardPadding } from '../../../utils';
 import Images from '../../../assets/icons/icons';
 
-const AlbumArt = ({ url, onPress }) => (
+const AlbumArt = ({ url }) => (
   <View style={styles.container}>
     <Image
       style={styles.image}
