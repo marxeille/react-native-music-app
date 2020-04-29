@@ -15,8 +15,9 @@ import { navigate, pop } from '../../navigation/navigation_service';
 import { rootStore, RootContext } from '../../data/context/root_context';
 import LinearGradient from 'react-native-linear-gradient';
 import LinearGradientText from '../main/library/components/LinearGradientText';
-import { getStatusBarHeight, D_WIDTH } from '../../utils';
+import { getStatusBarHeight } from '../../utils';
 import ListItem from '../components/playlist_menu_concept/list_item';
+import { isSmallDevice } from '../../utils';
 
 @observer
 @wrap
@@ -81,7 +82,11 @@ export default class AccountComponent extends Component {
               {this.renderHeader()}
               <View>
                 <ImageBackground
-                  cls="widthFn-150 heightFn-150 asc mt4 aic jcc"
+                  cls={`${
+                    isSmallDevice()
+                      ? 'widthFn-120 heightFn-120'
+                      : 'widthFn-150 heightFn-150'
+                  } asc mt4 aic jcc`}
                   source={rootStore.userStore?.avatar ?? Images.bAAlbum}>
                   <View
                     cls="fullWidth fullHeight aic jcc bg-#000"
@@ -98,14 +103,18 @@ export default class AccountComponent extends Component {
                 style={{ borderColor: '#9166cc' }}>
                 <View cls="aic jcc">
                   <TextInput
-                    cls="avertaFont white f4"
-                    value={rootStore.userStore?.name}
+                    cls={`${isSmallDevice() ? 'f6' : 'f4'} avertaFont white`}
+                    value={'rootStore.userStore?.name'}
                     editable={false}
                   />
                 </View>
                 <View cls="absolute asfe pr2">
                   <Image
-                    cls="widthFn-30 heightFn-30"
+                    cls={`${
+                      isSmallDevice()
+                        ? 'widthFn-20 heightFn-20'
+                        : 'widthFn-30 heightFn-30'
+                    }`}
                     source={Images.ic_insta}
                   />
                 </View>
@@ -139,7 +148,7 @@ export default class AccountComponent extends Component {
                   end={{ x: 0.7, y: 0 }}
                   styles={{
                     justifyContent: 'center',
-                    fontSize: 23,
+                    fontSize: isSmallDevice() ? 20 : 23,
                     fontWeight: '800',
                     textAlign: 'center',
                   }}
@@ -157,7 +166,7 @@ export default class AccountComponent extends Component {
 
               <Text
                 style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
-                cls="f9 pl3 pr3">
+                cls={`${isSmallDevice() ? 'f11' : 'f9'} pl3 pr3`}>
                 Với VIP, bạn sẽ tận hưởng trọn vẹn quyền truy cập theo yêu cầu
                 vào bộ sưu tập âm nhạc khổng lồ của Diijam, không có bất kỳ hạn
                 chế nào. Không giới hạn, không quảng cáo, không phiền phức. Chỉ
