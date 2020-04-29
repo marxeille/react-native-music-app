@@ -217,6 +217,7 @@ class Queue2 extends Component {
                 onDragEnd={({ data }) => {
                   this.shuffeData(data);
                 }}
+                activationDistance={30}
               />
             </GestureRecognizer>
           ) : (
@@ -229,6 +230,7 @@ class Queue2 extends Component {
               onDragEnd={({ data }) => {
                 this.shuffeData(data);
               }}
+              activationDistance={30}
             />
           )}
         </View>

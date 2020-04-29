@@ -27,6 +27,7 @@ export default class SearchComponent extends Component {
   }
 
   render() {
+    const { _showModal } = this.props;
     return (
       <View cls="fullWidth pt3 pb3 flx-row aic">
         <LinearGradient
@@ -48,7 +49,7 @@ export default class SearchComponent extends Component {
             />
           </View>
         </LinearGradient>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => _showModal()}>
           <LinearGradient
             colors={['#4E357A', '#9069A0', '#D39DC5']}
             start={{ x: 0, y: 0 }}

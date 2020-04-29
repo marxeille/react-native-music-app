@@ -43,7 +43,7 @@ export default class ArtistComponent extends Component {
   };
 
   renderHeader = () => {
-    return <View></View>;
+    return <View />;
   };
 
   renderSectionHeader = wrap(({ section: { title } }) => {

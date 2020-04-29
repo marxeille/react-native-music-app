@@ -15,6 +15,7 @@ import { RootContext } from '../../data/context/root_context';
 import Images from '../../assets/icons/icons';
 import { pop } from '../../navigation/navigation_service';
 import { observer } from 'mobx-react';
+import { isSmallDevice } from '../../utils';
 import LinearGradientText from '../main/library/components/LinearGradientText';
 
 @observer
@@ -46,10 +47,14 @@ export default class ReEnterPassWordComponent extends Component {
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView pt2">
             <ImageBackground cls="fullView aic" source={Images.bg4}>
-              <View cls="asfs pa3 mt4 pb0">
+              <View cls={`asfs pa3 ${isSmallDevice ? 'pt3' : 'pt4'} pb0`}>
                 <TouchableOpacity onPress={pop}>
                   <Image
-                    cls="widthFn-14 heightFn-24"
+                    cls={`${
+                      isSmallDevice
+                        ? 'widthFn-10 heightFn-18'
+                        : 'widthFn-14 heightFn-24'
+                    }`}
                     style={styles.iconBack}
                     source={Images.ic_back_white}
                   />
@@ -59,9 +64,14 @@ export default class ReEnterPassWordComponent extends Component {
                 <Image style={styles.icon} source={Images.logo_signin} />
               </View> */}
 
-              <View cls="fullWidth pa4 pb4 mt4">
+              <View
+                cls={`fullWidth ${
+                  isSmallDevice() ? 'pl3 pr3 pt4 mt4' : 'pa4 pb4 mt4'
+                }`}>
                 <Image
-                  cls="fullWidth asc aic heightFn-100"
+                  cls={`fullWidth asc aic ${
+                    isSmallDevice ? 'heightFn-60' : 'heightFn-100'
+                  }`}
                   source={Images.wave}
                 />
                 <View cls="aic asc" style={{ position: 'absolute' }}>
@@ -73,14 +83,19 @@ export default class ReEnterPassWordComponent extends Component {
                 </View>
               </View>
 
-              <View cls="fullWidth aic pl3 pr3">
+              <View
+                cls={`${
+                  isSmallDevice
+                    ? 'fullWidth aic pl3 pr3 mt4'
+                    : 'fullWidth aic pl3 pr3'
+                }`}>
                 <LinearGradientText
                   text={'Nhập lại mật khẩu'}
                   end={{ x: 0.7, y: 0 }}
                   styles={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: 30,
+                    fontSize: isSmallDevice ? 26 : 30,
                     fontFamily: 'Averta-ExtraBold',
                   }}
                 />
@@ -88,7 +103,7 @@ export default class ReEnterPassWordComponent extends Component {
               <View cls="fullWidth aic pl3 pr3">
                 <Text
                   style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
-                  cls="f8 pt1">
+                  cls={`${isSmallDevice ? 'f10' : 'f8'} pt1`}>
                   Vui lòng nhập lại mật khẩu mới để được đăng nhập.
                 </Text>
               </View>
@@ -100,7 +115,11 @@ export default class ReEnterPassWordComponent extends Component {
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
                   cls="mb3"
-                  style={{ borderRadius: 10, height: 57, padding: 1 }}>
+                  style={{
+                    borderRadius: 10,
+                    height: isSmallDevice ? 52 : 57,
+                    padding: 1,
+                  }}>
                   <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
                     <TextInput
                       secureTextEntry={false}
@@ -117,18 +136,24 @@ export default class ReEnterPassWordComponent extends Component {
               </View>
 
               {/* Button Group */}
-              <View cls="fullWidth pa3 pb0 aic mb4 mt3">
-                <TouchableOpacity>
+              <View
+                cls={`${
+                  isSmallDevice
+                    ? 'fullWidth pa3 pt3 pb0 aic'
+                    : 'fullWidth pa3 pt0 pb0 aic'
+                }`}>
+                <TouchableOpacity onPress={this.handleLogin}>
                   <LinearGradient
-                    cls="ba br5 b--#321A54 widthFn-220 heightFn-50 aic jcc"
+                    cls={`ba br5 b--#321A54 ${
+                      isSmallDevice()
+                        ? 'widthFn-160 heightFn-40'
+                        : 'widthFn-220 heightFn-50'
+                    } aic jcc`}
                     colors={['#4A3278', '#8B659D', '#DDA5CB']}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}>
                     <Text
-                      cls="white f6 pl5 pr5 avertaFont"
-                      style={{
-                        paddingVertical: 12,
-                      }}>
+                      cls={`white ${isSmallDevice() ? 'f8' : 'f6'} avertaFont`}>
                       Thay đổi
                     </Text>
                   </LinearGradient>
@@ -144,13 +169,16 @@ export default class ReEnterPassWordComponent extends Component {
 
 const styles = StyleSheet.create({
   iconBack: { width: 16, height: 29 },
-  icon: { width: 180, height: 110 },
+  icon: {
+    width: isSmallDevice() ? 140 : 180,
+    height: isSmallDevice() ? 80 : 110,
+  },
   inputGroup: {
     borderWidth: 1,
     borderColor: '#4B3277',
     borderRadius: 10,
     flexDirection: 'row',
-    height: 55,
+    height: isSmallDevice ? 50 : 55,
     alignItems: 'center',
     marginBottom: 5,
   },

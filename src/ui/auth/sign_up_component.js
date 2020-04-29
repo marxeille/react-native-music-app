@@ -18,6 +18,7 @@ import CheckBox from 'react-native-check-box';
 import { observer } from 'mobx-react';
 import { pop } from '../../navigation/navigation_service';
 import { apiService } from '../../data/context/api_context';
+import { isSmallDevice } from '../../utils';
 import Toast from 'react-native-simple-toast';
 
 @observer
@@ -104,10 +105,14 @@ export default class SignUpComponent extends Component {
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
             <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
-              <View cls="asfs pa3 pt4 pb0">
+              <View cls={`asfs pa3 ${isSmallDevice() ? 'pt3' : 'pt4'} pb0`}>
                 <TouchableOpacity onPress={pop}>
                   <Image
-                    cls="widthFn-14 heightFn-24"
+                    cls={`${
+                      isSmallDevice()
+                        ? 'widthFn-10 heightFn-18'
+                        : 'widthFn-14 heightFn-24'
+                    }`}
                     style={styles.iconBack}
                     source={Images.ic_back_white}
                   />
@@ -116,9 +121,14 @@ export default class SignUpComponent extends Component {
               {/* <View cls="pa4 pb3">
                 <Image style={styles.icon} source={Images.logo_signin} />
               </View> */}
-              <View cls="fullWidth pa4 mt4">
+              <View
+                cls={`fullWidth ${
+                  isSmallDevice() ? 'pl3 pr3 pt4 mt3' : 'pa4 pb4 mt4'
+                }`}>
                 <Image
-                  cls="fullWidth asc aic heightFn-100"
+                  cls={`fullWidth asc aic ${
+                    isSmallDevice() ? 'heightFn-60' : 'heightFn-100'
+                  }`}
                   source={Images.wave}
                 />
                 <View cls="aic asc" style={{ position: 'absolute' }}>
@@ -130,18 +140,23 @@ export default class SignUpComponent extends Component {
                 </View>
               </View>
               {/* Text Input group */}
-              <View cls="fullWidth pa3 pb3">
+              <View cls="fullWidth pa3 pb3 pt4">
                 <LinearGradient
                   colors={['#4E357A', '#9069A0', '#D39DC5']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  cls="mb4"
-                  style={{ borderRadius: 10, height: 57, padding: 1 }}>
+                  cls={`${isSmallDevice() ? 'mb2 mt2' : 'mb4'}`}
+                  style={{
+                    borderRadius: 10,
+                    height: isSmallDevice() ? 52 : 57,
+                    padding: 1,
+                  }}>
                   <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
                     <TextInput
                       secureTextEntry={false}
                       placeholderTextColor="#fff"
                       placeholder={'Email'}
+                      cls={`${isSmallDevice() ? 'f10' : ''}`}
                       style={[styles.inputText]}
                       value={email}
                       onChange={event => this.onChangeText(event, 'email')}
@@ -157,13 +172,18 @@ export default class SignUpComponent extends Component {
                   colors={['#4E357A', '#9069A0', '#D39DC5']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  cls="mb4"
-                  style={{ borderRadius: 10, height: 57, padding: 1 }}>
+                  cls={`${isSmallDevice() ? 'mb2 mt2' : 'mb4'}`}
+                  style={{
+                    borderRadius: 10,
+                    height: isSmallDevice() ? 52 : 57,
+                    padding: 1,
+                  }}>
                   <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
                     <TextInput
                       secureTextEntry={true}
                       placeholderTextColor="#fff"
                       placeholder={'Mật khẩu'}
+                      cls={`${isSmallDevice() ? 'f10' : ''}`}
                       style={[styles.inputText]}
                       value={pass}
                       onChange={event => this.onChangeText(event, 'pass')}
@@ -176,12 +196,18 @@ export default class SignUpComponent extends Component {
                   colors={['#4E357A', '#9069A0', '#D39DC5']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  style={{ borderRadius: 10, height: 57, padding: 1 }}>
+                  cls={`${isSmallDevice() ? 'mt2' : ''}`}
+                  style={{
+                    borderRadius: 10,
+                    height: isSmallDevice() ? 52 : 57,
+                    padding: 1,
+                  }}>
                   <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
                     <TextInput
                       secureTextEntry={true}
                       placeholderTextColor="#fff"
                       placeholder={'Nhập lại mật khẩu'}
+                      cls={`${isSmallDevice() ? 'f10' : ''}`}
                       style={[styles.inputText]}
                       value={rePass}
                       onChange={event => this.onChangeText(event, 'rePass')}
@@ -198,14 +224,24 @@ export default class SignUpComponent extends Component {
               </View> */}
 
               {/* Button Group */}
-              <View cls="fullWidth pa3 pt3 aic">
+              <View
+                cls={`${
+                  isSmallDevice()
+                    ? 'fullWidth pa3 pt3 pb0 aic'
+                    : 'fullWidth pa3 pt0 pb0 aic'
+                }`}>
                 <TouchableOpacity onPress={this.handleSignUp}>
                   <LinearGradient
-                    cls="ba br5 b--#321A54"
+                    cls={`ba br5 b--#321A54 ${
+                      isSmallDevice()
+                        ? 'widthFn-160 heightFn-40'
+                        : 'widthFn-220 heightFn-50'
+                    } aic jcc`}
                     colors={['#4A3278', '#8B659D', '#DDA5CB']}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}>
-                    <Text cls="white f6 avertaFont" style={styles.regisButton}>
+                    <Text
+                      cls={`white ${isSmallDevice() ? 'f8' : 'f6'} avertaFont`}>
                       Đăng Ký
                     </Text>
                   </LinearGradient>
@@ -222,7 +258,7 @@ export default class SignUpComponent extends Component {
                   }}
                 />
                 <Text
-                  cls="f8 asc aic ml2 mr2"
+                  cls={`${isSmallDevice() ? 'f10' : 'f8'} asc aic ml2 mr2`}
                   style={{ color: '#9166cc', fontFamily: 'lato-regular' }}>
                   hoặc
                 </Text>
@@ -236,16 +272,21 @@ export default class SignUpComponent extends Component {
                 />
               </View>
 
-              <View cls="fullWidth pa5 pt4  aic">
+              <View cls="fullWidth pa3 pt0 mt1 aic">
                 <View cls="pt3">
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={this.handleLoginWithFacebook}>
                     <View
-                      cls="aic ba b--#321A54 bg-#323277 br5 widthFn-220 heightFn-50"
-                      style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <Text cls="white avertaFont f6">Facebook</Text>
+                      cls={`ba b--#321A54 bg-#323277 br5 ${
+                        isSmallDevice()
+                          ? 'widthFn-160 heightFn-40'
+                          : 'widthFn-220 heightFn-50'
+                      } aic jcc`}>
+                      <Text
+                        cls={`${
+                          isSmallDevice() ? 'f8' : 'f6'
+                        } white avertaFont`}>
+                        Facebook
+                      </Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -260,13 +301,16 @@ export default class SignUpComponent extends Component {
 
 const styles = StyleSheet.create({
   iconBack: { width: 16, height: 29 },
-  icon: { width: 180, height: 110 },
+  icon: {
+    width: isSmallDevice() ? 140 : 180,
+    height: isSmallDevice() ? 80 : 110,
+  },
   inputGroup: {
     borderWidth: 1,
     borderColor: '#4B3277',
     borderRadius: 10,
     flexDirection: 'row',
-    height: 55,
+    height: isSmallDevice() ? 50 : 55,
     alignItems: 'center',
     marginBottom: 5,
   },

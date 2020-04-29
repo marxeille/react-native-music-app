@@ -90,7 +90,7 @@ export default class AddPlayListModal extends Component {
             </LinearGradient>
           </TouchableOpacity>
         </View>
-        <View cls="pa3 pt4 pb0" style={{ height: '80%' }}>
+        <View cls="pa3 pt4 pb0 fullWidth">
           <FlatList
             data={[...rootStore?.homeStore?.popular]}
             showsVerticalScrollIndicator={false}

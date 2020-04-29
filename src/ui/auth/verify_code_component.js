@@ -17,6 +17,7 @@ import { pop } from '../../navigation/navigation_service';
 import { observer } from 'mobx-react';
 import LinearGradientText from '../main/library/components/LinearGradientText';
 import OtpInputs from 'react-native-otp-inputs';
+import { isSmallDevice } from '../../utils';
 
 @observer
 @wrap
@@ -47,10 +48,14 @@ export default class VerifyCodeComponent extends Component {
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView pt2">
             <ImageBackground cls="fullView aic" source={Images.bg4}>
-              <View cls="asfs pa3 mt4 pb0">
+              <View cls={`asfs pa3 ${isSmallDevice() ? 'pt3' : 'pt4'} pb0`}>
                 <TouchableOpacity onPress={pop}>
                   <Image
-                    cls="widthFn-14 heightFn-24"
+                    cls={`${
+                      isSmallDevice()
+                        ? 'widthFn-10 heightFn-18'
+                        : 'widthFn-14 heightFn-24'
+                    }`}
                     style={styles.iconBack}
                     source={Images.ic_back_white}
                   />
@@ -60,9 +65,14 @@ export default class VerifyCodeComponent extends Component {
                 <Image style={styles.icon} source={Images.logo_signin} />
               </View> */}
 
-              <View cls="fullWidth pa4 pb4 mt4">
+              <View
+                cls={`fullWidth ${
+                  isSmallDevice() ? 'pl3 pr3 pt4 mt4' : 'pa4 pb4 mt4'
+                }`}>
                 <Image
-                  cls="fullWidth asc aic heightFn-100"
+                  cls={`fullWidth asc aic ${
+                    isSmallDevice() ? 'heightFn-60' : 'heightFn-100'
+                  }`}
                   source={Images.wave}
                 />
                 <View cls="aic asc" style={{ position: 'absolute' }}>
@@ -74,14 +84,19 @@ export default class VerifyCodeComponent extends Component {
                 </View>
               </View>
 
-              <View cls="fullWidth aic pl3 pr3">
+              <View
+                cls={`${
+                  isSmallDevice()
+                    ? 'fullWidth aic pl3 pr3 mt4'
+                    : 'fullWidth aic pl3 pr3'
+                }`}>
                 <LinearGradientText
                   text={'Mã xác nhận'}
                   end={{ x: 0.7, y: 0 }}
                   styles={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: 30,
+                    fontSize: isSmallDevice() ? 26 : 30,
                     fontFamily: 'Averta-ExtraBold',
                   }}
                 />
@@ -89,7 +104,7 @@ export default class VerifyCodeComponent extends Component {
               <View cls="fullWidth aic pl3 pr3">
                 <Text
                   style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
-                  cls="f8 pt1">
+                  cls={`${isSmallDevice() ? 'f10' : 'f8'} pt1`}>
                   Vui lòng nhập mã xác minh được gửi tới địa chỉ email.
                 </Text>
               </View>
@@ -103,8 +118,8 @@ export default class VerifyCodeComponent extends Component {
                   numberOfInputs={4}
                   inputContainerStyles={{
                     backgroundColor: '#2C184A',
-                    width: 60,
-                    height: 75,
+                    width: isSmallDevice() ? 50 : 60,
+                    height: isSmallDevice() ? 65 : 75,
                     borderWidth: 1,
                     borderColor: '#9166cc',
                     alignItems: 'center',
@@ -113,7 +128,7 @@ export default class VerifyCodeComponent extends Component {
                   }}
                   inputStyles={{
                     color: '#FFF',
-                    fontSize: 32,
+                    fontSize: isSmallDevice() ? 28 : 32,
                     fontFamily: 'Averta-ExtraBold',
                   }}
                 />
@@ -123,12 +138,12 @@ export default class VerifyCodeComponent extends Component {
               <View cls="fullWidth pa3 pb0 aic mb4 mt3">
                 <Text
                   style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
-                  cls="f8 pt1">
+                  cls={`${isSmallDevice() ? 'f10' : 'f8'} pt1`}>
                   Không nhận được mã?
                 </Text>
                 <Text
                   style={{ color: '#FFF', fontFamily: 'lato-regular' }}
-                  cls="f8 pt2">
+                  cls={`${isSmallDevice() ? 'f10' : 'f8'} pt2`}>
                   Gửi lại ngay
                 </Text>
               </View>
@@ -142,7 +157,10 @@ export default class VerifyCodeComponent extends Component {
 
 const styles = StyleSheet.create({
   iconBack: { width: 16, height: 29 },
-  icon: { width: 180, height: 110 },
+  icon: {
+    width: isSmallDevice() ? 140 : 180,
+    height: isSmallDevice() ? 80 : 110,
+  },
   inputGroup: {
     borderWidth: 1,
     borderColor: '#4B3277',

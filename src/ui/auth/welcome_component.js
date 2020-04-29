@@ -8,6 +8,7 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
 } from 'react-native';
+import { isSmallDevice } from '../../utils';
 import LinearGradient from 'react-native-linear-gradient';
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
@@ -35,7 +36,9 @@ export default class WelcomeComponent extends Component {
         end={{ x: 1, y: 1 }}>
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
-            <ImageBackground cls="fullView aic jcsb" source={Images.bg5}>
+            <ImageBackground
+              cls={`${isSmallDevice() ? 'pb2' : 'pb5'} fullView aic jcsb`}
+              source={Images.bg5}>
               <View cls="fullWidth pt5 pl3">
                 {/* <Image
                   cls="aifs"
@@ -43,46 +46,71 @@ export default class WelcomeComponent extends Component {
                   source={Images.ic_back_white}
                 /> */}
                 <Image
-                  cls="widthFn-180 heightFn-110 asc"
+                  cls={`${
+                    isSmallDevice()
+                      ? 'widthFn-140 heightFn-80'
+                      : 'widthFn-180 heightFn-110'
+                  } asc`}
                   resizeMode={'contain'}
                   source={Images.new_logo}
                 />
               </View>
 
               <View cls="fullWidth">
-                <View cls="fullWidth pa5 pt0 aic">
-                  <View cls="pa1">
+                <View
+                  cls={`fullWidth ${
+                    isSmallDevice() ? 'pb0' : 'pa5 pb4'
+                  } pt0 aic`}>
+                  <View cls={`${isSmallDevice() ? 'widthFn-160 pb3' : 'pa1'}`}>
                     <Text
                       style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
-                      cls="f8 pl3 pr3 tc">
+                      cls={`${isSmallDevice() ? 'f11' : 'f8 pl3 pr3'} tc`}>
                       Đăng ký nghe hàng triệu bài hát và chia sẻ tức thì trên
                       điện thoại, máy tính của bạn.
                     </Text>
                   </View>
                 </View>
                 {/* Button Group */}
-                <View cls="fullWidth pa3 pt0 pb0 aic">
+                <View
+                  cls={`${
+                    isSmallDevice() ? 'pt0' : 'pt3'
+                  } fullWidth pa3 pb0 aic`}>
                   <TouchableOpacity onPress={this.handleSignUp}>
                     <LinearGradient
-                      cls="ba br5 b--#321A54 widthFn-220 heightFn-50 aic jcc"
+                      cls={`ba br5 b--#321A54 ${
+                        isSmallDevice()
+                          ? 'widthFn-160 heightFn-40'
+                          : 'widthFn-220 heightFn-50'
+                      } aic jcc`}
                       colors={['#4A3278', '#8B659D', '#DDA5CB']}
                       start={{ x: 0, y: 0 }}
                       end={{ x: 1, y: 0 }}>
-                      <Text cls="white f6  avertaFont">Đăng Ký</Text>
+                      <Text
+                        cls={`white ${
+                          isSmallDevice() ? 'f8' : 'f6'
+                        } avertaFont`}>
+                        Đăng Ký
+                      </Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 </View>
 
-                <View cls="fullWidth pa4 pt3 aic">
-                  <View cls="pt3">
+                <View cls="fullWidth pa3 pt2 aic">
+                  <View cls={`${isSmallDevice() ? 'pt1' : 'pt3'}`}>
                     <TouchableOpacity onPress={this.handleLogin}>
                       <View
-                        cls="br5 ba aic flx-row"
+                        cls={`br5 ba aic jcc ${
+                          isSmallDevice() ? 'widthFn-160 heightFn-40' : ''
+                        } aic jcc`}
                         style={{ borderColor: '#d29dc5' }}>
                         <Text
-                          cls="white f6 pl5 pr5 avertaFont"
+                          cls={`white ${
+                            isSmallDevice()
+                              ? 'f8 pr2 pl3 pt1 pb1'
+                              : 'f6 pl5 pr5'
+                          }  avertaFont`}
                           style={styles.regisButton}>
-                          Đăng nhập
+                          Đăng Nhập
                         </Text>
                       </View>
                     </TouchableOpacity>

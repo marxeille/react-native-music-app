@@ -65,10 +65,11 @@ export default class PlaylistComponent extends Component {
   };
 
   render() {
+    const { _showModal, _hideModal } = this.props;
     return (
       <View style={{ marginBottom: 200 }}>
         <View cls="pt3">
-          <SearchComponent />
+          <SearchComponent _showModal={_showModal} _hideModal={_hideModal} />
         </View>
         <View cls="pt3 fullHeight">
           {rootStore.libraryStore.state == 'loading' ? (
