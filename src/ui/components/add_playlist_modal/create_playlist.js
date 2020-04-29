@@ -15,25 +15,10 @@ import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
 import { D_WIDTH, isTextEmpty, subLongStr } from '../../../utils';
-import ImagePicker from 'react-native-image-picker';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-simple-toast';
-
-const options = () => ({
-  title: 'Chọn ảnh',
-  cancelButtonTitle: 'Huỷ',
-  takePhotoButtonTitle: 'Chụp ảnh',
-  chooseFromLibraryButtonTitle: 'Chọn ảnh từ thư viện',
-  quality: 0.6,
-  maxWidth: 500,
-  maxHeight: 500,
-  storageOptions: {
-    cameraRoll: true,
-    skipBackup: true,
-    path: 'images',
-  },
-});
+import SelectImageBtn from '../select_image_btn';
 
 const CreatePlaylistModal = observer(
   wrap(props => {
@@ -46,21 +31,14 @@ const CreatePlaylistModal = observer(
     const [img, setImg] = useState('');
     const [path, setPathToImg] = useState('');
 
-    const resolveResponse = response => {
-      const { onCancel, onError, onCustomButton, onSuccess } = props;
-      if (response.didCancel) {
-        onCancel && onCancel();
-      } else if (response.error) {
-        onError && onError(response.error);
-      } else if (response.customButton) {
-        onCustomButton && onCustomButton(response.customButton);
-      } else {
-        onSuccess && onSuccess(response);
-        //If success, handle the response
-        setImg(response.data);
-        setPathToImg(response.uri);
-      }
-    };
+    const onSuccess = useCallback(response => {
+      setImg(response.data);
+      setPathToImg(response.uri);
+    });
+
+    const onError = useCallback(response => {
+      Toast.showWithGravity(response, Toast.LONG, Toast.BOTTOM);
+    });
 
     const removeSong = useCallback(song => {
       viewModel.current.removeSong(song);
@@ -75,36 +53,6 @@ const CreatePlaylistModal = observer(
       setDescription(des);
       viewModel.current.setPlaylistDescription(des);
     });
-
-    const _handleImagePickerOpen = e => {
-      let { onSuccess, maxImages, onlyPhoto, onlyCamera } = props;
-      onlyPhoto = true;
-      if (onlyCamera) {
-        return ImagePicker.launchCamera(options(), response => {
-          if (!isTextEmpty(response.error)) {
-            Toast.showWithGravity(response.error, Toast.LONG, Toast.BOTTOM);
-          } else {
-            resolveResponse(response);
-          }
-        });
-      }
-      if (onlyPhoto) {
-        return ImagePicker.launchImageLibrary(options(), response => {
-          if (!isTextEmpty(response.error)) {
-            Toast.showWithGravity(response.error, Toast.LONG, Toast.BOTTOM);
-          } else {
-            resolveResponse(response);
-          }
-        });
-      }
-      ImagePicker.showImagePicker(options(), response => {
-        if (!isTextEmpty(response.error)) {
-          Toast.showWithGravity(response.error, Toast.LONG, Toast.BOTTOM);
-        } else {
-          resolveResponse(response);
-        }
-      });
-    };
 
     const renderPublicSection = wrap(() => {
       return (
@@ -217,8 +165,7 @@ const CreatePlaylistModal = observer(
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View cls="pa3 pt4 aic">
             <View cls="pb3">
-              <TouchableWithoutFeedback
-                onPress={() => _handleImagePickerOpen()}>
+              <SelectImageBtn onSuccess={onSuccess} onError={onError} onlyPhoto>
                 <Image
                   style={{ width: 101, height: 101 }}
                   source={
@@ -227,7 +174,7 @@ const CreatePlaylistModal = observer(
                       : Images.ic_camera
                   }
                 />
-              </TouchableWithoutFeedback>
+              </SelectImageBtn>
             </View>
             <View cls="pb3">
               <View cls="pa3 bg-#100024" style={[styles.inputGroup]}>
