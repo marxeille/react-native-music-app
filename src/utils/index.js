@@ -17,69 +17,6 @@ export function isTextEmpty(value) {
   return !value || value.length === 0;
 }
 
-/**
- *
- * @param {object} ref - reference of the conponent
- *
- * The initial watchDog is actually the height of the React tree.
- * Then watchDog will be the flag when we find the wrapped component.
- */
-export const getReduxComponentRef = (ref, methodName) => {
-  if (!ref) {
-    return;
-  }
-  let element = ref;
-  let watchDog = 10;
-  while (element._reactInternalFiber && watchDog > 0) {
-    if (element[methodName]) {
-      return element;
-    }
-    element =
-      element._reactInternalFiber.child &&
-      element._reactInternalFiber.child.stateNode;
-    watchDog--;
-  }
-  return;
-};
-
-export const normalizeMoney = money =>
-  money?.toString().replace(/[^0-9 ]/g, '');
-
-export const transformMoney = money => {
-  const normalizedMoney = normalizeMoney(money ? money : 0);
-  const length = normalizedMoney?.length;
-
-  let realMoney = 0;
-
-  if (length <= 3) {
-    realMoney = normalizedMoney;
-  } else if (length % 3 === 0) {
-    let res = normalizedMoney?.substring(0, 3);
-    for (let i = 3; i < length; i += 3) {
-      res += `.${normalizedMoney?.substring(i, i + 3)}`;
-    }
-    realMoney = res;
-  } else if (length % 3 === 1) {
-    let res = normalizedMoney[0];
-    for (let i = 1; i < length; i += 3) {
-      res += `.${normalizedMoney?.substring(i, i + 3)}`;
-    }
-    realMoney = res;
-  } else {
-    let res = normalizedMoney?.substring(0, 2);
-    for (let i = 2; i < length; i += 3) {
-      res += `.${normalizedMoney?.substring(i, i + 3)}`;
-    }
-    realMoney = res;
-  }
-
-  if (money < 0) {
-    return `-${realMoney}`;
-  }
-
-  return `${realMoney}`;
-};
-
 export const isIphoneX = () => {
   const dimen = Dimensions.get('window');
   return (
@@ -91,18 +28,6 @@ export const isIphoneX = () => {
       dimen.height === 896 ||
       dimen.width === 896)
   );
-};
-export const normalizeCardNumber = cardNumber =>
-  cardNumber.toString().replace(/\s/g, '');
-export const formatCardBankNumber = cardNumber => {
-  const normalizedCardNumber = normalizeCardNumber(cardNumber);
-  if (normalizedCardNumber.length <= 4) return normalizedCardNumber;
-
-  let res = normalizedCardNumber.substring(0, 4);
-  for (let i = 4; i < normalizedCardNumber.length; i += 4) {
-    res += ` ${normalizedCardNumber.substring(i, i + 4)}`;
-  }
-  return res;
 };
 
 export const capitalizeFirstLetter = s => s[0].toUpperCase() + s.slice(1);
