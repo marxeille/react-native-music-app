@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { View, TouchableWithoutFeedback } from 'react-native';
+import { View, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Toast from 'react-native-simple-toast';
 import { isTextEmpty } from '../../utils';
@@ -10,6 +10,7 @@ const SelectImageBtn = ({
   onError,
   onlyPhoto,
   onlyCamera,
+  onCancel,
   onCustomButton,
 }) => {
   const options = useCallback(() => ({
@@ -68,9 +69,9 @@ const SelectImageBtn = ({
 
   return (
     <View>
-      <TouchableWithoutFeedback onPress={_handleImagePickerOpen}>
+      <TouchableOpacity onPress={_handleImagePickerOpen}>
         {children}
-      </TouchableWithoutFeedback>
+      </TouchableOpacity>
     </View>
   );
 };

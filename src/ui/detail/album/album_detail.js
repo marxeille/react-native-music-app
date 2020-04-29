@@ -31,6 +31,7 @@ import Toast from 'react-native-simple-toast';
 import AlbumListItem from './components/list_item';
 import AddPlayListModal from '../../player/components/add_playlist_modal';
 import ShareModal from '../../components/share';
+import { uploadImage } from '../../../data/datasource/api_config';
 
 @observer
 @wrap
@@ -140,6 +141,18 @@ export default class AlbumDetail extends Component {
 
   changeShowMenuEdit = state => {
     this.setState({ showMenuEdit: state });
+  };
+
+  editCover = async (playlist, response) => {
+    const plCover = await uploadImage(
+      `/api/playlists/${playlist.id}/cover`,
+      response.uri,
+      'cover',
+    );
+
+    if (plCover.status == 201) {
+      rootStore.updatePlayList(plCover.data);
+    }
   };
 
   getTracks = item => {
@@ -284,6 +297,8 @@ export default class AlbumDetail extends Component {
     if (typeof item == 'number') {
       item = this.state.article;
     }
+
+    console.log('item render', item);
 
     return (
       <View cls="pb5">
@@ -444,10 +459,13 @@ export default class AlbumDetail extends Component {
         : [
             {
               title: 'Đổi ảnh bìa',
-              action: () => {},
+              action: response => {
+                this.editCover(item, response);
+              },
               icon: Images.ic_pic,
               imgStyle: 'widthFn-20 heightFn-18',
               hidden: rootStore.userStore?.id !== item.owner_id,
+              picker: true,
             },
             {
               title: 'Đổi tên',
