@@ -51,6 +51,7 @@ export const HomeStore = types
           self.popular.push(playlist.id);
         }
       },
+      updatePlayList() {},
 
       removePlaylist(playlistId) {
         const plIndex = findIndex(
