@@ -36,7 +36,9 @@ export default class WelcomeComponent extends Component {
         end={{ x: 1, y: 1 }}>
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
-            <ImageBackground cls="fullView aic jcsb" source={Images.bg5}>
+            <ImageBackground
+              cls={`${isSmallDevice() ? 'pb2' : 'pb5'} fullView aic jcsb`}
+              source={Images.bg5}>
               <View cls="fullWidth pt5 pl3">
                 {/* <Image
                   cls="aifs"
@@ -55,7 +57,10 @@ export default class WelcomeComponent extends Component {
               </View>
 
               <View cls="fullWidth">
-                <View cls={`fullWidth ${isSmallDevice() ? '' : 'pa5'} pt0 aic`}>
+                <View
+                  cls={`fullWidth ${
+                    isSmallDevice() ? 'pb0' : 'pa5 pb4'
+                  } pt0 aic`}>
                   <View cls={`${isSmallDevice() ? 'widthFn-160 pb3' : 'pa1'}`}>
                     <Text
                       style={{ color: '#9166cc', fontFamily: 'lato-regular' }}
@@ -66,7 +71,10 @@ export default class WelcomeComponent extends Component {
                   </View>
                 </View>
                 {/* Button Group */}
-                <View cls="fullWidth pa3 pt0 pb0 aic">
+                <View
+                  cls={`${
+                    isSmallDevice() ? 'pt0' : 'pt3'
+                  } fullWidth pa3 pb0 aic`}>
                   <TouchableOpacity onPress={this.handleSignUp}>
                     <LinearGradient
                       cls={`ba br5 b--#321A54 ${

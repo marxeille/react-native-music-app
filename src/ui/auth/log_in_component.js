@@ -218,10 +218,8 @@ export default class LogInComponent extends Component {
               </View>
               <View
                 cls={`${
-                  isSmallDevice()
-                    ? 'fullWidth pl3 pr4 pb4 pt2'
-                    : 'fullWidth pl3 pr4 pb4 pt3'
-                }`}>
+                  isSmallDevice() ? 'pl3 pr4 pb4 pt2' : 'pl3 pr4 pb4 pt3'
+                } asfs`}>
                 <TouchableWithoutFeedback onPress={this.handleForgot}>
                   <View cls="pl3">
                     <Text
