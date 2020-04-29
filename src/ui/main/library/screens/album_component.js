@@ -24,11 +24,12 @@ export default class AlbumComponent extends Component {
 
   render() {
     const albums = [...rootStore.libraryStore.albums];
+    const { _showModal, _hideModal } = this.props;
 
     return (
       <>
         <View cls="pt3">
-          <SearchComponent />
+          <SearchComponent _showModal={_showModal} _hideModal={_hideModal} />
         </View>
         <View cls="pt3" style={{ marginBottom: 95 }}>
           <FlatList
