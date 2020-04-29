@@ -5,9 +5,6 @@ import {
   ImageBackground,
   Image,
   StyleSheet,
-  Linking,
-  Clipboard,
-  Platform,
 } from 'react-native';
 import Header from './Header';
 import AlbumArt from './AlbumArt';
@@ -22,14 +19,8 @@ import BottomModal from '../../components/modal/BottomModal';
 import * as _ from 'lodash';
 import { wrap } from '../../../themes';
 import { isMeidumDevice, isSmallDevice } from '../../../utils';
-import { ShareDialog } from 'react-native-fbsdk';
-import ZaloShare from 'react-native-zalo-share';
 import SongMenu from '../components/song_menu';
-import GestureRecognizer, {
-  swipeDirections,
-} from 'react-native-swipe-gestures';
-import Toast from 'react-native-simple-toast';
-import Share from 'react-native-share';
+import GestureRecognizer from 'react-native-swipe-gestures';
 import { pop } from '../../../navigation/navigation_service';
 import ShareModal from '../../components/share';
 
@@ -39,14 +30,8 @@ export default class Player extends Component {
   static contextType = PlayerContext;
   constructor(props) {
     super(props);
-    const shareLinkContent = {
-      contentType: 'link',
-      contentUrl: 'https://facebook.com',
-      contentDescription: 'Facebook sharing is easy!',
-    };
     this.state = {
       selectedTrack: 0,
-      shareLinkContent: shareLinkContent,
       showPlayMenu: false,
     };
     this.modalShare = React.createRef();
@@ -93,91 +78,8 @@ export default class Player extends Component {
     }
   }
 
-  shareLinkWithShareDialog = () => {
-    var tmp = this;
-    ShareDialog.canShow(this.state.shareLinkContent)
-      .then(function(canShow) {
-        if (canShow) {
-          return ShareDialog.show(tmp.state.shareLinkContent);
-        }
-      })
-      .then(
-        function(result) {
-          if (result.isCancelled) {
-            Toast.showWithGravity('Đã huỷ', Toast.LONG, Toast.BOTTOM);
-          } else {
-            Toast.showWithGravity(
-              'Chia sẻ thành công',
-              Toast.LONG,
-              Toast.BOTTOM,
-            );
-          }
-        },
-        function(error) {
-          Toast.showWithGravity(
-            'Chia sẻ thất bại: ' + error,
-            Toast.LONG,
-            Toast.BOTTOM,
-          );
-        },
-      );
-  };
-
   onSwipeDown = () => {
     pop();
-  };
-
-  onShareSms = () => {
-    var url = rootStore.playerStore?.currentSong?.url;
-    Linking.openURL(`sms:/open?addresses=null&body=${url}`);
-  };
-
-  onCopyToClipboard = async () => {
-    var url = rootStore.playerStore?.currentSong?.url;
-    await Clipboard.setString(url);
-    Toast.showWithGravity('Đã sao chép liên kết', Toast.LONG, Toast.BOTTOM);
-  };
-
-  onShareZalo = () => {
-    var config = {
-      msg: 'message',
-      link: rootStore.playerStore?.currentSong?.url,
-      linkTitle: '',
-      linkSource: '',
-      linkThumb: '',
-      appName: 'PlayerProject',
-    };
-    ZaloShare.shareMessage(config)
-      .then(console.log('send data to zalo success'))
-      .catch(error => console.log('error message', error.message));
-  };
-
-  onShareOther = async () => {
-    var url = rootStore.playerStore?.currentSong?.url;
-    var title = '';
-    var options = Platform.select({
-      ios: {
-        activityItemSources: [
-          {
-            // For sharing url with custom title.
-            placeholderItem: { type: 'url', content: url },
-            item: {
-              default: { type: 'url', content: url },
-            },
-            subject: {
-              default: title,
-            },
-            linkMetadata: { originalUrl: url, url, title },
-          },
-        ],
-      },
-    });
-    try {
-      const ShareResponse = await Share.open(options);
-      console.log(JSON.stringify(ShareResponse, null, 2));
-    } catch (error) {
-      console.log('error: '.concat(JSON.stringify(error)));
-    }
   };
 
   renderShareItem = wrap(({ item }) => {
@@ -204,49 +106,6 @@ export default class Player extends Component {
   _renderModalContent = wrap(() => {
     const { showPlayMenu } = this.state;
 
-    const shareItems = [
-      {
-        icon: Images.ic_mess,
-        title: 'Tin nhắn',
-        action: () => {
-          this.onShareSms();
-        },
-      },
-      {
-        icon: Images.ic_fb,
-        title: 'Facebook',
-        action: () => {
-          this.shareLinkWithShareDialog();
-        },
-      },
-      {
-        icon: Images.ic_link,
-        title: 'Sao chép liên kết',
-        action: () => {
-          this.onCopyToClipboard();
-        },
-      },
-      {
-        icon: Images.ic_insta,
-        title: 'Instagram',
-        action: () => {},
-      },
-      {
-        icon: Images.ic_zalo,
-        title: 'Zalo',
-        action: () => {
-          this.onShareZalo();
-        },
-      },
-      {
-        icon: Images.ic_menu,
-        title: 'Thêm nữa',
-        action: () => {
-          this.onShareOther();
-        },
-      },
-    ];
-
     return showPlayMenu ? (
       <SongMenu
         song={rootStore.playerStore?.currentSong}
@@ -255,9 +114,8 @@ export default class Player extends Component {
       />
     ) : (
       <ShareModal
-        song={rootStore.playerStore?.currentSong}
+        item={rootStore.playerStore?.currentSong}
         _hideModal={this._hideModal}
-        shareItems={shareItems}
       />
     );
   });

@@ -59,12 +59,10 @@ export default class SongMenu extends Component {
 
   render() {
     const { song } = this.props;
-
     const { showAddPlaylist } = this.state;
-
     return showAddPlaylist ? (
       <View>
-        <AddPlayListModal addPlaylist={this.addPlaylist} song={song} />
+        <AddPlayListModal addPlaylist={this.addPlaylist} songs={[song]} />
       </View>
     ) : (
       <>

@@ -5646,11 +5646,6 @@ react-native-text-ticker@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-native-text-ticker/-/react-native-text-ticker-1.1.0.tgz#311da8b60637ca607c4ceb95357283c4e5fca343"
   integrity sha512-gsKF+hW6P8bFsFWp7Cq55etSWRx4yLeDbMT3bAsGtcRLiI3SrHi55Du7d1JQTDzdKXLFBzzS5UbIpDXyn7+atw==
 
-react-native-track-player@^2.0.0-rc9:
-  version "2.0.0-rc9"
-  resolved "https://registry.yarnpkg.com/react-native-track-player/-/react-native-track-player-2.0.0-rc9.tgz#ac2036bcb8844d1e05b9367849abd0c90c6e11ea"
-  integrity sha512-NAQyvAuU86VGPR45VFZLpsigNaxWZOAyigs7BxJfO8gknX22o/4408o2KDi+BbewsjL09g/Z52yg90KIhsj0PQ==
-
 react-native-video@5.1.0-alpha6:
   version "5.1.0-alpha6"
   resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-5.1.0-alpha6.tgz#17d3ca44ed46ebfdd8fd361dfbf21b367c074c2f"

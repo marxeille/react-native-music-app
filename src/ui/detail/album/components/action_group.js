@@ -35,9 +35,7 @@ const ActionGroup = wrap(
         resizeMode="contain"
         source={Images.pl_wave}>
         <View cls="flx-row">
-          {hasSong ||
-          item?.id == 0 ||
-          (item?.id !== rootStore.userStore.id && hasSong) ? (
+          {hasSong || item?.id == 0 || item?.id !== rootStore.userStore.id ? (
             <>
               <View cls="pa3 pr0">
                 <TouchableWithoutFeedback

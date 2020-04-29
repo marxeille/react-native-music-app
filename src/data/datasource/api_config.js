@@ -34,7 +34,6 @@ export const injectBearer = (token, configs) => {
 export const privateRequest = async (request, url, data, configs) => {
   try {
     const token = await AsyncStorage.getItem(AsyncStorageKey.USERINFO);
-
     return request(
       url,
       data,
@@ -102,9 +101,7 @@ BASE_URL.addAsyncResponseTransform(async response => {
           );
           //Re-assign expried response with new one
           Object.assign(response, refreshResponse);
-        }
-        // This else is used in case refresh token api goes wrong, but it will never happend, so i commented it
-        else {
+        } else {
           if (!response.config.url.includes('/api/token/refresh')) {
             const refreshResponse = await privateRequestWithToken(
               BASE_URL[response.config.method],
@@ -115,7 +112,7 @@ BASE_URL.addAsyncResponseTransform(async response => {
             //Re-assign expried response with new one
             Object.assign(response, refreshResponse);
           }
-
+          // This else is used in case refresh token api goes wrong, but it will never happend, so i commented it
           // If token expired, and can not get new refresh token, redirect user to the login screen
           // if (!response.config.url.includes('/api/token/refresh')) {
           //   // DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native
@@ -150,6 +147,17 @@ export const login = async (name, password, fb_token) => {
           provider_name: 'facebook',
         };
     return await BASE_URL.post(path, params);
+  } catch (error) {
+    console.log('TCL: try -> error', error);
+  }
+};
+
+export const logout = async () => {
+  try {
+    const user = await AsyncStorage.getItem(AsyncStorageKey.USERINFO);
+    const refreshToken = JSON.parse(user).refreshToken;
+    const path = '/api/logout';
+    return await privateRequestWithToken(BASE_URL.post, path, {}, refreshToken);
   } catch (error) {
     console.log('TCL: try -> error', error);
   }
