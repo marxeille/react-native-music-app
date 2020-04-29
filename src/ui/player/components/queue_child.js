@@ -19,9 +19,9 @@ const QueueChild = observer(
 
     return (
       <View
-        cls={`pa3 heightFn-${onPlayItem ? '84' : '72'} flx-row jcsb aic ${
+        cls={`pa3 heightFn-${onPlayItem ? '72' : '72'} flx-row jcsb aic ${
           props.isActive ? 'bg-#1c0836' : ''
-        } ${onPlayItem ? 'bb b--#d59fc6' : ''}`}>
+        } ${onPlayItem ? '' : ''}`}>
         <GestureRecognizer
           onSwipeRight={props.onSwipeRight}
           config={props.config}>
@@ -32,11 +32,10 @@ const QueueChild = observer(
               />
             </TouchableOpacity>
             <View cls="pl3">
-              <Text cls={`white fw6 f${onPlayItem ? '4' : '6'} latoFont`}>
+              <Text cls={`white fw6 f${onPlayItem ? '6' : '6'} latoFont`}>
                 {subLongStr(props.item?.getName(), 18) ?? 'Queue Child'}
               </Text>
-              <Text
-                cls={`primaryPurple pt1 ${onPlayItem ? 'f6' : ''} latoFont`}>
+              <Text cls={`primaryPurple pt1 ${onPlayItem ? '' : ''} latoFont`}>
                 {props.item?.getSubTitle() ?? 'Queue Child'}
               </Text>
             </View>

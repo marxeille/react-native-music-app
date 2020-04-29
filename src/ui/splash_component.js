@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Button, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { RootContext } from '../data/context/root_context';
-import { UserStore } from '../data/repository/user_store';
 
 export default class SplashComponent extends Component {
   constructor(props) {

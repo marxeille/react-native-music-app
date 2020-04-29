@@ -35,16 +35,17 @@ const ActionGroup = wrap(
         resizeMode="contain"
         source={Images.pl_wave}>
         <View cls="flx-row">
-          {hasSong || item?.id == 0 || item?.id !== rootStore.userStore.id ? (
+          {hasSong || item?.id == 0 || item?.id !== rootStore.userStore?.id ? (
             <>
               <View cls="pa3 pr0">
                 <TouchableWithoutFeedback
                   onPress={
-                    rootStore.userStore.id == item?.owner_id || item?.id == 0
+                    rootStore.userStore?.id == item?.owner_id || item?.id == 0
                       ? addSong
                       : follow
                   }>
-                  {rootStore.userStore.id == item?.owner_id || item?.id == 0 ? (
+                  {rootStore.userStore?.id == item?.owner_id ||
+                  item?.id == 0 ? (
                     <Image
                       cls="widthFn-50 heightFn-50"
                       source={Images.ic_btn_plus}

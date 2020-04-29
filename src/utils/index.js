@@ -1,5 +1,4 @@
 import { Dimensions, Platform, StatusBar } from 'react-native';
-import unorm from 'unorm';
 
 export const { height: D_HEIGHT, width: D_WIDTH } = Dimensions.get('window');
 
@@ -31,20 +30,6 @@ export const isIphoneX = () => {
 };
 
 export const capitalizeFirstLetter = s => s[0].toUpperCase() + s.slice(1);
-
-export const unnormText = text => {
-  let normalizedText = '';
-
-  normalizedText = text
-    ? unorm
-        .nfd(text)
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/đ/g, 'd')
-        .replace(/Đ/g, 'D')
-        .replace(/\u00a0/g, '\u0020')
-    : '';
-  return normalizedText.split('').join('');
-};
 
 export function ifIphoneX(iphoneXStyle, regularStyle) {
   if (isIphoneX()) {

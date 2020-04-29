@@ -82,24 +82,51 @@ export default class AlbumDetail extends Component {
     this.getTracks(item);
   }
 
-  editPlaylist = () => {
+  editPlaylist = tracks => {
     let { item } = this.props.route?.params;
+    let orderedTracks = [];
 
     if (typeof item == 'number') {
       item = this.state.article;
     }
 
-    const newPlaylist = {
-      ...item,
-      private: !this.state.private,
-    };
+    if (tracks) {
+      tracks.map((track, i) => {
+        orderedTracks.push({
+          track_id: track.id,
+          position: item.tracks.length + i,
+        });
+      });
+    }
+
+    const newPlaylist = !tracks
+      ? {
+          ...item,
+          private: !this.state.private,
+        }
+      : {
+          ...item,
+          tracks: [...item.tracks, ...orderedTracks],
+        };
 
     apiService.trackApiService
       .editPlaylist(newPlaylist)
       .then(res => {
         if (res.status == 200) {
-          this.setState({ private: res.data.private });
+          !tracks ? this.setState({ private: res.data.private }) : null;
           rootStore.updatePlayList(res.data);
+          if (tracks) {
+            const orders = [];
+            res.data.tracks.map(track => {
+              orders.push(track.track_id);
+            });
+            tracks.map(t => {
+              this.viewModel.setSongs(t);
+            });
+            rootStore.playlistSongStore?.addList(orders);
+            this._hideModalAddSong();
+            this.setState({ ids: orders });
+          }
           Toast.showWithGravity('Sửa thành công', Toast.LONG, Toast.BOTTOM);
         } else {
           Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
@@ -403,7 +430,9 @@ export default class AlbumDetail extends Component {
 
     ids.map(id => {
       [...this.viewModel.songs.values()].map(song => {
-        if (Number(song.id) == id) songs.push(song);
+        if (Number(song.id) == id) {
+          songs.push(song);
+        }
       });
     });
 
@@ -567,7 +596,10 @@ export default class AlbumDetail extends Component {
               justifyCenterModal
               containerCls=""
               ref={this.modalAddSong}>
-              <AddSongPlaylist toggleAddSong={this._hideModalAddSong} />
+              <AddSongPlaylist
+                toggleAddSong={this._hideModalAddSong}
+                handleRightAction={this.editPlaylist}
+              />
             </BottomModal>
           </ImageBackground>
         </View>

@@ -81,7 +81,23 @@ const AddSongPlaylist = observer(
                   }}
                 />
               </View>
-              <View cls="flx-i" />
+              {typeof props.handleRightAction == 'function' ? (
+                <View cls="aifs jcc flx-i">
+                  <TouchableOpacity
+                    onPress={() =>
+                      typeof props.handleRightAction == 'function'
+                        ? props.handleRightAction([
+                            ...viewModel.current.songs.values(),
+                          ])
+                        : null
+                    }
+                    cls="jcc pv1 ph3 aic">
+                    <Image source={Images.ic_v} />
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View cls="flx-i" />
+              )}
             </View>
           </LinearGradient>
         );
