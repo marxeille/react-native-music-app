@@ -31,7 +31,8 @@ import Toast from 'react-native-simple-toast';
 import AlbumListItem from './components/list_item';
 import AddPlayListModal from '../../player/components/add_playlist_modal';
 import ShareModal from '../../components/share';
-import { uploadImage } from '../../../data/datasource/api_config';
+import { uploadImage, BASE_URL } from '../../../data/datasource/api_config';
+import { BASE_API_URL } from '../../../constant/constant';
 
 @observer
 @wrap
@@ -51,6 +52,7 @@ export default class AlbumDetail extends Component {
       showShareModal: false,
       playing: false,
       private: props.route?.params.item.private,
+      cover: props.route?.params.item.thumb,
       name: props.route?.params.item.name,
     };
   }
@@ -152,6 +154,7 @@ export default class AlbumDetail extends Component {
 
     if (plCover.status == 201) {
       rootStore.updatePlayList(plCover.data);
+      this.setState({ cover: BASE_API_URL + plCover.data.cover_path });
     }
   };
 
@@ -291,15 +294,7 @@ export default class AlbumDetail extends Component {
     this._showModalAddSong();
   };
 
-  renderHeaderSection = wrap(hasSong => {
-    let { item } = this.props.route?.params;
-
-    if (typeof item == 'number') {
-      item = this.state.article;
-    }
-
-    console.log('item render', item);
-
+  renderHeaderSection = wrap((hasSong, item) => {
     return (
       <View cls="pb5">
         <ImageBackground
@@ -385,8 +380,8 @@ export default class AlbumDetail extends Component {
     );
   });
 
-  _renderListHeaderContent = wrap(hasSong => {
-    return <>{this.renderHeaderSection(hasSong)}</>;
+  _renderListHeaderContent = wrap((hasSong, item) => {
+    return <>{this.renderHeaderSection(hasSong, item)}</>;
   });
 
   deletePlaylist = async () => {
@@ -556,7 +551,9 @@ export default class AlbumDetail extends Component {
         <View cls="fullView">
           <ImageBackground cls="fullView" source={Images.bg2}>
             <AlbumListItem
-              _renderListHeaderContent={this._renderListHeaderContent}
+              _renderListHeaderContent={() =>
+                this._renderListHeaderContent(hasSong, item)
+              }
               viewModel={this.viewModel}
               hasSong={hasSong}
               playSong={this.playSong}

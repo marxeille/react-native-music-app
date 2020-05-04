@@ -41,14 +41,12 @@ export const PlayList = types
   .actions(self => {
     return {
       update(newJson) {
-        console.log('newJson', newJson);
-
         self.name = newJson.name;
         self.tracks = newJson.tracks;
         self.private = newJson.private;
-        self.playlistCover = newJson.cover_path ?? self.playlistCover;
-
-        console.log('self.playlistCover', self.playlistCover);
+        self.thumb = newJson.cover_path
+          ? BASE_API_URL + newJson.cover_path
+          : self.thumb;
       },
     };
   });
