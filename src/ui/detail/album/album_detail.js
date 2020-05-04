@@ -303,8 +303,16 @@ export default class AlbumDetail extends Component {
       [...this.viewModel.songs.values()].map(song => {
         rootStore.createSongRef(song);
       });
+      const songIdsToCreate = [];
+      ids.map(id => {
+        [...this.viewModel.songs.values()].map(song => {
+          if (Number(song.id) == id) {
+            songIdsToCreate.push(song.id);
+          }
+        });
+      });
 
-      rootStore.playlistSongStore?.addList(ids);
+      rootStore.playlistSongStore?.addList(songIdsToCreate);
       rootStore.playlistSongStore?.setPlaylist(item);
       rootStore?.queueStore?.removeSongs([
         song ? song.id.toString() : randomId.toString(),
@@ -661,6 +669,7 @@ export default class AlbumDetail extends Component {
               containerCls=""
               ref={this.modalAddSong}>
               <AddSongPlaylist
+                isFavorite
                 toggleAddSong={this._hideModalAddSong}
                 handleRightAction={this.editPlaylist}
               />

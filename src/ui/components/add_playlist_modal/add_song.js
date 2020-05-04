@@ -33,10 +33,14 @@ const AddSongPlaylist = observer(
 
     const onFocus = useCallback(() => {});
     const addSong = useCallback(song => {
-      if (!viewModel.current.songs.get(song.id)) {
-        viewModel.current.putSong(song);
+      if (!props.isFavorite) {
+        if (!viewModel.current.songs.get(song.id)) {
+          viewModel.current.putSong(song);
+        } else {
+          viewModel.current.removeSong(song);
+        }
       } else {
-        viewModel.current.removeSong(song);
+        console.log('isFavorite', song);
       }
     });
     const renderEmptyContainer = useMemo(
@@ -60,7 +64,7 @@ const AddSongPlaylist = observer(
       }),
     );
     const handleCloseAction = useCallback(() => {
-      typeof props.handleRightAction == 'function'
+      typeof props.handleRightAction == 'function' && !props.isFavorite
         ? props.handleRightAction([...viewModel.current.songs.values()])
         : props.toggleAddSong(false);
     });

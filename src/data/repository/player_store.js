@@ -54,7 +54,7 @@ export const PlayerStore = types
 
       prepareSong(id) {
         //Get list of songs
-        const songs = self.getSongs();
+        // const songs = self.getSongs();
         //Define track
         let track;
 
