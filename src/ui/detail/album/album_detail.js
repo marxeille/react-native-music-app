@@ -50,6 +50,7 @@ export default class AlbumDetail extends Component {
       showMenuEdit: false,
       showMenuAddToPlaylist: false,
       showShareModal: false,
+      editTitle: false,
       playing: false,
       private: props.route?.params.item.private,
       cover: props.route?.params.item.thumb,
@@ -156,6 +157,35 @@ export default class AlbumDetail extends Component {
       rootStore.updatePlayList(plCover.data);
       this.setState({ cover: BASE_API_URL + plCover.data.cover_path });
     }
+  };
+
+  changeTitle = newTitle => {
+    let { item } = this.props.route?.params;
+    console.log('A:' + newTitle);
+    this.setState({ name: newTitle });
+    const newName = {
+      ...item,
+      name: newTitle,
+    };
+
+    apiService.trackApiService
+      .editPlaylist(newName)
+      .then(res => {
+        if (res.status == 200) {
+          rootStore.updatePlayList(res.data);
+          Toast.showWithGravity('Sửa thành công', Toast.LONG, Toast.BOTTOM);
+        } else {
+          Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
+        }
+      })
+      .catch(err => {
+        console.log('AlbumDetail -> editPlaylist -> err', err);
+        Toast.showWithGravity('Vui lòng thử lại', Toast.LONG, Toast.BOTTOM);
+      });
+  };
+
+  showEditTitle = show => {
+    this.setState({ editTitle: show });
   };
 
   getTracks = item => {
@@ -294,7 +324,7 @@ export default class AlbumDetail extends Component {
     this._showModalAddSong();
   };
 
-  renderHeaderSection = wrap((hasSong, item) => {
+  renderHeaderSection = wrap((hasSong, item, name) => {
     return (
       <View cls="pb5">
         <ImageBackground
@@ -334,9 +364,7 @@ export default class AlbumDetail extends Component {
 
             <View cls="aic jcc pt2">
               <Text cls="white fw8 f3 pb2 avertaFont">
-                {typeof item.title == 'function'
-                  ? item.title().toUpperCase()
-                  : '...'}
+                {typeof item.title == 'function' ? name.toUpperCase() : '...'}
               </Text>
               {item?.id == 0 ? (
                 <View cls="pb4">
@@ -380,8 +408,8 @@ export default class AlbumDetail extends Component {
     );
   });
 
-  _renderListHeaderContent = wrap((hasSong, item) => {
-    return <>{this.renderHeaderSection(hasSong, item)}</>;
+  _renderListHeaderContent = wrap((hasSong, item, name) => {
+    return <>{this.renderHeaderSection(hasSong, item, name)}</>;
   });
 
   deletePlaylist = async () => {
@@ -427,7 +455,14 @@ export default class AlbumDetail extends Component {
 
   render() {
     let { item } = this.props.route?.params;
-    let { ids, showMenuAddToPlaylist, showShareModal } = this.state;
+    let {
+      ids,
+      showMenuAddToPlaylist,
+      showShareModal,
+      name,
+      editTitle,
+      showMenuEdit,
+    } = this.state;
     if (typeof item == 'number') {
       item = this.state.article;
     }
@@ -464,7 +499,9 @@ export default class AlbumDetail extends Component {
             },
             {
               title: 'Đổi tên',
-              action: () => {},
+              action: () => {
+                this.showEditTitle(true);
+              },
               icon: Images.ic_pen,
               hidden: rootStore.userStore?.id !== item.owner_id,
             },
@@ -552,7 +589,7 @@ export default class AlbumDetail extends Component {
           <ImageBackground cls="fullView" source={Images.bg2}>
             <AlbumListItem
               _renderListHeaderContent={() =>
-                this._renderListHeaderContent(hasSong, item)
+                this._renderListHeaderContent(hasSong, item, name)
               }
               viewModel={this.viewModel}
               hasSong={hasSong}
@@ -598,10 +635,14 @@ export default class AlbumDetail extends Component {
               ) : (
                 <MenuConcept
                   item={item}
+                  title={name}
                   songs={songs}
+                  editTitle={editTitle}
                   changeOrder={this.changeOrder}
+                  changeTitle={this.changeTitle}
                   settingItems={settingItems}
-                  showMenuEdit={this.state.showMenuEdit}
+                  showMenuEdit={showMenuEdit}
+                  showEditTitle={this.showEditTitle}
                   changeShowMenuEdit={this.changeShowMenuEdit}
                 />
               )}
