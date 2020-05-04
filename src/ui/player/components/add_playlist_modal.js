@@ -109,7 +109,7 @@ export default class AddPlayListModal extends Component {
             data={[...rootStore?.homeStore?.popular]}
             showsVerticalScrollIndicator={false}
             renderItem={this._renderItem}
-            numColumns={3}
+            numColumns={4}
             horizontal={false}
             keyExtractor={(item, index) => index.toString()}
           />
@@ -120,7 +120,7 @@ export default class AddPlayListModal extends Component {
 }
 
 const ActionItem = wrap(({ item }) => {
-  let width = Dimensions.get('screen').width / 3 - 16;
+  const width = Dimensions.get('screen').width / 3 - 16;
   return (
     <>
       <View cls="flx-i pb3 pr2">

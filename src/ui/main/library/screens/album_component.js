@@ -42,6 +42,7 @@ export default class AlbumComponent extends Component {
             data={albums}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderPlaylist}
+            showsVerticalScrollIndicator={false}
             numColumns={3}
             horizontal={false}
           />

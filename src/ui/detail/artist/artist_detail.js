@@ -257,55 +257,6 @@ export default class ArtistDetail extends Component {
     );
   });
 
-  // renderMiddleSection = wrap(() => {
-  //   const following =
-  //     indexOf(
-  //       [...this.viewModel?.likedArtists],
-  //       Number(
-  //         typeof this.props.route.params.artist == 'number'
-  //           ? this.props.route.params.artist
-  //           : this.props.route.params.artist.id,
-  //       ),
-  //     ) >= 0;
-  //   return (
-  //     <>
-  //       <View cls="pb3">
-  //         <View cls="pt2 aic pb2">
-  //           <TouchableOpacity onPress={this.reaction}>
-  //             <View
-  //               cls={`widthFn-140 aic ba br5 pa3 pt2 pb2 ${
-  //                 following ? ' bg-#835db8' : ''
-  //               }`}
-  //               style={{ borderColor: '#d7a0c8' }}>
-  //               <Text cls="white f11 fw6 lightFont">
-  //                 {`${following ? 'Đang' : ''} theo dõi`.toUpperCase()}
-  //               </Text>
-  //             </View>
-  //           </TouchableOpacity>
-  //         </View>
-  //         <View>
-  //           <ImageBackground
-  //             cls="heightFn-70 aic pt3"
-  //             style={{ width: '100%' }}
-  //             source={Images.wave}>
-  //             <TouchableOpacity onPress={this.playSong}>
-  //               <LinearGradient
-  //                 cls="ba br5 b--#321A54"
-  //                 colors={['#4A3278', '#8B659D', '#DDA5CB']}
-  //                 start={{ x: 0, y: 0 }}
-  //                 end={{ x: 1, y: 0 }}>
-  //                 <Text cls="white f6 fw7 pa2 pl4 pr4 avertaFont">
-  //                   Phát trộn bài
-  //                 </Text>
-  //               </LinearGradient>
-  //             </TouchableOpacity>
-  //           </ImageBackground>
-  //         </View>
-  //       </View>
-  //     </>
-  //   );
-  // });
-
   renderMiddleSection = () => {
     const following =
       indexOf(
