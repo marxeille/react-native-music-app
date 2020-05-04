@@ -7,6 +7,8 @@ const MenuConcept = ({
   item,
   title,
   songs,
+  newTitleChange,
+  textTitleChange,
   editTitle,
   changeOrder,
   settingItems,
@@ -23,6 +25,8 @@ const MenuConcept = ({
     <PlaylistMenuConcept
       item={item}
       title={title}
+      newTitleChange={newTitleChange}
+      textTitleChange={textTitleChange}
       editTitle={editTitle}
       setMenu={setMenu}
       settingItems={settingItems}

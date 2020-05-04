@@ -18,7 +18,16 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const PlaylistMenuConcept = observer(
   wrap(
-    ({ item, title, editTitle, settingItems, changeTitle, showEditTitle }) => {
+    ({
+      item,
+      title,
+      newTitleChange,
+      textTitleChange,
+      editTitle,
+      settingItems,
+      changeTitle,
+      showEditTitle,
+    }) => {
       const onError = useCallback(response => {
         console.log('response picker', response);
       });
@@ -76,10 +85,11 @@ const PlaylistMenuConcept = observer(
                   style={{ borderColor: '#9166cc' }}>
                   <View cls="aic jcc">
                     <TextInput
-                      ref={node => (titleNode = node)}
                       autoFocus={true}
+                      selectTextOnFocus
+                      onChangeText={value => textTitleChange(value)}
                       cls={`${isSmallDevice() ? 'f6' : 'f4'} avertaFont white`}
-                      placeholder={title}
+                      defaultValue={title}
                     />
                   </View>
 
@@ -88,8 +98,8 @@ const PlaylistMenuConcept = observer(
                       onPress={() => {
                         showEditTitle(false);
                         changeTitle(
-                          this.titleNode._lastNativeText != undefined
-                            ? this.titleNode._lastNativeText
+                          newTitleChange != undefined || newTitleChange != ''
+                            ? newTitleChange
                             : title,
                         );
                       }}>

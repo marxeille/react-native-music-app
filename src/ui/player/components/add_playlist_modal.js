@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  Dimensions,
+} from 'react-native';
 import { wrap } from '../../../themes';
 import { observer } from 'mobx-react';
 import Images from '../../../assets/icons/icons';
@@ -8,6 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { rootStore } from '../../../data/context/root_context';
 import { cloneDeep } from 'lodash';
 import CreatePlaylist from '../../components/add_playlist_modal';
+import { subLongStr, isSmallDevice } from '../../../utils';
 
 @observer
 @wrap
@@ -90,11 +98,19 @@ export default class AddPlayListModal extends Component {
             </LinearGradient>
           </TouchableOpacity>
         </View>
-        <View cls="pa3 pt4 pb0 fullWidth">
+        <View cls="pa3 pt4 pb0 fullHeight fullWidth">
           <FlatList
+            columnWrapperStyle={{
+              justifyContent:
+                rootStore.libraryStore.playlists.length > 2
+                  ? 'space-between'
+                  : 'flex-start',
+            }}
             data={[...rootStore?.homeStore?.popular]}
             showsVerticalScrollIndicator={false}
             renderItem={this._renderItem}
+            numColumns={3}
+            horizontal={false}
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
@@ -104,11 +120,12 @@ export default class AddPlayListModal extends Component {
 }
 
 const ActionItem = wrap(({ item }) => {
+  let width = Dimensions.get('screen').width / 3 - 16;
   return (
     <>
-      <View cls="flx-row aic pb3">
+      <View cls="flx-i pb3 pr2">
         <Image
-          cls="widthFn-90 heightFn-82"
+          style={{ width: width, height: width }}
           source={
             item && item.getThumb() !== ''
               ? { uri: item?.getThumb() }
@@ -116,9 +133,15 @@ const ActionItem = wrap(({ item }) => {
           }
         />
 
-        <View cls="pl2">
-          <Text cls="white fw7 f6 pl2"> {item?.title() ?? 'Default'}</Text>
-          <Text cls="primaryPurple f6 pl2 pt1">
+        <View cls="pt2" style={{ width: width }}>
+          <Text cls={`${isSmallDevice() ? 'f12' : 'f10'} white fw7 lightFont`}>
+            {' '}
+            {subLongStr(item?.title(), 20) ?? 'Default'}
+          </Text>
+          <Text
+            cls={`${
+              isSmallDevice() ? 'f13' : 'f12'
+            } primaryPurple f12 pl1 pt1 lightFont`}>
             {item?.subTitle() ?? 'Default'}
           </Text>
         </View>

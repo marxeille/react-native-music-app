@@ -76,6 +76,12 @@ export default class PlaylistComponent extends Component {
             <Loading />
           ) : (
             <FlatList
+              columnWrapperStyle={{
+                justifyContent:
+                  rootStore.libraryStore.playlists.length > 2
+                    ? 'space-between'
+                    : 'flex-start',
+              }}
               showsVerticalScrollIndicator={false}
               data={[{}, ...rootStore.libraryStore.playlists]}
               keyExtractor={(item, index) => index.toString()}
