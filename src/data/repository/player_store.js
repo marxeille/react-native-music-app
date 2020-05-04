@@ -95,7 +95,10 @@ export const PlayerStore = types
           // Check if there is a queue, and play it first
           if ([...getParent(self).queueStore.getSongs()].length > 0) {
             track = songs[getParent(self).queueStore.queueIndex];
+            // remove song from queue after play
             getParent(self).queueStore.removeSongs([track.id]);
+            // add played song into history
+            getParent(self).historyStore.addSong(track.id);
             self.startNewSong(track.id);
             //play song
             if (track) self.playSong(track.id);
