@@ -85,7 +85,10 @@ export const PlayerStore = types
         }
 
         // Play song
-        self.playSong(track.id);
+        if (track) {
+          getParent(self).historyStore.addSong(track.id);
+          self.playSong(track.id);
+        }
       },
 
       changeSong(trackStatus) {
@@ -98,7 +101,7 @@ export const PlayerStore = types
             // remove song from queue after play
             getParent(self).queueStore.removeSongs([track.id]);
             // add played song into history
-            getParent(self).historyStore.addSong(track.id);
+
             self.startNewSong(track.id);
             //play song
             if (track) self.playSong(track.id);
@@ -113,6 +116,7 @@ export const PlayerStore = types
                   : Math.floor(Math.random() * Math.floor(self.getQueueSize())), // with shuffle on
               );
               track = songs[self.trackIndex];
+
               self.startNewSong(track?.id);
             } else {
               //if this is the last track, set state to pause
@@ -127,7 +131,10 @@ export const PlayerStore = types
         }
 
         //play song
-        if (track) self.playSong(track.id);
+        if (track) {
+          getParent(self).historyStore.addSong(track.id);
+          self.playSong(track.id);
+        }
       },
 
       startNewSong(trackId) {

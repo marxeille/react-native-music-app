@@ -155,7 +155,8 @@ class Queue2 extends Component {
   renderItem = wrap(({ item, index, drag, isActive }) => {
     return item.flag == 'header' ? (
       <GestureRecognizer onSwipeRight={this.onSwipeRight} config={this.config}>
-        <View cls={item.order == 1 ? 'pa3' : `bt b--#7351a1 pa3`}>
+        <View
+          cls={item.order == 1 ? 'pa3 pb0 pt0' : `bt b--#7351a1 pa3 pb0 pt0`}>
           <View cls={item.order == 1 ? 'flx-row' : `pt3 flx-row`}>
             <LinearGradientText
               text={item.title}
@@ -200,7 +201,7 @@ class Queue2 extends Component {
     if ([...rootStore.playlistSongStore.songs].length > 0) {
       data.push({
         flag: 'header',
-        title: 'Playlist : ',
+        title: 'Playlist :',
         subTitle: rootStore.playlistSongStore.name,
         order: 2,
       });
