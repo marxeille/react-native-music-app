@@ -5,11 +5,15 @@ import PlaylistMenuConcept from './menu';
 
 const MenuConcept = ({
   item,
+  title,
   songs,
+  editTitle,
   changeOrder,
   settingItems,
   showMenuEdit,
+  showEditTitle,
   changeShowMenuEdit,
+  changeTitle,
 }) => {
   const [menu, setMenu] = useState(!showMenuEdit);
   useEffect(() => {
@@ -18,8 +22,12 @@ const MenuConcept = ({
   return menu ? (
     <PlaylistMenuConcept
       item={item}
+      title={title}
+      editTitle={editTitle}
       setMenu={setMenu}
       settingItems={settingItems}
+      changeTitle={changeTitle}
+      showEditTitle={showEditTitle}
     />
   ) : (
     <Modifyplaylist
