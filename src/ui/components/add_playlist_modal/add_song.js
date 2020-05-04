@@ -10,6 +10,7 @@ import { subLongStr } from '../../../utils';
 import { rootStore } from '../../../data/context/root_context';
 import Loading from '../../components/loading';
 import { CreatePlaylistModel } from './model/view_model';
+import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
 
 const AddSongPlaylist = observer(
   wrap(props => {
@@ -31,8 +32,23 @@ const AddSongPlaylist = observer(
       }, 1300);
     };
 
+    const onSuccess = useCallback((type, data) => {
+      const idExist = [...rootStore.likedTracks].includes(Number(data));
+      if (type == 'like') {
+        if (!idExist) {
+          rootStore.addLikedTrack(data);
+        }
+      } else {
+        if (idExist) {
+          rootStore.removeLikedTrack(data);
+        }
+      }
+    });
+
+    const onError = useCallback((type, data) => {});
+
     const onFocus = useCallback(() => {});
-    const addSong = useCallback(song => {
+    const addSong = useCallback(async song => {
       if (!props.isFavorite) {
         if (!viewModel.current.songs.get(song.id)) {
           viewModel.current.putSong(song);
@@ -40,7 +56,11 @@ const AddSongPlaylist = observer(
           viewModel.current.removeSong(song);
         }
       } else {
-        console.log('isFavorite', song);
+        if (![...rootStore.likedTracks].includes(Number(song.id))) {
+          await likeHelper('track', song.id, onSuccess, onError);
+        } else {
+          await unlikeHelper('track', song.id, onSuccess, onError);
+        }
       }
     });
     const renderEmptyContainer = useMemo(
@@ -57,6 +77,7 @@ const AddSongPlaylist = observer(
             <SearchItem
               item={item.item}
               addSong={addSong}
+              isFavorite={props.isFavorite}
               checked={trackIds.includes(item.item.id)}
             />
           </View>
@@ -134,30 +155,49 @@ const AddSongPlaylist = observer(
 export default AddSongPlaylist;
 
 const SearchItem = observer(
-  wrap(props => (
-    <View cls="jcsb flx-row aic pb2 pt2 pa3 fullWidth">
-      <View cls="flx-row">
-        <Image
-          cls="squareFn-50"
-          source={
-            props.item.getThumb() !== ''
-              ? { uri: props.item.getThumb() }
-              : Images.bAAlbum
-          }
-        />
+  wrap(props => {
+    const toggleAddSong = useCallback(() => {
+      if (props) props.addSong(props.item);
+    });
+    return (
+      <View cls="jcsb flx-row aic pb2 pt2 pa3 fullWidth">
+        <View cls="flx-row">
+          <Image
+            cls="squareFn-50"
+            source={
+              props.item.getThumb() !== ''
+                ? { uri: props.item.getThumb() }
+                : Images.bAAlbum
+            }
+          />
 
-        <View cls="jcc pl3">
-          <Text cls="white fw7 f6 lightFont">
-            {subLongStr(props.item.getName(), 25)}
-          </Text>
-          <Text cls="primaryPurple lightFont">{props.item.getSubTitle()}</Text>
+          <View cls="jcc pl3">
+            <Text cls="white fw7 f6 lightFont">
+              {subLongStr(props.item.getName(), 25)}
+            </Text>
+            <Text cls="primaryPurple lightFont">
+              {props.item.getSubTitle()}
+            </Text>
+          </View>
+        </View>
+        <View>
+          <TouchableOpacity onPress={() => toggleAddSong()}>
+            {props.isFavorite ? (
+              <Image
+                source={
+                  [...rootStore.likedTracks].includes(Number(props.item.id))
+                    ? Images.ic_del_song
+                    : Images.ic_plus
+                }
+              />
+            ) : (
+              <Image
+                source={props.checked ? Images.ic_del_song : Images.ic_plus}
+              />
+            )}
+          </TouchableOpacity>
         </View>
       </View>
-      <View>
-        <TouchableOpacity onPress={() => props.addSong(props.item)}>
-          <Image source={props.checked ? Images.ic_del_song : Images.ic_plus} />
-        </TouchableOpacity>
-      </View>
-    </View>
-  )),
+    );
+  }),
 );

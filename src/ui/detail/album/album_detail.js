@@ -484,6 +484,7 @@ export default class AlbumDetail extends Component {
     if (item.id == 0) {
       ids = [...rootStore?.likedTracks];
     }
+    console.log('ids', ids);
 
     const songs = [];
 
@@ -494,6 +495,7 @@ export default class AlbumDetail extends Component {
         }
       });
     });
+    console.log('songs', songs);
 
     const hasSong = songs.length > 0;
 
@@ -669,7 +671,7 @@ export default class AlbumDetail extends Component {
               containerCls=""
               ref={this.modalAddSong}>
               <AddSongPlaylist
-                isFavorite
+                isFavorite={item.id == 0}
                 toggleAddSong={this._hideModalAddSong}
                 handleRightAction={this.editPlaylist}
               />

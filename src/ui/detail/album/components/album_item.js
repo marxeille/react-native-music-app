@@ -14,7 +14,7 @@ import { rootStore } from '../../../../data/context/root_context';
 const AlbumItem = observer(
   wrap(props => {
     const idExist = indexOf(
-      [...props.model?.likedTracks],
+      [...props.model?.likedTracks, ...rootStore.likedTracks],
       Number(props.item.id),
     );
 
