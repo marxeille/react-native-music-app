@@ -54,7 +54,7 @@ export const PlayerStore = types
 
       prepareSong(id) {
         //Get list of songs
-        // const songs = self.getSongs();
+        const songs = self.getSongs();
         //Define track
         let track;
 
@@ -73,7 +73,7 @@ export const PlayerStore = types
             // Set track index by track id
             // Minus the length of queue song, cause we will remove those song later on
             self.setTrackIndex(
-              _.findIndex(self.getSongs(), ['id', track.id]) -
+              _.findIndex(songs, ['id', track.id]) -
                 [...getParent(self).queueStore.getSongs()].length,
             );
             //set new song
