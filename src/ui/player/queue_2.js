@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Text,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../themes';
@@ -35,8 +36,13 @@ class Queue2 extends Component {
 
   renderQueuePlayer = wrap(() => {
     const { statusPlayer, toggleStatus, currentSong } = rootStore.playerStore;
+
     return (
-      <View>
+      <View cls="pb3">
+        <FlatList
+          data={[...rootStore.historyStore.songs]}
+          renderItem={this.renderItem}
+        />
         <ImageBackground
           cls="fullWidth heightFn-72 flx-row aic jcsb pl3 pr3"
           source={Images.bg_player}>
@@ -63,12 +69,12 @@ class Queue2 extends Component {
                 marqueeDelay={800}>
                 <Text cls="white fw7 f6 latoFont">
                   {currentSong !== null
-                    ? currentSong?.getName()
+                    ? subLongStr(currentSong?.getName(), 20)
                     : 'Dèfault Title'}
                 </Text>
               </TextTicker>
               <Text cls="primaryPurple f9 pt1 latoFont">
-                Idol {currentSong?.getSubTitle()} bẢnH
+                {currentSong?.getSubTitle()}
               </Text>
             </View>
           </View>
@@ -76,7 +82,7 @@ class Queue2 extends Component {
             <Image
               cls="widthFn-52 heightFn-52 pl2"
               source={
-                statusPlayer == 'pause'
+                rootStore.playerStore.statusPlayer == 'pause'
                   ? Images.ic_btn_play2
                   : Images.ic_btn_pause2
               }
@@ -99,9 +105,10 @@ class Queue2 extends Component {
               <Image cls="widthFn-24 heightFn-25" source={Images.ic_add_song} />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() =>
-                rootStore?.queueStore?.removeSongs(this.state.checkedSongs)
-              }>
+              onPress={() => {
+                rootStore?.queueStore?.removeSongs(this.state.checkedSongs);
+                rootStore?.historyStore?.removeSongs(this.state.checkedSongs);
+              }}>
               <Image cls="widthFn-24 heightFn-25" source={Images.ic_trash} />
             </TouchableOpacity>
           </View>
@@ -148,7 +155,7 @@ class Queue2 extends Component {
   renderItem = wrap(({ item, index, drag, isActive }) => {
     return item.flag == 'header' ? (
       <GestureRecognizer onSwipeRight={this.onSwipeRight} config={this.config}>
-        <View cls={item.order == 1 ? '' : `bt b--#7351a1`}>
+        <View cls={item.order == 1 ? 'pa3' : `bt b--#7351a1 pa3`}>
           <View cls={item.order == 1 ? 'flx-row' : `pt3 flx-row`}>
             <LinearGradientText
               text={item.title}
@@ -160,7 +167,7 @@ class Queue2 extends Component {
               }}
             />
 
-            <View style={{ paddingTop: 2 }}>
+            <View style={{ paddingTop: 2 }} cls="pa3">
               <Text cls="primaryPurple fw7 f6 avertaFont">{item.subTitle}</Text>
             </View>
           </View>
@@ -202,15 +209,15 @@ class Queue2 extends Component {
 
     return (
       <ImageBackground cls="jcsb fullView pt2" source={Images.bg3}>
-        {this.renderQueuePlayer()}
-        <View cls="pa3" style={{ height: D_HEIGHT - 112, paddingBottom: 56 }}>
-          {data.length == 1 ? (
+        {/* {this.renderQueuePlayer()} */}
+        <View style={{ height: D_HEIGHT - 112 }}>
+          {/* {data.length > 1 ? (
             <GestureRecognizer
               onSwipeRight={this.onSwipeRight}
               config={this.config}>
               <DraggableFlatList
                 data={data}
-                // ListHeaderComponent={this.renderQueuePlayer()}
+                ListHeaderComponent={this.renderQueuePlayer}
                 showsVerticalScrollIndicator={false}
                 renderItem={this.renderItem}
                 keyExtractor={(item, index) => `draggable-item-${index}`}
@@ -223,7 +230,7 @@ class Queue2 extends Component {
           ) : (
             <DraggableFlatList
               data={data}
-              // ListHeaderComponent={this.renderQueuePlayer()}
+              ListHeaderComponent={this.renderQueuePlayer}
               showsVerticalScrollIndicator={false}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => `draggable-item-${index}`}
@@ -232,7 +239,18 @@ class Queue2 extends Component {
               }}
               activationDistance={30}
             />
-          )}
+          )} */}
+          <DraggableFlatList
+            data={data}
+            ListHeaderComponent={this.renderQueuePlayer()}
+            showsVerticalScrollIndicator={false}
+            renderItem={this.renderItem}
+            keyExtractor={(item, index) => `draggable-item-${index}`}
+            onDragEnd={({ data }) => {
+              this.shuffeData(data);
+            }}
+            activationDistance={30}
+          />
         </View>
         <View
           cls="heightFn-56 fullWidth"
