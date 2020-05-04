@@ -175,13 +175,19 @@ export default class Player extends Component {
             paused={rootStore?.playerStore?.statusPlayer == 'pause'}
           />
         </GestureRecognizer>
-        <View style={styles.beatContainer}>
-          <Image
-            source={Images.wave2}
-            resizeMode="stretch"
-            style={styles.beat}
-          />
-        </View>
+
+        {isSmallDevice() ? (
+          <></>
+        ) : (
+          <View style={styles.beatContainer}>
+            <Image
+              source={Images.wave2}
+              resizeMode="stretch"
+              style={styles.beat}
+            />
+          </View>
+        )}
+
         <BottomModal
           ref={this.modalShare}
           title={'Chia sẻ'}
