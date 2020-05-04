@@ -52,6 +52,7 @@ export default class AlbumDetail extends Component {
       showShareModal: false,
       editTitle: false,
       playing: false,
+      newTitleChange: '',
       private: props.route?.params.item.private,
       cover: props.route?.params.item.thumb,
       name: props.route?.params.item.name,
@@ -157,6 +158,10 @@ export default class AlbumDetail extends Component {
       rootStore.updatePlayList(plCover.data);
       this.setState({ cover: BASE_API_URL + plCover.data.cover_path });
     }
+  };
+
+  textTitleChange = newTitle => {
+    this.setState({ newTitleChange: newTitle });
   };
 
   changeTitle = newTitle => {
@@ -462,6 +467,7 @@ export default class AlbumDetail extends Component {
       name,
       editTitle,
       showMenuEdit,
+      newTitleChange,
     } = this.state;
     if (typeof item == 'number') {
       item = this.state.article;
@@ -637,7 +643,9 @@ export default class AlbumDetail extends Component {
                   item={item}
                   title={name}
                   songs={songs}
+                  newTitleChange={newTitleChange}
                   editTitle={editTitle}
+                  textTitleChange={this.textTitleChange}
                   changeOrder={this.changeOrder}
                   changeTitle={this.changeTitle}
                   settingItems={settingItems}
