@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { wrap } from '../../../../themes';
 import SearchComponent from '../components/search_component';
 import ArtistItem from '../components/artist_item_component';
@@ -73,12 +73,17 @@ export default class ArtistComponent extends Component {
   // End test
 
   render() {
-    const sortedArtists = sortByAlphabet(
-      orderBy(
-        [...rootStore?.libraryStore?.artists],
-        [artist => artist.name.toLowerCase()],
-        ['asc'],
-      ),
+    // const sortedArtists = sortByAlphabet(
+    //   orderBy(
+    //     [...rootStore?.libraryStore?.artists],
+    //     [artist => artist.name.toLowerCase()],
+    //     ['asc'],
+    //   ),
+    // );
+    const sortedArtists = orderBy(
+      [...rootStore?.libraryStore?.artists],
+      [artist => artist.name.toLowerCase()],
+      ['asc'],
     );
     const { _showModal, _hideModal } = this.props;
     return (
@@ -89,7 +94,13 @@ export default class ArtistComponent extends Component {
 
         <View cls="pt3" style={{ marginBottom: 95 }}>
           <View cls="fullHeight">
-            <AlphabetSectionList
+            <View cls="ba br4 jcc asfe pa2 mb2 b--#4B3277">
+              <TouchableOpacity>
+                <Text cls="white fw6">Chỉ hiện DJ</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* <AlphabetSectionList
               data={sortedArtists}
               renderItem={this.renderItem}
               renderHeader={this.renderHeader}
@@ -100,14 +111,21 @@ export default class ArtistComponent extends Component {
               // sectionHeaderStyle={{ paddingVertical: 5 }}
               rightSectionListItem={this.renderRightSectionItem}
               // sectionHeaderTextStyle={{ fontSize: 16, color: 'blue' }}
+            /> */}
+
+            <FlatList
+              columnWrapperStyle={{
+                justifyContent:
+                  rootStore.libraryStore.playlists.length > 2
+                    ? 'space-between'
+                    : 'flex-start',
+              }}
+              data={sortedArtists}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={this.renderItem}
+              numColumns={3}
+              horizontal={false}
             />
-          </View>
-          <View
-            style={{ position: 'absolute' }}
-            cls="ba br4 jcc asfe pa2 b--#4B3277">
-            <TouchableOpacity>
-              <Text cls="white fw6">Chỉ hiện DJ</Text>
-            </TouchableOpacity>
           </View>
         </View>
       </>

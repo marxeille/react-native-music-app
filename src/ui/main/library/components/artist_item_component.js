@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { wrap } from '../../../../themes';
 import { observer } from 'mobx-react';
 import { navigate } from '../../../../navigation/navigation_service';
-import { subLongStr } from '../../../../utils';
+import { subLongStr, isSmallDevice } from '../../../../utils';
 import Images from '../../../../assets/icons/icons';
 
 @observer
@@ -16,13 +16,15 @@ export default class ArtistItem extends Component {
 
   render() {
     const { item } = this.props;
+    let width = Dimensions.get('screen').width / 3 - 16;
+
     return (
       <>
         <TouchableOpacity
           onPress={() => navigate('artist_detail', { artist: item })}>
-          <View cls="flx-row aic pb3">
+          <View cls="pb3 pr2">
             <Image
-              cls="widthFn-90 heightFn-82"
+              style={{ width: width, height: width }}
               source={
                 item !== undefined &&
                 item.getThumb() !== null &&
@@ -34,8 +36,11 @@ export default class ArtistItem extends Component {
               }
             />
 
-            <View cls="pl2">
-              <Text cls="white fw7 f6 pl2 lightFont">
+            <View cls="pt2" style={{ width: width }}>
+              <Text
+                ellipsizeMode="tail"
+                numberOfLines={1}
+                cls={`${isSmallDevice() ? 'f8' : 'f10'} white fw7 lightFont`}>
                 {subLongStr(item?.getName(), 20) ?? ''}
               </Text>
             </View>
