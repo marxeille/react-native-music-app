@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { wrap } from '../../../../themes';
 import { observer } from 'mobx-react';
 import { navigate } from '../../../../navigation/navigation_service';
-import { subLongStr, isTextEmpty } from '../../../../utils';
+import { subLongStr, isTextEmpty, isSmallDevice } from '../../../../utils';
 import Images from '../../../../assets/icons/icons';
 import { rootStore } from '../../../../data/context/root_context';
 
@@ -17,11 +17,12 @@ export default class PlaylistItem extends Component {
 
   render() {
     const { item } = this.props;
+    let width = Dimensions.get('screen').width / 3 - 16;
     return (
       <>
-        <View cls="flx-i pb3 pr2">
+        <View cls="pb3 pr2">
           <Image
-            cls="widthFn-108 heightFn-108"
+            style={{ width: width, height: width }}
             source={
               item !== undefined && item.getThumb() !== ''
                 ? {
@@ -35,14 +36,18 @@ export default class PlaylistItem extends Component {
             }
           />
 
-          <View cls="pt2">
-            <Text cls="white fw7 f10 lightFont">
+          <View cls="pt2" style={{ width: width }}>
+            <Text
+              cls={`${isSmallDevice() ? 'f12' : 'f10'} white fw7 lightFont`}>
               {item !== undefined
                 ? subLongStr(item.title(), 20)
                 : 'Tạo playlist'}
             </Text>
             {item !== undefined ? (
-              <Text cls="primaryPurple f12 pt1 lightFont">
+              <Text
+                cls={`${
+                  isSmallDevice() ? 'f13' : 'f12'
+                } primaryPurple f12 pt1 lightFont`}>
                 {item?.id == 0 ? rootStore.userStore?.name : item.subTitle()}
               </Text>
             ) : null}
