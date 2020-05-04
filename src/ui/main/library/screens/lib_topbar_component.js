@@ -199,7 +199,9 @@ export default class LibraryTabView extends React.Component {
     playlist: () => (
       <Playlist _showModal={this._showModal} _hideModal={this._hideModal} />
     ),
-    artist: Artist,
+    artist: () => (
+      <Artist _showModal={this._showModal} _hideModal={this._hideModal} />
+    ),
     album: () => (
       <Album _showModal={this._showModal} _hideModal={this._hideModal} />
     ),
