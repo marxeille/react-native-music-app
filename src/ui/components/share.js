@@ -233,11 +233,13 @@ const ShareModal = wrap(({ _hideModal, item }) => {
                   cls={`${
                     isSmallDevice() ? 'f7' : 'f5'
                   } white fw7 pt2 avertaFont`}>
-                  {rootStore.playerStore?.currentSong?.getName()}
+                  {item?.getName() ??
+                    rootStore.playerStore?.currentSong?.getName()}
                 </Text>
                 <Text
                   cls={`${isSmallDevice() ? 'f9' : 'f7'} white pt1 avertaFont`}>
-                  {rootStore.playerStore?.currentSong?.getSubTitle()}
+                  {item?.getSubTitle() ??
+                    rootStore.playerStore?.currentSong?.getSubTitle()}
                 </Text>
               </View>
             </View>

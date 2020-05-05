@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Keyboard } from 'react-native';
 import { wrap } from '../../../../themes';
 import SearchComponent from '../components/search_component';
 import ArtistItem from '../components/artist_item_component';
@@ -118,7 +118,9 @@ export default class ArtistComponent extends Component {
               data={sortedArtists}
               keyExtractor={(item, index) => index.toString()}
               renderItem={this.renderItem}
-              numColumns={3}
+              showsVerticalScrollIndicator={false}
+              onScrollBeginDrag={Keyboard.dismiss}
+              numColumns={4}
               horizontal={false}
             />
           </View>

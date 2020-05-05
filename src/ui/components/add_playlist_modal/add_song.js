@@ -19,7 +19,7 @@ const AddSongPlaylist = observer(
       props.viewModel ??
       useRef(CreatePlaylistModel.create({ state: 'success', name: '' }));
     const [keyword, setKeyword] = useState('');
-    const trackIds = [...viewModel.current.songs.values()].map(
+    const trackIds = [...viewModel?.current?.songs.values()].map(
       track => track.id,
     );
 
@@ -58,6 +58,7 @@ const AddSongPlaylist = observer(
       } else {
         if (![...rootStore.likedTracks].includes(Number(song.id))) {
           await likeHelper('track', song.id, onSuccess, onError);
+          props.parentModel?.setSongs(song);
         } else {
           await unlikeHelper('track', song.id, onSuccess, onError);
         }

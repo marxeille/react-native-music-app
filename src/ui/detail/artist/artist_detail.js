@@ -23,6 +23,9 @@ import { indexOf } from 'lodash';
 import { navigate } from '../../../navigation/navigation_service';
 import ArtistTabView from './components/artist_tabview';
 import MenuConcept from '../../components/playlist_menu_concept';
+import Toast from 'react-native-simple-toast';
+import ShareModal from '../../components/share';
+import AddPlayListModal from '../../player/components/add_playlist_modal';
 
 @observer
 @wrap
@@ -32,11 +35,14 @@ export default class ArtistDetail extends Component {
     this.viewModel = ArtistModel.create({ state: 'loading' });
     this.modalSong = React.createRef();
     this.modalMenu = React.createRef();
+    this.modalShare = React.createRef();
 
     this.state = {
       ids: [],
       artist: {},
       showCover: true,
+      showShareModal: false,
+      showAddPlaylistModal: false,
       following:
         indexOf(
           [...this.viewModel?.likedArtists],
@@ -107,6 +113,18 @@ export default class ArtistDetail extends Component {
   _hideModalMenu = () => {
     if (this.modalMenu && this.modalMenu.current) {
       this.modalMenu.current._hideModal();
+    }
+  };
+
+  _showModalShare = () => {
+    if (this.modalShare && this.modalShare.current) {
+      this.modalShare.current._showModal();
+    }
+  };
+
+  _hideModalShare = () => {
+    if (this.modalShare && this.modalShare.current) {
+      this.modalShare.current._hideModal();
     }
   };
 
@@ -189,6 +207,20 @@ export default class ArtistDetail extends Component {
     this.setState({ showCover: state });
   };
 
+  addToQueue = songs => {
+    songs.map(song => {
+      if (song.id !== rootStore?.playerStore?.currentSong?.id) {
+        rootStore?.createSongRef(song);
+        rootStore.queueStore.addSong(song);
+      }
+    });
+    Toast.showWithGravity('Thêm thành công', Toast.LONG, Toast.BOTTOM);
+  };
+
+  toggleShareModal = state => {
+    this.setState({ showShareModal: state });
+  };
+
   renderHeaderSection = wrap(() => {
     let { artist, showCover } = this.state;
 
@@ -259,7 +291,6 @@ export default class ArtistDetail extends Component {
   });
 
   renderActionSection = wrap(() => {
-    const { artist } = this.state;
     return (
       <ImageBackground
         style={{ width: D_WIDTH, height: 50 }}
@@ -308,7 +339,10 @@ export default class ArtistDetail extends Component {
             </TouchableOpacity>
           </View>
           <View cls="pa3 pl0">
-            <TouchableWithoutFeedback onPress={() => {}}>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                this._showModalShare();
+              }}>
               <Image
                 cls="widthFn-25 heightFn-25"
                 source={Images.ic_btn_share}
@@ -345,7 +379,7 @@ export default class ArtistDetail extends Component {
   });
 
   render() {
-    const { artist } = this.state;
+    const { artist, showShareModal, showAddPlaylistModal } = this.state;
     const settingItems = [
       {
         title: 'Tải xuống',
@@ -357,7 +391,7 @@ export default class ArtistDetail extends Component {
       {
         title: 'Thêm vào playlist',
         action: () => {
-          this.setState({ showMenuAddToPlaylist: true });
+          this.setState({ showAddPlaylistModal: true });
         },
         hidden: false,
         icon: Images.ic_add_pl,
@@ -366,7 +400,7 @@ export default class ArtistDetail extends Component {
       {
         title: 'Thêm vào danh sách chờ',
         action: () => {
-          this.addToQueue(songs);
+          this.addToQueue([...this.viewModel.songs.values()]);
         },
         hidden: false,
         icon: Images.ic_add_queue,
@@ -375,19 +409,19 @@ export default class ArtistDetail extends Component {
       {
         title: 'Chia sẻ',
         action: () => {
-          this.setState({ showShareModal: true });
+          this.toggleShareModal(true);
         },
         hidden: false,
         icon: Images.ic_share_white,
         imgStyle: 'widthFn-20 heightFn-24',
       },
-      {
-        title: 'Xem nghệ sĩ',
-        action: () => {},
-        hidden: false,
-        icon: Images.ic_person,
-        imgStyle: 'widthFn-20 heightFn-24',
-      },
+      // {
+      //   title: 'Xem nghệ sĩ',
+      //   action: () => {},
+      //   hidden: false,
+      //   icon: Images.ic_person,
+      //   imgStyle: 'widthFn-20 heightFn-24',
+      // },
     ];
     return (
       <LinearGradient
@@ -410,17 +444,34 @@ export default class ArtistDetail extends Component {
               containerCls=""
               customGradient={['#000', '#1a0632', '#000', '#13151A']}
               ref={this.modalMenu}>
-              <MenuConcept
-                item={artist}
-                settingItems={settingItems}
-                showMenuEdit={false}
-              />
+              {showShareModal ? (
+                <ShareModal
+                  item={artist}
+                  _hideModal={() => this.toggleShareModal(false)}
+                />
+              ) : showAddPlaylistModal ? (
+                <AddPlayListModal
+                  songs={[...this.viewModel.songs.values()]}
+                  addPlaylist={() =>
+                    this.setState({ showAddPlaylistModal: false })
+                  }
+                />
+              ) : (
+                <MenuConcept
+                  item={artist}
+                  settingItems={settingItems}
+                  showMenuEdit={false}
+                />
+              )}
             </BottomModal>
             <BottomModal ref={this.modalSong} headerNone>
               <SongMenu
                 song={this.viewModel?.selectedSong}
                 _hideModal={this._hideModal}
               />
+            </BottomModal>
+            <BottomModal ref={this.modalShare} headerNone>
+              <ShareModal item={artist} _hideModal={this._hideModalShare} />
             </BottomModal>
           </ImageBackground>
         </View>

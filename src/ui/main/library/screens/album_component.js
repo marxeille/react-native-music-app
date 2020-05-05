@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList, Keyboard } from 'react-native';
 import { wrap } from '../../../../themes';
 import SearchComponent from '../components/search_component';
 import AlbumItem from '../components/album_item_component';
@@ -38,6 +38,7 @@ export default class AlbumComponent extends Component {
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderPlaylist}
             showsVerticalScrollIndicator={false}
+            onScrollBeginDrag={Keyboard.dismiss}
             numColumns={3}
             horizontal={false}
           />
