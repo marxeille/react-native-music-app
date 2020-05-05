@@ -466,6 +466,10 @@ export default class AlbumDetail extends Component {
     Toast.showWithGravity('Thêm thành công', Toast.LONG, Toast.BOTTOM);
   };
 
+  handleLoadMore = () => {
+    console.log('load moreeee');
+  };
+
   render() {
     let { item } = this.props.route?.params;
     let {
@@ -610,6 +614,7 @@ export default class AlbumDetail extends Component {
               playSong={this.playSong}
               songs={songs}
               _showModal={this._showModal}
+              _handleLoadMore={this.handleLoadMore}
             />
             <BottomModal ref={this.modalSong} headerNone>
               {showShareModal ? (

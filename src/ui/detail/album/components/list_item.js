@@ -11,6 +11,7 @@ const AlbumListItem = wrap(
     playSong,
     _showModal,
     viewModel,
+    _handleLoadMore,
   }) => {
     const _renderItem = useCallback(
       wrap(item => {
@@ -35,6 +36,9 @@ const AlbumListItem = wrap(
           showsVerticalScrollIndicator={false}
           renderItem={_renderItem}
           keyExtractor={(item, index) => index.toString()}
+          onEndReached={_handleLoadMore}
+          onEndReachedThreshold={0.5}
+          initialNumToRender={10}
         />
       </View>
     );

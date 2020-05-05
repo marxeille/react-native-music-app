@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, FlatList, Image } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  FlatList,
+  Image,
+  Keyboard,
+} from 'react-native';
 import { wrap } from '../../../../themes';
 import Loading from '../../../components/loading';
 import SearchComponent from '../components/search_component';
@@ -84,6 +90,7 @@ export default class PlaylistComponent extends Component {
               }}
               showsVerticalScrollIndicator={false}
               data={[{}, ...rootStore.libraryStore.playlists]}
+              onScrollBeginDrag={Keyboard.dismiss}
               keyExtractor={(item, index) => index.toString()}
               numColumns={3}
               horizontal={false}
