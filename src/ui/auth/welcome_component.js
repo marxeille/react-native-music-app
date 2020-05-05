@@ -37,7 +37,9 @@ export default class WelcomeComponent extends Component {
         <KeyboardAvoidingView behavior="padding">
           <View cls="fullView">
             <ImageBackground
-              cls={`${isSmallDevice() ? 'pb2' : 'pb5'} fullView aic jcsb`}
+              cls={`${
+                isSmallDevice() ? 'pb2' : isMeidumDevice() ? 'pb3' : 'pb5'
+              } fullView aic jcsb`}
               source={Images.bg5}>
               <View cls="fullWidth pt5 pl3">
                 {/* <Image
@@ -62,7 +64,7 @@ export default class WelcomeComponent extends Component {
                     isSmallDevice()
                       ? 'pb0'
                       : isMeidumDevice()
-                      ? 'pa5 pb4'
+                      ? 'pa5 pb2'
                       : 'pa5 pb0'
                   } pt0 aic`}>
                   <View cls={`${isSmallDevice() ? 'widthFn-160 pb3' : 'pa1'}`}>
