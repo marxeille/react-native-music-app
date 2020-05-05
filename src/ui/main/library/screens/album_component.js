@@ -33,12 +33,6 @@ export default class AlbumComponent extends Component {
         </View>
         <View cls="pt3" style={{ marginBottom: 95 }}>
           <FlatList
-            columnWrapperStyle={{
-              justifyContent:
-                rootStore.libraryStore.playlists.length > 2
-                  ? 'space-between'
-                  : 'flex-start',
-            }}
             data={albums}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderPlaylist}

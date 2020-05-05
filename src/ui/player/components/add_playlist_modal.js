@@ -100,12 +100,6 @@ export default class AddPlayListModal extends Component {
         </View>
         <View cls="pa3 pt4 pb0 fullHeight fullWidth">
           <FlatList
-            columnWrapperStyle={{
-              justifyContent:
-                rootStore.libraryStore.playlists.length > 2
-                  ? 'space-between'
-                  : 'flex-start',
-            }}
             data={[...rootStore?.homeStore?.popular]}
             showsVerticalScrollIndicator={false}
             renderItem={this._renderItem}

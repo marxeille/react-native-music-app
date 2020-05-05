@@ -114,12 +114,6 @@ export default class ArtistComponent extends Component {
             /> */}
 
             <FlatList
-              columnWrapperStyle={{
-                justifyContent:
-                  rootStore.libraryStore.playlists.length > 2
-                    ? 'space-between'
-                    : 'flex-start',
-              }}
               data={sortedArtists}
               keyExtractor={(item, index) => index.toString()}
               renderItem={this.renderItem}
