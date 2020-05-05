@@ -77,6 +77,7 @@ export default class PlaylistComponent extends Component {
             <Loading />
           ) : (
             <FlatList
+              keyboardDismissMode="on-drag"
               showsVerticalScrollIndicator={false}
               data={[{}, ...rootStore.libraryStore.playlists]}
               keyExtractor={(item, index) => index.toString()}

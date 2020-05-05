@@ -114,6 +114,7 @@ export default class ArtistComponent extends Component {
             /> */}
 
             <FlatList
+              keyboardDismissMode="on-drag"
               data={sortedArtists}
               keyExtractor={(item, index) => index.toString()}
               renderItem={this.renderItem}

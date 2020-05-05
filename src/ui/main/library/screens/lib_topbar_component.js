@@ -8,6 +8,7 @@ import {
   ImageBackground,
   FlatList,
   TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { wrap } from '../../../../themes';
@@ -70,7 +71,11 @@ export default class LibraryTabView extends React.Component {
             <TouchableOpacity
               key={i.toString()}
               style={styles.tabItem}
-              onPress={() => this.setState({ index: i })}>
+              onPress={() => {
+                this.setState({ index: i });
+                Keyboard.dismiss();
+              }}
+              accessible={false}>
               <View cls="fullWidth">
                 {i == this.state.index ? (
                   <View

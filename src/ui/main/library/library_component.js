@@ -5,6 +5,8 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ImageBackground,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { wrap } from '../../../themes';
 import { RootStore } from '../../../data/repository/root_store';
@@ -27,18 +29,20 @@ export default class LibraryComponent extends Component {
   render() {
     let value = this.context;
     return (
-      <LinearGradient
-        colors={['#291048', '#1a0732', '#130727', '#110426']}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 1, y: 1 }}>
-        <View cls="fullView">
-          <ImageBackground cls="fullView pa3" source={Images.bg3}>
-            <View cls="flx-i pt4">
-              <LibraryTopBar />
-            </View>
-          </ImageBackground>
-        </View>
-      </LinearGradient>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <LinearGradient
+          colors={['#291048', '#1a0732', '#130727', '#110426']}
+          start={{ x: 1, y: 0 }}
+          end={{ x: 1, y: 1 }}>
+          <View cls="fullView">
+            <ImageBackground cls="fullView pa3" source={Images.bg3}>
+              <View cls="flx-i pt4">
+                <LibraryTopBar />
+              </View>
+            </ImageBackground>
+          </View>
+        </LinearGradient>
+      </TouchableWithoutFeedback>
     );
   }
 }

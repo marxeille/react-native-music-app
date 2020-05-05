@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   ImageBackground,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { wrap } from '../../themes';
@@ -98,203 +100,213 @@ export default class SignUpComponent extends Component {
   render() {
     const { pass, email, rePass, sex } = this.state;
     return (
-      <LinearGradient
-        colors={['#291048', '#1a0732', '#130727', '#110426']}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 1, y: 1 }}>
-        <KeyboardAvoidingView behavior="padding">
-          <View cls="fullView">
-            <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
-              <View cls={`asfs pa3 ${isSmallDevice() ? 'pt3' : 'pt4'} pb0`}>
-                <TouchableOpacity onPress={pop}>
-                  <Image
-                    cls={`${
-                      isSmallDevice()
-                        ? 'widthFn-10 heightFn-18'
-                        : 'widthFn-14 heightFn-24'
-                    }`}
-                    style={styles.iconBack}
-                    source={Images.ic_back_white}
-                  />
-                </TouchableOpacity>
-              </View>
-              {/* <View cls="pa4 pb3">
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <LinearGradient
+          colors={['#291048', '#1a0732', '#130727', '#110426']}
+          start={{ x: 1, y: 0 }}
+          end={{ x: 1, y: 1 }}>
+          <KeyboardAvoidingView behavior="padding">
+            <View cls="fullView">
+              <ImageBackground cls="fullView aic jcc" source={Images.bg4}>
+                <View cls={`asfs pa3 ${isSmallDevice() ? 'pt3' : 'pt4'} pb0`}>
+                  <TouchableOpacity onPress={pop}>
+                    <Image
+                      cls={`${
+                        isSmallDevice()
+                          ? 'widthFn-10 heightFn-18'
+                          : 'widthFn-14 heightFn-24'
+                      }`}
+                      style={styles.iconBack}
+                      source={Images.ic_back_white}
+                    />
+                  </TouchableOpacity>
+                </View>
+                {/* <View cls="pa4 pb3">
                 <Image style={styles.icon} source={Images.logo_signin} />
               </View> */}
-              <View
-                cls={`fullWidth ${
-                  isSmallDevice() ? 'pl3 pr3 pt4 mt3' : 'pa4 pb4 mt4'
-                }`}>
-                <Image
-                  cls={`fullWidth asc aic ${
-                    isSmallDevice() ? 'heightFn-60' : 'heightFn-100'
-                  }`}
-                  source={Images.wave}
-                />
-                <View cls="aic asc" style={{ position: 'absolute' }}>
+                <View
+                  cls={`fullWidth ${
+                    isSmallDevice() ? 'pl3 pr3 pt4 mt3' : 'pa4 pb4 mt4'
+                  }`}>
                   <Image
-                    style={styles.icon}
-                    resizeMode={'contain'}
-                    source={Images.new_logo}
+                    cls={`fullWidth asc aic ${
+                      isSmallDevice() ? 'heightFn-60' : 'heightFn-100'
+                    }`}
+                    source={Images.wave}
                   />
-                </View>
-              </View>
-              {/* Text Input group */}
-              <View cls="fullWidth pa3 pb3 pt4">
-                <LinearGradient
-                  colors={['#4E357A', '#9069A0', '#D39DC5']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  cls={`${isSmallDevice() ? 'mb2 mt2' : 'mb4'}`}
-                  style={{
-                    borderRadius: 10,
-                    height: isSmallDevice() ? 52 : 57,
-                    padding: 1,
-                  }}>
-                  <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
-                    <TextInput
-                      secureTextEntry={false}
-                      placeholderTextColor="#fff"
-                      placeholder={'Email'}
-                      cls={`${isSmallDevice() ? 'f10' : ''}`}
-                      style={[styles.inputText]}
-                      value={email}
-                      onChange={event => this.onChangeText(event, 'email')}
-                      autoCorrect={false}
-                    />
+                  <View cls="aic asc" style={{ position: 'absolute' }}>
                     <Image
-                      cls="widthFn-25 heightFn-25"
-                      source={Images.ic_pass}
+                      style={styles.icon}
+                      resizeMode={'contain'}
+                      source={Images.new_logo}
                     />
                   </View>
-                </LinearGradient>
-                <LinearGradient
-                  colors={['#4E357A', '#9069A0', '#D39DC5']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  cls={`${isSmallDevice() ? 'mb2 mt2' : 'mb4'}`}
-                  style={{
-                    borderRadius: 10,
-                    height: isSmallDevice() ? 52 : 57,
-                    padding: 1,
-                  }}>
-                  <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
-                    <TextInput
-                      secureTextEntry={true}
-                      placeholderTextColor="#fff"
-                      placeholder={'Mật khẩu'}
-                      cls={`${isSmallDevice() ? 'f10' : ''}`}
-                      style={[styles.inputText]}
-                      value={pass}
-                      onChange={event => this.onChangeText(event, 'pass')}
-                      autoCorrect={false}
-                    />
-                    <Image cls="widthFn-25 heightFn-25" source={Images.pass} />
-                  </View>
-                </LinearGradient>
-                <LinearGradient
-                  colors={['#4E357A', '#9069A0', '#D39DC5']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  cls={`${isSmallDevice() ? 'mt2' : ''}`}
-                  style={{
-                    borderRadius: 10,
-                    height: isSmallDevice() ? 52 : 57,
-                    padding: 1,
-                  }}>
-                  <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
-                    <TextInput
-                      secureTextEntry={true}
-                      placeholderTextColor="#fff"
-                      placeholder={'Nhập lại mật khẩu'}
-                      cls={`${isSmallDevice() ? 'f10' : ''}`}
-                      style={[styles.inputText]}
-                      value={rePass}
-                      onChange={event => this.onChangeText(event, 'rePass')}
-                      autoCorrect={false}
-                    />
-                    <Image cls="widthFn-25 heightFn-25" source={Images.pass} />
-                  </View>
-                </LinearGradient>
-              </View>
+                </View>
+                {/* Text Input group */}
+                <View cls="fullWidth pa3 pb3 pt4">
+                  <LinearGradient
+                    colors={['#4E357A', '#9069A0', '#D39DC5']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    cls={`${isSmallDevice() ? 'mb2 mt2' : 'mb4'}`}
+                    style={{
+                      borderRadius: 10,
+                      height: isSmallDevice() ? 52 : 57,
+                      padding: 1,
+                    }}>
+                    <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
+                      <TextInput
+                        secureTextEntry={false}
+                        placeholderTextColor="#fff"
+                        placeholder={'Email'}
+                        cls={`${isSmallDevice() ? 'f10' : ''}`}
+                        style={[styles.inputText]}
+                        value={email}
+                        onChange={event => this.onChangeText(event, 'email')}
+                        autoCorrect={false}
+                      />
+                      <Image
+                        cls="widthFn-25 heightFn-25"
+                        source={Images.ic_pass}
+                      />
+                    </View>
+                  </LinearGradient>
+                  <LinearGradient
+                    colors={['#4E357A', '#9069A0', '#D39DC5']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    cls={`${isSmallDevice() ? 'mb2 mt2' : 'mb4'}`}
+                    style={{
+                      borderRadius: 10,
+                      height: isSmallDevice() ? 52 : 57,
+                      padding: 1,
+                    }}>
+                    <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
+                      <TextInput
+                        secureTextEntry={true}
+                        placeholderTextColor="#fff"
+                        placeholder={'Mật khẩu'}
+                        cls={`${isSmallDevice() ? 'f10' : ''}`}
+                        style={[styles.inputText]}
+                        value={pass}
+                        onChange={event => this.onChangeText(event, 'pass')}
+                        autoCorrect={false}
+                      />
+                      <Image
+                        cls="widthFn-25 heightFn-25"
+                        source={Images.pass}
+                      />
+                    </View>
+                  </LinearGradient>
+                  <LinearGradient
+                    colors={['#4E357A', '#9069A0', '#D39DC5']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    cls={`${isSmallDevice() ? 'mt2' : ''}`}
+                    style={{
+                      borderRadius: 10,
+                      height: isSmallDevice() ? 52 : 57,
+                      padding: 1,
+                    }}>
+                    <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
+                      <TextInput
+                        secureTextEntry={true}
+                        placeholderTextColor="#fff"
+                        placeholder={'Nhập lại mật khẩu'}
+                        cls={`${isSmallDevice() ? 'f10' : ''}`}
+                        style={[styles.inputText]}
+                        value={rePass}
+                        onChange={event => this.onChangeText(event, 'rePass')}
+                        autoCorrect={false}
+                      />
+                      <Image
+                        cls="widthFn-25 heightFn-25"
+                        source={Images.pass}
+                      />
+                    </View>
+                  </LinearGradient>
+                </View>
 
-              {/* <View cls="flx-row aic jcsb pb3 pa4 pt2">
+                {/* <View cls="flx-row aic jcsb pb3 pa4 pt2">
                 <Text cls="primaryPurple lightFont f8">Chọn giới tính</Text>
                 {this.sex.map(s => this.renderCheckbox(s))}
               </View> */}
 
-              {/* Button Group */}
-              <View
-                cls={`${
-                  isSmallDevice()
-                    ? 'fullWidth pa3 pt3 pb0 aic'
-                    : 'fullWidth pa3 pt0 pb0 aic'
-                }`}>
-                <TouchableOpacity onPress={this.handleSignUp}>
-                  <LinearGradient
-                    cls={`ba br5 b--#321A54 ${
-                      isSmallDevice()
-                        ? 'widthFn-160 heightFn-40'
-                        : 'widthFn-220 heightFn-50'
-                    } aic jcc`}
-                    colors={['#4A3278', '#8B659D', '#DDA5CB']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}>
-                    <Text
-                      cls={`white ${isSmallDevice() ? 'f8' : 'f6'} avertaFont`}>
-                      Đăng Ký
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </View>
-
-              <View cls="fullWidth flx-row mt3">
-                <Image
-                  cls="aic asc"
-                  source={Images.sNg}
-                  style={{
-                    width: Dimensions.get('window').width / 2 - 25,
-                    height: 10,
-                  }}
-                />
-                <Text
-                  cls={`${isSmallDevice() ? 'f10' : 'f8'} asc aic ml2 mr2`}
-                  style={{ color: '#9166cc', fontFamily: 'lato-regular' }}>
-                  hoặc
-                </Text>
-                <Image
-                  cls="aic asc"
-                  source={Images.sNg}
-                  style={{
-                    width: Dimensions.get('window').width / 2,
-                    height: 10,
-                  }}
-                />
-              </View>
-
-              <View cls="fullWidth pa3 pt0 mt1 aic">
-                <View cls="pt3">
-                  <TouchableOpacity onPress={this.handleLoginWithFacebook}>
-                    <View
-                      cls={`ba b--#321A54 bg-#323277 br5 ${
+                {/* Button Group */}
+                <View
+                  cls={`${
+                    isSmallDevice()
+                      ? 'fullWidth pa3 pt3 pb0 aic'
+                      : 'fullWidth pa3 pt0 pb0 aic'
+                  }`}>
+                  <TouchableOpacity onPress={this.handleSignUp}>
+                    <LinearGradient
+                      cls={`ba br5 b--#321A54 ${
                         isSmallDevice()
                           ? 'widthFn-160 heightFn-40'
                           : 'widthFn-220 heightFn-50'
-                      } aic jcc`}>
+                      } aic jcc`}
+                      colors={['#4A3278', '#8B659D', '#DDA5CB']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}>
                       <Text
-                        cls={`${
+                        cls={`white ${
                           isSmallDevice() ? 'f8' : 'f6'
-                        } white avertaFont`}>
-                        Facebook
+                        } avertaFont`}>
+                        Đăng Ký
                       </Text>
-                    </View>
+                    </LinearGradient>
                   </TouchableOpacity>
                 </View>
-              </View>
-            </ImageBackground>
-          </View>
-        </KeyboardAvoidingView>
-      </LinearGradient>
+
+                <View cls="fullWidth flx-row mt3">
+                  <Image
+                    cls="aic asc"
+                    source={Images.sNg}
+                    style={{
+                      width: Dimensions.get('window').width / 2 - 25,
+                      height: 10,
+                    }}
+                  />
+                  <Text
+                    cls={`${isSmallDevice() ? 'f10' : 'f8'} asc aic ml2 mr2`}
+                    style={{ color: '#9166cc', fontFamily: 'lato-regular' }}>
+                    hoặc
+                  </Text>
+                  <Image
+                    cls="aic asc"
+                    source={Images.sNg}
+                    style={{
+                      width: Dimensions.get('window').width / 2,
+                      height: 10,
+                    }}
+                  />
+                </View>
+
+                <View cls="fullWidth pa3 pt0 mt1 aic">
+                  <View cls="pt3">
+                    <TouchableOpacity onPress={this.handleLoginWithFacebook}>
+                      <View
+                        cls={`ba b--#321A54 bg-#323277 br5 ${
+                          isSmallDevice()
+                            ? 'widthFn-160 heightFn-40'
+                            : 'widthFn-220 heightFn-50'
+                        } aic jcc`}>
+                        <Text
+                          cls={`${
+                            isSmallDevice() ? 'f8' : 'f6'
+                          } white avertaFont`}>
+                          Facebook
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </ImageBackground>
+            </View>
+          </KeyboardAvoidingView>
+        </LinearGradient>
+      </TouchableWithoutFeedback>
     );
   }
 }

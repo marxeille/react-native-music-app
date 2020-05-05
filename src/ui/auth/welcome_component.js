@@ -8,7 +8,7 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
 } from 'react-native';
-import { isSmallDevice } from '../../utils';
+import { isSmallDevice, isMeidumDevice } from '../../utils';
 import LinearGradient from 'react-native-linear-gradient';
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
@@ -59,7 +59,11 @@ export default class WelcomeComponent extends Component {
               <View cls="fullWidth">
                 <View
                   cls={`fullWidth ${
-                    isSmallDevice() ? 'pb0' : 'pa5 pb4'
+                    isSmallDevice()
+                      ? 'pb0'
+                      : isMeidumDevice()
+                      ? 'pa5 pb4'
+                      : 'pa5 pb0'
                   } pt0 aic`}>
                   <View cls={`${isSmallDevice() ? 'widthFn-160 pb3' : 'pa1'}`}>
                     <Text

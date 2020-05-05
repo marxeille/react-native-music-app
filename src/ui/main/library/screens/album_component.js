@@ -33,6 +33,7 @@ export default class AlbumComponent extends Component {
         </View>
         <View cls="pt3" style={{ marginBottom: 95 }}>
           <FlatList
+            keyboardDismissMode="on-drag"
             data={albums}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderPlaylist}
