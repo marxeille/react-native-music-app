@@ -22,6 +22,7 @@ import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
 import { indexOf } from 'lodash';
 import { navigate } from '../../../navigation/navigation_service';
 import ArtistTabView from './components/artist_tabview';
+import MenuConcept from '../../components/playlist_menu_concept';
 
 @observer
 @wrap
@@ -30,6 +31,7 @@ export default class ArtistDetail extends Component {
     super(props);
     this.viewModel = ArtistModel.create({ state: 'loading' });
     this.modalSong = React.createRef();
+    this.modalMenu = React.createRef();
 
     this.state = {
       ids: [],
@@ -93,6 +95,18 @@ export default class ArtistDetail extends Component {
   _hideModal = () => {
     if (this.modalSong && this.modalSong.current) {
       this.modalSong.current._hideModal();
+    }
+  };
+
+  _showModalMenu = () => {
+    if (this.modalMenu && this.modalMenu.current) {
+      this.modalMenu.current._showModal();
+    }
+  };
+
+  _hideModalMenu = () => {
+    if (this.modalMenu && this.modalMenu.current) {
+      this.modalMenu.current._hideModal();
     }
   };
 
@@ -196,7 +210,7 @@ export default class ArtistDetail extends Component {
                   source={Images.ic_back_white}
                 />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this._showModalMenu}>
                 <Image source={Images.ic_menu_white} />
               </TouchableOpacity>
             </View>
@@ -252,7 +266,7 @@ export default class ArtistDetail extends Component {
         cls="aic"
         resizeMode="contain"
         source={Images.pl_wave}>
-        <View style={{ position: 'absolute', top: -120 }}></View>
+        <View style={{ position: 'absolute', top: -120 }} />
       </ImageBackground>
     );
   });
@@ -331,6 +345,50 @@ export default class ArtistDetail extends Component {
   });
 
   render() {
+    const { artist } = this.state;
+    const settingItems = [
+      {
+        title: 'Tải xuống',
+        action: () => {},
+        hidden: false,
+        icon: Images.ic_download_white,
+        imgStyle: 'widthFn-20 heightFn-24',
+      },
+      {
+        title: 'Thêm vào playlist',
+        action: () => {
+          this.setState({ showMenuAddToPlaylist: true });
+        },
+        hidden: false,
+        icon: Images.ic_add_pl,
+        imgStyle: 'widthFn-20 heightFn-24',
+      },
+      {
+        title: 'Thêm vào danh sách chờ',
+        action: () => {
+          this.addToQueue(songs);
+        },
+        hidden: false,
+        icon: Images.ic_add_queue,
+        imgStyle: 'widthFn-20 heightFn-20',
+      },
+      {
+        title: 'Chia sẻ',
+        action: () => {
+          this.setState({ showShareModal: true });
+        },
+        hidden: false,
+        icon: Images.ic_share_white,
+        imgStyle: 'widthFn-20 heightFn-24',
+      },
+      {
+        title: 'Xem nghệ sĩ',
+        action: () => {},
+        hidden: false,
+        icon: Images.ic_person,
+        imgStyle: 'widthFn-20 heightFn-24',
+      },
+    ];
     return (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}
@@ -345,6 +403,19 @@ export default class ArtistDetail extends Component {
               renderItem={this._renderItem}
               keyExtractor={(item, index) => index.toString()}
             />
+            <BottomModal
+              headerNone
+              justifyCenterModal
+              // forceInsetBottom="never"
+              containerCls=""
+              customGradient={['#000', '#1a0632', '#000', '#13151A']}
+              ref={this.modalMenu}>
+              <MenuConcept
+                item={artist}
+                settingItems={settingItems}
+                showMenuEdit={false}
+              />
+            </BottomModal>
             <BottomModal ref={this.modalSong} headerNone>
               <SongMenu
                 song={this.viewModel?.selectedSong}
