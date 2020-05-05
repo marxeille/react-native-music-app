@@ -6,6 +6,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
+  LayoutAnimation,
 } from 'react-native';
 import { wrap } from '../../../themes';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -15,19 +16,55 @@ import { rootStore } from '../../../data/context/root_context';
 import { observer } from 'mobx-react';
 import Images from '../../../assets/icons/icons';
 import LinearGradient from 'react-native-linear-gradient';
+import { getStatusBarHeight } from '../../../utils';
 
 @observer
 @wrap
 export default class HomeComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isActionButtonVisible: true,
+    };
   }
 
   async componentDidMount() {
     rootStore.homeStore.fetchData();
     rootStore.userStore.fetchUserData();
   }
+
+  _listViewOffset = 0;
+
+  _onScroll = event => {
+    // Simple fade-in / fade-out animation
+    const CustomLayoutLinear = {
+      duration: 300,
+      create: {
+        type: LayoutAnimation.Types.linear,
+        property: LayoutAnimation.Properties.opacity,
+      },
+      update: {
+        type: LayoutAnimation.Types.linear,
+        property: LayoutAnimation.Properties.opacity,
+      },
+      delete: {
+        type: LayoutAnimation.Types.linear,
+        property: LayoutAnimation.Properties.opacity,
+      },
+    };
+    // Check if the user is scrolling up or down by confronting the new scroll position with your own one
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    const direction =
+      currentOffset > 0 && currentOffset > this._listViewOffset ? 'down' : 'up';
+    // If the user is scrolling down (and the action-button is still visible) hide it
+    const isActionButtonVisible = direction === 'up';
+    if (isActionButtonVisible !== this.state.isActionButtonVisible) {
+      LayoutAnimation.configureNext(CustomLayoutLinear);
+      this.setState({ isActionButtonVisible });
+    }
+    // Update your scroll position
+    this._listViewOffset = currentOffset;
+  };
 
   render() {
     return rootStore.homeStore.state === 'loading' ? (
@@ -48,30 +85,37 @@ export default class HomeComponent extends Component {
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
           <ImageBackground cls="fullView" source={Images.bg3}>
-            <TouchableOpacity cls="pt4 pb2" onPress={() => navigate('setting')}>
-              <View cls="pa3 pb1 flx-row-reverse aic">
-                <LinearGradient
-                  colors={['#4E357A', '#9069A0', '#D39DC5']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={{ padding: 1 }}
-                  cls="flx-row-reverse aic br5">
-                  <View cls="flx-row-reverse aic pl2 pr2 pt1 pb1 br5 bg-#2C184A">
-                    <Image
-                      cls="widthFn-24 heightFn-24"
-                      source={Images.ic_setting}
-                    />
-                    <Text
-                      cls="f8 mr1"
-                      style={{ color: '#fff', fontFamily: 'lato-heavy' }}>
-                      {rootStore.userStore?.name}
-                    </Text>
-                  </View>
-                </LinearGradient>
-              </View>
-            </TouchableOpacity>
+            {this.state.isActionButtonVisible ? (
+              <TouchableOpacity
+                cls="pt4 pb2"
+                onPress={() => navigate('setting')}>
+                <View cls="pa3 pb1 flx-row-reverse aic">
+                  <LinearGradient
+                    colors={['#4E357A', '#9069A0', '#D39DC5']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={{ padding: 1 }}
+                    cls="flx-row-reverse aic br5">
+                    <View cls="flx-row-reverse aic pl2 pr2 pt1 pb1 br5 bg-#2C184A">
+                      <Image
+                        cls="widthFn-24 heightFn-24"
+                        source={Images.ic_setting}
+                      />
+                      <Text
+                        cls="f8 mr1"
+                        style={{ color: '#fff', fontFamily: 'lato-heavy' }}>
+                        {rootStore.userStore?.name}
+                      </Text>
+                    </View>
+                  </LinearGradient>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <View style={{ height: getStatusBarHeight() }} />
+            )}
             <ScrollView
               style={{ width: '100%' }}
+              onScroll={this._onScroll}
               showsVerticalScrollIndicator={false}>
               <HomeListComponent
                 cate="1"
