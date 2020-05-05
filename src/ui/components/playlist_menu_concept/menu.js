@@ -7,6 +7,8 @@ import {
   FlatList,
   ImageBackground,
   TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
@@ -48,92 +50,101 @@ const PlaylistMenuConcept = observer(
         return <ListItem item={item.item} />;
       });
       return (
-        <View cls="jcc pb3">
-          <View cls="pt5 pl5 flx-row aic">
-            <Image
-              cls="squareFn-180 asc"
-              source={
-                !isTextEmpty(item.getThumb()) && item.getThumb() != undefined
-                  ? { uri: item.getThumb() }
-                  : Images.bAAlbum
-              }
-            />
-            <ImageBackground
-              cls="widthFn-185 heightFn-185 aic jcc"
-              style={{
-                zIndex: -1,
-                position: 'absolute',
-                right: 40,
-                bottom: -5,
-              }}
-              source={Images.e_cover}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View cls="jcc pb3">
+            <View cls="pt5 pl5 flx-row aic">
               <Image
-                cls="circleFn-90 asc"
+                cls="squareFn-180 asc"
                 source={
                   !isTextEmpty(item.getThumb()) && item.getThumb() != undefined
                     ? { uri: item.getThumb() }
                     : Images.bAAlbum
                 }
               />
-            </ImageBackground>
-          </View>
-          <View cls="aic jcc pt3 pb3">
-            {editTitle ? (
-              <View cls="fullWidth pl3 pr3 mb3 mt3">
-                <View
-                  cls="jcc ba br2 pa2 bg-#2C184A"
-                  style={{ borderColor: '#9166cc' }}>
-                  <View cls="aic jcc">
-                    <TextInput
-                      autoFocus={true}
-                      selectTextOnFocus
-                      onChangeText={value => textTitleChange(value)}
-                      cls={`${isSmallDevice() ? 'f6' : 'f4'} avertaFont white`}
-                      defaultValue={title}
-                    />
-                  </View>
-
-                  <View cls="absolute asfe pr2">
-                    <TouchableOpacity
-                      onPress={() => {
-                        showEditTitle(false);
-                        changeTitle(
-                          newTitleChange != undefined || newTitleChange != ''
-                            ? newTitleChange
-                            : title,
-                        );
-                      }}>
-                      <Image
+              <ImageBackground
+                cls="widthFn-185 heightFn-185 aic jcc"
+                style={{
+                  zIndex: -1,
+                  position: 'absolute',
+                  right: 40,
+                  bottom: -5,
+                }}
+                source={Images.e_cover}>
+                <Image
+                  cls="circleFn-90 asc"
+                  source={
+                    !isTextEmpty(item.getThumb()) &&
+                    item.getThumb() != undefined
+                      ? { uri: item.getThumb() }
+                      : Images.bAAlbum
+                  }
+                />
+              </ImageBackground>
+            </View>
+            <View cls="aic jcc pt3 pb3">
+              {editTitle ? (
+                <View cls="fullWidth pl3 pr3 mb3 mt3">
+                  <View
+                    cls="jcc ba br2 pa2 bg-#2C184A"
+                    style={{ borderColor: '#9166cc' }}>
+                    <View cls="aic jcc">
+                      <TextInput
+                        autoFocus={true}
+                        selectTextOnFocus
+                        onChangeText={value => textTitleChange(value)}
                         cls={`${
-                          isSmallDevice()
-                            ? 'widthFn-20 heightFn-20'
-                            : 'widthFn-30 heightFn-30'
-                        }`}
-                        source={Images.ic_checked_song}
+                          isSmallDevice() ? 'f6' : 'f4'
+                        } avertaFont white`}
+                        defaultValue={title}
                       />
-                    </TouchableOpacity>
+                    </View>
+
+                    <View cls="absolute asfe pr2">
+                      <TouchableOpacity
+                        onPress={() => {
+                          showEditTitle(false);
+                          changeTitle(
+                            newTitleChange != undefined &&
+                              !isTextEmpty(newTitleChange)
+                              ? newTitleChange
+                              : title,
+                          );
+                          console.log(
+                            'Title:' + title + ', New:' + newTitleChange,
+                          );
+                        }}>
+                        <Image
+                          cls={`${
+                            isSmallDevice()
+                              ? 'widthFn-20 heightFn-20'
+                              : 'widthFn-30 heightFn-30'
+                          }`}
+                          source={Images.ic_checked_song}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
-              </View>
-            ) : (
-              <Text cls="avertaFont white f4">
-                {item.getType() == 'artist' ? item.getName() : title}
+              ) : (
+                <Text cls="avertaFont white f4">
+                  {item.getType() == 'artist' ? item.getName() : title}
+                </Text>
+              )}
+              <Text cls="lightFont primaryPurple pt1 f8">
+                {item.getType() == 'artist'
+                  ? item.getSubTitle()
+                  : item.subTitle()}
               </Text>
-            )}
-            <Text cls="lightFont primaryPurple pt1 f8">
-              {item.getType() == 'artist'
-                ? item.getSubTitle()
-                : item.subTitle()}
-            </Text>
-            <View cls={`fullWidth ${isSmallDevice() ? 'heightFn-250' : ''}`}>
-              <FlatList
-                data={settingItems}
-                renderItem={renderItem}
-                keyExtractor={(item, index) => index.toString()}
-              />
+              <View cls={`fullWidth ${isSmallDevice() ? 'heightFn-250' : ''}`}>
+                <FlatList
+                  data={settingItems}
+                  renderItem={renderItem}
+                  keyExtractor={(item, index) => index.toString()}
+                />
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       );
     },
   ),

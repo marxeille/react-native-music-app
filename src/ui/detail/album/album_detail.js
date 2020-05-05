@@ -166,7 +166,10 @@ export default class AlbumDetail extends Component {
 
   changeTitle = newTitle => {
     let { item } = this.props.route?.params;
-    console.log('A:' + newTitle);
+    if (newTitle == this.state.name) {
+      Toast.showWithGravity('Sửa thành công', Toast.LONG, Toast.BOTTOM);
+      return;
+    }
     this.setState({ name: newTitle });
     const newName = {
       ...item,
