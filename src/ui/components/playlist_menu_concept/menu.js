@@ -53,7 +53,7 @@ const PlaylistMenuConcept = observer(
             <Image
               cls="squareFn-180 asc"
               source={
-                !isTextEmpty(item.getThumb())
+                !isTextEmpty(item.getThumb()) && item.getThumb() != undefined
                   ? { uri: item.getThumb() }
                   : Images.bAAlbum
               }
@@ -70,7 +70,7 @@ const PlaylistMenuConcept = observer(
               <Image
                 cls="circleFn-90 asc"
                 source={
-                  !isTextEmpty(item.getThumb())
+                  !isTextEmpty(item.getThumb()) && item.getThumb() != undefined
                     ? { uri: item.getThumb() }
                     : Images.bAAlbum
                 }
@@ -116,9 +116,15 @@ const PlaylistMenuConcept = observer(
                 </View>
               </View>
             ) : (
-              <Text cls="avertaFont white f4">{title}</Text>
+              <Text cls="avertaFont white f4">
+                {item.getType() == 'artist' ? item.getName() : title}
+              </Text>
             )}
-            <Text cls="lightFont primaryPurple pt1 f8">{item.subTitle()}</Text>
+            <Text cls="lightFont primaryPurple pt1 f8">
+              {item.getType() == 'artist'
+                ? item.getSubTitle()
+                : item.subTitle()}
+            </Text>
             <View cls={`fullWidth ${isSmallDevice() ? 'heightFn-250' : ''}`}>
               <FlatList
                 data={settingItems}
