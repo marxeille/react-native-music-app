@@ -20,7 +20,7 @@ import SongMenu from '../../player/components/song_menu';
 import BottomModal from '../../components/modal/BottomModal';
 import { AlbumModel } from './model/AlbumModel';
 import { likeHelper, unlikeHelper } from '../../../data/datasource/api_helper';
-import { indexOf, orderBy, findIndex, isEmpty } from 'lodash';
+import { indexOf, orderBy, findIndex, isEmpty, uniq } from 'lodash';
 import Loading from '../../components/loading';
 import { navigate } from '../../../navigation/navigation_service';
 import MenuConcept from '../../components/playlist_menu_concept';
@@ -31,7 +31,7 @@ import Toast from 'react-native-simple-toast';
 import AlbumListItem from './components/list_item';
 import AddPlayListModal from '../../player/components/add_playlist_modal';
 import ShareModal from '../../components/share';
-import { uploadImage, BASE_URL } from '../../../data/datasource/api_config';
+import { uploadImage } from '../../../data/datasource/api_config';
 import { BASE_API_URL } from '../../../constant/constant';
 
 @observer
@@ -484,18 +484,16 @@ export default class AlbumDetail extends Component {
     if (item.id == 0) {
       ids = [...rootStore?.likedTracks];
     }
-    console.log('ids', ids);
 
     const songs = [];
 
-    ids.map(id => {
+    uniq(ids).map(id => {
       [...this.viewModel.songs.values()].map(song => {
         if (Number(song.id) == id) {
           songs.push(song);
         }
       });
     });
-    console.log('songs', songs);
 
     const hasSong = songs.length > 0;
 
@@ -672,6 +670,7 @@ export default class AlbumDetail extends Component {
               ref={this.modalAddSong}>
               <AddSongPlaylist
                 isFavorite={item.id == 0}
+                parentModel={this.viewModel}
                 toggleAddSong={this._hideModalAddSong}
                 handleRightAction={this.editPlaylist}
               />

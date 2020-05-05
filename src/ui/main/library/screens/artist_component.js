@@ -123,7 +123,8 @@ export default class ArtistComponent extends Component {
               data={sortedArtists}
               keyExtractor={(item, index) => index.toString()}
               renderItem={this.renderItem}
-              numColumns={3}
+              showsVerticalScrollIndicator={false}
+              numColumns={4}
               horizontal={false}
             />
           </View>
