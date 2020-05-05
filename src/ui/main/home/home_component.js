@@ -24,7 +24,7 @@ export default class HomeComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isActionButtonVisible: true,
+      isActionSettingVisible: true,
     };
   }
 
@@ -57,10 +57,10 @@ export default class HomeComponent extends Component {
     const direction =
       currentOffset > 0 && currentOffset > this._listViewOffset ? 'down' : 'up';
     // If the user is scrolling down (and the action-button is still visible) hide it
-    const isActionButtonVisible = direction === 'up';
-    if (isActionButtonVisible !== this.state.isActionButtonVisible) {
+    const isActionSettingVisible = direction === 'up';
+    if (isActionSettingVisible !== this.state.isActionSettingVisible) {
       LayoutAnimation.configureNext(CustomLayoutLinear);
-      this.setState({ isActionButtonVisible });
+      this.setState({ isActionSettingVisible });
     }
     // Update your scroll position
     this._listViewOffset = currentOffset;
@@ -85,7 +85,7 @@ export default class HomeComponent extends Component {
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
           <ImageBackground cls="fullView" source={Images.bg3}>
-            {this.state.isActionButtonVisible ? (
+            {this.state.isActionSettingVisible ? (
               <TouchableOpacity
                 cls="pt4 pb2"
                 onPress={() => navigate('setting')}>

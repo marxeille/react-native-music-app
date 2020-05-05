@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Keyboard } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Keyboard,
+  LayoutAnimation,
+} from 'react-native';
 import { wrap } from '../../../../themes';
 import SearchComponent from '../components/search_component';
 import ArtistItem from '../components/artist_item_component';
@@ -32,7 +39,43 @@ export default class ArtistComponent extends Component {
         { name: 'Y6' },
       ],
     };
+    this.state = {
+      isActionSettingVisible: true,
+    };
   }
+
+  _listViewOffset = 0;
+
+  _onScroll = event => {
+    // Simple fade-in / fade-out animation
+    const CustomLayoutLinear = {
+      duration: 300,
+      create: {
+        type: LayoutAnimation.Types.linear,
+        property: LayoutAnimation.Properties.opacity,
+      },
+      update: {
+        type: LayoutAnimation.Types.linear,
+        property: LayoutAnimation.Properties.opacity,
+      },
+      delete: {
+        type: LayoutAnimation.Types.linear,
+        property: LayoutAnimation.Properties.opacity,
+      },
+    };
+    // Check if the user is scrolling up or down by confronting the new scroll position with your own one
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    const direction =
+      currentOffset > 0 && currentOffset > this._listViewOffset ? 'down' : 'up';
+    // If the user is scrolling down (and the action-button is still visible) hide it
+    const isActionSettingVisible = direction === 'up';
+    if (isActionSettingVisible !== this.state.isActionSettingVisible) {
+      LayoutAnimation.configureNext(CustomLayoutLinear);
+      this.setState({ isActionSettingVisible });
+    }
+    // Update your scroll position
+    this._listViewOffset = currentOffset;
+  };
 
   renderItem = ({ item }) => {
     return (
@@ -94,11 +137,13 @@ export default class ArtistComponent extends Component {
 
         <View cls="pt3" style={{ marginBottom: 95 }}>
           <View cls="fullHeight">
-            <View cls="ba br4 jcc asfe pa2 mb2 b--#4B3277">
-              <TouchableOpacity>
-                <Text cls="white fw6">Chỉ hiện DJ</Text>
-              </TouchableOpacity>
-            </View>
+            {this.state.isActionSettingVisible ? (
+              <View cls="ba br4 jcc asfe pa2 mb2 b--#4B3277">
+                <TouchableOpacity>
+                  <Text cls="white fw6">Chỉ hiện DJ</Text>
+                </TouchableOpacity>
+              </View>
+            ) : null}
 
             {/* <AlphabetSectionList
               data={sortedArtists}
@@ -114,6 +159,7 @@ export default class ArtistComponent extends Component {
             /> */}
 
             <FlatList
+              onScroll={this._onScroll}
               keyboardDismissMode="on-drag"
               data={sortedArtists}
               keyExtractor={(item, index) => index.toString()}
