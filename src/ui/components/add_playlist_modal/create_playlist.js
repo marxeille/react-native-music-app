@@ -14,7 +14,12 @@ import {
 import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
-import { D_WIDTH, isTextEmpty, subLongStr } from '../../../utils';
+import {
+  D_WIDTH,
+  isTextEmpty,
+  subLongStr,
+  isSmallDevice,
+} from '../../../utils';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-simple-toast';
@@ -57,7 +62,7 @@ const CreatePlaylistModal = observer(
 
     const renderPublicSection = wrap(() => {
       return (
-        <View cls="pa3 pb2 pt0">
+        <View cls={`${isSmallDevice() ? 'pl3 pr3' : 'pa3 pb2'} pt0`}>
           <View cls="flx-row jcsb aic">
             <Text cls="white lightFont">Công khai</Text>
             <Switch
@@ -172,7 +177,10 @@ const CreatePlaylistModal = observer(
                   onError={onError}
                   onlyPhoto>
                   <Image
-                    style={{ width: 101, height: 101 }}
+                    style={{
+                      width: isSmallDevice() ? 90 : 101,
+                      height: isSmallDevice() ? 90 : 101,
+                    }}
                     source={
                       !isTextEmpty(img)
                         ? { uri: `data:image/gif;base64,${img}` }
@@ -204,6 +212,7 @@ const CreatePlaylistModal = observer(
                   placeholder={'Viết mô tả'}
                   style={[styles.inputText]}
                   textAlignVertical={'top'}
+                  numberOfLines={5}
                   value={description}
                   onChangeText={txt => setPlDescription(txt)}
                   autoCorrect={false}
@@ -218,7 +227,7 @@ const CreatePlaylistModal = observer(
           <View>
             <Image
               resizeMode="contain"
-              style={{ height: 50, width: D_WIDTH }}
+              style={{ height: isSmallDevice() ? 30 : 50, width: D_WIDTH }}
               source={Images.pl_wave}
             />
           </View>
@@ -245,23 +254,31 @@ export default CreatePlaylistModal;
 const SearchItem = observer(
   wrap(props => (
     <View cls="jcsb flx-row aic pb2 pt2 pa3 fullWidth">
-      <View cls="flx-row">
-        <Image
-          cls="squareFn-50"
-          source={
-            props.item.getThumb() !== ''
-              ? { uri: props.item.getThumb() }
-              : Images.bAAlbum
-          }
-        />
-        <View cls="jcc pl3">
-          <Text cls="white fw7 f6 lightFont">
-            {subLongStr(props.item.getName(), 20)}
+      <Image
+        cls="squareFn-50"
+        source={
+          props.item.getThumb() !== ''
+            ? { uri: props.item.getThumb() }
+            : Images.bAAlbum
+        }
+      />
+      <View cls="flx-i flx-wrap">
+        <View cls="jcc pl3 pr3">
+          <Text
+            cls={`${isSmallDevice() ? 'f8' : 'f6'} white fw7 lightFont`}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {props.item.getName()}
           </Text>
-          <Text cls="primaryPurple lightFont">{props.item.getSubTitle()}</Text>
+          <Text
+            cls={`${isSmallDevice() ? 'f9' : ''} primaryPurple lightFont`}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {props.item.getSubTitle()}
+          </Text>
         </View>
       </View>
-      <View>
+      <View cls="flx-row">
         <TouchableOpacity onPress={() => props.removeSong(props.item)}>
           <Image source={Images.ic_del_song} />
         </TouchableOpacity>
@@ -275,7 +292,7 @@ const styles = StyleSheet.create({
     borderColor: '#100024',
     borderRadius: 7,
     flexDirection: 'row',
-    height: 55,
+    height: isSmallDevice() ? 40 : 55,
     alignItems: 'center',
     marginBottom: 5,
     width: '100%',
@@ -287,7 +304,7 @@ const styles = StyleSheet.create({
   },
 
   inputGroup2: {
-    height: 130,
+    height: isSmallDevice() ? 100 : 130,
     alignItems: 'flex-start',
   },
   inputText: {

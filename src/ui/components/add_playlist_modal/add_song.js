@@ -6,7 +6,7 @@ import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
 import SearchBar from '../../main/search/components/search_bar';
-import { subLongStr } from '../../../utils';
+import { subLongStr, isSmallDevice } from '../../../utils';
 import { rootStore } from '../../../data/context/root_context';
 import Loading from '../../components/loading';
 import { CreatePlaylistModel } from './model/view_model';
@@ -124,7 +124,7 @@ const AddSongPlaylist = observer(
     );
 
     return (
-      <View cls="pb8">
+      <View style={{ height: '100%' }}>
         {renderHeader()}
         <View cls="pa3 pb0 aic">
           <SearchBar
@@ -143,6 +143,7 @@ const AddSongPlaylist = observer(
                 ? [...rootStore?.homeStore?.popularSongs]
                 : [...viewModel.current.searchResult.values()]
             }
+            style={{ height: '100%' }}
             renderItem={renderItem}
             ListEmptyComponent={renderEmptyContainer}
             keyExtractor={(item, index) => index.toString()}
@@ -161,27 +162,33 @@ const SearchItem = observer(
       if (props) props.addSong(props.item);
     });
     return (
-      <View cls="jcsb flx-row aic pb2 pt2 pa3 fullWidth">
-        <View cls="flx-row">
-          <Image
-            cls="squareFn-50"
-            source={
-              props.item.getThumb() !== ''
-                ? { uri: props.item.getThumb() }
-                : Images.bAAlbum
-            }
-          />
+      <View cls="flx-row aic pb2 pt2 pa3 fullWidth">
+        <Image
+          cls="squareFn-50"
+          source={
+            props.item.getThumb() !== ''
+              ? { uri: props.item.getThumb() }
+              : Images.bAAlbum
+          }
+        />
 
-          <View cls="jcc pl3">
-            <Text cls="white fw7 f6 lightFont">
-              {subLongStr(props.item.getName(), 25)}
+        <View cls="flx-i flx-wrap">
+          <View cls="jcc pl3 pr3">
+            <Text
+              cls={`${isSmallDevice() ? 'f8' : 'f6'} white fw7 lightFont`}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {props.item.getName()}
             </Text>
-            <Text cls="primaryPurple lightFont">
+            <Text
+              cls={`${isSmallDevice() ? 'f9' : ''} primaryPurple lightFont`}
+              numberOfLines={1}
+              ellipsizeMode="tail">
               {props.item.getSubTitle()}
             </Text>
           </View>
         </View>
-        <View>
+        <View cls="flx-row">
           <TouchableOpacity onPress={() => toggleAddSong()}>
             {props.isFavorite ? (
               <Image
