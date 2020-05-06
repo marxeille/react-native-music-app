@@ -51,16 +51,21 @@ export default class HomeComponent extends Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
-          <ImageBackground cls="fullView" source={Images.bg3}>
+          <ImageBackground
+            cls="fullView"
+            style={{ zIndex: 1 }}
+            source={Images.bg3}>
             <Animated.View
               style={{
                 opacity: scrollY.interpolate({
                   inputRange: [0, 50],
                   outputRange: [1, 0],
                 }),
+                zIndex: 2,
               }}>
               <TouchableOpacity
                 cls="pt4 pb2 absolute asfe"
+                style={{ zIndex: 2 }}
                 onPress={() => navigate('setting')}>
                 <View cls="pa3 pb1 flx-row-reverse aic">
                   <LinearGradient
@@ -86,7 +91,7 @@ export default class HomeComponent extends Component {
             </Animated.View>
             <ScrollView
               cls="pt5 mt4"
-              style={{ width: '100%' }}
+              style={{ width: '100%', zIndex: 1 }}
               onScroll={Animated.event([
                 { nativeEvent: { contentOffset: { y: this.state.scrollY } } },
               ])}
