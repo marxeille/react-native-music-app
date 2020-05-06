@@ -65,24 +65,32 @@ const AlbumItem = observer(
       !like ? likeTrack() : unlikeTrack();
     });
     return (
-      <View cls="jcsb flx-row aic pr3" style={{ backgroundColor: '#321a54' }}>
-        <View cls="flx-row pa3 pb2 pt2">
-          <Image
-            cls="squareFn-50"
-            source={
-              !isTextEmpty(props.item.getThumb())
-                ? {
-                    uri: props.item.getThumb(),
-                  }
-                : Images.bAAlbum
-            }
-          />
+      <View
+        cls="flx-row aic pl3 pr3 pt2 pb2 br2"
+        style={{ backgroundColor: '#321a54' }}>
+        <Image
+          cls="squareFn-50"
+          source={
+            !isTextEmpty(props.item.getThumb())
+              ? {
+                  uri: props.item.getThumb(),
+                }
+              : Images.bAAlbum
+          }
+        />
 
-          <View cls="jcc pl3">
-            <Text cls="white fw7 f6 lightFont">
-              {subLongStr(props.item.getName(), 15)}
+        <View cls="flx-i flx-wrap pl3 pr3">
+          <View>
+            <Text
+              cls="white fw7 f6 lightFont"
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {props.item.getName()}
             </Text>
-            <Text cls="primaryPurple lightFont">
+            <Text
+              cls="primaryPurple lightFont"
+              numberOfLines={1}
+              ellipsizeMode="tail">
               {props.item.getSubTitle()}
             </Text>
           </View>
