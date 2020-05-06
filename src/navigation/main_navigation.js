@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, Dimensions } from 'react-native';
 // import {
 //   createBottomTabNavigator,
 //   BottomTabView,
@@ -94,6 +94,10 @@ export default function mainContainer() {
       screenOptions={{
         gestureEnabled: true,
         gestureDirection: 'vertical',
+        gestureResponseDistance: {
+          vertical: Dimensions.get('window').height,
+          horizontal: Dimensions.get('window').width,
+        },
         cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
       }}>
       <Stack.Screen name="bottomtab" component={getBottomTabNavigator} />
