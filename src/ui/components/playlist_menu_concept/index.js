@@ -7,6 +7,7 @@ const MenuConcept = ({
   item,
   title,
   songs,
+  likeCount,
   newTitleChange,
   textTitleChange,
   editTitle,
@@ -27,6 +28,7 @@ const MenuConcept = ({
       title={title}
       newTitleChange={newTitleChange}
       textTitleChange={textTitleChange}
+      likeCount={likeCount}
       editTitle={editTitle}
       setMenu={setMenu}
       settingItems={settingItems}

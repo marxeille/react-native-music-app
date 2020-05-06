@@ -320,9 +320,8 @@ export default class AlbumDetail extends Component {
       rootStore?.queueStore?.removeSongs([
         song ? song.id.toString() : randomId.toString(),
       ]);
-      this.setState({ playing: !this.state.playing });
-      if (!this.state.playing) {
-        if (randomId == rootStore?.playerStore?.currentSong?.id) {
+      if (!this.state.playing || song) {
+        if (randomId == Number(rootStore?.playerStore?.currentSong?.id)) {
           navigate('player');
         } else {
           navigate('player', { trackId: song ? song.id : randomId });
@@ -332,6 +331,9 @@ export default class AlbumDetail extends Component {
         rootStore.playlistSongStore?.setPlaylist({});
         rootStore.playerStore?.clearSong();
         rootStore.playerStore?.setState('pause');
+      }
+      if (!song) {
+        this.setState({ playing: !this.state.playing });
       }
     }
   };
@@ -659,6 +661,9 @@ export default class AlbumDetail extends Component {
                   item={item}
                   title={name}
                   songs={songs}
+                  likeCount={this.viewModel.stats
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                   newTitleChange={newTitleChange}
                   editTitle={editTitle}
                   textTitleChange={this.textTitleChange}

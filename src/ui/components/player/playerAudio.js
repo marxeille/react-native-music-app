@@ -26,12 +26,16 @@ class PlayerAudio extends React.Component {
   }
 
   onEnd = () => {
-    if (
-      rootStore.playerStore?.trackIndex <
-        rootStore.playerStore?.getQueueSize() - 1 &&
-      !rootStore?.playerStore?.repeat
-    ) {
-      rootStore.playerStore?.changeSong('next');
+    if (rootStore?.playerStore?.repeatOne) {
+      return;
+    } else {
+      if (
+        rootStore?.playerStore?.repeat ||
+        rootStore.playerStore?.trackIndex <
+          rootStore.playerStore?.getQueueSize() - 1
+      ) {
+        rootStore.playerStore?.changeSong('next');
+      }
     }
   };
 
@@ -56,7 +60,7 @@ class PlayerAudio extends React.Component {
         }}
         paused={rootStore?.playerStore?.statusPlayer == 'pause'} // Pauses playback entirely.
         resizeMode="cover" // Fill the whole screen at aspect ratio.
-        repeat={rootStore?.playerStore?.repeat} // Repeat forever.
+        repeat={rootStore?.playerStore?.repeatOne} // Repeat forever.
         //   onLoadStart={this.loadStart} // Callback when video starts to load
         onLoad={this.setDuration.bind(this)} // Callback when video loads
         onProgress={this.setTime.bind(this)} // Callback every ~250ms with currentTime

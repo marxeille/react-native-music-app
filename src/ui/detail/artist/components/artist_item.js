@@ -69,9 +69,11 @@ const ArtistItem = observer(
     });
 
     return (
-      <View cls="jcsb flx-row aic pr3" style={{ backgroundColor: '#321a54' }}>
+      <View
+        cls="jcsb flx-row aic pr3 br3"
+        style={{ backgroundColor: '#321a54' }}>
         <View cls="flx-row pa3 pb2 pt2">
-          <View cls="jcc pl3">
+          <View cls="jcc">
             <Text cls="white fw7 f6 lightFont">
               {subLongStr(props.item.getName(), 13)}
             </Text>

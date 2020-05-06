@@ -184,21 +184,41 @@ export default class ArtistDetail extends Component {
 
   playSong = song => {
     const { ids } = this.state;
+    const { artist } = this.props.route.params;
 
     if (ids.length > 0) {
       const randomId = ids[Math.floor(Math.random() * ids.length)];
       [...this.viewModel.songs.values()].map(song => {
         rootStore.createSongRef(song);
       });
+      const songIdsToCreate = [];
+      ids.map(id => {
+        [...this.viewModel.songs.values()].map(song => {
+          if (Number(song.id) == id) {
+            songIdsToCreate.push(song.id);
+          }
+        });
+      });
 
-      rootStore.playlistSongStore?.addList(ids);
+      rootStore.playlistSongStore?.addList(songIdsToCreate);
+      rootStore.playlistSongStore?.setPlaylist(artist);
       rootStore?.queueStore?.removeSongs([
-        song.id ? song.id.toString() : randomId.toString(),
+        song ? song.id.toString() : randomId.toString(),
       ]);
-      if (randomId == rootStore?.playerStore?.currentSong?.id) {
-        navigate('player');
+      if (!this.state.playing || song) {
+        if (randomId == Number(rootStore?.playerStore?.currentSong?.id)) {
+          navigate('player');
+        } else {
+          navigate('player', { trackId: song ? song.id : randomId });
+        }
+        rootStore.playerStore?.setState('play');
       } else {
-        navigate('player', { trackId: song ? song.id : randomId });
+        rootStore.playlistSongStore?.setPlaylist({});
+        rootStore.playerStore?.clearSong();
+        rootStore.playerStore?.setState('pause');
+      }
+      if (!song) {
+        this.setState({ playing: !this.state.playing });
       }
     }
   };
@@ -247,7 +267,7 @@ export default class ArtistDetail extends Component {
               </TouchableOpacity>
             </View>
 
-            <View cls="aic jcc">
+            <View cls="aic jcc pt3">
               <Text cls="white fw8 f3 pb2 avertaFont">
                 {typeof artist?.getName == 'function'
                   ? artist?.getName().toUpperCase()
@@ -328,7 +348,7 @@ export default class ArtistDetail extends Component {
             </TouchableWithoutFeedback>
           </View>
           <View cls="pa3 pl2 pr2">
-            <TouchableOpacity onPress={this.playSong}>
+            <TouchableOpacity onPress={() => this.playSong()}>
               <Image
                 resizeMode="contain"
                 cls="widthFn-150 heightFn-50"

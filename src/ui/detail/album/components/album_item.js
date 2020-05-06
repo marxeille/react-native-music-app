@@ -65,7 +65,9 @@ const AlbumItem = observer(
       !like ? likeTrack() : unlikeTrack();
     });
     return (
-      <View cls="jcsb flx-row aic pr3" style={{ backgroundColor: '#321a54' }}>
+      <View
+        cls="jcsb flx-row aic pr3 br3"
+        style={{ backgroundColor: '#321a54' }}>
         <View cls="flx-row pa3 pb2 pt2">
           <Image
             cls="squareFn-50"

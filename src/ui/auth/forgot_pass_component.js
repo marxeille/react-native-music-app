@@ -90,7 +90,7 @@ export default class ForgotPassWordComponent extends Component {
                     : 'fullWidth aic pl3 pr3'
                 }`}>
                 <LinearGradientText
-                  text={'Quên mật khẩu'}
+                  text={'Quên mật khẩu?'}
                   end={{ x: 0.7, y: 0 }}
                   styles={{
                     alignItems: 'center',
