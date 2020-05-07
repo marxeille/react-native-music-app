@@ -83,6 +83,16 @@ export const HomeStore = types
           getParent(self).playerStore.setSelectedId(songPlayingJson.id);
         }
 
+        // if there is local history, get it
+        const localHistory = yield AsyncStorage.getItem(
+          AsyncStorageKey.HISTORY,
+        );
+        const localHistoryJson = JSON.parse(localHistory);
+        localHistoryJson.map(history => {
+          getParent(self).createSongRef(history);
+          getParent(self).historyStore.addSong(history.id);
+        });
+
         //Get full home track info
         if (homeTrackIds?.status == 200) {
           let ids = homeTrackIds?.data.map(ht => ht.id).join(',');

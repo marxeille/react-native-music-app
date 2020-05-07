@@ -52,7 +52,8 @@ export const PlayerStore = types
       },
 
       getQueueSize() {
-        return getParent(self).songs.size;
+        return self.getSongs().length;
+        // return getParent(self).songs.size;
       },
 
       prepareSong(id) {
@@ -89,8 +90,7 @@ export const PlayerStore = types
 
         // Play song
         if (track) {
-          getParent(self).historyStore.addSong(track.id);
-          AsyncStorage.setItem(AsyncStorageKey.SONG, JSON.stringify(track));
+          self.addToLocalHistory(track);
           self.playSong(track.id);
         }
       },
@@ -143,11 +143,46 @@ export const PlayerStore = types
 
         //play song
         if (track) {
-          getParent(self).historyStore.addSong(track.id);
-          AsyncStorage.setItem(AsyncStorageKey.SONG, JSON.stringify(track));
+          self.addToLocalHistory(track);
           self.playSong(track.id);
         }
       },
+
+      addToLocalHistory: flow(function* addToLocalHistory(track) {
+        // Save history
+        getParent(self).historyStore.addSong(track.id);
+        // Here is the part that we save history into local storage
+        AsyncStorage.setItem(AsyncStorageKey.SONG, JSON.stringify(track));
+        const localHistory = yield AsyncStorage.getItem(
+          AsyncStorageKey.HISTORY,
+        );
+        let localHistoryJson = JSON.parse(localHistory);
+        //In case there is already a data list in local storage
+        if (localHistoryJson !== null) {
+          if (localHistoryJson.length < 15) {
+            localHistoryJson.push(track);
+            AsyncStorage.setItem(
+              AsyncStorageKey.HISTORY,
+              JSON.stringify(localHistoryJson),
+            );
+          } else {
+            localHistoryJson.shift();
+            localHistoryJson.push(track);
+            AsyncStorage.setItem(
+              AsyncStorageKey.HISTORY,
+              JSON.stringify(localDataJson),
+            );
+          }
+        } else {
+          //If not, create a new one
+          const newLocalData = [];
+          newLocalData.push(track);
+          AsyncStorage.setItem(
+            AsyncStorageKey.HISTORY,
+            JSON.stringify(newLocalData),
+          );
+        }
+      }),
 
       startNewSong(trackId) {
         self.setPosition(0);

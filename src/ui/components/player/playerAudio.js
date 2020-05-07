@@ -31,8 +31,10 @@ class PlayerAudio extends React.Component {
       return;
     } else {
       // if repeat option on, or it's not the last track, keep playing songs
+
       if (
-        rootStore?.playerStore?.repeat ||
+        (rootStore?.playerStore?.repeat &&
+          rootStore.playerStore?.getQueueSize() > 1) ||
         rootStore.playerStore?.trackIndex <
           rootStore.playerStore?.getQueueSize() - 1
       ) {

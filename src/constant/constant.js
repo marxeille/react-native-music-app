@@ -3,6 +3,7 @@ export const BASE_API_URL = 'http://103.28.37.44:5000';
 export const AsyncStorageKey = {
   USERINFO: '@userinfo',
   SONG: 'song',
+  HISTORY: 'history',
   RECENTLYSEARCH: {
     SONGS: '@recentlysongs',
     ARTISTS: '@recentlyartists',
