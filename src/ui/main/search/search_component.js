@@ -39,7 +39,14 @@ export default class SearchComponent extends Component {
 
   componentDidMount() {
     this.viewmodel.getRecentlyResult();
+    this.props.navigation.addListener('focus', this.onScreenFocus);
   }
+
+  onScreenFocus = () => {
+    this.setState({
+      keyword: null,
+    });
+  };
 
   _showModal = song => {
     this.setState({ song: song }, () => {
