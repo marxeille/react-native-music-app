@@ -103,7 +103,7 @@ export default class SongMenu extends Component {
             </Text>
           </View>
         </View>
-        <View cls="pa3 heightFn-250">
+        <View cls={`${isSmallDevice() ? 'heightFn-180' : 'heightFn-250'} pa3`}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <ActionItem
               onPress={() => this.addPlaylist(true)}

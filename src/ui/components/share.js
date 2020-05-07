@@ -269,7 +269,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
           </View>
         </ImageBackground>
 
-        <View cls="fullWidth pt3">
+        <View cls="flx-i pt3">
           <FlatList
             data={shareItems}
             renderItem={renderShareItem}
