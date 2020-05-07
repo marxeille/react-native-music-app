@@ -98,6 +98,7 @@ export default function mainContainer() {
           vertical: Dimensions.get('window').height,
           horizontal: Dimensions.get('window').width,
         },
+        gestureVelocityImpact: 1,
         cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
       }}>
       <Stack.Screen name="bottomtab" component={getBottomTabNavigator} />
