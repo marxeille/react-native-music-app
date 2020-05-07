@@ -42,6 +42,7 @@ const Images = {
   ic_down: require('./ic_down.png'),
   ic_download: require('./ic_download.png'),
   ic_download_white: require('./ic_download_white.png'),
+  ic_email: require('./ic_email.png'),
   ic_favorite: require('./ic_favorite.png'),
   ic_favorited: require('./ic_favorited.png'),
   ic_fb: require('./ic_fb.png'),
@@ -102,6 +103,6 @@ const Images = {
   sNg: require('./sNg.png'),
   setting: require('./setting.png'),
   wave: require('./wave.png'),
-  wave2: require('./wave2.png')
-}
-export default Images
+  wave2: require('./wave2.png'),
+};
+export default Images;
