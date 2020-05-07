@@ -20,27 +20,47 @@ import { ShareDialog } from 'react-native-fbsdk';
 import ZaloShare from 'react-native-zalo-share';
 
 const ShareModal = wrap(({ _hideModal, item }) => {
+  let link;
+  switch (item.getType()) {
+    case 'song':
+      // code block
+      link = `diijam.vn/tracks/${item.id}`;
+      break;
+    case 'playlist':
+      // code block
+      link = `diijam.vn/playlists/${item.id}`;
+      break;
+    case 'artist':
+      // code block
+      link = `diijam.vn/artists/${item.id}`;
+      break;
+    case 'article':
+      // code block
+      link = `diijam.vn/articles/${item.id}`;
+      break;
+    default:
+      // code block
+      link = '';
+  }
   const shareLinkContent = {
     contentType: 'link',
-    contentUrl: 'https://facebook.com',
-    contentDescription: 'Facebook sharing is easy!',
+    contentUrl: link,
+    contentDescription: 'Diijam!!!',
   };
 
   const onShareSms = useCallback(() => {
-    const url = rootStore.playerStore?.currentSong?.url ?? '';
-    Linking.openURL(`sms:/open?addresses=null&body=${url}`);
+    Linking.openURL(`sms:/open?addresses=null&body=${link}`);
   });
 
   const onCopyToClipboard = useCallback(async () => {
-    const url = rootStore.playerStore?.currentSong?.url ?? '';
-    await Clipboard.setString(url);
+    await Clipboard.setString(link);
     Toast.showWithGravity('Đã sao chép liên kết', Toast.LONG, Toast.BOTTOM);
   });
 
   const onShareZalo = useCallback(() => {
     const config = {
       msg: 'message',
-      link: rootStore.playerStore?.currentSong?.url,
+      link: link,
       linkTitle: item?.name,
       linkSource: '',
       linkThumb: item?.getThumb(),
@@ -55,21 +75,20 @@ const ShareModal = wrap(({ _hideModal, item }) => {
   });
 
   const onShareOther = useCallback(async () => {
-    const url = rootStore.playerStore?.currentSong?.url;
     const title = '';
     const options = Platform.select({
       ios: {
         activityItemSources: [
           {
             // For sharing url with custom title.
-            placeholderItem: { type: 'url', content: url },
+            placeholderItem: { type: 'url', content: link },
             item: {
-              default: { type: 'url', content: url },
+              default: { type: 'url', content: link },
             },
             subject: {
               default: title,
             },
-            linkMetadata: { originalUrl: url, url, title },
+            linkMetadata: { originalUrl: link, link, title },
           },
         ],
       },

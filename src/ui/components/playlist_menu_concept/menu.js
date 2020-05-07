@@ -17,6 +17,7 @@ import Images from '../../../assets/icons/icons';
 import ListItem from './list_item';
 import SelectImageBtn from '../select_image_btn';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { rootStore } from '../../../data/context/root_context';
 
 const PlaylistMenuConcept = observer(
   wrap(
@@ -26,6 +27,7 @@ const PlaylistMenuConcept = observer(
       newTitleChange,
       textTitleChange,
       editTitle,
+      likeCount,
       settingItems,
       changeTitle,
       showEditTitle,
@@ -133,7 +135,9 @@ const PlaylistMenuConcept = observer(
               <Text cls="lightFont primaryPurple pt1 f8">
                 {item.getType() == 'artist'
                   ? item.getSubTitle()
-                  : item.subTitle()}
+                  : item.owner_id == rootStore.userStore?.id
+                  ? rootStore.userStore?.name
+                  : likeCount + ' lượt thích'}
               </Text>
               <View cls={`fullWidth ${isSmallDevice() ? 'heightFn-250' : ''}`}>
                 <FlatList

@@ -2,6 +2,7 @@
 //IT'S HANDLE LOGIC FROM TAKING DATA FROM API
 
 import { apiService } from '../context/api_context';
+import { rootStore } from '../context/root_context';
 
 //Reaction refactor
 export async function likeHelper(type, id, onSuccess, onError) {
@@ -9,6 +10,7 @@ export async function likeHelper(type, id, onSuccess, onError) {
 
   if (like.status == 201) {
     if (typeof onSuccess == 'function') onSuccess('like', like.data.entity_id);
+    rootStore?.addLikedTrack(Number(id));
   } else {
     if (typeof onError == 'function') onError('like', like.data);
   }
@@ -18,6 +20,7 @@ export async function unlikeHelper(type, id, onSuccess, onError) {
   const unlike = await apiService.commonApiService.unlike(type, id);
   if (unlike.status == 200) {
     if (typeof onSuccess == 'function') onSuccess('unlike', id);
+    rootStore?.removeLikedTrack(Number(id));
   } else {
     if (typeof onError == 'function') onError('unlike', unlike.data);
   }

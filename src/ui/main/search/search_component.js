@@ -187,10 +187,10 @@ export default class SearchComponent extends Component {
                   keyExtractor={(item, index) => index.toString()}
                 />
                 {keyword == '' || keyword == null || keyword == undefined ? (
-                  <View style={{ position: 'absolute', right: 12, bottom: 75 }}>
+                  <View style={{ position: 'absolute', right: 12, bottom: 35 }}>
                     <TouchableOpacity onPress={() => this.clearRecently()}>
                       <View
-                        cls="ba pa2 pt1 pb1 br5"
+                        cls="ba pa2 pt1 pb1 br5 bg-#110926"
                         style={{ borderColor: '#d8a1c8' }}>
                         <Text cls="white lightFont f7 fw8">Xoá tất cả</Text>
                       </View>

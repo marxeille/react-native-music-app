@@ -17,6 +17,7 @@ export const PlayerStore = types
     duration: types.maybeNull(types.number),
     position: types.optional(types.number, 0),
     repeat: types.optional(types.boolean, false),
+    repeatOne: types.optional(types.boolean, false),
     shuffle: types.optional(types.boolean, false),
   })
   .actions(self => {
@@ -120,7 +121,15 @@ export const PlayerStore = types
               self.startNewSong(track?.id);
             } else {
               //if this is the last track, set state to pause
-              self.setState('pause');
+              if (!self.repeat || songs.length == 1) {
+                self.setState('pause');
+              } else {
+                if (self.repeat) {
+                  self.setTrackIndex(0);
+                  track = songs[self.trackIndex];
+                  self.startNewSong(track.id);
+                }
+              }
             }
           }
         } else {
@@ -164,6 +173,9 @@ export const PlayerStore = types
       },
       setRepeat(value) {
         self.repeat = value;
+      },
+      setRepeatOne(value) {
+        self.repeatOne = value;
       },
       setShuffle(value) {
         self.shuffle = value;

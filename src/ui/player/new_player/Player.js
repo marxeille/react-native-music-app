@@ -39,6 +39,8 @@ export default class Player extends Component {
 
   componentDidMount() {
     const trackId = this.props.route?.params?.trackId;
+    console.log('trackId', trackId);
+
     rootStore.playerStore?.prepareSong(trackId ?? null);
   }
 
@@ -154,10 +156,22 @@ export default class Player extends Component {
             onSlidingStart={() => this.setState({ paused: true })}
           />
           <Controls
-            onPressRepeat={() =>
-              rootStore?.playerStore?.setRepeat(!rootStore?.playerStore?.repeat)
-            }
+            onPressRepeat={() => {
+              if (!rootStore?.playerStore?.repeat) {
+                rootStore?.playerStore?.setRepeat(
+                  !rootStore?.playerStore?.repeat,
+                );
+              } else if (!rootStore?.playerStore?.repeatOne) {
+                rootStore?.playerStore?.setRepeatOne(
+                  !rootStore?.playerStore?.repeatOne,
+                );
+              } else {
+                rootStore?.playerStore?.setRepeatOne(false);
+                rootStore?.playerStore?.setRepeat(false);
+              }
+            }}
             repeatOn={rootStore?.playerStore?.repeat}
+            repeatOneOn={rootStore?.playerStore?.repeatOne}
             shuffleOn={rootStore?.playerStore?.shuffle}
             forwardDisabled={
               rootStore.playerStore?.trackIndex ===

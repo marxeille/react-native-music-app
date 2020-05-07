@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   Image,
+  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -16,6 +17,7 @@ const Controls = wrap(
     paused,
     shuffleOn,
     repeatOn,
+    repeatOneOn,
     onPressPlay,
     onPressPause,
     onBack,
@@ -56,11 +58,17 @@ const Controls = wrap(
         />
       </TouchableOpacity>
       <View style={{ width: 40 }} />
-      <TouchableOpacity activeOpacity={0.0} onPress={onPressRepeat}>
+      <TouchableOpacity
+        cls="flx-row aic jcc"
+        activeOpacity={0.0}
+        onPress={onPressRepeat}>
         <Image
           cls="widthFn-22"
-          style={[styles.secondaryControl, repeatOn ? [] : styles.off]}
-          source={Images.ic_repeat}
+          style={[
+            styles.secondaryControl,
+            repeatOn || repeatOneOn ? [] : styles.off,
+          ]}
+          source={repeatOneOn ? Images.ic_repeat_one : Images.ic_repeat}
         />
       </TouchableOpacity>
     </View>
