@@ -39,7 +39,7 @@ export default class SearchComponent extends Component {
 
   componentDidMount() {
     this.viewmodel.getRecentlyResult();
-    this.props.navigation.addListener('focus', this.onScreenFocus);
+    this.props.navigation.addListener('blur', this.onScreenFocus);
   }
 
   onScreenFocus = () => {
