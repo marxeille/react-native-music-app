@@ -45,7 +45,6 @@ export const CreatePlaylistModel = types
         }
       },
       setResultSong(song) {
-        self.searchResult.clear();
         const newSong = createSongFromJsonApi(song);
         self.searchResult.put(newSong);
       },
@@ -88,6 +87,7 @@ export const CreatePlaylistModel = types
             keyword,
           );
           if (result.status == 200) {
+            self.searchResult.clear();
             if (result.data.hits.tracks.length > 0) {
               result.data.hits.tracks.forEach(async data => {
                 const trackDetail = await apiService.trackApiService.getTrackInfo(
