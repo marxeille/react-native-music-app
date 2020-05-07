@@ -103,7 +103,7 @@ export default class AddPlayListModal extends Component {
             data={[...rootStore?.homeStore?.popular]}
             showsVerticalScrollIndicator={false}
             renderItem={this._renderItem}
-            numColumns={4}
+            numColumns={3}
             horizontal={false}
             keyExtractor={(item, index) => index.toString()}
           />
