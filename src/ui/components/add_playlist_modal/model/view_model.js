@@ -69,6 +69,8 @@ export const CreatePlaylistModel = types
               cover = { ...cover, playlistCover: plCover.data.cover_path };
             }
           }
+          // like playlist after create
+          yield apiService.commonApiService.like('playlist', createPl.data.id);
           const playlistFullInfo = { ...createPl.data, ...cover };
           rootStore.updatePlayList(playlistFullInfo);
           rootStore.libraryStore?.updatePlayList(playlistFullInfo);
