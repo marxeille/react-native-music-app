@@ -56,7 +56,7 @@ const PlaylistMenuConcept = observer(
           <View cls="jcc pb3">
             <View cls="pt5 pl5 flx-row aic">
               <Image
-                cls="squareFn-180 asc"
+                cls={`${isSmallDevice() ? 'squareFn-150' : 'squareFn-180'} asc`}
                 source={
                   !isTextEmpty(item.getThumb()) && item.getThumb() != undefined
                     ? { uri: item.getThumb() }
@@ -64,7 +64,11 @@ const PlaylistMenuConcept = observer(
                 }
               />
               <ImageBackground
-                cls="widthFn-185 heightFn-185 aic jcc"
+                cls={`${
+                  isSmallDevice()
+                    ? 'widthFn-155 heightFn-155'
+                    : 'widthFn-185 heightFn-185'
+                }  aic jcc`}
                 style={{
                   zIndex: -1,
                   position: 'absolute',
@@ -139,7 +143,7 @@ const PlaylistMenuConcept = observer(
                   ? rootStore.userStore?.name
                   : likeCount + ' lượt thích'}
               </Text>
-              <View cls={`fullWidth ${isSmallDevice() ? 'heightFn-250' : ''}`}>
+              <View cls={`fullWidth ${isSmallDevice() ? 'heightFn-190' : ''}`}>
                 <FlatList
                   data={settingItems}
                   renderItem={renderItem}
