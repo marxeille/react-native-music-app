@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { wrap } from '../../../themes';
+import { isSmallDevice } from '../../../utils';
 
 const ListItem = wrap(({ item }) => {
   return item.picker ? (
@@ -22,7 +23,7 @@ const ListItem = wrap(({ item }) => {
       </View>
     </View>
   ) : (
-    <View cls="pt3">
+    <View cls={`${isSmallDevice() ? 'pt1' : 'pt3'}`}>
       <TouchableOpacity
         onPress={() => {
           typeof item.action == 'function' ? item.action() : null;

@@ -15,7 +15,7 @@ import { navigate, pop } from '../../../navigation/navigation_service';
 import { rootStore, RootContext } from '../../../data/context/root_context';
 import LinearGradient from 'react-native-linear-gradient';
 import LinearGradientText from '../library/components/LinearGradientText';
-import { getStatusBarHeight, D_WIDTH } from '../../../utils';
+import { getStatusBarHeight, D_WIDTH, isSmallDevice } from '../../../utils';
 import ListItem from '../../components/playlist_menu_concept/list_item';
 import Toast from 'react-native-simple-toast';
 import { logout } from '../../../data/datasource/api_config';
@@ -128,18 +128,22 @@ class Settings extends Component {
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
           <ImageBackground cls="fullView aic" source={Images.bg3}>
-            <View cls="fullView">
+            <View cls="fullView" style={{ flex: 3 }}>
               {this.renderHeader()}
               <View>
                 <View cls="pt4">
                   <Image
-                    cls="widthFn-150 heightFn-150 asc"
+                    cls={`${
+                      isSmallDevice()
+                        ? 'widthFn-100 heightFn-100'
+                        : 'widthFn-150 heightFn-150'
+                    } asc`}
                     source={rootStore.userStore?.avatar ?? Images.bAAlbum}
                   />
                   <View style={styles.abs}>
                     <Image
-                      resizeMode="contain"
-                      cls="heightFn-50"
+                      resizeMode="stretch"
+                      cls={`${isSmallDevice() ? 'heightFn-25' : 'heightFn-50'}`}
                       style={{ width: D_WIDTH }}
                       source={Images.sNg}
                     />
@@ -147,11 +151,13 @@ class Settings extends Component {
                 </View>
               </View>
               <View cls="aic jcc pt3 pb2">
-                <Text cls="avertaFont white f3">
+                <Text cls={`${isSmallDevice() ? 'f5' : 'f3'} avertaFont white`}>
                   {rootStore.userStore?.name}
                 </Text>
               </View>
-              <View cls="fullWidth">
+              <View
+                cls="flx-i"
+                style={{ marginBottom: isSmallDevice() ? 60 : 70 }}>
                 <FlatList
                   data={this.settingItems}
                   renderItem={this.renderSettingItem}
@@ -181,7 +187,7 @@ export default Settings;
 const styles = StyleSheet.create({
   fixedBottom: {
     position: 'absolute',
-    bottom: 30,
+    bottom: isSmallDevice() ? 20 : 30,
   },
   abs: {
     position: 'absolute',
