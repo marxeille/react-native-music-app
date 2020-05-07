@@ -27,8 +27,10 @@ class PlayerAudio extends React.Component {
 
   onEnd = () => {
     if (rootStore?.playerStore?.repeatOne) {
+      // If repeat one on, keep playing this song
       return;
     } else {
+      // if repeat option on, or it's not the last track, keep playing songs
       if (
         rootStore?.playerStore?.repeat ||
         rootStore.playerStore?.trackIndex <
@@ -54,6 +56,7 @@ class PlayerAudio extends React.Component {
       <Video
         source={{ uri: currentSong.url }} // Can be a URL or a local file.
         ref={ref => {
+          // Set ref to use it on another place
           this.playerRef = ref;
           !this.state.playerRef && this.setState({ playerRef: ref });
           this.context.setPlayerRef(this.state.playerRef);
@@ -66,7 +69,6 @@ class PlayerAudio extends React.Component {
         onProgress={this.setTime.bind(this)} // Callback every ~250ms with currentTime
         onEnd={this.onEnd} // Callback when playback finishes
         onError={this.videoError} // Callback when video cannot be loaded
-        //   style={styles.audioElement}
         ignoreSilentSwitch={'ignore'}
         playWhenInactive={true}
         playInBackground={true}

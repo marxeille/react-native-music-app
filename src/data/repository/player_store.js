@@ -2,6 +2,8 @@ import { types, flow, getParent } from 'mobx-state-tree';
 import { Song } from '../model/song';
 import * as _ from 'lodash';
 import MusicControl from 'react-native-music-control';
+import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorageKey } from '../../constant/constant';
 
 export const PlayerState = types.enumeration('PlayerState', [
   'pause',
@@ -88,6 +90,7 @@ export const PlayerStore = types
         // Play song
         if (track) {
           getParent(self).historyStore.addSong(track.id);
+          AsyncStorage.setItem(AsyncStorageKey.SONG, JSON.stringify(track));
           self.playSong(track.id);
         }
       },
@@ -102,7 +105,6 @@ export const PlayerStore = types
             // remove song from queue after play
             getParent(self).queueStore.removeSongs([track.id]);
             // add played song into history
-
             self.startNewSong(track.id);
             //play song
             if (track) self.playSong(track.id);
@@ -117,13 +119,13 @@ export const PlayerStore = types
                   : Math.floor(Math.random() * Math.floor(self.getQueueSize())), // with shuffle on
               );
               track = songs[self.trackIndex];
-
               self.startNewSong(track?.id);
             } else {
-              //if this is the last track, set state to pause
+              //if this is the last track and no repeat, set state to pause
               if (!self.repeat || songs.length == 1) {
                 self.setState('pause');
               } else {
+                // if repeat option on
                 if (self.repeat) {
                   self.setTrackIndex(0);
                   track = songs[self.trackIndex];
@@ -142,6 +144,7 @@ export const PlayerStore = types
         //play song
         if (track) {
           getParent(self).historyStore.addSong(track.id);
+          AsyncStorage.setItem(AsyncStorageKey.SONG, JSON.stringify(track));
           self.playSong(track.id);
         }
       },
@@ -180,8 +183,11 @@ export const PlayerStore = types
       setShuffle(value) {
         self.shuffle = value;
       },
-      playSong(song) {
+      setCurrentSong(song) {
         self.currentSong = song;
+      },
+      playSong(song) {
+        self.setCurrentSong(song);
         if (self.position == 0 && self.currentSong.url !== '') {
           self.setState(true);
         }
