@@ -252,13 +252,19 @@ const ShareModal = wrap(({ _hideModal, item }) => {
                   cls={`${
                     isSmallDevice() ? 'f7' : 'f5'
                   } white fw7 pt2 avertaFont`}>
-                  {item?.getName() ??
-                    rootStore.playerStore?.currentSong?.getName()}
+                  {typeof item?.getName == 'function' && item?.getName()
+                    ? item?.getName()
+                    : item?.title() && typeof item?.title == 'function'
+                    ? item?.title()
+                    : rootStore.playerStore?.currentSong?.getName()}
                 </Text>
                 <Text
                   cls={`${isSmallDevice() ? 'f9' : 'f7'} white pt1 avertaFont`}>
-                  {item?.getSubTitle() ??
-                    rootStore.playerStore?.currentSong?.getSubTitle()}
+                  {typeof item?.getSubTitle == 'function' && item?.getSubTitle()
+                    ? item?.getSubTitle()
+                    : item?.subTitle() && typeof item?.subTitle == 'function'
+                    ? item?.subTitle()
+                    : rootStore.playerStore?.currentSong?.getSubTitle()}
                 </Text>
               </View>
             </View>
