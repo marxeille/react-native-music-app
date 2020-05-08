@@ -160,7 +160,8 @@ export default class PlayerComponent extends Component {
                           'Chưa xác định'}
                       </Text>
                       <Text cls="primaryPurple f10 fw4 lightFont">
-                        {rootStore.playerStore.currentSong?.getSubTitle()}
+                        {rootStore.playerStore.currentSong?.getSubTitle() ??
+                          'Chưa xác định'}
                       </Text>
                     </View>
                     <TouchableWithoutFeedback

@@ -139,7 +139,7 @@ export default class HomeComponent extends Component {
                   cate="2"
                 />
               </View>
-              <View cls="pb5">
+              <View cls="pb2">
                 <HomeListComponent
                   type={'large'}
                   data={[...rootStore?.homeStore?.popular]}
