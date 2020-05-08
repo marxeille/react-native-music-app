@@ -156,10 +156,12 @@ export default class PlayerComponent extends Component {
 
                     <View style={styles.infoSection}>
                       <Text cls="white fw7 lightFont">
-                        {rootStore.playerStore.currentSong?.getName()}
+                        {rootStore.playerStore.currentSong?.getName() ??
+                          'Chưa xác định'}
                       </Text>
                       <Text cls="primaryPurple f10 fw4 lightFont">
-                        {rootStore.playerStore.currentSong?.getSubTitle()}
+                        {rootStore.playerStore.currentSong?.getSubTitle() ??
+                          'Chưa xác định'}
                       </Text>
                     </View>
                     <TouchableWithoutFeedback

@@ -48,7 +48,7 @@ const ArtistItem = observer(
     const likeTrack = useCallback(async () => {
       await likeHelper(
         'track',
-        props.item.id,
+        props.item?.id ?? 0,
         onReactionSuccess,
         onReactionError,
       );
@@ -57,7 +57,7 @@ const ArtistItem = observer(
     const unlikeTrack = useCallback(async () => {
       await unlikeHelper(
         'track',
-        props.item.id,
+        props.item?.id ?? 0,
         onReactionSuccess,
         onReactionError,
       );

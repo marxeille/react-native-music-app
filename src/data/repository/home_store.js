@@ -88,10 +88,12 @@ export const HomeStore = types
           AsyncStorageKey.HISTORY,
         );
         const localHistoryJson = JSON.parse(localHistory);
-        localHistoryJson.map(history => {
-          getParent(self).createSongRef(history);
-          getParent(self).historyStore.addSong(history.id);
-        });
+        if (localHistoryJson !== null) {
+          localHistoryJson.map(history => {
+            getParent(self).createSongRef(history);
+            getParent(self).historyStore.addSong(history.id);
+          });
+        }
 
         //Get full home track info
         if (homeTrackIds?.status == 200) {

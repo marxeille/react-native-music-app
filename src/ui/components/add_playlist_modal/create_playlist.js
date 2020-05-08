@@ -257,8 +257,9 @@ const SearchItem = observer(
       <Image
         cls="squareFn-50"
         source={
-          props.item.getThumb() !== ''
-            ? { uri: props.item.getThumb() }
+          typeof props.item?.getThumb == 'function' &&
+          props.item?.getThumb() !== ''
+            ? { uri: props.item?.getThumb() }
             : Images.bAAlbum
         }
       />
@@ -274,7 +275,9 @@ const SearchItem = observer(
             cls={`${isSmallDevice() ? 'f9' : ''} primaryPurple lightFont`}
             numberOfLines={1}
             ellipsizeMode="tail">
-            {props.item.getSubTitle()}
+            {props.item && typeof props.item?.getName == 'function'
+              ? props.item?.getName()
+              : ''}
           </Text>
         </View>
       </View>

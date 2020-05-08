@@ -146,7 +146,7 @@ export default class Player extends Component {
           <Header message="Playing From Charts" />
           <AlbumArt url={currentSong?.artwork} />
           <TrackDetails
-            title={currentSong?.getName()}
+            title={currentSong?.getName() ?? 'Chưa xác định'}
             artist={currentSong?.getSubTitle()}
             onSharePress={this._showModal}
           />

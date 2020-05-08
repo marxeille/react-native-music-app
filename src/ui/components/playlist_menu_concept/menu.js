@@ -58,7 +58,8 @@ const PlaylistMenuConcept = observer(
               <Image
                 cls={`${isSmallDevice() ? 'squareFn-150' : 'squareFn-180'} asc`}
                 source={
-                  !isTextEmpty(item.getThumb()) && item.getThumb() != undefined
+                  !isTextEmpty(item?.getThumb()) &&
+                  item?.getThumb() != undefined
                     ? { uri: item.getThumb() }
                     : Images.bAAlbum
                 }
@@ -79,8 +80,8 @@ const PlaylistMenuConcept = observer(
                 <Image
                   cls="circleFn-90 asc"
                   source={
-                    !isTextEmpty(item.getThumb()) &&
-                    item.getThumb() != undefined
+                    !isTextEmpty(item?.getThumb()) &&
+                    item?.getThumb() != undefined
                       ? { uri: item.getThumb() }
                       : Images.bAAlbum
                   }

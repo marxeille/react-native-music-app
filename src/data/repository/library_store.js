@@ -134,6 +134,7 @@ export const LibraryStore = types
 
           if (albums.status == 200) {
             const ids = albums.data.map(album => album.entity_id);
+
             const albumsData: Array = yield apiService.libraryApiService.getAlbums(
               ids,
             );

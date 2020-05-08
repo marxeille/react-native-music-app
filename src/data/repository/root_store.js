@@ -103,5 +103,13 @@ export const RootStore = types
         remove(tmpLikedTracks, track => track == trackId);
         self.setLikedTracks([...tmpLikedTracks]);
       },
+
+      setLikedAlbums(albums) {
+        self.likedAlbums = albums;
+      },
+
+      setLikedArtists(artists) {
+        self.likedArtists = artists;
+      },
     };
   });
