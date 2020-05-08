@@ -193,6 +193,13 @@ export default class PlayerComponent extends Component {
                     </TouchableWithoutFeedback>
                   </View>
                 </ImageBackground>
+
+                <View
+                  style={{
+                    backgroundColor: '#835DB8',
+                    height: 0.5,
+                  }}
+                />
               </View>
             </TouchableWithoutFeedback>
           </GestureRecognizer>
@@ -205,8 +212,10 @@ export default class PlayerComponent extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    height: 54,
+    height: 58.5,
+    flexDirection: 'column',
     backgroundColor: '#110027',
+    justifyContent: 'space-between',
   },
   infoSection: {
     height: 54,
