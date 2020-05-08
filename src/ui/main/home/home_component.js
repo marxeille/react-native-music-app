@@ -139,12 +139,14 @@ export default class HomeComponent extends Component {
                   cate="2"
                 />
               </View>
-              <HomeListComponent
-                type={'large'}
-                data={[...rootStore?.homeStore?.popular]}
-                title="Dành cho bạn"
-                cate="3"
-              />
+              <View cls="pb5">
+                <HomeListComponent
+                  type={'large'}
+                  data={[...rootStore?.homeStore?.popular]}
+                  title="Dành cho bạn"
+                  cate="3"
+                />
+              </View>
             </ScrollView>
           </ImageBackground>
         </View>
