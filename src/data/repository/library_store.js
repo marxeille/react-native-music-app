@@ -78,14 +78,24 @@ export const LibraryStore = types
 
       fetchPlaylist: flow(function* fetchPlaylist() {
         try {
-          const playlist: Array = yield apiService.commonApiService.getPlaylists();
+          const playlist: Array = yield apiService.libraryApiService.getLikedPlaylists();
           if (playlist.status == 200) {
-            playlist.data.map(pl => {
-              getParent(self).updatePlayList(pl);
-              self.playlists.push(pl.id);
-            });
-          } else {
-            Toast.showWithGravity(playlist.data.msg, Toast.LONG, Toast.BOTTOM);
+            const ids = playlist.data.map(pl => pl.id);
+            const playlistData: Array = yield apiService.commonApiService.getPlaylists(
+              ids,
+            );
+            if (playlistData.status == 200) {
+              playlistData.data.map(pl => {
+                getParent(self).updatePlayList(pl);
+                self.playlists.push(pl.id);
+              });
+            } else {
+              Toast.showWithGravity(
+                playlistData.data.msg,
+                Toast.LONG,
+                Toast.BOTTOM,
+              );
+            }
           }
         } catch (err) {
           console.log('err ', err);
@@ -94,14 +104,24 @@ export const LibraryStore = types
 
       fetchArtists: flow(function* fetchArtists() {
         try {
-          const artists: Array = yield apiService.libraryApiService.getArtists();
+          const artists: Array = yield apiService.libraryApiService.getLikedArtists();
           if (artists.status == 200) {
-            artists.data.map(ar => {
-              getParent(self).updateArtist(ar);
-              self.artists.push(ar.id);
-            });
-          } else {
-            Toast.showWithGravity(artists.data.msg, Toast.LONG, Toast.BOTTOM);
+            const ids = artists.data.map(artist => artist.id);
+            const artistsData: Array = yield apiService.libraryApiService.getArtists(
+              ids,
+            );
+            if (artistsData.status == 200) {
+              artistsData.data.map(ar => {
+                getParent(self).updateArtist(ar);
+                self.artists.push(ar.id);
+              });
+            } else {
+              Toast.showWithGravity(
+                artistsData.data.msg,
+                Toast.LONG,
+                Toast.BOTTOM,
+              );
+            }
           }
         } catch (err) {
           console.log('err ', err);
@@ -109,25 +129,35 @@ export const LibraryStore = types
       }),
       fetchAlbums: flow(function* fetchAlbums() {
         try {
-          const albums: Array = yield apiService.libraryApiService.getAlbums();
+          const albums: Array = yield apiService.libraryApiService.getLikedAlbums();
           if (albums.status == 200) {
-            albums.data.map(async al => {
-              let cover = await getPlaylistCover(
-                al?.tracks,
-                al.cover_path !== null,
+            const ids = albums.data.map(album => album.id);
+            const albumsData: Array = yield apiService.libraryApiService.getAlbums(
+              ids,
+            );
+            if (albumsData.status == 200) {
+              albumsData.data.map(async al => {
+                let cover = await getPlaylistCover(
+                  al?.tracks,
+                  al.cover_path !== null,
+                );
+                if (al.cover_path !== null) {
+                  cover = {
+                    ...cover,
+                    playlistCover: al.cover_path,
+                  };
+                }
+                const albumFullInfo = { ...al, ...cover };
+                getParent(self).updateAlbum(albumFullInfo);
+                self.setAlbum(al);
+              });
+            } else {
+              Toast.showWithGravity(
+                albumsData.data.msg,
+                Toast.LONG,
+                Toast.BOTTOM,
               );
-              if (al.cover_path !== null) {
-                cover = {
-                  ...cover,
-                  playlistCover: al.cover_path,
-                };
-              }
-              const albumFullInfo = { ...al, ...cover };
-              getParent(self).updateAlbum(albumFullInfo);
-              self.setAlbum(al);
-            });
-          } else {
-            Toast.showWithGravity(albums.data.msg, Toast.LONG, Toast.BOTTOM);
+            }
           }
         } catch (err) {
           console.log('err ', err);

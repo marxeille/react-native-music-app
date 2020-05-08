@@ -7,6 +7,8 @@ import { Song } from '../model/song';
 import { getTrackFullDetail, getPlaylistCover } from '../datasource/api_helper';
 import { findIndex } from 'lodash';
 import Toast from 'react-native-simple-toast';
+import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorageKey } from '../../constant/constant';
 
 export const HomeStore = types
   .model('HomeStore', {
@@ -60,10 +62,36 @@ export const HomeStore = types
         self.popular.splice(plIndex, 1);
       },
 
+      setHistorySong(song) {},
+
       //#region Handle Fect Popular Success
       fetchHomeData: flow(function* fetchHomeData() {
         const homeTrackIds: Array = yield apiService.commonApiService.getHomeTrackIds();
         const homePlaylist: Array = yield apiService.commonApiService.getHomePlaylists();
+        // If there is a song in local storage, set it to current song
+        const songPlaying = yield AsyncStorage.getItem(AsyncStorageKey.SONG);
+        const songPlayingJson = JSON.parse(songPlaying);
+        if (
+          songPlayingJson &&
+          songPlayingJson !== null &&
+          typeof songPlayingJson !== 'undefined'
+        ) {
+          getParent(self).createSongRef(songPlayingJson);
+          getParent(self).playerStore.setCurrentSong(songPlayingJson.id);
+          getParent(self).playerStore.setState('pause');
+          getParent(self).playerStore.setTrackIndex(0);
+          getParent(self).playerStore.setSelectedId(songPlayingJson.id);
+        }
+
+        // if there is local history, get it
+        const localHistory = yield AsyncStorage.getItem(
+          AsyncStorageKey.HISTORY,
+        );
+        const localHistoryJson = JSON.parse(localHistory);
+        localHistoryJson.map(history => {
+          getParent(self).createSongRef(history);
+          getParent(self).historyStore.addSong(history.id);
+        });
 
         //Get full home track info
         if (homeTrackIds?.status == 200) {

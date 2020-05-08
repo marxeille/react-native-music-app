@@ -168,7 +168,7 @@ class Queue2 extends Component {
               }}
             />
 
-            <View style={{ paddingTop: 2 }} cls="pa3">
+            <View style={{ paddingTop: 2 }} cls="pa3 pr6">
               <Text cls="primaryPurple fw7 f6 avertaFont">{item.subTitle}</Text>
             </View>
           </View>

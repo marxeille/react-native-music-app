@@ -35,7 +35,30 @@ const ActionGroup = wrap(
         resizeMode="contain"
         source={Images.pl_wave}>
         <View cls="flx-row">
-          {hasSong || item?.id == 0 || item?.id !== rootStore.userStore?.id ? (
+          {!hasSong && item?.id !== rootStore.userStore?.id ? (
+            <>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  addSong();
+                }}>
+                <LinearGradient
+                  cls="br5 b--#321A54"
+                  colors={['#4A3278', '#8B659D', '#DDA5CB']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}>
+                  <Text
+                    cls="white f7 pl4 pr4 avertaFont"
+                    style={{
+                      paddingVertical: 8,
+                    }}>
+                    Thêm bài hát
+                  </Text>
+                </LinearGradient>
+              </TouchableWithoutFeedback>
+            </>
+          ) : hasSong ||
+            item?.id == 0 ||
+            item?.id !== rootStore.userStore?.id ? (
             <>
               <View cls="pa3 pr0">
                 <TouchableWithoutFeedback
