@@ -92,6 +92,9 @@ export default class HomeComponent extends Component {
             <ScrollView
               cls="pt5 mt4"
               style={{ width: '100%', zIndex: 1 }}
+              contentContainerStyle={{
+                paddingBottom: 70,
+              }}
               onScroll={Animated.event([
                 { nativeEvent: { contentOffset: { y: this.state.scrollY } } },
               ])}
