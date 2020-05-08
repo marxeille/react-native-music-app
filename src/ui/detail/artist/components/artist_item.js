@@ -48,7 +48,7 @@ const ArtistItem = observer(
     const likeTrack = useCallback(async () => {
       await likeHelper(
         'track',
-        props.item.id,
+        props.item?.id ?? 0,
         onReactionSuccess,
         onReactionError,
       );
@@ -57,7 +57,7 @@ const ArtistItem = observer(
     const unlikeTrack = useCallback(async () => {
       await unlikeHelper(
         'track',
-        props.item.id,
+        props.item?.id ?? 0,
         onReactionSuccess,
         onReactionError,
       );
@@ -75,7 +75,12 @@ const ArtistItem = observer(
         <View cls="flx-row pa3 pb2 pt2">
           <View cls="jcc">
             <Text cls="white fw7 f6 lightFont">
-              {subLongStr(props.item.getName(), 13)}
+              {subLongStr(
+                props.item && typeof props.item?.getName == 'function'
+                  ? props.item?.getName()
+                  : '',
+                15,
+              )}
             </Text>
             <Text cls="primaryPurple f9 lightFont pt1">
               {`${stats.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} `}

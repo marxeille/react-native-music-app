@@ -45,7 +45,7 @@ const AlbumItem = observer(
     const likeTrack = useCallback(async () => {
       await likeHelper(
         'track',
-        props.item.id,
+        props.item?.id ?? 0,
         onReactionSuccess,
         onReactionError,
       );
@@ -54,7 +54,7 @@ const AlbumItem = observer(
     const unlikeTrack = useCallback(async () => {
       await unlikeHelper(
         'track',
-        props.item.id,
+        props.item?.id ?? 0,
         onReactionSuccess,
         onReactionError,
       );
@@ -72,9 +72,13 @@ const AlbumItem = observer(
           <Image
             cls="squareFn-50"
             source={
-              !isTextEmpty(props.item.getThumb())
+              !isTextEmpty(
+                props.item && typeof props.item?.getThumb == 'function'
+                  ? props.item?.getThumb()
+                  : '',
+              )
                 ? {
-                    uri: props.item.getThumb(),
+                    uri: props.item?.getThumb(),
                   }
                 : Images.bAAlbum
             }
@@ -82,10 +86,17 @@ const AlbumItem = observer(
 
           <View cls="jcc pl3">
             <Text cls="white fw7 f6 lightFont">
-              {subLongStr(props.item.getName(), 15)}
+              {subLongStr(
+                props.item && typeof props.item?.getName == 'function'
+                  ? props.item?.getName()
+                  : '',
+                15,
+              )}
             </Text>
             <Text cls="primaryPurple lightFont">
-              {props.item.getSubTitle()}
+              {props.item && typeof props.item?.getSubTitle == 'function'
+                ? props.item.getSubTitle()
+                : ''}
             </Text>
           </View>
         </View>

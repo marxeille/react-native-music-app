@@ -166,18 +166,26 @@ const SearchItem = observer(
           <Image
             cls="squareFn-50"
             source={
-              props.item.getThumb() !== ''
-                ? { uri: props.item.getThumb() }
+              typeof props.item?.getThumb == 'function' &&
+              props.item?.getThumb() !== ''
+                ? { uri: props.item?.getThumb() }
                 : Images.bAAlbum
             }
           />
 
           <View cls="jcc pl3">
             <Text cls="white fw7 f6 lightFont">
-              {subLongStr(props.item.getName(), 25)}
+              {subLongStr(
+                props.item && typeof props.item?.getName == 'function'
+                  ? props.item?.getName()
+                  : '',
+                25,
+              )}
             </Text>
             <Text cls="primaryPurple lightFont">
-              {props.item.getSubTitle()}
+              {props.item && typeof props.item?.getSubTitle == 'function'
+                ? props.item.getSubTitle()
+                : ''}
             </Text>
           </View>
         </View>

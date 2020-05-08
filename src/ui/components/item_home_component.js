@@ -22,7 +22,7 @@ export default class ItemHome extends Component {
         <Image
           cls="heightFn-150 widthFn-150"
           source={
-            item.getThumb() !== null && item.getThumb() !== ''
+            item?.getThumb() !== null && item?.getThumb() !== ''
               ? { uri: item?.getThumb() }
               : Images.bAAlbum
           }

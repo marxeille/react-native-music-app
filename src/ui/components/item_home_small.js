@@ -31,7 +31,7 @@ export default class ItemHomeSmall extends Component {
           <Image
             cls="heightFn-130 widthFn-130"
             source={
-              item && item.getThumb() !== ''
+              item && item?.getThumb() !== ''
                 ? { uri: item?.getThumb() }
                 : Images.bAAlbum
             }

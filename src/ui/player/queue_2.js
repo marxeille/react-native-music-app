@@ -69,7 +69,7 @@ class Queue2 extends Component {
                 marqueeDelay={800}>
                 <Text cls="white fw7 f6 latoFont">
                   {currentSong !== null
-                    ? subLongStr(currentSong?.getName(), 20)
+                    ? subLongStr(currentSong?.getName() ?? '', 20)
                     : 'Dèfault Title'}
                 </Text>
               </TextTicker>
