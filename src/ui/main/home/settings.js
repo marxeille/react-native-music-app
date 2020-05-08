@@ -68,19 +68,11 @@ class Settings extends Component {
   }
 
   handleLogout = async () => {
-    const response = await logout();
-    if (response?.status == 200) {
-      rootStore?.playerStore?.clearSong();
-      rootStore?.homeStore?.clearHomeData();
-      rootStore?.libraryStore?.clearLibraryData();
-      this.context.userStore.removeUserInfo();
-    } else {
-      Toast.showWithGravity(
-        'Đăng xuất thất bại, vui lòng thử lại',
-        Toast.LONG,
-        Toast.BOTTOM,
-      );
-    }
+    await logout();
+    rootStore?.playerStore?.clearSong();
+    rootStore?.homeStore?.clearHomeData();
+    rootStore?.libraryStore?.clearLibraryData();
+    this.context.userStore.removeUserInfo();
   };
 
   renderHeader = wrap(() => {
