@@ -71,9 +71,13 @@ const AlbumItem = observer(
         <Image
           cls="squareFn-50"
           source={
-            !isTextEmpty(props.item.getThumb())
+            !isTextEmpty(
+              props.item && typeof props.item?.getThumb == 'function'
+                ? props.item?.getThumb()
+                : '',
+            )
               ? {
-                  uri: props.item.getThumb(),
+                  uri: props.item?.getThumb(),
                 }
               : Images.bAAlbum
           }
@@ -85,13 +89,17 @@ const AlbumItem = observer(
               cls="white fw7 f6 lightFont"
               numberOfLines={1}
               ellipsizeMode="tail">
-              {props.item.getName()}
+              {props.item && typeof props.item?.getName == 'function'
+                  ? props.item?.getName()
+                  : '')}
             </Text>
             <Text
               cls="primaryPurple lightFont"
               numberOfLines={1}
               ellipsizeMode="tail">
-              {props.item.getSubTitle()}
+              {props.item && typeof props.item?.getSubTitle == 'function'
+                ? props.item.getSubTitle()
+                : ''}
             </Text>
           </View>
         </View>

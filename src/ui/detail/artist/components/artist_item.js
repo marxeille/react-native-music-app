@@ -78,7 +78,9 @@ const ArtistItem = observer(
               cls={`${isSmallDevice() ? 'f8' : 'f6'} white fw7  lightFont`}
               numberOfLines={1}
               ellipsizeMode="tail">
-              {props.item.getName()}
+              {props.item && typeof props.item?.getName == 'function'
+                ? props.item?.getName()
+                : ''}
             </Text>
             <Text
               cls={`${
