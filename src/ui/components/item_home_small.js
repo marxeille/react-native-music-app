@@ -20,6 +20,7 @@ export default class ItemHomeSmall extends Component {
       return this.props.navigate('player');
     }
     this.props.navigate('player', { trackId: this.props.id });
+    rootStore?.playerStore?.setPlayFrom('Home');
   };
 
   render() {

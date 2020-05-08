@@ -21,6 +21,7 @@ export const PlayerStore = types
     repeat: types.optional(types.boolean, false),
     repeatOne: types.optional(types.boolean, false),
     shuffle: types.optional(types.boolean, false),
+    playFrom: types.optional(types.string, 'Home'),
   })
   .actions(self => {
     return {
@@ -34,6 +35,10 @@ export const PlayerStore = types
 
       clearSong() {
         self.currentSong = null;
+      },
+
+      setPlayFrom(name) {
+        self.playFrom = name;
       },
 
       play: flow(function* play() {

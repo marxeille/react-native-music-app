@@ -34,6 +34,7 @@ export default class SearchItem extends Component {
     if (item.getType() == 'song') {
       rootStore.createSongRef(item);
       model.addRecentlySong(item);
+      rootStore?.playerStore?.setPlayFrom('Search');
       if (rootStore.playerStore?.currentSong?.id == item.id) {
         return navigate('player');
       }

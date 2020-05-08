@@ -94,9 +94,12 @@ const AlbumItem = observer(
               )}
             </Text>
             <Text cls="primaryPurple lightFont">
-              {props.item && typeof props.item?.getSubTitle == 'function'
-                ? props.item.getSubTitle()
-                : ''}
+              {subLongStr(
+                props.item && typeof props.item?.getSubTitle == 'function'
+                  ? props.item.getSubTitle()
+                  : '',
+                15,
+              )}
             </Text>
           </View>
         </View>

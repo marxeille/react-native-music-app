@@ -3,7 +3,6 @@ import {
   Text,
   View,
   Image,
-  StyleSheet,
   FlatList,
   ImageBackground,
   TextInput,

@@ -209,8 +209,11 @@ export default class ArtistDetail extends Component {
         if (randomId == Number(rootStore?.playerStore?.currentSong?.id)) {
           navigate('player');
         } else {
-          navigate('player', { trackId: song ? song.id : randomId });
+          navigate('player', {
+            trackId: song ? song.id : randomId,
+          });
         }
+        rootStore?.playerStore?.setPlayFrom(artist?.getName() ?? 'Artist');
         rootStore.playerStore?.setState('play');
       } else {
         rootStore.playlistSongStore?.setPlaylist({});
