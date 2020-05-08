@@ -170,7 +170,7 @@ export const PlayerStore = types
             localHistoryJson.push(track);
             AsyncStorage.setItem(
               AsyncStorageKey.HISTORY,
-              JSON.stringify(localDataJson),
+              JSON.stringify(localHistoryJson),
             );
           }
         } else {
