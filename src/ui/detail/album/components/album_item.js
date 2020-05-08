@@ -90,8 +90,8 @@ const AlbumItem = observer(
               numberOfLines={1}
               ellipsizeMode="tail">
               {props.item && typeof props.item?.getName == 'function'
-                  ? props.item?.getName()
-                  : '')}
+                ? props.item?.getName()
+                : ''}
             </Text>
             <Text
               cls="primaryPurple lightFont"
