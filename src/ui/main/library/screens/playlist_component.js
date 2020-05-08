@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  FlatList,
-  Image,
-  Keyboard,
-} from 'react-native';
+import { View, TouchableOpacity, FlatList, Keyboard } from 'react-native';
 import { wrap } from '../../../../themes';
 import Loading from '../../../components/loading';
 import SearchComponent from '../components/search_component';
@@ -15,7 +9,6 @@ import { observer } from 'mobx-react';
 import { navigate } from '../../../../navigation/navigation_service';
 import BottomModal from '../../../components/modal/BottomModal';
 import CreatePlayListModal from '../../../components/add_playlist_modal';
-import { PlayList } from '../../../../data/model/playlist';
 
 @observer
 @wrap

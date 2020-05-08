@@ -80,7 +80,7 @@ export const LibraryStore = types
         try {
           const playlist: Array = yield apiService.libraryApiService.getLikedPlaylists();
           if (playlist.status == 200) {
-            const ids = playlist.data.map(pl => pl.id);
+            const ids = playlist.data.map(pl => pl.entity_id);
             const playlistData: Array = yield apiService.commonApiService.getPlaylists(
               ids,
             );
@@ -105,8 +105,9 @@ export const LibraryStore = types
       fetchArtists: flow(function* fetchArtists() {
         try {
           const artists: Array = yield apiService.libraryApiService.getLikedArtists();
+
           if (artists.status == 200) {
-            const ids = artists.data.map(artist => artist.id);
+            const ids = artists.data.map(artist => artist.entity_id);
             const artistsData: Array = yield apiService.libraryApiService.getArtists(
               ids,
             );
@@ -130,8 +131,9 @@ export const LibraryStore = types
       fetchAlbums: flow(function* fetchAlbums() {
         try {
           const albums: Array = yield apiService.libraryApiService.getLikedAlbums();
+
           if (albums.status == 200) {
-            const ids = albums.data.map(album => album.id);
+            const ids = albums.data.map(album => album.entity_id);
             const albumsData: Array = yield apiService.libraryApiService.getAlbums(
               ids,
             );
