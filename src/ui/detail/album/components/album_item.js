@@ -3,7 +3,7 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../../themes';
 import { observer } from 'mobx-react';
 import Images from '../../../../assets/icons/icons';
-import { subLongStr, isTextEmpty } from '../../../../utils';
+import { subLongStr, isTextEmpty, isSmallDevice } from '../../../../utils';
 import {
   likeHelper,
   unlikeHelper,
@@ -90,7 +90,7 @@ const AlbumItem = observer(
                 props.item && typeof props.item?.getName == 'function'
                   ? props.item?.getName()
                   : '',
-                15,
+                isSmallDevice() ? 10 : 15,
               )}
             </Text>
             <Text cls="primaryPurple lightFont">
@@ -98,7 +98,7 @@ const AlbumItem = observer(
                 props.item && typeof props.item?.getSubTitle == 'function'
                   ? props.item.getSubTitle()
                   : '',
-                15,
+                isSmallDevice() ? 12 : 15,
               )}
             </Text>
           </View>

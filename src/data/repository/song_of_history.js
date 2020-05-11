@@ -18,6 +18,10 @@ const SongOfHistoryStore = types
         });
       },
 
+      clearHistory() {
+        self.songs.clear();
+      },
+
       addSong(id) {
         if (indexOf(map([...self.songs], 'id'), id) < 0) {
           self.songs.push(id);

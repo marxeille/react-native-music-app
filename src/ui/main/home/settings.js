@@ -15,7 +15,7 @@ import { navigate, pop } from '../../../navigation/navigation_service';
 import { rootStore, RootContext } from '../../../data/context/root_context';
 import LinearGradient from 'react-native-linear-gradient';
 import LinearGradientText from '../library/components/LinearGradientText';
-import { getStatusBarHeight, D_WIDTH } from '../../../utils';
+import { getStatusBarHeight, D_WIDTH, isSmallDevice } from '../../../utils';
 import ListItem from '../../components/playlist_menu_concept/list_item';
 import Toast from 'react-native-simple-toast';
 import { logout } from '../../../data/datasource/api_config';
@@ -73,6 +73,7 @@ class Settings extends Component {
       rootStore?.playerStore?.clearSong();
       rootStore?.homeStore?.clearHomeData();
       rootStore?.libraryStore?.clearLibraryData();
+      rootStore?.historyStore.clearHistory();
       this.context.userStore.removeUserInfo();
     } else {
       Toast.showWithGravity(
@@ -151,7 +152,7 @@ class Settings extends Component {
                   {rootStore.userStore?.name}
                 </Text>
               </View>
-              <View cls="fullWidth">
+              <View cls={`fullWidth ${isSmallDevice() ? 'heightFn-170' : ''}`}>
                 <FlatList
                   data={this.settingItems}
                   renderItem={this.renderSettingItem}

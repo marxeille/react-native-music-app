@@ -6,7 +6,7 @@ import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
 import SearchBar from '../../main/search/components/search_bar';
-import { subLongStr } from '../../../utils';
+import { subLongStr, isSmallDevice } from '../../../utils';
 import { rootStore } from '../../../data/context/root_context';
 import Loading from '../../components/loading';
 import { CreatePlaylistModel } from './model/view_model';
@@ -179,13 +179,16 @@ const SearchItem = observer(
                 props.item && typeof props.item?.getName == 'function'
                   ? props.item?.getName()
                   : '',
-                25,
+                isSmallDevice() ? 20 : 25,
               )}
             </Text>
             <Text cls="primaryPurple lightFont">
-              {props.item && typeof props.item?.getSubTitle == 'function'
-                ? props.item.getSubTitle()
-                : ''}
+              {subLongStr(
+                props.item && typeof props.item?.getSubTitle == 'function'
+                  ? props.item.getSubTitle()
+                  : '',
+                isSmallDevice() ? 20 : 25,
+              )}
             </Text>
           </View>
         </View>

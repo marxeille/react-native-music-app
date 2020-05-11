@@ -156,23 +156,35 @@ export const PlayerStore = types
       addToLocalHistory: flow(function* addToLocalHistory(track) {
         // Save history
         getParent(self).historyStore.addSong(track.id);
+        const trackWithOwner = {
+          ...track,
+          owner_id: getParent(self).userStore.id,
+        };
         // Here is the part that we save history into local storage
-        AsyncStorage.setItem(AsyncStorageKey.SONG, JSON.stringify(track));
+        AsyncStorage.setItem(
+          AsyncStorageKey.SONG,
+          JSON.stringify(trackWithOwner),
+        );
         const localHistory = yield AsyncStorage.getItem(
           AsyncStorageKey.HISTORY,
         );
         let localHistoryJson = JSON.parse(localHistory);
+
         //In case there is already a data list in local storage
         if (localHistoryJson !== null) {
+          localHistoryJson = _.filter(
+            localHistoryJson,
+            history => history.owner_id == getParent(self).userStore.id,
+          );
           if (localHistoryJson.length < 15) {
-            localHistoryJson.push(track);
+            localHistoryJson.push(trackWithOwner);
             AsyncStorage.setItem(
               AsyncStorageKey.HISTORY,
               JSON.stringify(localHistoryJson),
             );
           } else {
             localHistoryJson.shift();
-            localHistoryJson.push(track);
+            localHistoryJson.push(trackWithOwner);
             AsyncStorage.setItem(
               AsyncStorageKey.HISTORY,
               JSON.stringify(localHistoryJson),
@@ -181,7 +193,7 @@ export const PlayerStore = types
         } else {
           //If not, create a new one
           const newLocalData = [];
-          newLocalData.push(track);
+          newLocalData.push(trackWithOwner);
           AsyncStorage.setItem(
             AsyncStorageKey.HISTORY,
             JSON.stringify(newLocalData),

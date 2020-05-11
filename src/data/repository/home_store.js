@@ -71,10 +71,12 @@ export const HomeStore = types
         // If there is a song in local storage, set it to current song
         const songPlaying = yield AsyncStorage.getItem(AsyncStorageKey.SONG);
         const songPlayingJson = JSON.parse(songPlaying);
+
         if (
           songPlayingJson &&
           songPlayingJson !== null &&
-          typeof songPlayingJson !== 'undefined'
+          typeof songPlayingJson !== 'undefined' &&
+          songPlayingJson.owner_id == getParent(self).userStore.id
         ) {
           getParent(self).createSongRef(songPlayingJson);
           getParent(self).playerStore.setCurrentSong(songPlayingJson.id);
@@ -90,8 +92,10 @@ export const HomeStore = types
         const localHistoryJson = JSON.parse(localHistory);
         if (localHistoryJson !== null) {
           localHistoryJson.map(history => {
-            getParent(self).createSongRef(history);
-            getParent(self).historyStore.addSong(history.id);
+            if (history.owner_id == getParent(self).userStore.id) {
+              getParent(self).createSongRef(history);
+              getParent(self).historyStore.addSong(history.id);
+            }
           });
         }
 
