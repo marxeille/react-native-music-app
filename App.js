@@ -22,6 +22,7 @@ import { observer, autorun } from 'mobx-react';
 import { navigationRef } from './src/navigation/navigation_service';
 import PlayerAudio from './src/ui/components/player/playerAudio';
 import PlayerContextProvider from './src/data/context/player_context';
+import { StatusBar } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    StatusBar.setBarStyle('light-content');
   }
 
   render() {
