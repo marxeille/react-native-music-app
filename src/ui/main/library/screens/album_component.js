@@ -22,6 +22,8 @@ export default class AlbumComponent extends Component {
     );
   };
 
+  handleLoadMore = () => {};
+
   render() {
     const albums = [...rootStore.libraryStore.albums];
     const { _showModal, _hideModal } = this.props;
@@ -41,6 +43,8 @@ export default class AlbumComponent extends Component {
             onScrollBeginDrag={Keyboard.dismiss}
             numColumns={3}
             horizontal={false}
+            onEndReachedThreshold={0.4}
+            onEndReached={this.handleLoadMore.bind(this)}
           />
         </View>
       </>
