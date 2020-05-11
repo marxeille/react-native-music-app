@@ -122,7 +122,7 @@ BASE_URL.addAsyncResponseTransform(async response => {
                 // DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native
                 // Link to this article: https://stackoverflow.com/questions/29807664/cyclic-dependency-returns-empty-object-in-react-native
                 // IT IS HAPPEN
-                let rootStore = require('../context/root_context');
+                const rootStore = require('../context/root_context');
                 AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(
                   value => {
                     rootStore.rootStore.userStore.removeSuccess(value);

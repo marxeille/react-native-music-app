@@ -324,8 +324,11 @@ export default class AlbumDetail extends Component {
         if (randomId == Number(rootStore?.playerStore?.currentSong?.id)) {
           navigate('player');
         } else {
-          navigate('player', { trackId: song ? song.id : randomId });
+          navigate('player', {
+            trackId: song ? song.id : randomId,
+          });
         }
+        rootStore?.playerStore?.setPlayFrom(item?.name ?? 'Album');
         rootStore.playerStore?.setState('play');
       } else {
         rootStore.playlistSongStore?.setPlaylist({});
