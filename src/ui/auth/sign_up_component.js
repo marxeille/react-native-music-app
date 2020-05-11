@@ -167,7 +167,7 @@ export default class SignUpComponent extends Component {
                       />
                       <Image
                         cls="widthFn-25 heightFn-25"
-                        source={Images.ic_pass}
+                        source={Images.ic_mail}
                       />
                     </View>
                   </LinearGradient>

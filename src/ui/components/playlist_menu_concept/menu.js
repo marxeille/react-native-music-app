@@ -129,14 +129,16 @@ const PlaylistMenuConcept = observer(
                 </View>
               ) : (
                 <Text cls="avertaFont white f4">
-                  {item.getType() == 'artist' ? item.getName() : title}
+                  {item?.getType() == 'artist' ? item?.getName() : title}
                 </Text>
               )}
               <Text cls="lightFont primaryPurple pt1 f8">
-                {item.getType() == 'artist'
-                  ? item.getSubTitle()
+                {item?.getType() == 'artist'
+                  ? item?.getSubTitle()
                   : item.owner_id == rootStore.userStore?.id
                   ? rootStore.userStore?.name
+                  : item?.getType() == 'article'
+                  ? item?.short_biography
                   : likeCount + ' lượt thích'}
               </Text>
               <View cls={`fullWidth ${isSmallDevice() ? 'heightFn-250' : ''}`}>

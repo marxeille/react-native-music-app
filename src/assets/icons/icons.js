@@ -59,6 +59,7 @@ const Images = {
   ic_list: require('./ic_list.png'),
   ic_lock: require('./ic_lock.png'),
   ic_logo: require('./ic_logo.png'),
+  ic_mail: require('./ic_mail.png'),
   ic_menu: require('./ic_menu.png'),
   ic_menu_white: require('./ic_menu_white.png'),
   ic_mess: require('./ic_mess.png'),

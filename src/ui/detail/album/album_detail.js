@@ -202,7 +202,7 @@ export default class AlbumDetail extends Component {
     );
 
     this.cancelablePromise = makeCancelable(
-      this.viewModel.getStats(item.getType(), item.id),
+      this.viewModel.getStats(item?.getType(), item.id),
       this.viewModel.getLikedPlaylist(item.id),
       this.viewModel.getAlbumTracks(
         //if item.id = 0, it's liked tracks playlist, so just get the list right in the rootStore. Otherwise, it's normal playlist
@@ -385,7 +385,9 @@ export default class AlbumDetail extends Component {
 
             <View cls="aic jcc pt2">
               <Text cls="white fw8 f3 pb2 avertaFont">
-                {typeof item.getName == 'function' ? name.toUpperCase() : '...'}
+                {typeof item.getName == 'function'
+                  ? item.getName().toUpperCase()
+                  : '...'}
               </Text>
               {item?.id == 0 ? (
                 <View cls="pb4">
@@ -396,9 +398,15 @@ export default class AlbumDetail extends Component {
               ) : (
                 <>
                   <Text cls="f9 primaryPurple lightFont">
-                    {`${this.viewModel.stats
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} lượt thích`}
+                    {`${
+                      typeof item?.getType == 'function' &&
+                      item?.getType() == 'article'
+                        ? item?.getSubTitle()
+                        : this.viewModel.stats
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, '.') +
+                          ' lượt thích'
+                    } `}
                   </Text>
                   <Text cls="white f8 lightFont pt2 pb4">
                     {hasSong
