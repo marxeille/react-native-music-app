@@ -117,7 +117,7 @@ const Modifyplaylist = wrap(
       <View>
         {renderHeader()}
         <View cls="aic jcc pa3">
-          <Text cls="white f3 avertaFont">{item.title()}</Text>
+          <Text cls="white f3 avertaFont">{item.getName()}</Text>
         </View>
         <View cls="fullView">
           <DraggableFlatList

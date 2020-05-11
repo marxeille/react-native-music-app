@@ -37,11 +37,12 @@ export default class ItemHome extends Component {
           bounceSpeed={400}
           marqueeDelay={800}>
           <Text cls="white pt2 fw6 lightFont">
-            {rootStore.playlist.get(this.props.id).title()}
+            {rootStore.playlist.get(this.props.id).getName()}
           </Text>
         </TextTicker>
         <Text cls="primaryPurple pt1 lightFont f11">
-          {rootStore.playlist.get(this.props.id).subTitle() ?? 'Billie Erlish'}
+          {rootStore.playlist.get(this.props.id).getSubTitle() ??
+            'Billie Erlish'}
         </Text>
       </View>
     );

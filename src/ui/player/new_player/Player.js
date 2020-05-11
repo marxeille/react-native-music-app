@@ -4,6 +4,7 @@ import {
   StatusBar,
   ImageBackground,
   Image,
+  Text,
   StyleSheet,
 } from 'react-native';
 import Header from './Header';
@@ -71,8 +72,7 @@ export default class Player extends Component {
 
   onForward() {
     if (
-      rootStore.playerStore?.trackIndex <
-      rootStore.playerStore?.getQueueSize() - 1
+      rootStore.playerStore?.trackIndex < rootStore.playerStore?.getQueueSize()
     ) {
       rootStore.playerStore?.changeSong('next');
     }
@@ -105,19 +105,22 @@ export default class Player extends Component {
 
   _renderModalContent = wrap(() => {
     const { showPlayMenu } = this.state;
-
-    return showPlayMenu ? (
-      <SongMenu
-        song={rootStore.playerStore?.currentSong}
-        toggleShareMenu={() => this.setState({ showPlayMenu: false })}
-        _hideModal={this._hideModal}
-      />
-    ) : (
-      <ShareModal
-        item={rootStore.playerStore?.currentSong}
-        _hideModal={this._hideModal}
-      />
-    );
+    if (showPlayMenu) {
+      return (
+        <SongMenu
+          song={rootStore.playerStore?.currentSong}
+          toggleShareMenu={() => this.setState({ showPlayMenu: false })}
+          _hideModal={this._hideModal}
+        />
+      );
+    } else {
+      return (
+        <ShareModal
+          item={rootStore.playerStore?.currentSong}
+          _hideModal={this._hideModal}
+        />
+      );
+    }
   });
 
   onSwipeLeft = () => {
@@ -132,6 +135,7 @@ export default class Player extends Component {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,
     };
+
     return (
       <ImageBackground
         blurRadius={15}
@@ -176,7 +180,7 @@ export default class Player extends Component {
             shuffleOn={rootStore?.playerStore?.shuffle}
             forwardDisabled={
               rootStore.playerStore?.trackIndex ===
-              rootStore.playerStore?.getQueueSize() - 1
+              rootStore.playerStore?.getQueueSize()
             }
             onPressShuffle={() =>
               rootStore?.playerStore?.setShuffle(
@@ -240,6 +244,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    height: isSmallDevice() ? 50 : isMeidumDevice() ? 70 : 130,
+    height: isSmallDevice() ? 50 : isMeidumDevice() ? 70 : 100,
   },
 });

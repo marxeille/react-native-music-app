@@ -21,22 +21,22 @@ import ZaloShare from 'react-native-zalo-share';
 
 const ShareModal = wrap(({ _hideModal, item }) => {
   let link;
-  switch (item.getType()) {
+  switch (item?.getType()) {
     case 'song':
       // code block
-      link = `diijam.vn/tracks/${item.id}`;
+      link = `diijam.vn/tracks/${item?.id}`;
       break;
     case 'playlist':
       // code block
-      link = `diijam.vn/playlists/${item.id}`;
+      link = `diijam.vn/playlists/${item?.id}`;
       break;
     case 'artist':
       // code block
-      link = `diijam.vn/artists/${item.id}`;
+      link = `diijam.vn/artists/${item?.id}`;
       break;
     case 'article':
       // code block
-      link = `diijam.vn/articles/${item.id}`;
+      link = `diijam.vn/articles/${item?.id}`;
       break;
     default:
       // code block
@@ -181,7 +181,9 @@ const ShareModal = wrap(({ _hideModal, item }) => {
     wrap(({ item }) => {
       return (
         <View cls={`${isSmallDevice() ? 'pt1' : 'pt2'}`}>
-          <TouchableOpacity onPress={() => item.action()} cls="jcc pv1 ph3 aic">
+          <TouchableOpacity
+            onPress={() => item?.action()}
+            cls="jcc pv1 ph3 aic">
             <View
               cls={`${
                 isSmallDevice() ? 'pa1' : 'pa2'
@@ -191,16 +193,17 @@ const ShareModal = wrap(({ _hideModal, item }) => {
                 <Image
                   cls="widthFn-18 heightFn-18"
                   style={{ tintColor: '#FFF' }}
-                  source={item.icon}
+                  source={item?.icon}
                 />
               </View>
-              <Text cls="white lightFont pl3">{item.title}</Text>
+              <Text cls="white lightFont pl3">{item?.title}</Text>
             </View>
           </TouchableOpacity>
         </View>
       );
     }),
   );
+  console.log('item', item);
 
   return (
     <View cls="fullView">

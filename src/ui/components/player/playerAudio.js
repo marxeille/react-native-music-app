@@ -36,7 +36,7 @@ class PlayerAudio extends React.Component {
         (rootStore?.playerStore?.repeat &&
           rootStore.playerStore?.getQueueSize() > 1) ||
         rootStore.playerStore?.trackIndex <
-          rootStore.playerStore?.getQueueSize() - 1
+          rootStore.playerStore?.getQueueSize()
       ) {
         rootStore.playerStore?.changeSong('next');
       }
