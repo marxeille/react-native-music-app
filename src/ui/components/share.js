@@ -216,63 +216,71 @@ const ShareModal = wrap(({ _hideModal, item }) => {
                 }
               : Images.bAAlbum
           }>
-          <View cls="fullWidth jcc">
-            <View cls="pv2 flx-row aic">
-              <View cls="aifs jcc flx-i">
-                <TouchableOpacity onPress={_hideModal} cls="jcc aic">
-                  <Image
-                    cls="widthFn-20 heightFn-20 ml3"
-                    style={{ tintColor: '#FFF' }}
-                    source={Images.ic_delete}
-                  />
-                </TouchableOpacity>
+          <ImageBackground
+            cls="fullWidth"
+            resizeMode="cover"
+            source={Images.bNgEnd}>
+            <View cls="fullWidth jcc">
+              <View cls="pv2 flx-row aic">
+                <View cls="aifs jcc flx-i">
+                  <TouchableOpacity onPress={_hideModal} cls="jcc aic">
+                    <Image
+                      cls="widthFn-20 heightFn-20 ml3"
+                      style={{ tintColor: '#FFF' }}
+                      source={Images.ic_delete}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View cls="aic jcc flexFn-5">
+                  <Text style={styles.title}>Chia sẻ</Text>
+                </View>
+                <View cls="flx-i" />
               </View>
-              <View cls="aic jcc flexFn-5">
-                <Text style={styles.title}>Chia sẻ</Text>
-              </View>
-              <View cls="flx-i" />
-            </View>
-            <View cls="aic pt3 pb3">
-              <Image
-                cls={`${
-                  isSmallDevice()
-                    ? 'widthFn-160 heightFn-160'
-                    : 'widthFn-200 heightFn-200'
-                }`}
-                source={
-                  !isTextEmpty(item?.getThumb())
-                    ? {
-                        uri: item?.getThumb(),
-                      }
-                    : Images.bAAlbum
-                }
-              />
-              <View cls="jcc aic">
-                <Text
+              <View cls="aic pt3 pb3">
+                <Image
                   cls={`${
-                    isSmallDevice() ? 'f7' : 'f5'
-                  } white fw7 pt2 avertaFont`}>
-                  {typeof item?.getName == 'function' && item?.getName()
-                    ? item?.getName()
-                    : item?.title() && typeof item?.title == 'function'
-                    ? item?.title()
-                    : rootStore.playerStore?.currentSong?.getName()}
-                </Text>
-                <Text
-                  cls={`${isSmallDevice() ? 'f9' : 'f7'} white pt1 avertaFont`}>
-                  {typeof item?.getSubTitle == 'function' && item?.getSubTitle()
-                    ? item?.getSubTitle()
-                    : item?.subTitle() && typeof item?.subTitle == 'function'
-                    ? item?.subTitle()
-                    : rootStore.playerStore?.currentSong?.getSubTitle()}
-                </Text>
+                    isSmallDevice()
+                      ? 'widthFn-160 heightFn-160'
+                      : 'widthFn-200 heightFn-200'
+                  }`}
+                  source={
+                    !isTextEmpty(item?.getThumb())
+                      ? {
+                          uri: item?.getThumb(),
+                        }
+                      : Images.bAAlbum
+                  }
+                />
+                <View cls="jcc aic">
+                  <Text
+                    cls={`${
+                      isSmallDevice() ? 'f7' : 'f5'
+                    } white fw7 pt2 avertaFont`}>
+                    {typeof item?.getName == 'function' && item?.getName()
+                      ? item?.getName()
+                      : item?.title() && typeof item?.title == 'function'
+                      ? item?.title()
+                      : rootStore.playerStore?.currentSong?.getName()}
+                  </Text>
+                  <Text
+                    cls={`${
+                      isSmallDevice() ? 'f9' : 'f7'
+                    } white pt1 avertaFont`}>
+                    {typeof item?.getSubTitle == 'function' &&
+                    item?.getSubTitle()
+                      ? item?.getSubTitle()
+                      : item?.subTitle() && typeof item?.subTitle == 'function'
+                      ? item?.subTitle()
+                      : rootStore.playerStore?.currentSong?.getSubTitle()}
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
 
-          <View cls="fullWidth aife asfe" style={styles.underWave}>
-            <Image cls="fullWidth" resizeMode="contain" source={Images.sNg} />
-          </View>
+            <View cls="fullWidth aife asfe" style={styles.underWave}>
+              <Image cls="fullWidth" resizeMode="contain" source={Images.sNg} />
+            </View>
+          </ImageBackground>
         </ImageBackground>
 
         <View cls="flx-i pt3">

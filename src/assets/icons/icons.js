@@ -104,5 +104,6 @@ const Images = {
   setting: require('./setting.png'),
   wave: require('./wave.png'),
   wave2: require('./wave2.png'),
+  bNgEnd: require('./bNgEn.png'),
 };
 export default Images;
