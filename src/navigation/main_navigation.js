@@ -92,6 +92,9 @@ export default function mainContainer() {
     <Stack.Navigator
       headerMode="none"
       screenOptions={{
+        cardStyle: {
+          backgroundColor: 'transparent',
+        },
         gestureEnabled: true,
         gestureDirection: 'vertical',
         gestureResponseDistance: {

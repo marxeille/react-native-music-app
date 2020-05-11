@@ -16,7 +16,9 @@ export default class PlaylistComponent extends Component {
   constructor(props) {
     super(props);
     this.modalPlaylist = React.createRef();
-    this.state = {};
+    this.state = {
+      playlists: [{}, ...rootStore.libraryStore.playlists],
+    };
   }
 
   componentDidMount() {
@@ -63,9 +65,18 @@ export default class PlaylistComponent extends Component {
     );
   };
 
+  handleLoadMore = () => {
+    // this.setState({
+    //   playlists: [
+    //     ...rootStore.libraryStore.playlists,
+    //     ...rootStore.libraryStore.playlists,
+    //   ],
+    // });
+  };
+
   render() {
     const { _showModal, _hideModal } = this.props;
-
+    const { playlists } = this.state;
     return (
       <View style={{ marginBottom: 200 }}>
         <View cls="pt3">
@@ -78,12 +89,14 @@ export default class PlaylistComponent extends Component {
             <FlatList
               keyboardDismissMode="on-drag"
               showsVerticalScrollIndicator={false}
-              data={[{}, ...rootStore.libraryStore.playlists]}
+              data={playlists}
               onScrollBeginDrag={Keyboard.dismiss}
               keyExtractor={(item, index) => index.toString()}
               numColumns={3}
               horizontal={false}
               renderItem={this.renderPlaylist}
+              onEndReachedThreshold={0.5}
+              onEndReached={() => this.handleLoadMore()}
             />
           )}
         </View>

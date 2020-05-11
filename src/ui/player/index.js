@@ -5,7 +5,13 @@ import Player2 from './new_player/App';
 import Queue from './queue_2';
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
-import { getStatusBarHeight, D_WIDTH, D_HEIGHT } from '../../utils';
+import {
+  getStatusBarHeight,
+  D_WIDTH,
+  D_HEIGHT,
+  isSmallDevice,
+  isMeidumDevice,
+} from '../../utils';
 import LinearGradient from 'react-native-linear-gradient';
 import { rootStore } from '../../data/context/root_context';
 import { observer } from 'mobx-react';
@@ -74,7 +80,11 @@ export default class PlayerTabView extends React.Component {
       <LinearGradient
         colors={['#291047', '#1a0632', '#110926', '#110926']}
         start={{ x: 1, y: 0 }}
-        end={{ x: 1, y: 1 }}>
+        end={{ x: 1, y: 1 }}
+        style={{
+          borderTopLeftRadius: !isSmallDevice() && !isMeidumDevice() ? 35 : 0,
+          borderTopRightRadius: !isSmallDevice() && !isMeidumDevice() ? 35 : 0,
+        }}>
         <View cls="fullView">
           {this.state.index == 0 ? (
             <Image
