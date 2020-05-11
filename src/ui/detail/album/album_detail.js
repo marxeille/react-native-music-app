@@ -385,7 +385,7 @@ export default class AlbumDetail extends Component {
 
             <View cls="aic jcc pt2">
               <Text cls="white fw8 f3 pb2 avertaFont">
-                {typeof item.title == 'function' ? name.toUpperCase() : '...'}
+                {typeof item.getName == 'function' ? name.toUpperCase() : '...'}
               </Text>
               {item?.id == 0 ? (
                 <View cls="pb4">
@@ -403,7 +403,7 @@ export default class AlbumDetail extends Component {
                   <Text cls="white f8 lightFont pt2 pb4">
                     {hasSong
                       ? `Idol khÁ ${
-                          typeof item.subTitle == 'function'
+                          typeof item.getSubTitle == 'function'
                             ? item.getDescription()
                             : '...'
                         } bẢnH is on top of the Vinahey hey hey!`

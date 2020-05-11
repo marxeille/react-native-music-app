@@ -25,10 +25,12 @@ const SeekBar = observer(
     const remaining = minutesAndSeconds(trackLength - currentPosition);
     return !slider ? (
       <View cls="flx-row fullWidth heightFn-2">
-        <View style={{ flex: currentPosition, backgroundColor: '#d9a2c9' }} />
+        <View
+          style={{ flex: Number(currentPosition), backgroundColor: '#d9a2c9' }}
+        />
         <View
           style={{
-            flex: trackLength > 1 && trackLength - currentPosition,
+            flex: Number(trackLength > 1 && trackLength - currentPosition),
             backgroundColor: '#4b3277',
           }}
         />

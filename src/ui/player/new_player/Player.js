@@ -4,7 +4,6 @@ import {
   StatusBar,
   ImageBackground,
   Image,
-  Text,
   StyleSheet,
 } from 'react-native';
 import Header from './Header';
@@ -82,27 +81,6 @@ export default class Player extends Component {
     pop();
   };
 
-  renderShareItem = wrap(({ item }) => {
-    return (
-      <View cls="pt2">
-        <TouchableOpacity onPress={() => item.action()} cls="jcc pv1 ph3 aic">
-          <View
-            cls="br5 ba pa2 fullWidth aic flx-row"
-            style={{ borderColor: '#d29dc5' }}>
-            <View cls="pl2">
-              <Image
-                cls="widthFn-18 heightFn-18"
-                style={{ tintColor: '#FFF' }}
-                source={item.icon}
-              />
-            </View>
-            <Text cls="white lightFont pl3">{item.title}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  });
-
   _renderModalContent = wrap(() => {
     const { showPlayMenu } = this.state;
     if (showPlayMenu) {
@@ -129,7 +107,6 @@ export default class Player extends Component {
 
   render() {
     const { currentSong } = rootStore?.playerStore;
-    const goFrom = this.props.route?.params?.from;
     const { showPlayMenu } = this.state;
     const config = {
       velocityThreshold: 0.3,

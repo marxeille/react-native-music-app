@@ -27,6 +27,7 @@
     "classnames": "^2.2.6",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.4.0",
+    "jsc-android": "^241213.1.0",
     "lodash": "^4.17.15",
     "mobx": "^5.15.4",
     "mobx-devtools-mst": "^0.9.21",
