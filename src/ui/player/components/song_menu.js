@@ -15,7 +15,7 @@ import { rootStore } from '../../../data/context/root_context';
 import AddPlayListModal from './add_playlist_modal';
 import { navigate } from '../../../navigation/navigation_service';
 import { ScrollView } from 'react-native-gesture-handler';
-import { subLongStr, isTextEmpty } from '../../../utils';
+import { subLongStr, isTextEmpty, getStatusBarHeight } from '../../../utils';
 import { isSmallDevice } from '../../../utils';
 
 @observer
@@ -66,7 +66,9 @@ export default class SongMenu extends Component {
       </View>
     ) : (
       <>
-        <View cls="aic jcc pt4 pb2">
+        <View
+          cls="aic jcc pt4 pb2"
+          style={{ paddingTop: getStatusBarHeight() }}>
           <ImageBackground
             cls={`${
               isSmallDevice()

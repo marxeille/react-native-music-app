@@ -231,6 +231,7 @@ export default class LibraryTabView extends React.Component {
         <BottomModal
           ref={this.modalFilter}
           justifyCenterModal
+          forceInsetTop={'never'}
           forceInsetBottom={'never'}
           headerNone={true}
           customGradient={['#1a0632', '#1a0632', '#000', '#13151A']}

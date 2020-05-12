@@ -366,7 +366,7 @@ export default class AlbumDetail extends Component {
             <View cls="pa3">
               <View
                 cls="flx-row aic jcsb"
-                style={{ paddingTop: getStatusBarHeight() }}>
+                style={{ paddingTop: getStatusBarHeight() + 10 }}>
                 <TouchableOpacity
                   onPress={() => this.props.navigation.goBack()}>
                   <Image
@@ -638,7 +638,11 @@ export default class AlbumDetail extends Component {
               _showModal={this._showModal}
               _handleLoadMore={this.handleLoadMore}
             />
-            <BottomModal ref={this.modalSong} headerNone>
+            <BottomModal
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}
+              ref={this.modalSong}
+              headerNone>
               {showShareModal ? (
                 <ShareModal
                   item={this.viewModel.selectedSong}
@@ -657,7 +661,8 @@ export default class AlbumDetail extends Component {
             <BottomModal
               headerNone
               justifyCenterModal
-              // forceInsetBottom="never"
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}
               containerCls=""
               customGradient={['#000', '#1a0632', '#000', '#13151A']}
               ref={this.modalPlaylist}>
@@ -696,6 +701,8 @@ export default class AlbumDetail extends Component {
             <BottomModal
               headerNone
               justifyCenterModal
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}
               containerCls=""
               ref={this.modalAddSong}>
               <AddSongPlaylist

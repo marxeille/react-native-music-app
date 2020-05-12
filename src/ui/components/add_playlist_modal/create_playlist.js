@@ -19,6 +19,7 @@ import {
   isTextEmpty,
   subLongStr,
   isSmallDevice,
+  getStatusBarHeight,
 } from '../../../utils';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
@@ -135,7 +136,9 @@ const CreatePlaylistModal = observer(
             colors={['#291047', '#1a0632', '#110926', '#110926']}
             start={{ x: 1, y: 1 }}
             end={{ x: 0, y: 0 }}>
-            <View cls="pv2 flx-row aic">
+            <View
+              cls="pv2 flx-row aic"
+              style={{ paddingTop: getStatusBarHeight() + 10 }}>
               <View cls="aifs jcc flx-i">
                 <TouchableOpacity
                   onPress={() => {

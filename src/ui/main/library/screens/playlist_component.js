@@ -103,6 +103,8 @@ export default class PlaylistComponent extends Component {
         <BottomModal
           ref={this.modalPlaylist}
           headerNone={true}
+          forceInsetTop={'never'}
+          forceInsetBottom={'never'}
           justifyCenterModal
           containerCls="">
           <CreatePlayListModal _hideModal={this._hideModal} />

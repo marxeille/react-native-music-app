@@ -13,7 +13,11 @@ import {
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
 import { rootStore } from '../../data/context/root_context';
-import { isTextEmpty, isSmallDevice } from '../../utils/index';
+import {
+  isTextEmpty,
+  isSmallDevice,
+  getStatusBarHeight,
+} from '../../utils/index';
 import Toast from 'react-native-simple-toast';
 import Share from 'react-native-share';
 import { ShareDialog } from 'react-native-fbsdk';
@@ -224,7 +228,9 @@ const ShareModal = wrap(({ _hideModal, item }) => {
             resizeMode="cover"
             source={Images.bNgEnd}>
             <View cls="fullWidth jcc">
-              <View cls="pv2 flx-row aic">
+              <View
+                cls="pv2 flx-row aic"
+                style={{ paddingTop: getStatusBarHeight() + 10 }}>
                 <View cls="aifs jcc flx-i">
                   <TouchableOpacity onPress={_hideModal} cls="jcc aic">
                     <Image

@@ -274,7 +274,7 @@ export default class ArtistDetail extends Component {
             <View cls="pa3">
               <View
                 cls="flx-row aic jcsb"
-                style={{ paddingTop: getStatusBarHeight() }}>
+                style={{ paddingTop: getStatusBarHeight() + 10 }}>
                 <TouchableOpacity
                   onPress={() => this.props.navigation.goBack()}>
                   <Image
@@ -482,12 +482,16 @@ export default class ArtistDetail extends Component {
               data={[...this.viewModel.songs.values()]}
               showsVerticalScrollIndicator={false}
               renderItem={this._renderItem}
+              onScroll={event => {
+                // console.log(event.nativeEvent.contentOffset.y);
+              }}
               keyExtractor={(item, index) => index.toString()}
             />
             <BottomModal
               headerNone
               justifyCenterModal
-              // forceInsetBottom="never"
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}
               containerCls=""
               customGradient={['#000', '#1a0632', '#000', '#13151A']}
               ref={this.modalMenu}>
@@ -511,13 +515,21 @@ export default class ArtistDetail extends Component {
                 />
               )}
             </BottomModal>
-            <BottomModal ref={this.modalSong} headerNone>
+            <BottomModal
+              ref={this.modalSong}
+              headerNone
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}>
               <SongMenu
                 song={this.viewModel?.selectedSong}
                 _hideModal={this._hideModal}
               />
             </BottomModal>
-            <BottomModal ref={this.modalShare} headerNone>
+            <BottomModal
+              ref={this.modalShare}
+              headerNone
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}>
               <ShareModal item={artist} _hideModal={this._hideModalShare} />
             </BottomModal>
           </ImageBackground>

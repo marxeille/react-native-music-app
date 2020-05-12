@@ -215,7 +215,11 @@ export default class SearchComponent extends Component {
                 </View>
               </ScrollView>
             )}
-            <BottomModal ref={this.modalMenu} headerNone>
+            <BottomModal
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}
+              ref={this.modalMenu}
+              headerNone>
               <SongMenu song={song} _hideModal={this._hideModal} />
             </BottomModal>
           </ImageBackground>

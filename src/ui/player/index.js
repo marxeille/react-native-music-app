@@ -35,7 +35,10 @@ export default class PlayerTabView extends React.Component {
           return (
             <TouchableOpacity
               key={i}
-              style={[styles.tabItem, { paddingTop: getStatusBarHeight() }]}
+              style={[
+                styles.tabItem,
+                { paddingTop: getStatusBarHeight() + 10 },
+              ]}
               onPress={() => this.setState({ index: i })}>
               <View cls="aic jcc">
                 {i == this.state.index ? (

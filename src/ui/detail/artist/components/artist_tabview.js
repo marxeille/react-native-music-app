@@ -80,7 +80,7 @@ export default class ArtistTabView extends Component {
           <View cls="pt2 asc" style={{ paddingBottom: showCover ? 0 : 150 }}>
             {showCover ? (
               <Image
-                cls="squareFn-180"
+                cls="squareFn-150"
                 source={
                   typeof artist?.getThumb == 'function' &&
                   artist?.getThumb() !== ''

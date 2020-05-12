@@ -191,7 +191,7 @@ export default class Player extends Component {
           title={'Chia sẻ'}
           // onModalShow={this._showModal}
           justifyCenterModal
-          // forceInsetTop={'never'}
+          forceInsetTop={'never'}
           forceInsetBottom={'never'}
           headerNone={true}
           closeBottomNone={!showPlayMenu}
