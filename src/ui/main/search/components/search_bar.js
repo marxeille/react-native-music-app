@@ -19,7 +19,13 @@ export default class SearchBar extends Component {
   }
 
   render() {
-    const { keyword, onChangeKeyword, onFocus, placeHolder } = this.props;
+    const {
+      keyword,
+      onChangeKeyword,
+      onFocus,
+      placeHolder,
+      autoFocus,
+    } = this.props;
 
     return (
       <TouchableWithoutFeedback
@@ -39,6 +45,7 @@ export default class SearchBar extends Component {
               onFocus={() => onFocus()}
               onChangeText={value => onChangeKeyword(value)}
               autoCorrect={false}
+              autoFocus={autoFocus ?? false}
             />
             {keyword == null || keyword == '' || keyword == undefined ? null : (
               <TouchableOpacity onPress={() => onChangeKeyword('')}>
