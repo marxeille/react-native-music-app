@@ -3,7 +3,7 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../../themes';
 import { observer } from 'mobx-react';
 import Images from '../../../../assets/icons/icons';
-import { subLongStr } from '../../../../utils';
+import { subLongStr, isSmallDevice } from '../../../../utils';
 import {
   likeHelper,
   unlikeHelper,
@@ -70,19 +70,22 @@ const ArtistItem = observer(
 
     return (
       <View
-        cls="jcsb flx-row aic pr3 br3"
+        cls="jcsb flx-row aic pr3 br2"
         style={{ backgroundColor: '#321a54' }}>
-        <View cls="flx-row pa3 pb2 pt2">
+        <View cls="flx-i flx-wrap pa3 pb2 pt2">
           <View cls="jcc">
-            <Text cls="white fw7 f6 lightFont">
-              {subLongStr(
-                props.item && typeof props.item?.getName == 'function'
-                  ? props.item?.getName()
-                  : '',
-                15,
-              )}
+            <Text
+              cls={`${isSmallDevice() ? 'f8' : 'f6'} white fw7  lightFont`}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {props.item && typeof props.item?.getName == 'function'
+                ? props.item?.getName()
+                : ''}
             </Text>
-            <Text cls="primaryPurple f9 lightFont pt1">
+            <Text
+              cls={`${
+                isSmallDevice() ? 'f10' : 'f9'
+              } primaryPurple  lightFont pt1`}>
               {`${stats.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} `}
             </Text>
           </View>

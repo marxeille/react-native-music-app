@@ -134,7 +134,7 @@ export default class ForgotPassWordComponent extends Component {
                     />
                     <Image
                       cls="widthFn-25 heightFn-25"
-                      source={Images.ic_mail}
+                      source={Images.ic_email}
                     />
                   </View>
                 </LinearGradient>

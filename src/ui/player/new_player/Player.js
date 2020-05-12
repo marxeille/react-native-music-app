@@ -39,6 +39,8 @@ export default class Player extends Component {
 
   componentDidMount() {
     const trackId = this.props.route?.params?.trackId;
+    console.log('trackId', trackId);
+
     rootStore.playerStore?.prepareSong(trackId ?? null);
   }
 
@@ -123,9 +125,7 @@ export default class Player extends Component {
           onSwipeDown={this.onSwipeDown}
           onSwipeLeft={this.onSwipeLeft}
           config={config}>
-          <Header
-            message={`Playing From ${rootStore?.playerStore?.playFrom.toUpperCase()}`}
-          />
+          <Header message="Playing From Charts" />
           <AlbumArt url={currentSong?.artwork} />
           <TrackDetails
             title={currentSong?.getName() ?? 'Chưa xác định'}

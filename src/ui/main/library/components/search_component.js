@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { wrap } from '../../../../themes';
 import Images from '../../../../assets/icons/icons';
@@ -17,6 +18,7 @@ export default class SearchComponent extends Component {
     this.state = {
       keyword: '',
     };
+    this.search = React.createRef();
   }
 
   onChangeText(event, name) {
@@ -30,25 +32,31 @@ export default class SearchComponent extends Component {
     const { _showModal } = this.props;
     return (
       <View cls="fullWidth pt3 pb3 flx-row aic">
-        <LinearGradient
-          colors={['#4E357A', '#9069A0', '#D39DC5']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          cls="flx-i mr2"
-          style={{ borderRadius: 10, height: 57, padding: 1 }}>
-          <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
-            <Image source={Images.ic_search} />
-            <TextInput
-              secureTextEntry={false}
-              placeholderTextColor="#fff"
-              placeholder={'Tìm trong nghệ sĩ'}
-              style={[styles.inputText]}
-              value={this.state.keyword}
-              onChange={event => this.onChangeText(event, 'keyword')}
-              autoCorrect={false}
-            />
-          </View>
-        </LinearGradient>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            this.search.current.focus();
+          }}>
+          <LinearGradient
+            colors={['#4E357A', '#9069A0', '#D39DC5']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            cls="flx-i mr2"
+            style={{ borderRadius: 10, height: 57, padding: 1 }}>
+            <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
+              <Image source={Images.ic_search} />
+              <TextInput
+                ref={this.search}
+                secureTextEntry={false}
+                placeholderTextColor="#fff"
+                placeholder={'Tìm trong nghệ sĩ'}
+                style={[styles.inputText]}
+                value={this.state.keyword}
+                onChange={event => this.onChangeText(event, 'keyword')}
+                autoCorrect={false}
+              />
+            </View>
+          </LinearGradient>
+        </TouchableWithoutFeedback>
         <TouchableOpacity onPress={() => _showModal()}>
           <LinearGradient
             colors={['#4E357A', '#9069A0', '#D39DC5']}

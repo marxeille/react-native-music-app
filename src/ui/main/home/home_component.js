@@ -6,7 +6,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  LayoutAnimation,
+  Animated,
 } from 'react-native';
 import { wrap } from '../../../themes';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -16,7 +16,6 @@ import { rootStore } from '../../../data/context/root_context';
 import { observer } from 'mobx-react';
 import Images from '../../../assets/icons/icons';
 import LinearGradient from 'react-native-linear-gradient';
-import { getStatusBarHeight } from '../../../utils';
 
 @observer
 @wrap
@@ -24,7 +23,7 @@ export default class HomeComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isActionSettingVisible: true,
+      scrollY: new Animated.Value(0),
     };
   }
 
@@ -33,40 +32,8 @@ export default class HomeComponent extends Component {
     rootStore.userStore.fetchUserData();
   }
 
-  _listViewOffset = 0;
-
-  _onScroll = event => {
-    // Simple fade-in / fade-out animation
-    const CustomLayoutLinear = {
-      duration: 300,
-      create: {
-        type: LayoutAnimation.Types.linear,
-        property: LayoutAnimation.Properties.opacity,
-      },
-      update: {
-        type: LayoutAnimation.Types.linear,
-        property: LayoutAnimation.Properties.opacity,
-      },
-      delete: {
-        type: LayoutAnimation.Types.linear,
-        property: LayoutAnimation.Properties.opacity,
-      },
-    };
-    // Check if the user is scrolling up or down by confronting the new scroll position with your own one
-    const currentOffset = event.nativeEvent.contentOffset.y;
-    const direction =
-      currentOffset > 0 && currentOffset > this._listViewOffset ? 'down' : 'up';
-    // If the user is scrolling down (and the action-button is still visible) hide it
-    const isActionSettingVisible = direction === 'up';
-    if (isActionSettingVisible !== this.state.isActionSettingVisible) {
-      LayoutAnimation.configureNext(CustomLayoutLinear);
-      this.setState({ isActionSettingVisible });
-    }
-    // Update your scroll position
-    this._listViewOffset = currentOffset;
-  };
-
   render() {
+    const { scrollY } = this.state;
     return rootStore.homeStore.state === 'loading' ? (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}
@@ -84,10 +51,21 @@ export default class HomeComponent extends Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
-          <ImageBackground cls="fullView" source={Images.bg3}>
-            {this.state.isActionSettingVisible ? (
+          <ImageBackground
+            cls="fullView"
+            style={{ zIndex: 1 }}
+            source={Images.bg3}>
+            <Animated.View
+              style={{
+                opacity: scrollY.interpolate({
+                  inputRange: [0, 50],
+                  outputRange: [1, 0],
+                }),
+                zIndex: 2,
+              }}>
               <TouchableOpacity
-                cls="pt4 pb2"
+                cls="pt4 pb2 absolute asfe"
+                style={{ zIndex: 2 }}
                 onPress={() => navigate('setting')}>
                 <View cls="pa3 pb1 flx-row-reverse aic">
                   <LinearGradient
@@ -110,12 +88,17 @@ export default class HomeComponent extends Component {
                   </LinearGradient>
                 </View>
               </TouchableOpacity>
-            ) : (
-              <View style={{ height: getStatusBarHeight() }} />
-            )}
+            </Animated.View>
             <ScrollView
-              style={{ width: '100%' }}
-              onScroll={this._onScroll}
+              cls="pt5 mt4"
+              style={{ width: '100%', zIndex: 1 }}
+              contentContainerStyle={{
+                paddingBottom: 70,
+              }}
+              onScroll={Animated.event([
+                { nativeEvent: { contentOffset: { y: this.state.scrollY } } },
+              ])}
+              scrollEventThrottle={16}
               showsVerticalScrollIndicator={false}>
               <HomeListComponent
                 cate="1"

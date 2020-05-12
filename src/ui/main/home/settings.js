@@ -68,20 +68,12 @@ class Settings extends Component {
   }
 
   handleLogout = async () => {
-    const response = await logout();
-    if (response?.status == 200) {
-      rootStore?.playerStore?.clearSong();
-      rootStore?.homeStore?.clearHomeData();
-      rootStore?.libraryStore?.clearLibraryData();
-      rootStore?.historyStore.clearHistory();
-      this.context.userStore.removeUserInfo();
-    } else {
-      Toast.showWithGravity(
-        'Đăng xuất thất bại, vui lòng thử lại',
-        Toast.LONG,
-        Toast.BOTTOM,
-      );
-    }
+    await logout();
+    rootStore?.playerStore?.clearSong();
+    rootStore?.homeStore?.clearHomeData();
+    rootStore?.libraryStore?.clearLibraryData();
+    rootStore?.historyStore.clearHistory();
+    this.context.userStore.removeUserInfo();
   };
 
   renderHeader = wrap(() => {
@@ -129,18 +121,22 @@ class Settings extends Component {
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
           <ImageBackground cls="fullView aic" source={Images.bg3}>
-            <View cls="fullView">
+            <View cls="fullView" style={{ flex: 3 }}>
               {this.renderHeader()}
               <View>
                 <View cls="pt4">
                   <Image
-                    cls="widthFn-150 heightFn-150 asc"
+                    cls={`${
+                      isSmallDevice()
+                        ? 'widthFn-100 heightFn-100'
+                        : 'widthFn-150 heightFn-150'
+                    } asc`}
                     source={rootStore.userStore?.avatar ?? Images.bAAlbum}
                   />
                   <View style={styles.abs}>
                     <Image
-                      resizeMode="contain"
-                      cls="heightFn-50"
+                      resizeMode="stretch"
+                      cls={`${isSmallDevice() ? 'heightFn-25' : 'heightFn-50'}`}
                       style={{ width: D_WIDTH }}
                       source={Images.sNg}
                     />
@@ -148,11 +144,13 @@ class Settings extends Component {
                 </View>
               </View>
               <View cls="aic jcc pt3 pb2">
-                <Text cls="avertaFont white f3">
+                <Text cls={`${isSmallDevice() ? 'f5' : 'f3'} avertaFont white`}>
                   {rootStore.userStore?.name}
                 </Text>
               </View>
-              <View cls={`fullWidth ${isSmallDevice() ? 'heightFn-170' : ''}`}>
+              <View
+                cls="flx-i"
+                style={{ marginBottom: isSmallDevice() ? 60 : 70 }}>
                 <FlatList
                   data={this.settingItems}
                   renderItem={this.renderSettingItem}
@@ -182,7 +180,7 @@ export default Settings;
 const styles = StyleSheet.create({
   fixedBottom: {
     position: 'absolute',
-    bottom: 30,
+    bottom: isSmallDevice() ? 20 : 30,
   },
   abs: {
     position: 'absolute',

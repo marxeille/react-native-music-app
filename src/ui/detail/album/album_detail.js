@@ -358,31 +358,37 @@ export default class AlbumDetail extends Component {
               ? { uri: item?.getThumb() }
               : Images.nN
           }>
-          <View cls="pa3">
-            <View
-              cls="flx-row aic jcsb"
-              style={{ paddingTop: getStatusBarHeight() }}>
-              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                <Image
-                  cls="widthFn-10 heightFn-20"
-                  source={Images.ic_back_white}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this._showModalPlaylist}>
-                <Image source={Images.ic_menu_white} />
-              </TouchableOpacity>
+          <ImageBackground
+            cls={`jcsb`}
+            style={{ opacity: 0.9 }}
+            resizeMode="cover"
+            source={Images.bNgEnd}>
+            <View cls="pa3">
+              <View
+                cls="flx-row aic jcsb"
+                style={{ paddingTop: getStatusBarHeight() }}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.goBack()}>
+                  <Image
+                    cls="widthFn-10 heightFn-20"
+                    source={Images.ic_back_white}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this._showModalPlaylist}>
+                  <Image source={Images.ic_menu_white} />
+                </TouchableOpacity>
+              </View>
+              <Image
+                cls="squareFn-195 asc"
+                source={
+                  !isEmpty(item) && !isTextEmpty(item?.getThumb())
+                    ? { uri: item?.getThumb() }
+                    : item?.id == 0
+                    ? Images.ic_heart_cover
+                    : Images.bAAlbum
+                }
+              />
             </View>
-            <Image
-              cls="squareFn-195 asc"
-              source={
-                !isEmpty(item) && !isTextEmpty(item?.getThumb())
-                  ? { uri: item?.getThumb() }
-                  : item?.id == 0
-                  ? Images.ic_heart_cover
-                  : Images.bAAlbum
-              }
-            />
-
             <View cls="aic jcc pt2">
               <Text cls="white fw8 f3 pb2 avertaFont">
                 {typeof item.getName == 'function'
@@ -420,18 +426,18 @@ export default class AlbumDetail extends Component {
                 </>
               )}
             </View>
-          </View>
-          <View style={{ position: 'absolute', bottom: -23 }}>
-            <ActionGroup
-              item={item}
-              playSong={this.playSong}
-              playing={this.state.playing}
-              reaction={this.reaction}
-              addSong={this.addSong}
-              hasSong={hasSong}
-              viewModel={this.viewModel}
-            />
-          </View>
+            <View style={{ position: 'absolute', bottom: -23 }}>
+              <ActionGroup
+                item={item}
+                playSong={this.playSong}
+                playing={this.state.playing}
+                reaction={this.reaction}
+                addSong={this.addSong}
+                hasSong={hasSong}
+                viewModel={this.viewModel}
+              />
+            </View>
+          </ImageBackground>
         </ImageBackground>
       </View>
     );

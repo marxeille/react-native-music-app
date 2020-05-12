@@ -66,40 +66,39 @@ const AlbumItem = observer(
     });
     return (
       <View
-        cls="jcsb flx-row aic pr3 br3"
+        cls="flx-row aic pl3 pr3 pt2 pb2 br2"
         style={{ backgroundColor: '#321a54' }}>
-        <View cls="flx-row pa3 pb2 pt2">
-          <Image
-            cls="squareFn-50"
-            source={
-              !isTextEmpty(
-                props.item && typeof props.item?.getThumb == 'function'
-                  ? props.item?.getThumb()
-                  : '',
-              )
-                ? {
-                    uri: props.item?.getThumb(),
-                  }
-                : Images.bAAlbum
-            }
-          />
-
-          <View cls="jcc pl3">
-            <Text cls="white fw7 f6 lightFont">
-              {subLongStr(
-                props.item && typeof props.item?.getName == 'function'
-                  ? props.item?.getName()
-                  : '',
-                isSmallDevice() ? 10 : 15,
-              )}
+        <Image
+          cls="squareFn-50"
+          source={
+            !isTextEmpty(
+              props.item && typeof props.item?.getThumb == 'function'
+                ? props.item?.getThumb()
+                : '',
+            )
+              ? {
+                  uri: props.item?.getThumb(),
+                }
+              : Images.bAAlbum
+          }
+        />
+        <View cls="flx-i flx-wrap pl3 pr3">
+          <View>
+            <Text
+              cls="white fw7 f6 lightFont"
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {props.item && typeof props.item?.getName == 'function'
+                ? props.item?.getName()
+                : ''}
             </Text>
-            <Text cls="primaryPurple lightFont">
-              {subLongStr(
-                props.item && typeof props.item?.getSubTitle == 'function'
-                  ? props.item.getSubTitle()
-                  : '',
-                isSmallDevice() ? 12 : 15,
-              )}
+            <Text
+              cls="primaryPurple lightFont"
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {props.item && typeof props.item?.getSubTitle == 'function'
+                ? props.item.getSubTitle()
+                : ''}
             </Text>
           </View>
         </View>

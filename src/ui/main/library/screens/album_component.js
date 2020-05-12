@@ -11,7 +11,7 @@ import { observer } from 'mobx-react';
 export default class AlbumComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { albums: [...rootStore.libraryStore.albums] };
   }
 
   renderPlaylist = item => {
@@ -22,8 +22,17 @@ export default class AlbumComponent extends Component {
     );
   };
 
+  handleLoadMore = () => {
+    // this.setState({
+    //   albums: [
+    //     ...rootStore.libraryStore.albums,
+    //     ...rootStore.libraryStore.albums,
+    //   ],
+    // });
+  };
+
   render() {
-    const albums = [...rootStore.libraryStore.albums];
+    const { albums } = this.state;
     const { _showModal, _hideModal } = this.props;
 
     return (
@@ -41,6 +50,8 @@ export default class AlbumComponent extends Component {
             onScrollBeginDrag={Keyboard.dismiss}
             numColumns={3}
             horizontal={false}
+            onEndReachedThreshold={0}
+            onEndReached={() => this.handleLoadMore()}
           />
         </View>
       </>

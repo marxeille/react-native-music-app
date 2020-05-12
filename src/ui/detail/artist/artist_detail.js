@@ -255,59 +255,66 @@ export default class ArtistDetail extends Component {
           blurRadius={15}
           cls={`jcsb`}
           source={Images.nN}>
-          <View cls="pa3">
-            <View
-              cls="flx-row aic jcsb"
-              style={{ paddingTop: getStatusBarHeight() }}>
-              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                <Image
-                  cls="widthFn-10 heightFn-20"
-                  source={Images.ic_back_white}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this._showModalMenu}>
-                <Image source={Images.ic_menu_white} />
-              </TouchableOpacity>
-            </View>
+          <ImageBackground
+            cls={`jcsb`}
+            style={{ opacity: 0.9 }}
+            resizeMode="cover"
+            source={Images.bNgEnd}>
+            <View cls="pa3">
+              <View
+                cls="flx-row aic jcsb"
+                style={{ paddingTop: getStatusBarHeight() }}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.goBack()}>
+                  <Image
+                    cls="widthFn-10 heightFn-20"
+                    source={Images.ic_back_white}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this._showModalMenu}>
+                  <Image source={Images.ic_menu_white} />
+                </TouchableOpacity>
+              </View>
 
-            <View cls="aic jcc pt3">
-              <Text cls="white fw8 f3 pb2 avertaFont">
-                {typeof artist?.getName == 'function'
-                  ? artist?.getName().toUpperCase()
-                  : '...'}
-              </Text>
-              <Text cls="f8 white lightFont">
-                {`${this.viewModel.stats
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} Fans`}
-              </Text>
+              <View cls="aic jcc pt3">
+                <Text cls="white fw8 f3 pb2 avertaFont">
+                  {typeof artist?.getName == 'function'
+                    ? artist?.getName().toUpperCase()
+                    : '...'}
+                </Text>
+                <Text cls="f8 white lightFont">
+                  {`${this.viewModel.stats
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} Fans`}
+                </Text>
+              </View>
             </View>
-          </View>
-          <View>
-            <ArtistTabView
-              artist={artist}
-              showArtistDetailCover={this.showArtistDetailCover}
-            />
-          </View>
-          {showCover ? (
-            <View
-              cls="asc"
-              style={{ position: 'absolute', bottom: -40, zIndex: 1 }}>
-              <Image
-                cls="squareFn-180 asc"
-                source={
-                  typeof artist?.getThumb == 'function' &&
-                  artist?.getThumb() !== ''
-                    ? { uri: artist.getThumb() }
-                    : Images.bAAlbum
-                }
+            <View>
+              <ArtistTabView
+                artist={artist}
+                showArtistDetailCover={this.showArtistDetailCover}
               />
             </View>
-          ) : null}
+            {showCover ? (
+              <View
+                cls="asc"
+                style={{ position: 'absolute', bottom: -40, zIndex: 1 }}>
+                <Image
+                  cls="squareFn-180 asc"
+                  source={
+                    typeof artist?.getThumb == 'function' &&
+                    artist?.getThumb() !== ''
+                      ? { uri: artist.getThumb() }
+                      : Images.bAAlbum
+                  }
+                />
+              </View>
+            ) : null}
 
-          <View style={{ position: 'absolute', bottom: -23 }}>
-            {this.renderActionSection()}
-          </View>
+            <View style={{ position: 'absolute', bottom: -23 }}>
+              {this.renderActionSection()}
+            </View>
+          </ImageBackground>
         </ImageBackground>
       </View>
     );

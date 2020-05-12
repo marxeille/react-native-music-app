@@ -14,11 +14,17 @@ import {
 import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
-import { D_WIDTH, isTextEmpty, subLongStr } from '../../../utils';
+import {
+  D_WIDTH,
+  isTextEmpty,
+  subLongStr,
+  isSmallDevice,
+} from '../../../utils';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
 import Toast from 'react-native-simple-toast';
 import SelectImageBtn from '../select_image_btn';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const CreatePlaylistModal = observer(
   wrap(props => {
@@ -56,7 +62,7 @@ const CreatePlaylistModal = observer(
 
     const renderPublicSection = wrap(() => {
       return (
-        <View cls="pa3 pb2 pt0">
+        <View cls={`${isSmallDevice() ? 'pl3 pr3' : 'pa3 pb2'} pt0`}>
           <View cls="flx-row jcsb aic">
             <Text cls="white lightFont">Công khai</Text>
             <Switch
@@ -162,74 +168,83 @@ const CreatePlaylistModal = observer(
     return (
       <View cls="fullView">
         {renderHeader()}
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View cls="pa3 pt4 aic">
-            <View cls="pb3">
-              <SelectImageBtn onSuccess={onSuccess} onError={onError} onlyPhoto>
-                <Image
-                  style={{ width: 101, height: 101 }}
-                  source={
-                    !isTextEmpty(img)
-                      ? { uri: `data:image/gif;base64,${img}` }
-                      : Images.ic_camera
-                  }
-                />
-              </SelectImageBtn>
-            </View>
-            <View cls="pb3">
-              <View cls="pa3 bg-#100024" style={[styles.inputGroup]}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View cls="pa3 pt4 aic">
+              <View cls="pb3">
+                <SelectImageBtn
+                  onSuccess={onSuccess}
+                  onError={onError}
+                  onlyPhoto>
+                  <Image
+                    style={{
+                      width: isSmallDevice() ? 90 : 101,
+                      height: isSmallDevice() ? 90 : 101,
+                    }}
+                    source={
+                      !isTextEmpty(img)
+                        ? { uri: `data:image/gif;base64,${img}` }
+                        : Images.ic_camera
+                    }
+                  />
+                </SelectImageBtn>
+              </View>
+              <View cls="pb3">
+                <View cls="pa3 bg-#100024" style={[styles.inputGroup]}>
+                  <TextInput
+                    secureTextEntry={false}
+                    placeholderTextColor="#9166cc"
+                    placeholder={'Tên Playlist'}
+                    style={[styles.inputText]}
+                    value={name}
+                    textAlign={'center'}
+                    onChangeText={txt => setPlName(txt)}
+                    autoCorrect={false}
+                  />
+                </View>
+              </View>
+              <View
+                cls="pa3 bg-#100024"
+                style={[styles.inputGroup, styles.inputGroup2]}>
                 <TextInput
                   secureTextEntry={false}
                   placeholderTextColor="#9166cc"
-                  placeholder={'Tên Playlist'}
+                  placeholder={'Viết mô tả'}
                   style={[styles.inputText]}
-                  value={name}
-                  textAlign={'center'}
-                  onChangeText={txt => setPlName(txt)}
+                  textAlignVertical={'top'}
+                  numberOfLines={5}
+                  value={description}
+                  onChangeText={txt => setPlDescription(txt)}
                   autoCorrect={false}
+                  multiline={true}
                 />
               </View>
-            </View>
-            <View
-              cls="pa3 bg-#100024"
-              style={[styles.inputGroup, styles.inputGroup2]}>
-              <TextInput
-                secureTextEntry={false}
-                placeholderTextColor="#9166cc"
-                placeholder={'Viết mô tả'}
-                style={[styles.inputText]}
-                textAlignVertical={'top'}
-                value={description}
-                onChangeText={txt => setPlDescription(txt)}
-                autoCorrect={false}
-                multiline={true}
-              />
-            </View>
-            <View cls="pt3" style={styles.fullWidth}>
-              {renderPublicSection()}
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-        <View>
-          <Image
-            resizeMode="contain"
-            style={{ height: 50, width: D_WIDTH }}
-            source={Images.pl_wave}
-          />
-        </View>
-        <View cls="pa3">
-          <TouchableWithoutFeedback onPress={() => props.toggleAddSong(true)}>
-            <View cls="flx-row aic">
-              <Image source={Images.ic_plus} />
-              <Text cls="white lightFont pl2">Thêm bài hát</Text>
+              <View cls="pt3" style={styles.fullWidth}>
+                {renderPublicSection()}
+              </View>
             </View>
           </TouchableWithoutFeedback>
-        </View>
-        <FlatList
-          data={[...viewModel.current.songs.values()]}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-        />
+          <View>
+            <Image
+              resizeMode="contain"
+              style={{ height: isSmallDevice() ? 30 : 50, width: D_WIDTH }}
+              source={Images.pl_wave}
+            />
+          </View>
+          <View cls="pa3">
+            <TouchableWithoutFeedback onPress={() => props.toggleAddSong(true)}>
+              <View cls="flx-row aic">
+                <Image source={Images.ic_plus} />
+                <Text cls="white lightFont pl2">Thêm bài hát</Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          <FlatList
+            data={[...viewModel.current.songs.values()]}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </ScrollView>
       </View>
     );
   }),
@@ -239,29 +254,34 @@ export default CreatePlaylistModal;
 const SearchItem = observer(
   wrap(props => (
     <View cls="jcsb flx-row aic pb2 pt2 pa3 fullWidth">
-      <View cls="flx-row">
-        <Image
-          cls="squareFn-50"
-          source={
-            typeof props.item?.getThumb == 'function' &&
-            props.item?.getThumb() !== ''
-              ? { uri: props.item?.getThumb() }
-              : Images.bAAlbum
-          }
-        />
-        <View cls="jcc pl3">
-          <Text cls="white fw7 f6 lightFont">
-            {subLongStr(
-              props.item && typeof props.item?.getName == 'function'
-                ? props.item?.getName()
-                : '',
-              20,
-            )}
+      <Image
+        cls="squareFn-50"
+        source={
+          typeof props.item?.getThumb == 'function' &&
+          props.item?.getThumb() !== ''
+            ? { uri: props.item?.getThumb() }
+            : Images.bAAlbum
+        }
+      />
+      <View cls="flx-i flx-wrap">
+        <View cls="jcc pl3 pr3">
+          <Text
+            cls={`${isSmallDevice() ? 'f8' : 'f6'} white fw7 lightFont`}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {props.item.getName()}
           </Text>
-          <Text cls="primaryPurple lightFont">{props.item.getSubTitle()}</Text>
+          <Text
+            cls={`${isSmallDevice() ? 'f9' : ''} primaryPurple lightFont`}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {props.item && typeof props.item?.getName == 'function'
+              ? props.item?.getName()
+              : ''}
+          </Text>
         </View>
       </View>
-      <View>
+      <View cls="flx-row">
         <TouchableOpacity onPress={() => props.removeSong(props.item)}>
           <Image source={Images.ic_del_song} />
         </TouchableOpacity>
@@ -275,7 +295,7 @@ const styles = StyleSheet.create({
     borderColor: '#100024',
     borderRadius: 7,
     flexDirection: 'row',
-    height: 55,
+    height: isSmallDevice() ? 40 : 55,
     alignItems: 'center',
     marginBottom: 5,
     width: '100%',
@@ -287,7 +307,7 @@ const styles = StyleSheet.create({
   },
 
   inputGroup2: {
-    height: 130,
+    height: isSmallDevice() ? 100 : 130,
     alignItems: 'flex-start',
   },
   inputText: {

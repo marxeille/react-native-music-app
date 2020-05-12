@@ -39,7 +39,14 @@ export default class SearchComponent extends Component {
 
   componentDidMount() {
     this.viewmodel.getRecentlyResult();
+    this.props.navigation.addListener('blur', this.onScreenFocus);
   }
+
+  onScreenFocus = () => {
+    this.setState({
+      keyword: null,
+    });
+  };
 
   _showModal = song => {
     this.setState({ song: song }, () => {
@@ -109,7 +116,7 @@ export default class SearchComponent extends Component {
       <View cls="pt4">
         <View cls="flx-row aife">
           <Text cls="white fw8 f5 avertaFont">{title}</Text>
-          <View cls="bg-#4b3277 heightFn-1 fullWidth flx-i mb1"></View>
+          <View cls="bg-#4b3277 heightFn-1 fullWidth flx-i mb1" />
         </View>
         <View>
           {data.map((item, index) => (

@@ -124,7 +124,7 @@ const AddSongPlaylist = observer(
     );
 
     return (
-      <View cls="pb8">
+      <View style={{ height: '100%' }}>
         {renderHeader()}
         <View cls="pa3 pb0 aic">
           <SearchBar
@@ -143,6 +143,7 @@ const AddSongPlaylist = observer(
                 ? [...rootStore?.homeStore?.popularSongs]
                 : [...viewModel.current.searchResult.values()]
             }
+            style={{ height: '100%' }}
             renderItem={renderItem}
             ListEmptyComponent={renderEmptyContainer}
             keyExtractor={(item, index) => index.toString()}
@@ -161,38 +162,37 @@ const SearchItem = observer(
       if (props) props.addSong(props.item);
     });
     return (
-      <View cls="jcsb flx-row aic pb2 pt2 pa3 fullWidth">
-        <View cls="flx-row">
-          <Image
-            cls="squareFn-50"
-            source={
-              typeof props.item?.getThumb == 'function' &&
-              props.item?.getThumb() !== ''
-                ? { uri: props.item?.getThumb() }
-                : Images.bAAlbum
-            }
-          />
-
-          <View cls="jcc pl3">
-            <Text cls="white fw7 f6 lightFont">
-              {subLongStr(
-                props.item && typeof props.item?.getName == 'function'
-                  ? props.item?.getName()
-                  : '',
-                isSmallDevice() ? 20 : 25,
-              )}
+      <View cls="flx-row aic pb2 pt2 pa3 fullWidth">
+        <Image
+          cls="squareFn-50"
+          source={
+            typeof props.item?.getThumb == 'function' &&
+            props.item?.getThumb() !== ''
+              ? { uri: props.item?.getThumb() }
+              : Images.bAAlbum
+          }
+        />
+        <View cls="flx-i flx-wrap">
+          <View cls="jcc pl3 pr3">
+            <Text
+              cls={`${isSmallDevice() ? 'f8' : 'f6'} white fw7 lightFont`}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {props.item && typeof props.item?.getName == 'function'
+                ? props.item?.getName()
+                : ''}
             </Text>
-            <Text cls="primaryPurple lightFont">
-              {subLongStr(
-                props.item && typeof props.item?.getSubTitle == 'function'
-                  ? props.item.getSubTitle()
-                  : '',
-                isSmallDevice() ? 20 : 25,
-              )}
+            <Text
+              cls={`${isSmallDevice() ? 'f9' : ''} primaryPurple lightFont`}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {props.item && typeof props.item?.getSubTitle == 'function'
+                ? props.item.getSubTitle()
+                : ''}
             </Text>
           </View>
         </View>
-        <View>
+        <View cls="flx-row">
           <TouchableOpacity onPress={() => toggleAddSong()}>
             {props.isFavorite ? (
               <Image
