@@ -55,7 +55,7 @@ export default class PlaylistDetail extends Component {
           width: '100%',
           height: '100%',
         }}>
-        <Text>{rootStore.playlist.get(this.model.id).title()}</Text>
+        <Text>{rootStore.playlist.get(this.model.id).getName()}</Text>
         <Text>{this.model.songs.length}</Text>
         <TouchableOpacity onPress={this._showModal}>
           <Text>modal</Text>

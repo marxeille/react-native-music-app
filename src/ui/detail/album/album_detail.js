@@ -388,36 +388,35 @@ export default class AlbumDetail extends Component {
                     : Images.bAAlbum
                 }
               />
-
-              <View cls="aic jcc pt2">
-                <Text cls="white fw8 f3 pb2 avertaFont">
-                  {typeof item.title == 'function' ? name.toUpperCase() : '...'}
-                </Text>
-                {item?.id == 0 ? (
-                  <View cls="pb4">
-                    <Text cls="f9 primaryPurple lightFont">
-                      {rootStore?.userStore?.name}
-                    </Text>
-                  </View>
-                ) : (
-                  <>
-                    <Text cls="f9 primaryPurple lightFont">
-                      {`${this.viewModel.stats
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} lượt thích`}
-                    </Text>
-                    <Text cls="white f8 lightFont pt2 pb4">
-                      {hasSong
-                        ? `Idol khÁ ${
-                            typeof item.subTitle == 'function'
-                              ? item.getDescription()
-                              : '...'
-                          } bẢnH is on top of the Vinahey hey hey!`
-                        : 'Hãy cùng tìm kiếm vài bài hát cho playlist của bạn'}
-                    </Text>
-                  </>
-                )}
-              </View>
+            </View>
+            <View cls="aic jcc pt2">
+              <Text cls="white fw8 f3 pb2 avertaFont">
+                {typeof item.getName == 'function' ? name.toUpperCase() : '...'}
+              </Text>
+              {item?.id == 0 ? (
+                <View cls="pb4">
+                  <Text cls="f9 primaryPurple lightFont">
+                    {rootStore?.userStore?.name}
+                  </Text>
+                </View>
+              ) : (
+                <>
+                  <Text cls="f9 primaryPurple lightFont">
+                    {`${this.viewModel.stats
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} lượt thích`}
+                  </Text>
+                  <Text cls="white f8 lightFont pt2 pb4">
+                    {hasSong
+                      ? `Idol khÁ ${
+                          typeof item.getSubTitle == 'function'
+                            ? item.getDescription()
+                            : '...'
+                        } bẢnH is on top of the Vinahey hey hey!`
+                      : 'Hãy cùng tìm kiếm vài bài hát cho playlist của bạn'}
+                  </Text>
+                </>
+              )}
             </View>
             <View style={{ position: 'absolute', bottom: -23 }}>
               <ActionGroup

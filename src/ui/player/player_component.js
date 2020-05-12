@@ -39,8 +39,7 @@ export default class PlayerComponent extends Component {
 
   onSwipeLeft() {
     if (
-      rootStore.playerStore?.trackIndex <
-      rootStore.playerStore?.getQueueSize() - 1
+      rootStore.playerStore?.trackIndex < rootStore.playerStore?.getQueueSize()
     ) {
       rootStore.playerStore?.changeSong('next');
     }

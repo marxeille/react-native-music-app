@@ -5,6 +5,7 @@ export default class LibraryApiService {
   async getArtists(ids) {
     try {
       const path = `/api/artists`;
+
       const params = ids
         ? {
             ids: ids.join(','),
@@ -72,15 +73,6 @@ export default class LibraryApiService {
     try {
       const path = ids ? '/api/like/article?ids=' + ids : '/api/like/article';
       return await privateRequest(BASE_URL.get, path, { per_page: 50 });
-    } catch (error) {
-      console.log('TCL: try -> error', error);
-    }
-  }
-
-  async getAlbums() {
-    try {
-      const path = `/api/articles`;
-      return await privateRequest(BASE_URL.get, path, {});
     } catch (error) {
       console.log('TCL: try -> error', error);
     }

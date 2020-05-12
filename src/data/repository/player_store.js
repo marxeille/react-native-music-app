@@ -75,18 +75,18 @@ export const PlayerStore = types
             track = songs[self.trackIndex];
 
             //set new song
-            self.startNewSong(track.id);
+            self.startNewSong(track?.id);
           } else {
             //Case 5: no song in queue, start new song WITH ID
             track = getParent(self).songs.get(id);
             // Set track index by track id
             // Minus the length of queue song, cause we will remove those song later on
             self.setTrackIndex(
-              _.findIndex(songs, ['id', track.id]) -
+              _.findIndex(songs, ['id', track?.id]) -
                 [...getParent(self).queueStore.getSongs()].length,
             );
-            //set new song
-            self.startNewSong(track.id);
+            // //set new song
+            self.startNewSong(track?.id);
           }
         } else {
           //Case 4: Continue current track(in case user from another screen get into player screen)
@@ -96,7 +96,7 @@ export const PlayerStore = types
         // Play song
         if (track) {
           self.addToLocalHistory(track);
-          self.playSong(track.id);
+          self.playSong(track?.id);
         }
       },
 
@@ -108,11 +108,11 @@ export const PlayerStore = types
           if ([...getParent(self).queueStore.getSongs()].length > 0) {
             track = songs[getParent(self).queueStore.queueIndex];
             // remove song from queue after play
-            getParent(self).queueStore.removeSongs([track.id]);
+            getParent(self).queueStore.removeSongs([track?.id]);
             // add played song into history
-            self.startNewSong(track.id);
+            self.startNewSong(track?.id);
             //play song
-            if (track) self.playSong(track.id);
+            if (track) self.playSong(track?.id);
             return;
           } else {
             //Case 2: next track (with shuffle or not)
@@ -134,7 +134,7 @@ export const PlayerStore = types
                 if (self.repeat) {
                   self.setTrackIndex(0);
                   track = songs[self.trackIndex];
-                  self.startNewSong(track.id);
+                  self.startNewSong(track?.id);
                 }
               }
             }
@@ -143,36 +143,48 @@ export const PlayerStore = types
           //Case 3: back track(no shuffle)
           self.setTrackIndex(self.trackIndex - 1);
           track = songs[self.trackIndex];
-          self.startNewSong(track.id);
+          self.startNewSong(track?.id);
         }
 
         //play song
         if (track) {
           self.addToLocalHistory(track);
-          self.playSong(track.id);
+          self.playSong(track?.id);
         }
       },
 
       addToLocalHistory: flow(function* addToLocalHistory(track) {
         // Save history
         getParent(self).historyStore.addSong(track.id);
+        const trackWithOwner = {
+          ...track,
+          owner_id: getParent(self).userStore.id,
+        };
         // Here is the part that we save history into local storage
-        AsyncStorage.setItem(AsyncStorageKey.SONG, JSON.stringify(track));
+        AsyncStorage.setItem(
+          AsyncStorageKey.SONG,
+          JSON.stringify(trackWithOwner),
+        );
         const localHistory = yield AsyncStorage.getItem(
           AsyncStorageKey.HISTORY,
         );
         let localHistoryJson = JSON.parse(localHistory);
+
         //In case there is already a data list in local storage
         if (localHistoryJson !== null) {
+          localHistoryJson = _.filter(
+            localHistoryJson,
+            history => history.owner_id == getParent(self).userStore.id,
+          );
           if (localHistoryJson.length < 15) {
-            localHistoryJson.push(track);
+            localHistoryJson.push(trackWithOwner);
             AsyncStorage.setItem(
               AsyncStorageKey.HISTORY,
               JSON.stringify(localHistoryJson),
             );
           } else {
             localHistoryJson.shift();
-            localHistoryJson.push(track);
+            localHistoryJson.push(trackWithOwner);
             AsyncStorage.setItem(
               AsyncStorageKey.HISTORY,
               JSON.stringify(localHistoryJson),
@@ -181,7 +193,7 @@ export const PlayerStore = types
         } else {
           //If not, create a new one
           const newLocalData = [];
-          newLocalData.push(track);
+          newLocalData.push(trackWithOwner);
           AsyncStorage.setItem(
             AsyncStorageKey.HISTORY,
             JSON.stringify(newLocalData),
@@ -228,7 +240,8 @@ export const PlayerStore = types
       },
       playSong(song) {
         self.setCurrentSong(song);
-        if (self.position == 0 && self.currentSong.url !== '') {
+
+        if (self.position == 0 && self.currentSong?.url !== '') {
           self.setState(true);
         }
         // Basic Controls
@@ -244,7 +257,7 @@ export const PlayerStore = types
           self.play();
         });
         MusicControl.on('nextTrack', () => {
-          if (self.trackIndex < self.getQueueSize() - 1) {
+          if (self.trackIndex < self.getQueueSize()) {
             self.changeSong('next');
           }
         });
@@ -270,12 +283,12 @@ export const PlayerStore = types
         MusicControl.enableControl('remoteVolume', false);
         // Set Now Playing
         MusicControl.setNowPlaying({
-          title: self.currentSong.getName(),
-          artwork: self.currentSong.getThumb(), // URL or RN's image require()
-          artist: self.currentSong.getSubTitle(),
+          title: self.currentSong?.getName() ?? 'Chưa xác định',
+          artwork: self.currentSong?.getThumb() ?? '', // URL or RN's image require()
+          artist: self.currentSong?.getSubTitle() ?? 'Chưa xác định',
           // album: 'Thriller',
           // genre: 'Post-disco, Rhythm and Blues, Funk, Dance-pop',
-          duration: self.currentSong.duration ?? 100, // (Seconds)
+          duration: self.currentSong?.duration ?? 0, // (Seconds)
           description: '', // Android Only
           color: 0xffffff, // Notification Color - Android Only
           // date: '1983-01-02T00:00:00Z', // Release Date (RFC 3339) - Android Only

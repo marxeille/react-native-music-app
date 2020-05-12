@@ -40,13 +40,13 @@ export default class AlbumItem extends Component {
           <View style={{ width: width }}>
             <Text
               cls={`${isSmallDevice() ? 'f12' : 'f10'} white fw7 lightFont`}>
-              {subLongStr(item.title(), 8)}
+              {subLongStr(item.getName(), 8)}
             </Text>
             <Text
               cls={`${
                 isSmallDevice() ? 'f13' : 'f12'
               } primaryPurple f12 pt1 lightFont`}>
-              của {subLongStr(item.subTitle(), 6)}
+              của {subLongStr(item.getSubTitle(), 6)}
             </Text>
           </View>
         </View>

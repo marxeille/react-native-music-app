@@ -116,7 +116,7 @@ BASE_URL.addAsyncResponseTransform(async response => {
               //Re-assign expried response with new one
               Object.assign(response, refreshResponse);
             } else {
-              // This else is used in case refresh token api goes wrong, but it will never happen
+              // This else is used in case refresh token api goes wrong, but (i hope) it will never happen
               // If token expired, and can not get new refresh token, redirect user to the login screen
               if (!response.config.url.includes('/api/token/refresh')) {
                 // DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native

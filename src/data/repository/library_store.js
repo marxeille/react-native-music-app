@@ -81,7 +81,7 @@ export const LibraryStore = types
           const playlist: Array = yield apiService.libraryApiService.getLikedPlaylists();
           if (playlist.status == 200) {
             const ids = playlist.data.map(pl => pl.entity_id);
-            const playlistData: Array = yield apiService.commonApiService.getPlaylists(
+            const playlistData: Array = yield apiService.libraryApiService.getPlaylists(
               ids,
             );
             if (playlistData.status == 200) {
@@ -138,6 +138,7 @@ export const LibraryStore = types
             const albumsData: Array = yield apiService.libraryApiService.getAlbums(
               ids,
             );
+
             if (albumsData.status == 200) {
               albumsData.data.map(async al => {
                 let cover = await getPlaylistCover(

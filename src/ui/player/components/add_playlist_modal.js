@@ -129,14 +129,13 @@ const ActionItem = wrap(({ item }) => {
 
         <View cls="pt2" style={{ width: width }}>
           <Text cls={`${isSmallDevice() ? 'f12' : 'f10'} white fw7 lightFont`}>
-            {' '}
-            {subLongStr(item?.title(), 20) ?? 'Default'}
+            {subLongStr(item?.getName(), 20) ?? 'Default'}
           </Text>
           <Text
             cls={`${
               isSmallDevice() ? 'f13' : 'f12'
-            } primaryPurple f12 pl1 pt1 lightFont`}>
-            {item?.subTitle() ?? 'Default'}
+            } primaryPurple f12 pt1 lightFont`}>
+            {`${item?.tracks.length} bài hát`}
           </Text>
         </View>
       </View>

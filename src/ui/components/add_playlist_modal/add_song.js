@@ -172,7 +172,6 @@ const SearchItem = observer(
               : Images.bAAlbum
           }
         />
-
         <View cls="flx-i flx-wrap">
           <View cls="jcc pl3 pr3">
             <Text

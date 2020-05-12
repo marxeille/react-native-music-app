@@ -21,10 +21,10 @@ export const PlayList = types
   })
   .views(self => {
     return {
-      title() {
+      getName() {
         return self.name;
       },
-      subTitle() {
+      getSubTitle() {
         return subLongStr(self.owner, 25);
       },
       getThumb() {

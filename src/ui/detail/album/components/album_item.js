@@ -3,7 +3,7 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { wrap } from '../../../../themes';
 import { observer } from 'mobx-react';
 import Images from '../../../../assets/icons/icons';
-import { subLongStr, isTextEmpty } from '../../../../utils';
+import { subLongStr, isTextEmpty, isSmallDevice } from '../../../../utils';
 import {
   likeHelper,
   unlikeHelper,
@@ -82,7 +82,6 @@ const AlbumItem = observer(
               : Images.bAAlbum
           }
         />
-
         <View cls="flx-i flx-wrap pl3 pr3">
           <View>
             <Text

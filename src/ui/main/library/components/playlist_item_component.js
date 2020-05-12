@@ -40,7 +40,7 @@ export default class PlaylistItem extends Component {
             <Text
               cls={`${isSmallDevice() ? 'f12' : 'f10'} white fw7 lightFont`}>
               {item !== undefined
-                ? subLongStr(item.title(), 20)
+                ? subLongStr(item.getName(), 20)
                 : 'Tạo playlist'}
             </Text>
             {item !== undefined ? (
@@ -48,7 +48,7 @@ export default class PlaylistItem extends Component {
                 cls={`${
                   isSmallDevice() ? 'f13' : 'f12'
                 } primaryPurple f12 pt1 lightFont`}>
-                {item?.id == 0 ? rootStore.userStore?.name : item.subTitle()}
+                {item?.id == 0 ? rootStore.userStore?.name : item.getSubTitle()}
               </Text>
             ) : null}
           </View>

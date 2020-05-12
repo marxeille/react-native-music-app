@@ -127,6 +127,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+
+    packagingOptions {
+       pickFirst '**/libjsc.so'
+       pickFirst '**/libc++_shared.so'
+    }
+
     defaultConfig {
         applicationId "com.playerproject"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -180,6 +186,8 @@ android {
 }
 
 dependencies {
+    // Make sure to put android-jsc at the top
+    implementation "org.webkit:android-jsc:r241213"
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'

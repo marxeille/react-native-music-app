@@ -72,6 +72,7 @@ class Settings extends Component {
     rootStore?.playerStore?.clearSong();
     rootStore?.homeStore?.clearHomeData();
     rootStore?.libraryStore?.clearLibraryData();
+    rootStore?.historyStore.clearHistory();
     this.context.userStore.removeUserInfo();
   };
 

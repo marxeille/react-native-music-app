@@ -73,8 +73,7 @@ export default class Player extends Component {
 
   onForward() {
     if (
-      rootStore.playerStore?.trackIndex <
-      rootStore.playerStore?.getQueueSize() - 1
+      rootStore.playerStore?.trackIndex < rootStore.playerStore?.getQueueSize()
     ) {
       rootStore.playerStore?.changeSong('next');
     }
@@ -84,42 +83,24 @@ export default class Player extends Component {
     pop();
   };
 
-  renderShareItem = wrap(({ item }) => {
-    return (
-      <View cls="pt2">
-        <TouchableOpacity onPress={() => item.action()} cls="jcc pv1 ph3 aic">
-          <View
-            cls="br5 ba pa2 fullWidth aic flx-row"
-            style={{ borderColor: '#d29dc5' }}>
-            <View cls="pl2">
-              <Image
-                cls="widthFn-18 heightFn-18"
-                style={{ tintColor: '#FFF' }}
-                source={item.icon}
-              />
-            </View>
-            <Text cls="white lightFont pl3">{item.title}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  });
-
   _renderModalContent = wrap(() => {
     const { showPlayMenu } = this.state;
-
-    return showPlayMenu ? (
-      <SongMenu
-        song={rootStore.playerStore?.currentSong}
-        toggleShareMenu={() => this.setState({ showPlayMenu: false })}
-        _hideModal={this._hideModal}
-      />
-    ) : (
-      <ShareModal
-        item={rootStore.playerStore?.currentSong}
-        _hideModal={this._hideModal}
-      />
-    );
+    if (showPlayMenu) {
+      return (
+        <SongMenu
+          song={rootStore.playerStore?.currentSong}
+          toggleShareMenu={() => this.setState({ showPlayMenu: false })}
+          _hideModal={this._hideModal}
+        />
+      );
+    } else {
+      return (
+        <ShareModal
+          item={rootStore.playerStore?.currentSong}
+          _hideModal={this._hideModal}
+        />
+      );
+    }
   });
 
   onSwipeLeft = () => {
@@ -133,6 +114,7 @@ export default class Player extends Component {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,
     };
+
     return (
       <ImageBackground
         blurRadius={15}
@@ -175,7 +157,7 @@ export default class Player extends Component {
             shuffleOn={rootStore?.playerStore?.shuffle}
             forwardDisabled={
               rootStore.playerStore?.trackIndex ===
-              rootStore.playerStore?.getQueueSize() - 1
+              rootStore.playerStore?.getQueueSize()
             }
             onPressShuffle={() =>
               rootStore?.playerStore?.setShuffle(
@@ -239,6 +221,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    height: isSmallDevice() ? 50 : isMeidumDevice() ? 70 : 130,
+    height: isSmallDevice() ? 50 : isMeidumDevice() ? 70 : 100,
   },
 });

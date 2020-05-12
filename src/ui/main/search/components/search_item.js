@@ -4,7 +4,7 @@ import { wrap } from '../../../../themes';
 import Images from '../../../../assets/icons/icons';
 import { navigate } from '../../../../navigation/navigation_service';
 import { rootStore } from '../../../../data/context/root_context';
-import { subLongStr } from '../../../../utils';
+import { subLongStr, isSmallDevice } from '../../../../utils';
 
 @wrap
 export default class SearchItem extends Component {
@@ -76,9 +76,11 @@ export default class SearchItem extends Component {
             />
             <View>
               <Text cls="white fw7 f6 pl2">
-                {subLongStr(item?.getName(), 20)}
+                {subLongStr(item?.getName(), isSmallDevice() ? 12 : 20)}
               </Text>
-              <Text cls="primaryPurple f7 pl2 pt1">{item?.getSubTitle()}</Text>
+              <Text cls="primaryPurple f7 pl2 pt1">
+                {subLongStr(item?.getSubTitle(), isSmallDevice() ? 12 : 20)}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
