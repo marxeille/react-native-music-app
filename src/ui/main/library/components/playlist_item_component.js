@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, Image, Dimensions } from 'react-native';
 import { wrap } from '../../../../themes';
 import { observer } from 'mobx-react';
-import { navigate } from '../../../../navigation/navigation_service';
 import { subLongStr, isTextEmpty, isSmallDevice } from '../../../../utils';
 import Images from '../../../../assets/icons/icons';
-import { rootStore } from '../../../../data/context/root_context';
 
 @observer
 @wrap
@@ -17,7 +15,7 @@ export default class PlaylistItem extends Component {
 
   render() {
     const { item } = this.props;
-    let width = Dimensions.get('screen').width / 3 - 16;
+    const width = Dimensions.get('screen').width / 3 - 16;
     return (
       <>
         <View cls="pb3 pr2">
@@ -48,7 +46,9 @@ export default class PlaylistItem extends Component {
                 cls={`${
                   isSmallDevice() ? 'f13' : 'f12'
                 } primaryPurple f12 pt1 lightFont`}>
-                {item?.id == 0 ? rootStore.userStore?.name : item.getSubTitle()}
+                {item?.id == 0
+                  ? `${item.tracks.length} bài hát`
+                  : item.getSubTitle()}
               </Text>
             ) : null}
           </View>

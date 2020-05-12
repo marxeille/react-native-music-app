@@ -138,7 +138,7 @@ const PlaylistMenuConcept = observer(
                   : item.owner_id == rootStore.userStore?.id
                   ? rootStore.userStore?.name
                   : item?.getType() == 'article'
-                  ? item?.short_biography
+                  ? item?.getSubTitle()
                   : likeCount + ' lượt thích'}
               </Text>
               <View cls={`fullWidth ${isSmallDevice() ? 'heightFn-250' : ''}`}>
