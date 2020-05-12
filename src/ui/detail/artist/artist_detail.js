@@ -26,6 +26,7 @@ import MenuConcept from '../../components/playlist_menu_concept';
 import Toast from 'react-native-simple-toast';
 import ShareModal from '../../components/share';
 import AddPlayListModal from '../../player/components/add_playlist_modal';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 @observer
 @wrap
@@ -41,6 +42,7 @@ export default class ArtistDetail extends Component {
       ids: [],
       artist: {},
       showCover: true,
+      tabIndex: 0,
       showShareModal: false,
       showAddPlaylistModal: false,
       following:
@@ -244,8 +246,17 @@ export default class ArtistDetail extends Component {
     this.setState({ showShareModal: state });
   };
 
+  onSwipeLeft = i => {
+    this.setState({ tabIndex: i });
+    this.showArtistDetailCover(false);
+  };
+
   renderHeaderSection = wrap(() => {
     let { artist, showCover } = this.state;
+    const config = {
+      velocityThreshold: 0.3,
+      directionalOffsetThreshold: 80,
+    };
 
     return (
       <View cls="pb4">
@@ -293,21 +304,27 @@ export default class ArtistDetail extends Component {
               <ArtistTabView
                 artist={artist}
                 showArtistDetailCover={this.showArtistDetailCover}
+                tabIndex={this.state.tabIndex}
+                onSwipe={this.onSwipeLeft}
               />
             </View>
             {showCover ? (
               <View
                 cls="asc"
                 style={{ position: 'absolute', bottom: -40, zIndex: 1 }}>
-                <Image
-                  cls="squareFn-180 asc"
-                  source={
-                    typeof artist?.getThumb == 'function' &&
-                    artist?.getThumb() !== ''
-                      ? { uri: artist.getThumb() }
-                      : Images.bAAlbum
-                  }
-                />
+                <GestureRecognizer
+                  onSwipeLeft={() => this.onSwipeLeft(1)}
+                  config={config}>
+                  <Image
+                    cls="squareFn-180 asc"
+                    source={
+                      typeof artist?.getThumb == 'function' &&
+                      artist?.getThumb() !== ''
+                        ? { uri: artist.getThumb() }
+                        : Images.bAAlbum
+                    }
+                  />
+                </GestureRecognizer>
               </View>
             ) : null}
 

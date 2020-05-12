@@ -7,12 +7,21 @@ import LinearGradient from 'react-native-linear-gradient';
 
 @wrap
 export default class ArtistTabView extends Component {
-  state = {
-    readMore: true,
-    showCover: false,
-    index: 0,
-    routes: [{ key: 'cover' }, { key: 'detail' }],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      readMore: true,
+      showCover: false,
+      index: 0,
+      routes: [{ key: 'cover' }, { key: 'detail' }],
+    };
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.tabIndex !== this.state.tabIndex) {
+      this.setState({ index: nextProps.tabIndex });
+    }
+  }
 
   _handleIndexChange = index => {
     if (index == 0) {
@@ -25,6 +34,12 @@ export default class ArtistTabView extends Component {
     this.setState({ index });
   };
 
+  handleIndexChange = i => {
+    this.setState({ index: i });
+    this.props.onSwipe(i);
+    this._handleIndexChange(i);
+  };
+
   _renderTabBar = wrap(props => {
     return (
       <View style={styles.tabBar} cls="aic jcc">
@@ -33,7 +48,9 @@ export default class ArtistTabView extends Component {
             <TouchableOpacity
               key={i}
               style={[styles.tabItem]}
-              onPress={() => this.setState({ index: i })}>
+              onPress={() => {
+                this.handleIndexChange(i);
+              }}>
               <View cls="aic jcc">
                 {i == this.state.index ? (
                   <Image
