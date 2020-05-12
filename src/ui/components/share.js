@@ -17,6 +17,8 @@ import {
   isTextEmpty,
   isSmallDevice,
   getStatusBarHeight,
+  D_WIDTH,
+  D_HEIGHT,
 } from '../../utils/index';
 import Toast from 'react-native-simple-toast';
 import Share from 'react-native-share';
@@ -182,9 +184,9 @@ const ShareModal = wrap(({ _hideModal, item }) => {
   ];
 
   const renderShareItem = useCallback(
-    wrap(({ item }) => {
+    wrap(({ item, index }) => {
       return (
-        <View cls={`${isSmallDevice() ? 'pt1' : 'pt2'}`}>
+        <View cls={`${index == 0 ? 'pt3' : isSmallDevice() ? 'pt1' : 'pt2'}`}>
           <TouchableOpacity
             onPress={() => item?.action()}
             cls="jcc pv1 ph3 aic">
@@ -207,11 +209,10 @@ const ShareModal = wrap(({ _hideModal, item }) => {
       );
     }),
   );
-  console.log('item', item);
 
-  return (
-    <View cls="fullView">
-      <View cls="fullHeight">
+  const renderHeader = useCallback(
+    wrap(() => {
+      return (
         <ImageBackground
           cls="fullWidth"
           resizeMode="cover"
@@ -291,9 +292,15 @@ const ShareModal = wrap(({ _hideModal, item }) => {
             </View>
           </ImageBackground>
         </ImageBackground>
-
-        <View cls="flx-i pt3">
+      );
+    }),
+  );
+  return (
+    <View cls="fullView">
+      <View cls="fullHeight">
+        <View cls="flx-i">
           <FlatList
+            ListHeaderComponent={renderHeader}
             data={shareItems}
             renderItem={renderShareItem}
             keyExtractor={(item, index) => index.toString()}
@@ -307,6 +314,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
 export default ShareModal;
 const styles = StyleSheet.create({
   underWave: { position: 'absolute', bottom: 8, height: 20 },
+  fullWidth: { width: D_WIDTH },
   title: {
     color: '#FFF',
     justifyContent: 'center',
