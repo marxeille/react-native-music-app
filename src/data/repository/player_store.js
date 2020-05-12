@@ -160,6 +160,7 @@ export const PlayerStore = types
           ...track,
           owner_id: getParent(self).userStore.id,
         };
+
         // Here is the part that we save history into local storage
         AsyncStorage.setItem(
           AsyncStorageKey.SONG,
@@ -169,26 +170,30 @@ export const PlayerStore = types
           AsyncStorageKey.HISTORY,
         );
         let localHistoryJson = JSON.parse(localHistory);
-
+        const idExist = _.find(localHistoryJson, function(h) {
+          return h.id == track.id && h.owner_id == getParent(self).userStore.id;
+        });
         //In case there is already a data list in local storage
         if (localHistoryJson !== null) {
           localHistoryJson = _.filter(
             localHistoryJson,
             history => history.owner_id == getParent(self).userStore.id,
           );
-          if (localHistoryJson.length < 15) {
-            localHistoryJson.push(trackWithOwner);
-            AsyncStorage.setItem(
-              AsyncStorageKey.HISTORY,
-              JSON.stringify(localHistoryJson),
-            );
-          } else {
-            localHistoryJson.shift();
-            localHistoryJson.push(trackWithOwner);
-            AsyncStorage.setItem(
-              AsyncStorageKey.HISTORY,
-              JSON.stringify(localHistoryJson),
-            );
+          if (!idExist) {
+            if (localHistoryJson.length < 15) {
+              localHistoryJson.push(trackWithOwner);
+              AsyncStorage.setItem(
+                AsyncStorageKey.HISTORY,
+                JSON.stringify(localHistoryJson),
+              );
+            } else {
+              localHistoryJson.shift();
+              localHistoryJson.push(trackWithOwner);
+              AsyncStorage.setItem(
+                AsyncStorageKey.HISTORY,
+                JSON.stringify(localHistoryJson),
+              );
+            }
           }
         } else {
           //If not, create a new one

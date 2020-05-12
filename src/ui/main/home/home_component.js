@@ -32,6 +32,11 @@ export default class HomeComponent extends Component {
     rootStore.userStore.fetchUserData();
   }
 
+  handleSettingPress = () => {
+    console.log('pressed');
+    navigate('setting');
+  };
+
   render() {
     const { scrollY } = this.state;
     return rootStore.homeStore.state === 'loading' ? (
@@ -66,7 +71,7 @@ export default class HomeComponent extends Component {
               <TouchableOpacity
                 cls="pt4 pb2 absolute asfe"
                 style={{ zIndex: 2 }}
-                onPress={() => navigate('setting')}>
+                onPress={this.handleSettingPress}>
                 <View cls="pa3 pb1 flx-row-reverse aic">
                   <LinearGradient
                     colors={['#4E357A', '#9069A0', '#D39DC5']}

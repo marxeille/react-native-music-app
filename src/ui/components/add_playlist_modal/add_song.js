@@ -1,5 +1,12 @@
 import React, { useCallback, useState, useRef, useMemo } from 'react';
-import { Text, View, TouchableOpacity, Image, FlatList } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  Keyboard,
+} from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
@@ -145,6 +152,7 @@ const AddSongPlaylist = observer(
             }
             style={{ height: '100%' }}
             renderItem={renderItem}
+            onScrollBeginDrag={Keyboard.dismiss}
             ListEmptyComponent={renderEmptyContainer}
             keyExtractor={(item, index) => index.toString()}
           />
