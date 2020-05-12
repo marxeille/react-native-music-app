@@ -13,7 +13,7 @@ import Images from '../../assets/icons/icons';
 import QueueChild from './components/queue_child';
 import LinearGradient from 'react-native-linear-gradient';
 import { rootStore } from '../../data/context/root_context';
-import { subLongStr, D_HEIGHT, isTextEmpty } from '../../utils';
+import { subLongStr, D_HEIGHT, isTextEmpty, isSmallDevice } from '../../utils';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import LinearGradientText from '../main/library/components/LinearGradientText';
 import * as _ from 'lodash';
@@ -69,12 +69,18 @@ class Queue2 extends Component {
                 marqueeDelay={800}>
                 <Text cls="white fw7 f6 latoFont">
                   {currentSong !== null
-                    ? subLongStr(currentSong?.getName() ?? '', 20)
+                    ? subLongStr(
+                        currentSong?.getName() ?? '',
+                        isSmallDevice() ? 15 : 20,
+                      )
                     : 'Dèfault Title'}
                 </Text>
               </TextTicker>
               <Text cls="primaryPurple f9 pt1 latoFont">
-                {currentSong?.getSubTitle()}
+                {subLongStr(
+                  currentSong?.getSubTitle(),
+                  isSmallDevice() ? 15 : 20,
+                )}
               </Text>
             </View>
           </View>
