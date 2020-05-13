@@ -298,6 +298,11 @@ const ShareModal = wrap(({ _hideModal, item }) => {
             ListHeaderComponent={renderHeader}
             data={shareItems}
             renderItem={renderShareItem}
+            onScroll={event => {
+              if (event.nativeEvent.contentOffset.y < -180) {
+                _hideModal();
+              }
+            }}
             keyExtractor={(item, index) => index.toString()}
           />
         </View>

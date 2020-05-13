@@ -147,6 +147,7 @@ export default class SongMenu extends Component {
 
   render() {
     const { showAddPlaylist } = this.state;
+    const { _hideModal } = this.props;
     return showAddPlaylist ? (
       <View>
         <AddPlayListModal
@@ -161,6 +162,11 @@ export default class SongMenu extends Component {
           data={this.menuItems}
           renderItem={this.renderItem}
           showsVerticalScrollIndicator={false}
+          onScroll={event => {
+            if (event.nativeEvent.contentOffset.y < -180) {
+              if (typeof _hideModal == 'function') _hideModal();
+            }
+          }}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>

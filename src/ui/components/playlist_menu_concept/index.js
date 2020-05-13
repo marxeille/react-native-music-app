@@ -17,6 +17,7 @@ const MenuConcept = ({
   showEditTitle,
   changeShowMenuEdit,
   changeTitle,
+  _hideModal,
 }) => {
   const [menu, setMenu] = useState(!showMenuEdit);
   useEffect(() => {
@@ -29,6 +30,7 @@ const MenuConcept = ({
       newTitleChange={newTitleChange}
       textTitleChange={textTitleChange}
       likeCount={likeCount}
+      hideModal={_hideModal}
       editTitle={editTitle}
       setMenu={setMenu}
       settingItems={settingItems}

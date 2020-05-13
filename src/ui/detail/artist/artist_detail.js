@@ -480,9 +480,6 @@ export default class ArtistDetail extends Component {
               data={[...this.viewModel.songs.values()]}
               showsVerticalScrollIndicator={false}
               renderItem={this._renderItem}
-              onScroll={event => {
-                // console.log(event.nativeEvent.contentOffset.y);
-              }}
               keyExtractor={(item, index) => index.toString()}
             />
             <BottomModal
@@ -496,7 +493,10 @@ export default class ArtistDetail extends Component {
               {showShareModal ? (
                 <ShareModal
                   item={artist}
-                  _hideModal={() => this.toggleShareModal(false)}
+                  _hideModal={() => {
+                    this._hideModalMenu();
+                    this.toggleShareModal(false);
+                  }}
                 />
               ) : showAddPlaylistModal ? (
                 <AddPlayListModal
@@ -508,6 +508,9 @@ export default class ArtistDetail extends Component {
               ) : (
                 <MenuConcept
                   item={artist}
+                  _hideModal={() => {
+                    this._hideModalMenu();
+                  }}
                   settingItems={settingItems}
                   showMenuEdit={false}
                 />
@@ -522,6 +525,7 @@ export default class ArtistDetail extends Component {
                 <ShareModal
                   item={this.viewModel?.selectedSong}
                   _hideModal={() => {
+                    this._hideModal();
                     this.setState({ showShareSongModal: false });
                   }}
                 />

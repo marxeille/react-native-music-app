@@ -30,6 +30,7 @@ const PlaylistMenuConcept = observer(
       settingItems,
       changeTitle,
       showEditTitle,
+      hideModal,
     }) => {
       const onError = useCallback(response => {
         console.log('response picker', response);
@@ -157,6 +158,11 @@ const PlaylistMenuConcept = observer(
               <FlatList
                 ListHeaderComponent={renderHeader}
                 data={settingItems}
+                onScroll={event => {
+                  if (event.nativeEvent.contentOffset.y < -170) {
+                    if (typeof hideModal == 'function') hideModal();
+                  }
+                }}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
               />

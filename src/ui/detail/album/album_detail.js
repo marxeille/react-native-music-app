@@ -650,7 +650,10 @@ export default class AlbumDetail extends Component {
               {showShareModal ? (
                 <ShareModal
                   item={this.viewModel.selectedSong}
-                  _hideModal={() => this.setState({ showShareModal: false })}
+                  _hideModal={() => {
+                    this._hideModal();
+                    this.setState({ showShareModal: false });
+                  }}
                 />
               ) : (
                 <SongMenu
@@ -687,6 +690,9 @@ export default class AlbumDetail extends Component {
                   item={item}
                   title={name}
                   songs={songs}
+                  _hideModal={() => {
+                    this._hideModalPlaylist();
+                  }}
                   likeCount={this.viewModel.stats
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}

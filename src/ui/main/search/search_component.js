@@ -226,6 +226,7 @@ export default class SearchComponent extends Component {
                 <ShareModal
                   item={song}
                   _hideModal={() => {
+                    this._hideModal();
                     this.setState({ showShareModal: false });
                   }}
                 />
