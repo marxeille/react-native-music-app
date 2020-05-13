@@ -26,6 +26,7 @@ import MenuConcept from '../../components/playlist_menu_concept';
 import Toast from 'react-native-simple-toast';
 import ShareModal from '../../components/share';
 import AddPlayListModal from '../../player/components/add_playlist_modal';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 @observer
 @wrap
@@ -41,8 +42,10 @@ export default class ArtistDetail extends Component {
       ids: [],
       artist: {},
       showCover: true,
+      tabIndex: 0,
       showShareModal: false,
       showAddPlaylistModal: false,
+      showShareSongModal: false,
       following:
         indexOf(
           [...this.viewModel?.likedArtists],
@@ -129,7 +132,8 @@ export default class ArtistDetail extends Component {
   };
 
   onReactionSuccess = (type, data) => {
-    const { artist } = this.props.route.params;
+    let { artist } = this.props.route.params;
+    if (typeof artist == 'number') artist = this.state.artist;
     const idExist = indexOf(
       [...this.viewModel?.likedArtists],
       Number(artist.id),
@@ -137,10 +141,12 @@ export default class ArtistDetail extends Component {
     if (type == 'like') {
       if (idExist < 0) {
         this.viewModel?.addLikedArtist(data);
+        rootStore?.libraryStore?.updateArtist(data);
       }
     } else {
       if (idExist >= 0) {
         this.viewModel?.removeLikedArtist(data);
+        rootStore?.libraryStore?.removeArtist(data);
       }
     }
   };
@@ -150,7 +156,8 @@ export default class ArtistDetail extends Component {
   };
 
   followArtist = async () => {
-    const { artist } = this.props.route.params;
+    let { artist } = this.props.route.params;
+    if (typeof artist == 'number') artist = this.state.artist;
     await likeHelper(
       'artist',
       artist.id,
@@ -160,7 +167,8 @@ export default class ArtistDetail extends Component {
   };
 
   unfollowArtist = async () => {
-    const { artist } = this.props.route.params;
+    let { artist } = this.props.route.params;
+    if (typeof artist == 'number') artist = this.state.artist;
     await unlikeHelper(
       'artist',
       artist.id,
@@ -184,7 +192,8 @@ export default class ArtistDetail extends Component {
 
   playSong = song => {
     const { ids } = this.state;
-    const { artist } = this.props.route.params;
+    let { artist } = this.props.route.params;
+    if (typeof artist == 'number') artist = this.state.artist;
 
     if (ids.length > 0) {
       const randomId = ids[Math.floor(Math.random() * ids.length)];
@@ -206,14 +215,26 @@ export default class ArtistDetail extends Component {
         song ? song.id.toString() : randomId.toString(),
       ]);
       if (!this.state.playing || song) {
-        if (randomId == Number(rootStore?.playerStore?.currentSong?.id)) {
+        if (
+          Number(randomId) == Number(rootStore?.playerStore?.currentSong?.id)
+        ) {
           navigate('player');
         } else {
-          navigate('player', {
-            trackId: song ? song.id : randomId,
-          });
+          if (
+            Number(song.id) !== Number(rootStore?.playerStore?.currentSong?.id)
+          ) {
+            navigate('player', {
+              trackId: song ? song.id : randomId,
+            });
+          } else {
+            navigate('player');
+          }
         }
-        rootStore?.playerStore?.setPlayFrom(artist?.getName() ?? 'Artist');
+        rootStore?.playerStore?.setPlayFrom(
+          typeof artist?.getName == 'function'
+            ? artist?.getName().toUpperCase()
+            : '...',
+        );
         rootStore.playerStore?.setState('play');
       } else {
         rootStore.playlistSongStore?.setPlaylist({});
@@ -222,6 +243,8 @@ export default class ArtistDetail extends Component {
       }
       if (!song) {
         this.setState({ playing: !this.state.playing });
+      } else {
+        this.setState({ playing: true });
       }
     }
   };
@@ -244,8 +267,17 @@ export default class ArtistDetail extends Component {
     this.setState({ showShareModal: state });
   };
 
+  onSwipeLeft = i => {
+    this.setState({ tabIndex: i });
+    this.showArtistDetailCover(false);
+  };
+
   renderHeaderSection = wrap(() => {
     let { artist, showCover } = this.state;
+    const config = {
+      velocityThreshold: 0.3,
+      directionalOffsetThreshold: 80,
+    };
 
     return (
       <View cls="pb4">
@@ -263,7 +295,7 @@ export default class ArtistDetail extends Component {
             <View cls="pa3">
               <View
                 cls="flx-row aic jcsb"
-                style={{ paddingTop: getStatusBarHeight() }}>
+                style={{ paddingTop: getStatusBarHeight() + 10 }}>
                 <TouchableOpacity
                   onPress={() => this.props.navigation.goBack()}>
                   <Image
@@ -293,21 +325,27 @@ export default class ArtistDetail extends Component {
               <ArtistTabView
                 artist={artist}
                 showArtistDetailCover={this.showArtistDetailCover}
+                tabIndex={this.state.tabIndex}
+                onSwipe={this.onSwipeLeft}
               />
             </View>
             {showCover ? (
               <View
                 cls="asc"
                 style={{ position: 'absolute', bottom: -40, zIndex: 1 }}>
-                <Image
-                  cls="squareFn-180 asc"
-                  source={
-                    typeof artist?.getThumb == 'function' &&
-                    artist?.getThumb() !== ''
-                      ? { uri: artist.getThumb() }
-                      : Images.bAAlbum
-                  }
-                />
+                <GestureRecognizer
+                  onSwipeLeft={() => this.onSwipeLeft(1)}
+                  config={config}>
+                  <Image
+                    cls="squareFn-180 asc"
+                    source={
+                      typeof artist?.getThumb == 'function' &&
+                      artist?.getThumb() !== ''
+                        ? { uri: artist.getThumb() }
+                        : Images.bAAlbum
+                    }
+                  />
+                </GestureRecognizer>
               </View>
             ) : null}
 
@@ -445,13 +483,6 @@ export default class ArtistDetail extends Component {
         icon: Images.ic_share_white,
         imgStyle: 'widthFn-20 heightFn-24',
       },
-      // {
-      //   title: 'Xem nghệ sĩ',
-      //   action: () => {},
-      //   hidden: false,
-      //   icon: Images.ic_person,
-      //   imgStyle: 'widthFn-20 heightFn-24',
-      // },
     ];
     return (
       <LinearGradient
@@ -470,14 +501,18 @@ export default class ArtistDetail extends Component {
             <BottomModal
               headerNone
               justifyCenterModal
-              // forceInsetBottom="never"
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}
               containerCls=""
               customGradient={['#000', '#1a0632', '#000', '#13151A']}
               ref={this.modalMenu}>
               {showShareModal ? (
                 <ShareModal
                   item={artist}
-                  _hideModal={() => this.toggleShareModal(false)}
+                  _hideModal={() => {
+                    this._hideModalMenu();
+                    this.toggleShareModal(false);
+                  }}
                 />
               ) : showAddPlaylistModal ? (
                 <AddPlayListModal
@@ -489,18 +524,44 @@ export default class ArtistDetail extends Component {
               ) : (
                 <MenuConcept
                   item={artist}
+                  _hideModal={() => {
+                    this._hideModalMenu();
+                  }}
                   settingItems={settingItems}
                   showMenuEdit={false}
                 />
               )}
             </BottomModal>
-            <BottomModal ref={this.modalSong} headerNone>
-              <SongMenu
-                song={this.viewModel?.selectedSong}
-                _hideModal={this._hideModal}
-              />
+            <BottomModal
+              ref={this.modalSong}
+              headerNone
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}>
+              {this.state.showShareSongModal ? (
+                <ShareModal
+                  item={this.viewModel?.selectedSong}
+                  _hideModal={() => {
+                    this._hideModal();
+                    this.setState({ showShareSongModal: false });
+                  }}
+                />
+              ) : (
+                <SongMenu
+                  song={this.viewModel?.selectedSong}
+                  _hideModal={() => {
+                    this._hideModal();
+                  }}
+                  toggleShareMenu={() =>
+                    this.setState({ showShareSongModal: true })
+                  }
+                />
+              )}
             </BottomModal>
-            <BottomModal ref={this.modalShare} headerNone>
+            <BottomModal
+              ref={this.modalShare}
+              headerNone
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}>
               <ShareModal item={artist} _hideModal={this._hideModalShare} />
             </BottomModal>
           </ImageBackground>

@@ -10,6 +10,7 @@ import { remove, cloneDeep } from 'lodash';
 import { apiService } from '../../../data/context/api_context';
 import { rootStore } from '../../../data/context/root_context';
 import Toast from 'react-native-simple-toast';
+import { getStatusBarHeight } from '../../../utils';
 
 const Modifyplaylist = wrap(
   ({ setMenu, item, songs, changeOrder, changeShowMenuEdit }) => {
@@ -84,7 +85,9 @@ const Modifyplaylist = wrap(
             colors={['#291047', '#1a0632', '#110926', '#110926']}
             start={{ x: 1, y: 1 }}
             end={{ x: 0, y: 0 }}>
-            <View cls="pv2 flx-row aic">
+            <View
+              cls="pv2 flx-row aic"
+              style={{ paddingTop: getStatusBarHeight() + 10 }}>
               <View cls="aifs jcc flx-i">
                 <TouchableOpacity
                   onPress={() => {
@@ -117,7 +120,7 @@ const Modifyplaylist = wrap(
       <View>
         {renderHeader()}
         <View cls="aic jcc pa3">
-          <Text cls="white f3 avertaFont">{item.getName()}</Text>
+          <Text cls="white f3 avertaFont">{item?.getName()}</Text>
         </View>
         <View cls="fullView">
           <DraggableFlatList

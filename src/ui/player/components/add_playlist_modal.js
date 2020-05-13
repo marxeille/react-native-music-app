@@ -15,7 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { rootStore } from '../../../data/context/root_context';
 import { cloneDeep } from 'lodash';
 import CreatePlaylist from '../../components/add_playlist_modal';
-import { subLongStr, isSmallDevice } from '../../../utils';
+import { subLongStr, isSmallDevice, getStatusBarHeight } from '../../../utils';
 
 @observer
 @wrap
@@ -63,7 +63,9 @@ export default class AddPlayListModal extends Component {
       />
     ) : (
       <View cls="pb7">
-        <View cls="pv2 flx-row aic bg-#280f46">
+        <View
+          cls="pv2 flx-row aic bg-#280f46"
+          style={{ paddingTop: getStatusBarHeight() + 10 }}>
           <View cls="aifs jcc flx-i">
             <TouchableOpacity
               onPress={() => this.props.addPlaylist(false)}
@@ -103,7 +105,7 @@ export default class AddPlayListModal extends Component {
             data={[...rootStore?.homeStore?.popular]}
             showsVerticalScrollIndicator={false}
             renderItem={this._renderItem}
-            numColumns={3}
+            numColumns={4}
             horizontal={false}
             keyExtractor={(item, index) => index.toString()}
           />

@@ -251,7 +251,11 @@ export default class AlbumDetail extends Component {
   };
 
   onReactionSuccess = (type, data) => {
-    const { item } = this.props.route?.params;
+    let { item } = this.props.route?.params;
+
+    if (typeof item == 'number') {
+      item = this.state.article;
+    }
     const idExist = indexOf(
       [...this.viewModel?.likedPlaylist],
       Number(item.id),
@@ -259,10 +263,12 @@ export default class AlbumDetail extends Component {
     if (type == 'like') {
       if (idExist < 0) {
         this.viewModel?.addLikedAlbum(data);
+        rootStore?.libraryStore?.updatePlayList(data);
       }
     } else {
       if (idExist >= 0) {
         this.viewModel?.removeLikedAlbum(data);
+        rootStore?.libraryStore?.removePlaylist(data);
       }
     }
   };
@@ -270,7 +276,11 @@ export default class AlbumDetail extends Component {
   onReactionError = () => {};
 
   follow = async () => {
-    const { item } = this.props.route?.params;
+    let { item } = this.props.route?.params;
+
+    if (typeof item == 'number') {
+      item = this.state.article;
+    }
     await likeHelper(
       'article',
       item.id,
@@ -280,7 +290,11 @@ export default class AlbumDetail extends Component {
   };
 
   unfollow = async () => {
-    const { item } = this.props.route?.params;
+    let { item } = this.props.route?.params;
+
+    if (typeof item == 'number') {
+      item = this.state.article;
+    }
     await unlikeHelper(
       'article',
       item.id,
@@ -321,12 +335,20 @@ export default class AlbumDetail extends Component {
         song ? song.id.toString() : randomId.toString(),
       ]);
       if (!this.state.playing || song) {
-        if (randomId == Number(rootStore?.playerStore?.currentSong?.id)) {
+        if (
+          Number(randomId) == Number(rootStore?.playerStore?.currentSong?.id)
+        ) {
           navigate('player');
         } else {
-          navigate('player', {
-            trackId: song ? song.id : randomId,
-          });
+          if (
+            Number(song.id) !== Number(rootStore?.playerStore?.currentSong?.id)
+          ) {
+            navigate('player', {
+              trackId: song ? song.id : randomId,
+            });
+          } else {
+            navigate('player');
+          }
         }
         rootStore?.playerStore?.setPlayFrom(item?.name ?? 'Album');
         rootStore.playerStore?.setState('play');
@@ -337,6 +359,8 @@ export default class AlbumDetail extends Component {
       }
       if (!song) {
         this.setState({ playing: !this.state.playing });
+      } else {
+        this.setState({ playing: true });
       }
     }
   };
@@ -366,7 +390,7 @@ export default class AlbumDetail extends Component {
             <View cls="pa3">
               <View
                 cls="flx-row aic jcsb"
-                style={{ paddingTop: getStatusBarHeight() }}>
+                style={{ paddingTop: getStatusBarHeight() + 10 }}>
                 <TouchableOpacity
                   onPress={() => this.props.navigation.goBack()}>
                   <Image
@@ -638,11 +662,18 @@ export default class AlbumDetail extends Component {
               _showModal={this._showModal}
               _handleLoadMore={this.handleLoadMore}
             />
-            <BottomModal ref={this.modalSong} headerNone>
+            <BottomModal
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}
+              ref={this.modalSong}
+              headerNone>
               {showShareModal ? (
                 <ShareModal
                   item={this.viewModel.selectedSong}
-                  _hideModal={() => this.setState({ showShareModal: false })}
+                  _hideModal={() => {
+                    this._hideModal();
+                    this.setState({ showShareModal: false });
+                  }}
                 />
               ) : (
                 <SongMenu
@@ -657,7 +688,8 @@ export default class AlbumDetail extends Component {
             <BottomModal
               headerNone
               justifyCenterModal
-              // forceInsetBottom="never"
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}
               containerCls=""
               customGradient={['#000', '#1a0632', '#000', '#13151A']}
               ref={this.modalPlaylist}>
@@ -678,6 +710,9 @@ export default class AlbumDetail extends Component {
                   item={item}
                   title={name}
                   songs={songs}
+                  _hideModal={() => {
+                    this._hideModalPlaylist();
+                  }}
                   likeCount={this.viewModel.stats
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
@@ -696,6 +731,8 @@ export default class AlbumDetail extends Component {
             <BottomModal
               headerNone
               justifyCenterModal
+              forceInsetTop={'never'}
+              forceInsetBottom={'never'}
               containerCls=""
               ref={this.modalAddSong}>
               <AddSongPlaylist

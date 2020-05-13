@@ -90,6 +90,7 @@ export const HomeStore = types
           AsyncStorageKey.HISTORY,
         );
         const localHistoryJson = JSON.parse(localHistory);
+
         if (localHistoryJson !== null) {
           localHistoryJson.map(history => {
             if (history.owner_id == getParent(self).userStore.id) {

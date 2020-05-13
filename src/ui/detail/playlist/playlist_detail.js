@@ -64,7 +64,8 @@ export default class PlaylistDetail extends Component {
           ref={this.modalMenu}
           title={'Chỉnh sửa Playlist'}
           justifyCenterModal
-          forceInsetBottom="never"
+          forceInsetTop={'never'}
+          forceInsetBottom={'never'}
           containerCls=""
           rightComponent={this.renderRightACtion()}>
           <View cls="mb5">

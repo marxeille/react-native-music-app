@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Text,
   View,
@@ -13,40 +13,42 @@ import {
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
 import { rootStore } from '../../data/context/root_context';
-import { isTextEmpty, isSmallDevice } from '../../utils/index';
+import {
+  isTextEmpty,
+  isSmallDevice,
+  getStatusBarHeight,
+  D_WIDTH,
+} from '../../utils/index';
 import Toast from 'react-native-simple-toast';
 import Share from 'react-native-share';
 import { ShareDialog } from 'react-native-fbsdk';
 import ZaloShare from 'react-native-zalo-share';
+import { scrollDownPosition } from '../../constant/constant';
 
 const ShareModal = wrap(({ _hideModal, item }) => {
   let link;
   switch (item?.getType()) {
     case 'song':
-      // code block
-      link = `diijam.vn/tracks/${item?.id}`;
+      link = `https://www.diijam.vn/tracks/${item?.id}/`;
       break;
     case 'playlist':
-      // code block
-      link = `diijam.vn/playlists/${item?.id}`;
+      link = `https://www.diijam.vn/playlists/${item?.id}/`;
       break;
     case 'artist':
-      // code block
-      link = `diijam.vn/artists/${item?.id}`;
+      link = `https://www.diijam.vn/artists/${item?.id}/`;
       break;
     case 'article':
-      // code block
-      link = `diijam.vn/articles/${item?.id}`;
+      link = `https://www.diijam.vn/articles/${item?.id}/`;
       break;
     default:
-      // code block
       link = '';
   }
-  const shareLinkContent = {
+
+  const [shareFBContent] = useState({
     contentType: 'link',
     contentUrl: link,
-    contentDescription: 'Diijam!!!',
-  };
+    contentDescription: 'Diijam!',
+  });
 
   const onShareSms = useCallback(() => {
     Linking.openURL(`sms:/open?addresses=null&body=${link}`);
@@ -106,10 +108,10 @@ const ShareModal = wrap(({ _hideModal, item }) => {
   });
 
   const shareLinkWithShareDialog = useCallback(() => {
-    ShareDialog.canShow(shareLinkContent)
+    ShareDialog.canShow(shareFBContent)
       .then(function(canShow) {
         if (canShow) {
-          return ShareDialog.show(shareLinkContent);
+          return ShareDialog.show(shareFBContent);
         }
       })
       .then(
@@ -178,9 +180,9 @@ const ShareModal = wrap(({ _hideModal, item }) => {
   ];
 
   const renderShareItem = useCallback(
-    wrap(({ item }) => {
+    wrap(({ item, index }) => {
       return (
-        <View cls={`${isSmallDevice() ? 'pt1' : 'pt2'}`}>
+        <View cls={`${index == 0 ? 'pt3' : isSmallDevice() ? 'pt1' : 'pt2'}`}>
           <TouchableOpacity
             onPress={() => item?.action()}
             cls="jcc pv1 ph3 aic">
@@ -203,11 +205,10 @@ const ShareModal = wrap(({ _hideModal, item }) => {
       );
     }),
   );
-  console.log('item', item);
 
-  return (
-    <View cls="fullView">
-      <View cls="fullHeight">
+  const renderHeader = useCallback(
+    wrap(() => {
+      return (
         <ImageBackground
           cls="fullWidth"
           resizeMode="cover"
@@ -224,7 +225,9 @@ const ShareModal = wrap(({ _hideModal, item }) => {
             resizeMode="cover"
             source={Images.bNgEnd}>
             <View cls="fullWidth jcc">
-              <View cls="pv2 flx-row aic">
+              <View
+                cls="pv2 flx-row aic"
+                style={{ paddingTop: getStatusBarHeight() + 10 }}>
                 <View cls="aifs jcc flx-i">
                   <TouchableOpacity onPress={_hideModal} cls="jcc aic">
                     <Image
@@ -254,7 +257,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
                       : Images.bAAlbum
                   }
                 />
-                <View cls="jcc aic">
+                <View cls="jcc aic pa3">
                   <Text
                     cls={`${
                       isSmallDevice() ? 'f7' : 'f5'
@@ -285,11 +288,22 @@ const ShareModal = wrap(({ _hideModal, item }) => {
             </View>
           </ImageBackground>
         </ImageBackground>
-
-        <View cls="flx-i pt3">
+      );
+    }),
+  );
+  return (
+    <View cls="fullView">
+      <View cls="fullHeight">
+        <View cls="flx-i">
           <FlatList
+            ListHeaderComponent={renderHeader}
             data={shareItems}
             renderItem={renderShareItem}
+            onScroll={event => {
+              if (event.nativeEvent.contentOffset.y < scrollDownPosition) {
+                _hideModal();
+              }
+            }}
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
@@ -301,6 +315,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
 export default ShareModal;
 const styles = StyleSheet.create({
   underWave: { position: 'absolute', bottom: 8, height: 20 },
+  fullWidth: { width: D_WIDTH },
   title: {
     color: '#FFF',
     justifyContent: 'center',

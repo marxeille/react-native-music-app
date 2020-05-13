@@ -1,12 +1,19 @@
 import React, { useCallback, useState, useRef, useMemo } from 'react';
-import { Text, View, TouchableOpacity, Image, FlatList } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  Keyboard,
+} from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../../main/library/components/LinearGradientText';
 import LinearGradient from 'react-native-linear-gradient';
 import SearchBar from '../../main/search/components/search_bar';
-import { subLongStr, isSmallDevice } from '../../../utils';
+import { subLongStr, isSmallDevice, getStatusBarHeight } from '../../../utils';
 import { rootStore } from '../../../data/context/root_context';
 import Loading from '../../components/loading';
 import { CreatePlaylistModel } from './model/view_model';
@@ -97,7 +104,9 @@ const AddSongPlaylist = observer(
             colors={['#291047', '#1a0632', '#110926', '#110926']}
             start={{ x: 1, y: 1 }}
             end={{ x: 0, y: 0 }}>
-            <View cls="pv2 flx-row aic">
+            <View
+              cls="pv2 flx-row aic"
+              style={{ paddingTop: getStatusBarHeight() + 10 }}>
               <View cls="aifs jcc flx-i">
                 <TouchableOpacity
                   onPress={handleCloseAction}
@@ -145,6 +154,7 @@ const AddSongPlaylist = observer(
             }
             style={{ height: '100%' }}
             renderItem={renderItem}
+            onScrollBeginDrag={Keyboard.dismiss}
             ListEmptyComponent={renderEmptyContainer}
             keyExtractor={(item, index) => index.toString()}
           />

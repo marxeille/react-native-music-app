@@ -35,7 +35,10 @@ export default class PlayerTabView extends React.Component {
           return (
             <TouchableOpacity
               key={i}
-              style={[styles.tabItem, { paddingTop: getStatusBarHeight() }]}
+              style={[
+                styles.tabItem,
+                { paddingTop: getStatusBarHeight() + 10 },
+              ]}
               onPress={() => this.setState({ index: i })}>
               <View cls="aic jcc">
                 {i == this.state.index ? (
@@ -82,8 +85,8 @@ export default class PlayerTabView extends React.Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{
-          borderTopLeftRadius: !isSmallDevice() && !isMeidumDevice() ? 35 : 0,
-          borderTopRightRadius: !isSmallDevice() && !isMeidumDevice() ? 35 : 0,
+          borderTopLeftRadius: !isSmallDevice() && !isMeidumDevice() ? 30 : 0,
+          borderTopRightRadius: !isSmallDevice() && !isMeidumDevice() ? 30 : 0,
         }}>
         <View cls="fullView">
           {this.state.index == 0 ? (

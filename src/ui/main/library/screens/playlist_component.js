@@ -89,7 +89,7 @@ export default class PlaylistComponent extends Component {
             <FlatList
               keyboardDismissMode="on-drag"
               showsVerticalScrollIndicator={false}
-              data={playlists}
+              data={[{}, ...rootStore.libraryStore.playlists]}
               onScrollBeginDrag={Keyboard.dismiss}
               keyExtractor={(item, index) => index.toString()}
               numColumns={3}
@@ -103,6 +103,8 @@ export default class PlaylistComponent extends Component {
         <BottomModal
           ref={this.modalPlaylist}
           headerNone={true}
+          forceInsetTop={'never'}
+          forceInsetBottom={'never'}
           justifyCenterModal
           containerCls="">
           <CreatePlayListModal _hideModal={this._hideModal} />

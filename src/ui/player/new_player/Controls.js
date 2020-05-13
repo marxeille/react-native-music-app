@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import Images from '../../../assets/icons/icons';
-import { standardPadding } from '../../../utils';
+import { standardPadding, isSmallDevice } from '../../../utils';
 import { wrap } from '../../../themes';
 
 const Controls = wrap(
@@ -42,12 +42,18 @@ const Controls = wrap(
       {!paused ? (
         <TouchableWithoutFeedback onPress={onPressPause}>
           <View>
-            <Image source={Images.ic_btn_pause2} />
+            <Image
+              cls={`${isSmallDevice() ? 'widthFn-65 heightFn-65' : ''}`}
+              source={Images.ic_btn_pause2}
+            />
           </View>
         </TouchableWithoutFeedback>
       ) : (
         <TouchableWithoutFeedback onPress={onPressPlay}>
-          <Image source={Images.ic_btn_play2} />
+          <Image
+            cls={`${isSmallDevice() ? 'widthFn-65 heightFn-65' : ''}`}
+            source={Images.ic_btn_play2}
+          />
         </TouchableWithoutFeedback>
       )}
       <View style={{ width: 15 }} />

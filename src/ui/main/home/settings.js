@@ -113,6 +113,36 @@ class Settings extends Component {
     return <ListItem item={item.item} />;
   });
 
+  renderListHeader = wrap(() => {
+    return (
+      <View>
+        <View cls="pt4">
+          <Image
+            cls={`${
+              isSmallDevice()
+                ? 'widthFn-100 heightFn-100'
+                : 'widthFn-150 heightFn-150'
+            } asc`}
+            source={rootStore.userStore?.avatar ?? Images.bAAlbum}
+          />
+          <View style={styles.abs}>
+            <Image
+              resizeMode="stretch"
+              cls={`${isSmallDevice() ? 'heightFn-25' : 'heightFn-50'}`}
+              style={{ width: D_WIDTH }}
+              source={Images.sNg}
+            />
+          </View>
+        </View>
+        <View cls="aic jcc pt3 pb2">
+          <Text cls={`${isSmallDevice() ? 'f5' : 'f3'} avertaFont white`}>
+            {rootStore.userStore?.name}
+          </Text>
+        </View>
+      </View>
+    );
+  });
+
   render() {
     return (
       <LinearGradient
@@ -123,35 +153,11 @@ class Settings extends Component {
           <ImageBackground cls="fullView aic" source={Images.bg3}>
             <View cls="fullView" style={{ flex: 3 }}>
               {this.renderHeader()}
-              <View>
-                <View cls="pt4">
-                  <Image
-                    cls={`${
-                      isSmallDevice()
-                        ? 'widthFn-100 heightFn-100'
-                        : 'widthFn-150 heightFn-150'
-                    } asc`}
-                    source={rootStore.userStore?.avatar ?? Images.bAAlbum}
-                  />
-                  <View style={styles.abs}>
-                    <Image
-                      resizeMode="stretch"
-                      cls={`${isSmallDevice() ? 'heightFn-25' : 'heightFn-50'}`}
-                      style={{ width: D_WIDTH }}
-                      source={Images.sNg}
-                    />
-                  </View>
-                </View>
-              </View>
-              <View cls="aic jcc pt3 pb2">
-                <Text cls={`${isSmallDevice() ? 'f5' : 'f3'} avertaFont white`}>
-                  {rootStore.userStore?.name}
-                </Text>
-              </View>
               <View
                 cls="flx-i"
                 style={{ marginBottom: isSmallDevice() ? 60 : 70 }}>
                 <FlatList
+                  ListHeaderComponent={this.renderListHeader}
                   data={this.settingItems}
                   renderItem={this.renderSettingItem}
                   keyExtractor={(item, index) => index.toString()}

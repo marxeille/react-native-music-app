@@ -13,12 +13,14 @@ import Images from '../../assets/icons/icons';
 import QueueChild from './components/queue_child';
 import LinearGradient from 'react-native-linear-gradient';
 import { rootStore } from '../../data/context/root_context';
-import { subLongStr, D_HEIGHT, isTextEmpty } from '../../utils';
+import { subLongStr, D_HEIGHT, isTextEmpty, isSmallDevice } from '../../utils';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import LinearGradientText from '../main/library/components/LinearGradientText';
 import * as _ from 'lodash';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import TextTicker from 'react-native-text-ticker';
+import { AsyncStorageKey } from '../../constant/constant';
+import AsyncStorage from '@react-native-community/async-storage';
 
 @observer
 @wrap
@@ -35,7 +37,7 @@ class Queue2 extends Component {
   }
 
   renderQueuePlayer = wrap(() => {
-    const { statusPlayer, toggleStatus, currentSong } = rootStore.playerStore;
+    const { toggleStatus, currentSong } = rootStore.playerStore;
 
     return (
       <View cls="pb3">
@@ -69,12 +71,18 @@ class Queue2 extends Component {
                 marqueeDelay={800}>
                 <Text cls="white fw7 f6 latoFont">
                   {currentSong !== null
-                    ? subLongStr(currentSong?.getName() ?? '', 20)
+                    ? subLongStr(
+                        currentSong?.getName() ?? '',
+                        isSmallDevice() ? 15 : 20,
+                      )
                     : 'Dèfault Title'}
                 </Text>
               </TextTicker>
               <Text cls="primaryPurple f9 pt1 latoFont">
-                {currentSong?.getSubTitle()}
+                {subLongStr(
+                  currentSong?.getSubTitle(),
+                  isSmallDevice() ? 15 : 20,
+                )}
               </Text>
             </View>
           </View>
@@ -93,6 +101,26 @@ class Queue2 extends Component {
     );
   });
 
+  removeSongs = async () => {
+    const { checkedSongs } = this.state;
+    rootStore?.queueStore?.removeSongs(checkedSongs);
+    rootStore?.historyStore?.removeSongs(checkedSongs);
+    const localHistory = await AsyncStorage.getItem(AsyncStorageKey.HISTORY);
+    let localHistoryJson = JSON.parse(localHistory);
+    if (localHistoryJson !== null) {
+      _.remove(localHistoryJson, song => {
+        return (
+          _.indexOf(checkedSongs, song.id) >= 0 &&
+          song.owner_id == rootStore.userStore?.id
+        );
+      });
+      AsyncStorage.setItem(
+        AsyncStorageKey.HISTORY,
+        JSON.stringify(localHistoryJson),
+      );
+    }
+  };
+
   renderBottomBar = wrap(() => {
     return (
       <LinearGradient
@@ -104,11 +132,7 @@ class Queue2 extends Component {
             <TouchableOpacity>
               <Image cls="widthFn-24 heightFn-25" source={Images.ic_add_song} />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                rootStore?.queueStore?.removeSongs(this.state.checkedSongs);
-                rootStore?.historyStore?.removeSongs(this.state.checkedSongs);
-              }}>
+            <TouchableOpacity onPress={this.removeSongs}>
               <Image cls="widthFn-24 heightFn-25" source={Images.ic_trash} />
             </TouchableOpacity>
           </View>
@@ -210,37 +234,7 @@ class Queue2 extends Component {
 
     return (
       <ImageBackground cls="jcsb fullView pt2" source={Images.bg3}>
-        {/* {this.renderQueuePlayer()} */}
         <View style={{ height: D_HEIGHT - 112 }}>
-          {/* {data.length > 1 ? (
-            <GestureRecognizer
-              onSwipeRight={this.onSwipeRight}
-              config={this.config}>
-              <DraggableFlatList
-                data={data}
-                ListHeaderComponent={this.renderQueuePlayer}
-                showsVerticalScrollIndicator={false}
-                renderItem={this.renderItem}
-                keyExtractor={(item, index) => `draggable-item-${index}`}
-                onDragEnd={({ data }) => {
-                  this.shuffeData(data);
-                }}
-                activationDistance={30}
-              />
-            </GestureRecognizer>
-          ) : (
-            <DraggableFlatList
-              data={data}
-              ListHeaderComponent={this.renderQueuePlayer}
-              showsVerticalScrollIndicator={false}
-              renderItem={this.renderItem}
-              keyExtractor={(item, index) => `draggable-item-${index}`}
-              onDragEnd={({ data }) => {
-                this.shuffeData(data);
-              }}
-              activationDistance={30}
-            />
-          )} */}
           <DraggableFlatList
             data={data}
             ListHeaderComponent={this.renderQueuePlayer()}

@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
-  SafeAreaView,
+  FlatList,
 } from 'react-native';
 import { wrap } from '../../../themes';
 import { observer } from 'mobx-react';
@@ -14,9 +14,9 @@ import LinearGradientText from '../../main/library/components/LinearGradientText
 import { rootStore } from '../../../data/context/root_context';
 import AddPlayListModal from './add_playlist_modal';
 import { navigate } from '../../../navigation/navigation_service';
-import { ScrollView } from 'react-native-gesture-handler';
-import { subLongStr, isTextEmpty } from '../../../utils';
+import { isTextEmpty, isMeidumDevice } from '../../../utils';
 import { isSmallDevice } from '../../../utils';
+import { scrollDownPosition } from '../../../constant/constant';
 
 @observer
 @wrap
@@ -26,6 +26,43 @@ export default class SongMenu extends Component {
     this.state = {
       showAddPlaylist: false,
     };
+    this.menuItems = [
+      {
+        title: 'Thêm vào playlist',
+        icon: 'ic_add_playlist',
+        action: () => {
+          this.addPlaylist(true);
+        },
+      },
+      {
+        title: 'Thêm vào danh sách chờ',
+        icon: 'ic_add_song',
+        action: () => {
+          this.addToQueue();
+        },
+      },
+      {
+        title: 'Chia sẻ',
+        icon: 'ic_btn_share',
+        action: () => {
+          props.toggleShareMenu();
+        },
+      },
+      {
+        title: 'Thông tin album',
+        icon: 'ic_album',
+        action: () => {
+          this.navigateToAlbum();
+        },
+      },
+      {
+        title: 'Xem nghệ sĩ',
+        icon: 'ic_artist',
+        action: () => {
+          this.navigateToArtist();
+        },
+      },
+    ];
   }
 
   addPlaylist = state => {
@@ -57,82 +94,83 @@ export default class SongMenu extends Component {
     if (typeof _hideModal == 'function') _hideModal();
   };
 
-  render() {
+  renderItem = ({ item }) => {
+    return (
+      <ActionItem onPress={item.action} title={item.title} icon={item.icon} />
+    );
+  };
+
+  renderHeader = wrap(() => {
     const { song } = this.props;
+    return (
+      <View
+        cls={`aic jcc ${
+          isSmallDevice() ? 'pt2' : isMeidumDevice() ? 'pt2' : 'pt4'
+        } pb2`}>
+        <ImageBackground
+          cls={`${
+            isSmallDevice()
+              ? 'widthFn-200 heightFn-200'
+              : 'widthFn-260 heightFn-260'
+          } aic jcc`}
+          source={Images.e_cover}>
+          <Image
+            source={
+              !isTextEmpty(song?.artwork)
+                ? {
+                    uri: song?.artwork,
+                  }
+                : Images.bAAlbum
+            }
+            cls={`${isSmallDevice() ? 'circleFn-80' : 'circleFn-140'}`}
+          />
+        </ImageBackground>
+        <View cls="aic jcc pb0 pa3">
+          <LinearGradientText
+            text={song?.getName() ?? 'Chưa xác định'}
+            end={{ x: 0.7, y: 0 }}
+            styles={{
+              justifyContent: 'center',
+              fontSize: isSmallDevice() ? 20 : 25,
+              fontFamily: 'Averta-ExtraBold',
+            }}
+          />
+          <Text
+            cls={`${
+              isSmallDevice() ? 'f9' : 'f7'
+            } white fw5 pt1 latoHeavyFont`}>
+            {song?.getSubTitle() ?? 'Chưa rõ'}
+          </Text>
+        </View>
+      </View>
+    );
+  });
+
+  render() {
     const { showAddPlaylist } = this.state;
+    const { _hideModal } = this.props;
     return showAddPlaylist ? (
       <View>
-        <AddPlayListModal addPlaylist={this.addPlaylist} songs={[song]} />
+        <AddPlayListModal
+          addPlaylist={this.addPlaylist}
+          songs={[this.props.song]}
+        />
       </View>
     ) : (
-      <>
-        <View cls="aic jcc pt4 pb2">
-          <ImageBackground
-            cls={`${
-              isSmallDevice()
-                ? 'widthFn-200 heightFn-200'
-                : 'widthFn-260 heightFn-260'
-            } aic jcc`}
-            source={Images.e_cover}>
-            <Image
-              source={
-                !isTextEmpty(song?.artwork)
-                  ? {
-                      uri: song?.artwork,
-                    }
-                  : Images.bAAlbum
-              }
-              cls={`${isSmallDevice() ? 'circleFn-80' : 'circleFn-140'}`}
-            />
-          </ImageBackground>
-          <View cls="aic jcc pb0 pa3">
-            <LinearGradientText
-              text={song?.getName() ?? 'Chưa xác định'}
-              end={{ x: 0.7, y: 0 }}
-              styles={{
-                justifyContent: 'center',
-                fontSize: isSmallDevice() ? 20 : 25,
-                fontFamily: 'Averta-ExtraBold',
-              }}
-            />
-            <Text
-              cls={`${
-                isSmallDevice() ? 'f9' : 'f7'
-              } white fw5 pt1 latoHeavyFont`}>
-              {song?.getSubTitle() ?? 'Chưa rõ'}
-            </Text>
-          </View>
-        </View>
-        <View cls={`pa3 ${isSmallDevice() ? 'heightFn-170' : 'heightFn-250'}`}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <ActionItem
-              onPress={() => this.addPlaylist(true)}
-              icon={'ic_add_playlist'}
-              title={'Thêm vào playlist'}
-            />
-            <ActionItem
-              onPress={() => this.addToQueue()}
-              icon={'ic_add_song'}
-              title={'Thêm vào danh sách chờ'}
-            />
-            <ActionItem
-              onPress={() => this.props.toggleShareMenu()}
-              icon={'ic_btn_share'}
-              title={'Chia sẻ'}
-            />
-            <ActionItem
-              onPress={this.navigateToAlbum}
-              icon={'ic_album'}
-              title={'Thông tin album'}
-            />
-            <ActionItem
-              onPress={this.navigateToArtist}
-              icon={'ic_artist'}
-              title={'Xem nghệ sĩ'}
-            />
-          </ScrollView>
-        </View>
-      </>
+      <View cls="pa3">
+        <FlatList
+          ListHeaderComponent={this.renderHeader}
+          data={this.menuItems}
+          renderItem={this.renderItem}
+          showsVerticalScrollIndicator={false}
+          onScroll={event => {
+            if (event.nativeEvent.contentOffset.y < scrollDownPosition) {
+              if (typeof _hideModal == 'function') _hideModal();
+            }
+          }}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
     );
   }
 }
