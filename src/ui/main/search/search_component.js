@@ -22,6 +22,7 @@ import { observer } from 'mobx-react';
 import { rootStore } from '../../../data/context/root_context';
 import BottomModal from '../../../ui/components/modal/BottomModal';
 import SongMenu from '../../../ui/player/components/song_menu';
+import ShareModal from '../../components/share';
 @observer
 @wrap
 export default class SearchComponent extends Component {
@@ -29,6 +30,7 @@ export default class SearchComponent extends Component {
     super(props);
     this.state = {
       showHistory: true,
+      showShareModal: false,
       keyword: null,
       song: null,
     };
@@ -220,7 +222,22 @@ export default class SearchComponent extends Component {
               forceInsetBottom={'never'}
               ref={this.modalMenu}
               headerNone>
-              <SongMenu song={song} _hideModal={this._hideModal} />
+              {this.state.showShareModal ? (
+                <ShareModal
+                  item={song}
+                  _hideModal={() => {
+                    this.setState({ showShareModal: false });
+                  }}
+                />
+              ) : (
+                <SongMenu
+                  song={song}
+                  _hideModal={this._hideModal}
+                  toggleShareMenu={() =>
+                    this.setState({ showShareModal: true })
+                  }
+                />
+              )}
             </BottomModal>
           </ImageBackground>
         </View>

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { wrap } from '../../../themes';
-import { isTextEmpty, isSmallDevice } from '../../../utils';
+import { isTextEmpty, isSmallDevice, isMeidumDevice } from '../../../utils';
 import Images from '../../../assets/icons/icons';
 import ListItem from './list_item';
 import SelectImageBtn from '../select_image_btn';
@@ -75,7 +75,7 @@ const PlaylistMenuConcept = observer(
                   style={{
                     zIndex: -1,
                     position: 'absolute',
-                    right: 40,
+                    right: isSmallDevice() ? 45 : isMeidumDevice() ? 75 : 40,
                     bottom: -5,
                   }}
                   source={Images.e_cover}>
@@ -90,9 +90,9 @@ const PlaylistMenuConcept = observer(
                   />
                 </ImageBackground>
               </View>
-              <View cls="aic jcc pt3 pb3">
+              <View cls="aic jcc pa3">
                 {editTitle ? (
-                  <View cls="fullWidth pl3 pr3 mb3 mt3">
+                  <View cls="fullWidth pa3">
                     <View
                       cls="jcc ba br2 pa2 bg-#2C184A"
                       style={{ borderColor: '#9166cc' }}>
@@ -117,9 +117,6 @@ const PlaylistMenuConcept = observer(
                                 !isTextEmpty(newTitleChange)
                                 ? newTitleChange
                                 : title,
-                            );
-                            console.log(
-                              'Title:' + title + ', New:' + newTitleChange,
                             );
                           }}>
                           <Image

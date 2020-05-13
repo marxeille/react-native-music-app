@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Text,
   View,
@@ -18,7 +18,6 @@ import {
   isSmallDevice,
   getStatusBarHeight,
   D_WIDTH,
-  D_HEIGHT,
 } from '../../utils/index';
 import Toast from 'react-native-simple-toast';
 import Share from 'react-native-share';
@@ -29,30 +28,26 @@ const ShareModal = wrap(({ _hideModal, item }) => {
   let link;
   switch (item?.getType()) {
     case 'song':
-      // code block
-      link = `diijam.vn/tracks/${item?.id}`;
+      link = `https://www.diijam.vn/tracks/${item?.id}/`;
       break;
     case 'playlist':
-      // code block
-      link = `diijam.vn/playlists/${item?.id}`;
+      link = `https://www.diijam.vn/playlists/${item?.id}/`;
       break;
     case 'artist':
-      // code block
-      link = `diijam.vn/artists/${item?.id}`;
+      link = `https://www.diijam.vn/artists/${item?.id}/`;
       break;
     case 'article':
-      // code block
-      link = `diijam.vn/articles/${item?.id}`;
+      link = `https://www.diijam.vn/articles/${item?.id}/`;
       break;
     default:
-      // code block
       link = '';
   }
-  const shareLinkContent = {
+
+  const [shareFBContent] = useState({
     contentType: 'link',
     contentUrl: link,
-    contentDescription: 'Diijam!!!',
-  };
+    contentDescription: 'Diijam!',
+  });
 
   const onShareSms = useCallback(() => {
     Linking.openURL(`sms:/open?addresses=null&body=${link}`);
@@ -112,10 +107,11 @@ const ShareModal = wrap(({ _hideModal, item }) => {
   });
 
   const shareLinkWithShareDialog = useCallback(() => {
-    ShareDialog.canShow(shareLinkContent)
+    console.log('shareFBContent', shareFBContent);
+    ShareDialog.canShow(shareFBContent)
       .then(function(canShow) {
         if (canShow) {
-          return ShareDialog.show(shareLinkContent);
+          return ShareDialog.show(shareFBContent);
         }
       })
       .then(
@@ -261,7 +257,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
                       : Images.bAAlbum
                   }
                 />
-                <View cls="jcc aic">
+                <View cls="jcc aic pa3">
                   <Text
                     cls={`${
                       isSmallDevice() ? 'f7' : 'f5'

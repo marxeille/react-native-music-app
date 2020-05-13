@@ -45,6 +45,7 @@ export default class ArtistDetail extends Component {
       tabIndex: 0,
       showShareModal: false,
       showAddPlaylistModal: false,
+      showShareSongModal: false,
       following:
         indexOf(
           [...this.viewModel?.likedArtists],
@@ -462,13 +463,6 @@ export default class ArtistDetail extends Component {
         icon: Images.ic_share_white,
         imgStyle: 'widthFn-20 heightFn-24',
       },
-      // {
-      //   title: 'Xem nghệ sĩ',
-      //   action: () => {},
-      //   hidden: false,
-      //   icon: Images.ic_person,
-      //   imgStyle: 'widthFn-20 heightFn-24',
-      // },
     ];
     return (
       <LinearGradient
@@ -520,10 +514,24 @@ export default class ArtistDetail extends Component {
               headerNone
               forceInsetTop={'never'}
               forceInsetBottom={'never'}>
-              <SongMenu
-                song={this.viewModel?.selectedSong}
-                _hideModal={this._hideModal}
-              />
+              {this.state.showShareSongModal ? (
+                <ShareModal
+                  item={this.viewModel?.selectedSong}
+                  _hideModal={() => {
+                    this.setState({ showShareSongModal: false });
+                  }}
+                />
+              ) : (
+                <SongMenu
+                  song={this.viewModel?.selectedSong}
+                  _hideModal={() => {
+                    this._hideModal();
+                  }}
+                  toggleShareMenu={() =>
+                    this.setState({ showShareSongModal: true })
+                  }
+                />
+              )}
             </BottomModal>
             <BottomModal
               ref={this.modalShare}
