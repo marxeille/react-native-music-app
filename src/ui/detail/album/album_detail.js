@@ -251,7 +251,11 @@ export default class AlbumDetail extends Component {
   };
 
   onReactionSuccess = (type, data) => {
-    const { item } = this.props.route?.params;
+    let { item } = this.props.route?.params;
+
+    if (typeof item == 'number') {
+      item = this.state.article;
+    }
     const idExist = indexOf(
       [...this.viewModel?.likedPlaylist],
       Number(item.id),
@@ -272,7 +276,11 @@ export default class AlbumDetail extends Component {
   onReactionError = () => {};
 
   follow = async () => {
-    const { item } = this.props.route?.params;
+    let { item } = this.props.route?.params;
+
+    if (typeof item == 'number') {
+      item = this.state.article;
+    }
     await likeHelper(
       'article',
       item.id,
@@ -282,7 +290,11 @@ export default class AlbumDetail extends Component {
   };
 
   unfollow = async () => {
-    const { item } = this.props.route?.params;
+    let { item } = this.props.route?.params;
+
+    if (typeof item == 'number') {
+      item = this.state.article;
+    }
     await unlikeHelper(
       'article',
       item.id,
@@ -323,12 +335,20 @@ export default class AlbumDetail extends Component {
         song ? song.id.toString() : randomId.toString(),
       ]);
       if (!this.state.playing || song) {
-        if (randomId == Number(rootStore?.playerStore?.currentSong?.id)) {
+        if (
+          Number(randomId) == Number(rootStore?.playerStore?.currentSong?.id)
+        ) {
           navigate('player');
         } else {
-          navigate('player', {
-            trackId: song ? song.id : randomId,
-          });
+          if (
+            Number(song.id) !== Number(rootStore?.playerStore?.currentSong?.id)
+          ) {
+            navigate('player', {
+              trackId: song ? song.id : randomId,
+            });
+          } else {
+            navigate('player');
+          }
         }
         rootStore?.playerStore?.setPlayFrom(item?.name ?? 'Album');
         rootStore.playerStore?.setState('play');

@@ -132,7 +132,8 @@ export default class ArtistDetail extends Component {
   };
 
   onReactionSuccess = (type, data) => {
-    const { artist } = this.props.route.params;
+    let { artist } = this.props.route.params;
+    if (typeof artist == 'number') artist = this.state.artist;
     const idExist = indexOf(
       [...this.viewModel?.likedArtists],
       Number(artist.id),
@@ -155,7 +156,8 @@ export default class ArtistDetail extends Component {
   };
 
   followArtist = async () => {
-    const { artist } = this.props.route.params;
+    let { artist } = this.props.route.params;
+    if (typeof artist == 'number') artist = this.state.artist;
     await likeHelper(
       'artist',
       artist.id,
@@ -165,7 +167,8 @@ export default class ArtistDetail extends Component {
   };
 
   unfollowArtist = async () => {
-    const { artist } = this.props.route.params;
+    let { artist } = this.props.route.params;
+    if (typeof artist == 'number') artist = this.state.artist;
     await unlikeHelper(
       'artist',
       artist.id,
@@ -189,7 +192,8 @@ export default class ArtistDetail extends Component {
 
   playSong = song => {
     const { ids } = this.state;
-    const { artist } = this.props.route.params;
+    let { artist } = this.props.route.params;
+    if (typeof artist == 'number') artist = this.state.artist;
 
     if (ids.length > 0) {
       const randomId = ids[Math.floor(Math.random() * ids.length)];
@@ -211,14 +215,26 @@ export default class ArtistDetail extends Component {
         song ? song.id.toString() : randomId.toString(),
       ]);
       if (!this.state.playing || song) {
-        if (randomId == Number(rootStore?.playerStore?.currentSong?.id)) {
+        if (
+          Number(randomId) == Number(rootStore?.playerStore?.currentSong?.id)
+        ) {
           navigate('player');
         } else {
-          navigate('player', {
-            trackId: song ? song.id : randomId,
-          });
+          if (
+            Number(song.id) !== Number(rootStore?.playerStore?.currentSong?.id)
+          ) {
+            navigate('player', {
+              trackId: song ? song.id : randomId,
+            });
+          } else {
+            navigate('player');
+          }
         }
-        rootStore?.playerStore?.setPlayFrom(artist?.getName() ?? 'Artist');
+        rootStore?.playerStore?.setPlayFrom(
+          typeof artist?.getName == 'function'
+            ? artist?.getName().toUpperCase()
+            : '...',
+        );
         rootStore.playerStore?.setState('play');
       } else {
         rootStore.playlistSongStore?.setPlaylist({});
