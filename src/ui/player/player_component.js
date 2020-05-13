@@ -33,10 +33,6 @@ export default class PlayerComponent extends Component {
     navigate('player');
   }
 
-  onSwipeDown(gestureState) {
-    console.log('you swipe down', gestureState);
-  }
-
   onSwipeLeft() {
     if (
       rootStore.playerStore?.trackIndex < rootStore.playerStore?.getQueueSize()

@@ -1,3 +1,5 @@
+import { isSmallDevice, isMeidumDevice } from '../utils';
+
 export const BASE_API_URL = 'http://103.28.37.44:5000';
 
 export const AsyncStorageKey = {
@@ -10,6 +12,12 @@ export const AsyncStorageKey = {
     ALBUMS: '@recentlyalbums',
   },
 };
+
+export const scrollDownPosition = isSmallDevice()
+  ? -120
+  : isMeidumDevice()
+  ? -145
+  : -170;
 
 export const alphabetJson = [
   // '[#]',

@@ -17,6 +17,7 @@ import ListItem from './list_item';
 import SelectImageBtn from '../select_image_btn';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { rootStore } from '../../../data/context/root_context';
+import { scrollDownPosition } from '../../../constant/constant';
 
 const PlaylistMenuConcept = observer(
   wrap(
@@ -159,7 +160,7 @@ const PlaylistMenuConcept = observer(
                 ListHeaderComponent={renderHeader}
                 data={settingItems}
                 onScroll={event => {
-                  if (event.nativeEvent.contentOffset.y < -170) {
+                  if (event.nativeEvent.contentOffset.y < scrollDownPosition) {
                     if (typeof hideModal == 'function') hideModal();
                   }
                 }}

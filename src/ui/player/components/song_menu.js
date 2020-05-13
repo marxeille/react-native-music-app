@@ -16,6 +16,7 @@ import AddPlayListModal from './add_playlist_modal';
 import { navigate } from '../../../navigation/navigation_service';
 import { isTextEmpty, isMeidumDevice } from '../../../utils';
 import { isSmallDevice } from '../../../utils';
+import { scrollDownPosition } from '../../../constant/constant';
 
 @observer
 @wrap
@@ -163,7 +164,7 @@ export default class SongMenu extends Component {
           renderItem={this.renderItem}
           showsVerticalScrollIndicator={false}
           onScroll={event => {
-            if (event.nativeEvent.contentOffset.y < -180) {
+            if (event.nativeEvent.contentOffset.y < scrollDownPosition) {
               if (typeof _hideModal == 'function') _hideModal();
             }
           }}

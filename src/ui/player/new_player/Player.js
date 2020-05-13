@@ -39,8 +39,6 @@ export default class Player extends Component {
 
   componentDidMount() {
     const trackId = this.props.route?.params?.trackId;
-    console.log('trackId', trackId);
-
     rootStore.playerStore?.prepareSong(trackId ?? null);
   }
 

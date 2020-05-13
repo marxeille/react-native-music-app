@@ -23,6 +23,7 @@ import Toast from 'react-native-simple-toast';
 import Share from 'react-native-share';
 import { ShareDialog } from 'react-native-fbsdk';
 import ZaloShare from 'react-native-zalo-share';
+import { scrollDownPosition } from '../../constant/constant';
 
 const ShareModal = wrap(({ _hideModal, item }) => {
   let link;
@@ -299,7 +300,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
             data={shareItems}
             renderItem={renderShareItem}
             onScroll={event => {
-              if (event.nativeEvent.contentOffset.y < -180) {
+              if (event.nativeEvent.contentOffset.y < scrollDownPosition) {
                 _hideModal();
               }
             }}
