@@ -140,10 +140,12 @@ export default class ArtistDetail extends Component {
     if (type == 'like') {
       if (idExist < 0) {
         this.viewModel?.addLikedArtist(data);
+        rootStore?.libraryStore?.updateArtist(data);
       }
     } else {
       if (idExist >= 0) {
         this.viewModel?.removeLikedArtist(data);
+        rootStore?.libraryStore?.removeArtist(data);
       }
     }
   };
@@ -225,6 +227,8 @@ export default class ArtistDetail extends Component {
       }
       if (!song) {
         this.setState({ playing: !this.state.playing });
+      } else {
+        this.setState({ playing: true });
       }
     }
   };

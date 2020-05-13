@@ -107,7 +107,6 @@ const ShareModal = wrap(({ _hideModal, item }) => {
   });
 
   const shareLinkWithShareDialog = useCallback(() => {
-    console.log('shareFBContent', shareFBContent);
     ShareDialog.canShow(shareFBContent)
       .then(function(canShow) {
         if (canShow) {

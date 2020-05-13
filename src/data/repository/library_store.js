@@ -34,8 +34,12 @@ export const LibraryStore = types
         self.albums.push(album.id);
       },
 
-      updatePlayList(pl) {
-        self.playlists.push(pl.id);
+      updatePlayList(plId) {
+        self.playlists.push(plId);
+      },
+
+      updateArtist(arId) {
+        self.artists.push(arId);
       },
       removePlaylist(playlistId) {
         const plIndex = findIndex(
@@ -43,6 +47,13 @@ export const LibraryStore = types
           pl => Number(pl.id) == Number(playlistId),
         );
         self.playlists.splice(plIndex, 1);
+      },
+      removeArtist(artistId) {
+        const arIndex = findIndex(
+          [...self.artists],
+          ar => Number(ar.id) == Number(artistId),
+        );
+        self.artists.splice(arIndex, 1);
       },
 
       clearLibraryData() {
@@ -72,7 +83,7 @@ export const LibraryStore = types
           };
 
           getParent(self).updatePlayList(likedTracksPlaylist);
-          self.playlists.push(likedTracksPlaylist.id);
+          self.updatePlayList(likedTracksPlaylist.id);
         }
       },
 
@@ -87,7 +98,7 @@ export const LibraryStore = types
             if (playlistData.status == 200) {
               playlistData.data.map(pl => {
                 getParent(self).updatePlayList(pl);
-                self.playlists.push(pl.id);
+                self.updatePlayList(pl.id);
               });
             } else {
               Toast.showWithGravity(
@@ -114,7 +125,7 @@ export const LibraryStore = types
             if (artistsData.status == 200) {
               artistsData.data.map(ar => {
                 getParent(self).updateArtist(ar);
-                self.artists.push(ar.id);
+                self.updateArtist(ar.id);
               });
             } else {
               Toast.showWithGravity(

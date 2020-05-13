@@ -259,10 +259,12 @@ export default class AlbumDetail extends Component {
     if (type == 'like') {
       if (idExist < 0) {
         this.viewModel?.addLikedAlbum(data);
+        rootStore?.libraryStore?.updatePlayList(data);
       }
     } else {
       if (idExist >= 0) {
         this.viewModel?.removeLikedAlbum(data);
+        rootStore?.libraryStore?.removePlaylist(data);
       }
     }
   };
@@ -337,6 +339,8 @@ export default class AlbumDetail extends Component {
       }
       if (!song) {
         this.setState({ playing: !this.state.playing });
+      } else {
+        this.setState({ playing: true });
       }
     }
   };
