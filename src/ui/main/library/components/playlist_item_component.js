@@ -18,7 +18,7 @@ export default class PlaylistItem extends Component {
     const width = Dimensions.get('screen').width / 3 - 16;
     return (
       <>
-        <View cls="pb3 pr2">
+        <View cls="pb2 pr2">
           <Image
             style={{ width: width, height: width }}
             source={

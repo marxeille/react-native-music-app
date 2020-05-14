@@ -291,17 +291,19 @@ export default class ArtistDetail extends Component {
             cls={`jcsb`}
             style={{ opacity: 0.9 }}
             resizeMode="cover"
-            source={Images.bNgEnd}>
+            source={Images.bNgEn}>
             <View cls="pa3">
               <View
                 cls="flx-row aic jcsb"
                 style={{ paddingTop: getStatusBarHeight() + 10 }}>
                 <TouchableOpacity
                   onPress={() => this.props.navigation.goBack()}>
-                  <Image
-                    cls="widthFn-10 heightFn-20"
-                    source={Images.ic_back_white}
-                  />
+                  <View cls="widthFn-50 heightFn-50 jcc">
+                    <Image
+                      cls="widthFn-10 heightFn-20"
+                      source={Images.ic_back_white}
+                    />
+                  </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this._showModalMenu}>
                   <Image source={Images.ic_menu_white} />
@@ -490,7 +492,7 @@ export default class ArtistDetail extends Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
-          <ImageBackground cls="fullView" source={Images.bg3}>
+          <ImageBackground cls="fullView" source={Images.default_wave_bg}>
             <FlatList
               ListHeaderComponent={this._renderListHeaderContent()}
               data={[...this.viewModel.songs.values()]}

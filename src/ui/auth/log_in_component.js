@@ -128,7 +128,9 @@ export default class LogInComponent extends Component {
           end={{ x: 1, y: 1 }}>
           <KeyboardAvoidingView behavior="padding">
             <View cls="fullView">
-              <ImageBackground cls="fullView aic jcsb" source={Images.bg4}>
+              <ImageBackground
+                cls="fullView aic jcsb"
+                source={Images.default_wave_bg}>
                 <View cls={`asfs pa3 ${isSmallDevice() ? 'pt3' : 'pt4'} pb0`}>
                   <TouchableOpacity onPress={pop} cls="mt2">
                     <Image

@@ -180,7 +180,7 @@ export default class SearchComponent extends Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
         <View style={{ paddingBottom: 175 }}>
-          <ImageBackground cls="fullView" source={Images.bg2}>
+          <ImageBackground cls="fullView" source={Images.default_wave_bg}>
             {this.renderSearchSection()}
             {this.viewmodel.state == 'loading' ? (
               <View cls="aic jcc pt5">

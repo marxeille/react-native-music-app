@@ -77,7 +77,7 @@ export default class AccountComponent extends Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
-          <ImageBackground cls="fullView aic" source={Images.bg3}>
+          <ImageBackground cls="fullView aic" source={Images.default_wave_bg}>
             <View cls="fullView">
               {this.renderHeader()}
               <View>

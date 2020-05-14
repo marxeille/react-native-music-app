@@ -33,6 +33,7 @@ import AddPlayListModal from '../../player/components/add_playlist_modal';
 import ShareModal from '../../components/share';
 import { uploadImage } from '../../../data/datasource/api_config';
 import { BASE_API_URL } from '../../../constant/constant';
+import TextTicker from 'react-native-text-ticker';
 
 @observer
 @wrap
@@ -397,17 +398,19 @@ export default class AlbumDetail extends Component {
             cls={`jcsb`}
             style={{ opacity: 0.9 }}
             resizeMode="cover"
-            source={Images.bNgEnd}>
+            source={Images.bNgEn}>
             <View cls="pa3">
               <View
                 cls="flx-row aic jcsb"
                 style={{ paddingTop: getStatusBarHeight() + 10 }}>
                 <TouchableWithoutFeedback
                   onPress={() => this.props.navigation.goBack()}>
-                  <Image
-                    cls="widthFn-10 heightFn-20"
-                    source={Images.ic_back_white}
-                  />
+                  <View cls="widthFn-50 heightFn-50 jcc">
+                    <Image
+                      cls="widthFn-10 heightFn-20"
+                      source={Images.ic_back_white}
+                    />
+                  </View>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={this._showModalPlaylist}>
                   <Image source={Images.ic_menu_white} />
@@ -424,12 +427,23 @@ export default class AlbumDetail extends Component {
                 }
               />
             </View>
-            <View cls="aic jcc pt2">
-              <Text cls="white fw8 f3 pb2 avertaFont">
-                {typeof item.getName == 'function'
-                  ? item.getName().toUpperCase()
-                  : '...'}
-              </Text>
+            <View cls="aic jcc pa3 pt2">
+              <TextTicker
+                style={{ fontSize: 15 }}
+                duration={14000}
+                loop
+                bounce
+                repeatSpacer={150}
+                scrollSpeed={100}
+                bounceSpeed={400}
+                marqueeDelay={800}>
+                <Text cls="white fw8 f3 pb2 avertaFont">
+                  {typeof item.getName == 'function'
+                    ? item.getName().toUpperCase()
+                    : '...'}
+                </Text>
+              </TextTicker>
+
               {item?.id == 0 ? (
                 <View cls="pb4">
                   <Text cls="f9 primaryPurple lightFont">
@@ -661,7 +675,7 @@ export default class AlbumDetail extends Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
-          <ImageBackground cls="fullView" source={Images.bg2}>
+          <ImageBackground cls="fullView" source={Images.default_wave_bg}>
             <AlbumListItem
               _renderListHeaderContent={() =>
                 this._renderListHeaderContent(hasSong, item, name)

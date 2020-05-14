@@ -24,7 +24,7 @@ export default class AlbumItem extends Component {
         onPress={() => {
           item ? navigate('album_detail', { id: item.id, item: item }) : null;
         }}>
-        <View cls="pb3 pr2">
+        <View cls="pb2 pr2">
           <Image
             style={{ width: width, height: width }}
             source={

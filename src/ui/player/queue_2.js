@@ -187,7 +187,7 @@ class Queue2 extends Component {
               end={{ x: 0.6, y: 0 }}
               styles={{
                 justifyContent: 'center',
-                fontSize: 20,
+                fontSize: 23,
                 fontFamily: 'Averta-ExtraBold',
               }}
             />
@@ -233,7 +233,7 @@ class Queue2 extends Component {
     }
 
     return (
-      <ImageBackground cls="jcsb fullView pt2" source={Images.bg3}>
+      <ImageBackground cls="jcsb fullView pt2" source={Images.default_wave_bg}>
         <View style={{ height: D_HEIGHT - 112 }}>
           <DraggableFlatList
             data={data}

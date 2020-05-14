@@ -1,5 +1,6 @@
 const Images = {
   bAAlbum: require('./bAAlbum.png'),
+  bNgEn: require('./bNgEn.png'),
   bc_tabbottom: require('./bc_tabbottom.png'),
   bg: require('./bg.png'),
   bg2: require('./bg2.png'),
@@ -9,7 +10,9 @@ const Images = {
   bg_mini_player: require('./bg_mini_player.png'),
   bg_player: require('./bg_player.png'),
   bg_wave: require('./bg_wave.png'),
+  default_wave_bg: require('./default_wave_bg.png'),
   e_cover: require('./e_cover.png'),
+  home_wave_bg: require('./home_wave_bg.png'),
   ic_account: require('./ic_account.png'),
   ic_add_pl: require('./ic_add_pl.png'),
   ic_add_playlist: require('./ic_add_playlist.png'),
@@ -108,7 +111,6 @@ const Images = {
   sNg: require('./sNg.png'),
   setting: require('./setting.png'),
   wave: require('./wave.png'),
-  wave2: require('./wave2.png'),
-  bNgEnd: require('./bNgEn.png'),
-};
-export default Images;
+  wave2: require('./wave2.png')
+}
+export default Images

@@ -131,14 +131,20 @@ export default class SongMenu extends Component {
             end={{ x: 0.7, y: 0 }}
             styles={{
               justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
               fontSize: isSmallDevice() ? 20 : 25,
               fontFamily: 'Averta-ExtraBold',
             }}
           />
           <Text
-            cls={`${
-              isSmallDevice() ? 'f9' : 'f7'
-            } white fw5 pt1 latoHeavyFont`}>
+            style={{
+              fontSize: 16,
+              marginTop: 6,
+              fontWeight: '600',
+              color: '#fff',
+              fontFamily: 'lato-heavy',
+            }}>
             {song?.getSubTitle() ?? 'Chưa rõ'}
           </Text>
         </View>

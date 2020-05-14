@@ -27,23 +27,25 @@ export default class ItemHome extends Component {
               : Images.bAAlbum
           }
         />
-        <TextTicker
-          style={{ fontSize: 15 }}
-          duration={6000}
-          loop
-          bounce
-          repeatSpacer={150}
-          scrollSpeed={100}
-          bounceSpeed={400}
-          marqueeDelay={800}>
-          <Text cls="white pt2 fw6 lightFont">
-            {rootStore.playlist.get(this.props.id).getName()}
+        <View cls="pt2">
+          <TextTicker
+            style={{ fontSize: 15 }}
+            duration={12000}
+            loop
+            bounce
+            repeatSpacer={150}
+            scrollSpeed={100}
+            bounceSpeed={400}
+            marqueeDelay={800}>
+            <Text cls="white pt2 fw6 lightFont">
+              {rootStore.playlist.get(this.props.id).getName()}
+            </Text>
+          </TextTicker>
+          <Text cls="primaryPurple pt1 lightFont f11">
+            {rootStore.playlist.get(this.props.id).getSubTitle() ??
+              'Billie Erlish'}
           </Text>
-        </TextTicker>
-        <Text cls="primaryPurple pt1 lightFont f11">
-          {rootStore.playlist.get(this.props.id).getSubTitle() ??
-            'Billie Erlish'}
-        </Text>
+        </View>
       </View>
     );
   }

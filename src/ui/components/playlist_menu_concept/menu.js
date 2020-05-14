@@ -18,6 +18,7 @@ import SelectImageBtn from '../select_image_btn';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { rootStore } from '../../../data/context/root_context';
 import { scrollDownPosition } from '../../../constant/constant';
+import TextTicker from 'react-native-text-ticker';
 
 const PlaylistMenuConcept = observer(
   wrap(
@@ -123,9 +124,7 @@ const PlaylistMenuConcept = observer(
                           }}>
                           <Image
                             cls={`${
-                              isSmallDevice()
-                                ? 'widthFn-20 heightFn-20'
-                                : 'widthFn-30 heightFn-30'
+                              isSmallDevice() ? 'squareFn-20' : 'squareFn-30'
                             }`}
                             source={Images.ic_checked_song}
                           />
@@ -134,9 +133,19 @@ const PlaylistMenuConcept = observer(
                     </View>
                   </View>
                 ) : (
-                  <Text cls="avertaFont white f4">
-                    {item?.getType() == 'artist' ? item?.getName() : title}
-                  </Text>
+                  <TextTicker
+                    style={{ fontSize: 15 }}
+                    duration={12000}
+                    loop
+                    bounce
+                    repeatSpacer={150}
+                    scrollSpeed={100}
+                    bounceSpeed={400}
+                    marqueeDelay={800}>
+                    <Text cls="avertaFont white f4">
+                      {item?.getType() == 'artist' ? item?.getName() : title}
+                    </Text>
+                  </TextTicker>
                 )}
                 <Text cls="lightFont primaryPurple pt1 f8">
                   {item?.getType() == 'artist'

@@ -42,11 +42,6 @@ export default class WelcomeComponent extends Component {
               } fullView aic jcsb`}
               source={Images.bg5}>
               <View cls="fullWidth pt5 pl3">
-                {/* <Image
-                  cls="aifs"
-                  style={styles.iconBack}
-                  source={Images.ic_back_white}
-                /> */}
                 <Image
                   cls={`${
                     isSmallDevice()

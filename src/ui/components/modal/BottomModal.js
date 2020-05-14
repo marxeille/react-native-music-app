@@ -107,7 +107,7 @@ export default class BottomModal extends React.Component {
               <ImageBackground
                 cls="fullView"
                 style={[style]}
-                source={Images.bg2}>
+                source={Images.default_wave_bg}>
                 {headerNone ? null : (
                   <View cls="pv2 flx-row aic">
                     <View cls="aifs jcc flx-i">

@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
-import { View, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Toast from 'react-native-simple-toast';
 import { isTextEmpty } from '../../utils';

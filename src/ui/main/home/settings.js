@@ -87,7 +87,7 @@ class Settings extends Component {
           style={{ paddingTop: getStatusBarHeight() + 20 }}>
           <View cls="aifs jcc flx-i">
             <TouchableOpacity onPress={() => pop()} cls="jcc pv1 ph3 aic">
-              <View>
+              <View cls="widthFn-50 heightFn-50 jcc">
                 <Image cls="widthFn-22 heightFn-13" source={Images.ic_down} />
               </View>
             </TouchableOpacity>
@@ -150,7 +150,7 @@ class Settings extends Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
-          <ImageBackground cls="fullView aic" source={Images.bg3}>
+          <ImageBackground cls="fullView aic" source={Images.default_wave_bg}>
             <View cls="fullView" style={{ flex: 3 }}>
               {this.renderHeader()}
               <View

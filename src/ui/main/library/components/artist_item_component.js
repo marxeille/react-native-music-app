@@ -22,7 +22,7 @@ export default class ArtistItem extends Component {
       <>
         <TouchableOpacity
           onPress={() => navigate('artist_detail', { artist: item })}>
-          <View cls="pb3 pr2">
+          <View cls="pb2 pr2">
             <Image
               style={{ width: width, height: width }}
               source={

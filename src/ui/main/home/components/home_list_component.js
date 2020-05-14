@@ -48,7 +48,15 @@ export default class HomeListComponent extends Component {
         <View cls="flx-row pa3 pb3 pt0 pr0 aic">
           <MaskedView
             maskElement={
-              <Text style={{ fontWeight: '700', fontSize: 22 }}>{title}</Text>
+              <Text
+                style={{
+                  fontWeight: '700',
+                  fontSize: 22,
+                  fontFamily: 'Averta-ExtraBold',
+                }}
+                cls="fw5 f4">
+                {title}
+              </Text>
             }>
             <LinearGradient
               colors={['#4b3379', '#a57aae', '#b889c5']}
@@ -66,11 +74,6 @@ export default class HomeListComponent extends Component {
               </Text>
             </LinearGradient>
           </MaskedView>
-          {/* {rightIcon ? (
-            <TouchableOpacity onPress={() => navigate('setting')}>
-              <Image cls="widthFn-24 heightFn-24" source={Images.ic_setting} />
-            </TouchableOpacity>
-          ) : null} */}
           <Image
             source={Images.sNg}
             cls="fullWidth heightFn-30"
