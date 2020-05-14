@@ -91,7 +91,7 @@ export default class LibraryTabView extends React.Component {
                     <View cls="jcc asc aic">
                       <Image
                         cls="widthFn-30 heightFn-35"
-                        source={Images.ic_logo}
+                        source={Images.ic_diijam}
                       />
 
                       <LinearGradientText

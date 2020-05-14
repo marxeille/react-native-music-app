@@ -4,7 +4,7 @@ import {
   Text,
   ImageBackground,
   Image,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import {
@@ -391,16 +391,16 @@ export default class AlbumDetail extends Component {
               <View
                 cls="flx-row aic jcsb"
                 style={{ paddingTop: getStatusBarHeight() + 10 }}>
-                <TouchableOpacity
+                <TouchableWithoutFeedback
                   onPress={() => this.props.navigation.goBack()}>
                   <Image
                     cls="widthFn-10 heightFn-20"
                     source={Images.ic_back_white}
                   />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this._showModalPlaylist}>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this._showModalPlaylist}>
                   <Image source={Images.ic_menu_white} />
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
               </View>
               <Image
                 cls="squareFn-195 asc"

@@ -202,9 +202,9 @@ export default class ArtistDetail extends Component {
       });
       const songIdsToCreate = [];
       ids.map(id => {
-        [...this.viewModel.songs.values()].map(song => {
-          if (Number(song.id) == id) {
-            songIdsToCreate.push(song.id);
+        [...this.viewModel.songs.values()].map(s => {
+          if (Number(s.id) == id) {
+            songIdsToCreate.push(s.id);
           }
         });
       });
@@ -221,7 +221,7 @@ export default class ArtistDetail extends Component {
           navigate('player');
         } else {
           if (
-            Number(song.id) !== Number(rootStore?.playerStore?.currentSong?.id)
+            Number(song?.id) !== Number(rootStore?.playerStore?.currentSong?.id)
           ) {
             navigate('player', {
               trackId: song ? song.id : randomId,
@@ -396,7 +396,7 @@ export default class ArtistDetail extends Component {
             </TouchableWithoutFeedback>
           </View>
           <View cls="pa3 pl2 pr2">
-            <TouchableOpacity onPress={() => this.playSong()}>
+            <TouchableWithoutFeedback onPress={() => this.playSong()}>
               <Image
                 resizeMode="contain"
                 cls="widthFn-150 heightFn-50"
@@ -404,7 +404,7 @@ export default class ArtistDetail extends Component {
                   this.state.playing ? Images.ic_btn_pause : Images.ic_btn_play
                 }
               />
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
           </View>
           <View cls="pa3 pl0">
             <TouchableWithoutFeedback

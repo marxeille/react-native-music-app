@@ -82,7 +82,7 @@ export default class HomeComponent extends Component {
                     <View cls="flx-row-reverse aic pl2 pr2 pt1 pb1 br5 bg-#2C184A">
                       <Image
                         cls="widthFn-24 heightFn-24"
-                        source={Images.ic_setting}
+                        source={Images.ic_setting2}
                       />
                       <Text
                         cls="f8 mr1"

@@ -72,7 +72,7 @@ export const CreatePlaylistModel = types
           yield apiService.commonApiService.like('playlist', createPl.data.id);
           const playlistFullInfo = { ...createPl.data, ...cover };
           rootStore.updatePlayList(playlistFullInfo);
-          rootStore.libraryStore?.updatePlayList(playlistFullInfo);
+          rootStore.libraryStore?.updatePlayList(playlistFullInfo.id);
           rootStore.homeStore?.addPopular(playlistFullInfo);
           Toast.showWithGravity('Tạo thành công', Toast.LONG, Toast.BOTTOM);
         } else {
