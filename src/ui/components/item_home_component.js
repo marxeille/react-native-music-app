@@ -30,7 +30,7 @@ export default class ItemHome extends Component {
         <View cls="pt2">
           <TextTicker
             style={{ fontSize: 15 }}
-            duration={6000}
+            duration={12000}
             loop
             bounce
             repeatSpacer={150}

@@ -19,7 +19,7 @@ const QueueChild = observer(
 
     return (
       <View
-        cls={`pa3 heightFn-${onPlayItem ? '72' : '72'} flx-row jcsb aic ${
+        cls={`pa3 heightFn-${onPlayItem ? '62' : '62'} flx-row jcsb aic ${
           props.isActive ? 'bg-#1c0836' : ''
         } ${onPlayItem ? '' : ''}`}>
         <GestureRecognizer

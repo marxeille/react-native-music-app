@@ -33,6 +33,7 @@ import AddPlayListModal from '../../player/components/add_playlist_modal';
 import ShareModal from '../../components/share';
 import { uploadImage } from '../../../data/datasource/api_config';
 import { BASE_API_URL } from '../../../constant/constant';
+import TextTicker from 'react-native-text-ticker';
 
 @observer
 @wrap
@@ -426,12 +427,23 @@ export default class AlbumDetail extends Component {
                 }
               />
             </View>
-            <View cls="aic jcc pt2">
-              <Text cls="white fw8 f3 pb2 avertaFont">
-                {typeof item.getName == 'function'
-                  ? item.getName().toUpperCase()
-                  : '...'}
-              </Text>
+            <View cls="aic jcc pa3 pt2">
+              <TextTicker
+                style={{ fontSize: 15 }}
+                duration={14000}
+                loop
+                bounce
+                repeatSpacer={150}
+                scrollSpeed={100}
+                bounceSpeed={400}
+                marqueeDelay={800}>
+                <Text cls="white fw8 f3 pb2 avertaFont">
+                  {typeof item.getName == 'function'
+                    ? item.getName().toUpperCase()
+                    : '...'}
+                </Text>
+              </TextTicker>
+
               {item?.id == 0 ? (
                 <View cls="pb4">
                   <Text cls="f9 primaryPurple lightFont">

@@ -187,7 +187,7 @@ class Queue2 extends Component {
               end={{ x: 0.6, y: 0 }}
               styles={{
                 justifyContent: 'center',
-                fontSize: 20,
+                fontSize: 23,
                 fontFamily: 'Averta-ExtraBold',
               }}
             />

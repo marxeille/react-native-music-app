@@ -24,6 +24,7 @@ import Share from 'react-native-share';
 import { ShareDialog } from 'react-native-fbsdk';
 import ZaloShare from 'react-native-zalo-share';
 import { scrollDownPosition } from '../../constant/constant';
+import TextTicker from 'react-native-text-ticker';
 
 const ShareModal = wrap(({ _hideModal, item }) => {
   let link;
@@ -182,7 +183,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
   const renderShareItem = useCallback(
     wrap(({ item, index }) => {
       return (
-        <View cls={`${index == 0 ? 'pt3' : isSmallDevice() ? 'pt1' : 'pt2'}`}>
+        <View cls={`${index == 0 ? 'pt4' : isSmallDevice() ? 'pt1' : 'pt2'}`}>
           <TouchableOpacity
             onPress={() => item?.action()}
             cls="jcc pv1 ph3 aic">
@@ -244,11 +245,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
               </View>
               <View cls="aic pt3 pb3">
                 <Image
-                  cls={`${
-                    isSmallDevice()
-                      ? 'widthFn-160 heightFn-160'
-                      : 'widthFn-200 heightFn-200'
-                  }`}
+                  cls={`${isSmallDevice() ? 'squareFn-160' : 'squareFn-200'}`}
                   source={
                     !isTextEmpty(item?.getThumb())
                       ? {
@@ -257,21 +254,32 @@ const ShareModal = wrap(({ _hideModal, item }) => {
                       : Images.bAAlbum
                   }
                 />
-                <View cls="jcc aic pa3">
-                  <Text
-                    cls={`${
-                      isSmallDevice() ? 'f7' : 'f5'
-                    } white fw7 pt2 avertaFont`}>
-                    {typeof item?.getName == 'function' && item?.getName()
-                      ? item?.getName()
-                      : item?.title() && typeof item?.title == 'function'
-                      ? item?.title()
-                      : rootStore.playerStore?.currentSong?.getName()}
-                  </Text>
+                <View cls="jcc aic jcc pa3">
+                  <TextTicker
+                    style={{ fontSize: 15 }}
+                    duration={6000}
+                    loop
+                    bounce
+                    repeatSpacer={150}
+                    scrollSpeed={100}
+                    bounceSpeed={400}
+                    marqueeDelay={800}>
+                    <Text
+                      cls={`${
+                        isSmallDevice() ? 'f7' : 'f5'
+                      } white fw7 pt2 asc avertaFont`}>
+                      {typeof item?.getName == 'function' && item?.getName()
+                        ? item?.getName()
+                        : item?.title() && typeof item?.title == 'function'
+                        ? item?.title()
+                        : rootStore.playerStore?.currentSong?.getName()}
+                    </Text>
+                  </TextTicker>
+
                   <Text
                     cls={`${
                       isSmallDevice() ? 'f9' : 'f7'
-                    } white pt1 avertaFont`}>
+                    } white pt2 avertaFont`}>
                     {typeof item?.getSubTitle == 'function' &&
                     item?.getSubTitle()
                       ? item?.getSubTitle()

@@ -63,7 +63,7 @@ export default class SearchItem extends Component {
         <TouchableOpacity onPress={this.handleOnItemPress}>
           <View cls="flx-row aic">
             <Image
-              cls="widthFn-90 heightFn-82"
+              cls="squareFn-80"
               source={
                 item !== undefined &&
                 item.getThumb() !== null &&
