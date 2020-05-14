@@ -175,12 +175,13 @@ export const PlayerStore = types
         });
         //In case there is already a data list in local storage
         if (localHistoryJson !== null) {
-          localHistoryJson = _.filter(
+          let localHistoryJsonWithOwner = _.filter(
             localHistoryJson,
             history => history.owner_id == getParent(self).userStore.id,
           );
+
           if (!idExist) {
-            if (localHistoryJson.length < 15) {
+            if (localHistoryJsonWithOwner.length < 15) {
               localHistoryJson.push(trackWithOwner);
               AsyncStorage.setItem(
                 AsyncStorageKey.HISTORY,
