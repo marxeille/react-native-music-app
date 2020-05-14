@@ -341,7 +341,7 @@ export default class AlbumDetail extends Component {
           navigate('player');
         } else {
           if (
-            Number(song.id) !== Number(rootStore?.playerStore?.currentSong?.id)
+            Number(song?.id) !== Number(rootStore?.playerStore?.currentSong?.id)
           ) {
             navigate('player', {
               trackId: song ? song.id : randomId,
