@@ -226,6 +226,10 @@ class Queue2 extends Component {
     this.props._handleIndexChange(0);
   };
 
+  onScrollFailed = () => {
+    console.log('on scroll to index failed');
+  };
+
   render() {
     const data = [
       { flag: 'header', title: 'Danh sách chờ', order: 1 },
@@ -251,6 +255,10 @@ class Queue2 extends Component {
             showsVerticalScrollIndicator={false}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => `draggable-item-${index}`}
+            initialScrollIndex={
+              [...rootStore.historyStore.songs].length > 3 ? data.length - 2 : 0
+            }
+            onScrollToIndexFailed={this.onScrollFailed}
             onDragEnd={({ data }) => {
               this.shuffeData(data);
             }}
