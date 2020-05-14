@@ -15,6 +15,7 @@ const CreatePlaylist = observer(props => {
   return !addSong ? (
     <CreatePlaylistModal
       toggleAddSong={toggleAddSong}
+      withSongs={props.withSongs}
       _hideModal={props._hideModal}
       viewModel={viewModel}
     />

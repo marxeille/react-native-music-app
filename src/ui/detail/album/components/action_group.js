@@ -11,20 +11,12 @@ import { wrap } from '../../../../themes';
 import { rootStore } from '../../../../data/context/root_context';
 import { D_WIDTH } from '../../../../utils';
 import Images from '../../../../assets/icons/icons';
-import { indexOf } from 'lodash';
 
 const ActionGroup = wrap(
-  ({ item, hasSong, playing, reaction, playSong, addSong, viewModel }) => {
+  ({ item, hasSong, playing, reaction, playSong, addSong, followed }) => {
     const [following, setFollowing] = useState(false);
     useEffect(() => {
-      setFollowing(
-        indexOf(
-          item?.getType() == 'playlist'
-            ? [...viewModel?.likedPlaylist]
-            : [...viewModel?.likedAlbum],
-          Number(item.id),
-        ) >= 0,
-      );
+      setFollowing(followed);
     }, []);
 
     const follow = useCallback(() => {

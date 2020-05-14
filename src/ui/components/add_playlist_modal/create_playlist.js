@@ -100,7 +100,13 @@ const CreatePlaylistModal = observer(
           cover: path,
           name: name,
           private: !publicState,
-          tracks: tracks,
+          tracks:
+            props.withSongs && props.withSongs?.length > 0
+              ? [
+                  ...tracks,
+                  { position: tracks.length, track_id: props.withSongs[0].id },
+                ]
+              : tracks,
         };
 
         viewModel.current.createPlaylist(playlistData);

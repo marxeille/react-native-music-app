@@ -55,9 +55,12 @@ export default class AddPlayListModal extends Component {
   };
 
   render() {
+    const { songs } = this.props;
     const { createPlaylist } = this.state;
+
     return createPlaylist ? (
       <CreatePlaylist
+        withSongs={songs}
         onClosePress={this.onClosePress}
         _hideModal={this.onClosePress}
       />

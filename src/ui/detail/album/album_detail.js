@@ -381,7 +381,7 @@ export default class AlbumDetail extends Component {
     this._showModalAddSong();
   };
 
-  renderHeaderSection = wrap((hasSong, item, name) => {
+  renderHeaderSection = wrap((hasSong, item, name, following) => {
     return (
       <View cls="pb5">
         <ImageBackground
@@ -480,6 +480,7 @@ export default class AlbumDetail extends Component {
                 item={item}
                 playSong={this.playSong}
                 playing={this.state.playing}
+                followed={following}
                 reaction={this.reaction}
                 addSong={this.addSong}
                 hasSong={hasSong}
@@ -492,8 +493,8 @@ export default class AlbumDetail extends Component {
     );
   });
 
-  _renderListHeaderContent = wrap((hasSong, item, name) => {
-    return <>{this.renderHeaderSection(hasSong, item, name)}</>;
+  _renderListHeaderContent = wrap((hasSong, item, name, following) => {
+    return <>{this.renderHeaderSection(hasSong, item, name, following)}</>;
   });
 
   deletePlaylist = async () => {
@@ -555,6 +556,14 @@ export default class AlbumDetail extends Component {
     if (typeof item == 'number') {
       item = this.state.article;
     }
+
+    const following =
+      indexOf(
+        item?.getType() == 'playlist'
+          ? [...this.viewModel?.likedPlaylist]
+          : [...this.viewModel?.likedAlbum],
+        Number(item.id),
+      ) >= 0;
 
     if (item.id == 0) {
       ids = [...rootStore?.likedTracks];
@@ -678,7 +687,7 @@ export default class AlbumDetail extends Component {
           <ImageBackground cls="fullView" source={Images.default_wave_bg}>
             <AlbumListItem
               _renderListHeaderContent={() =>
-                this._renderListHeaderContent(hasSong, item, name)
+                this._renderListHeaderContent(hasSong, item, name, following)
               }
               viewModel={this.viewModel}
               hasSong={hasSong}
