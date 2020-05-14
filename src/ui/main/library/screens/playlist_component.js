@@ -76,7 +76,6 @@ export default class PlaylistComponent extends Component {
 
   render() {
     const { _showModal, _hideModal } = this.props;
-    const { playlists } = this.state;
     return (
       <View style={{ marginBottom: 200 }}>
         <View cls="pt3">
