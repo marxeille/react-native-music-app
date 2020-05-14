@@ -181,7 +181,7 @@ export const PlayerStore = types
           );
 
           if (!idExist) {
-            if (localHistoryJsonWithOwner.length < 15) {
+            if (localHistoryJsonWithOwner.length < 10) {
               localHistoryJson.push(trackWithOwner);
               AsyncStorage.setItem(
                 AsyncStorageKey.HISTORY,

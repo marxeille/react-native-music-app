@@ -21,6 +21,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import TextTicker from 'react-native-text-ticker';
 import { AsyncStorageKey } from '../../constant/constant';
 import AsyncStorage from '@react-native-community/async-storage';
+import Toast from 'react-native-simple-toast';
 
 @observer
 @wrap
@@ -121,6 +122,15 @@ class Queue2 extends Component {
     }
   };
 
+  addSongsToQueue = () => {
+    this.state.checkedSongs.map(song => {
+      if (Number(song) !== Number(rootStore?.playerStore?.currentSong?.id)) {
+        rootStore.queueStore.addSong({ id: song });
+      }
+    });
+    Toast.showWithGravity('Thêm thành công', Toast.LONG, Toast.BOTTOM);
+  };
+
   renderBottomBar = wrap(() => {
     return (
       <LinearGradient
@@ -129,7 +139,7 @@ class Queue2 extends Component {
         end={{ x: 1, y: 0 }}>
         <View cls="jcc pa3">
           <View cls="flx-row jcsb pl1 pr1 pb3">
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.addSongsToQueue}>
               <Image cls="widthFn-24 heightFn-25" source={Images.ic_add_song} />
             </TouchableOpacity>
             <TouchableOpacity onPress={this.removeSongs}>

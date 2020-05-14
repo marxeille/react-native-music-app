@@ -1,8 +1,8 @@
-// const fs = require('fs');
+const fs = require('fs');
 
-// function replaceRNCheckox() {
-//   const content = fs.readFileSync('./scripts/indexRNCheckbox.js').toString();
-//   fs.writeFileSync('./node_modules/react-native-check-box/index.js', content);
-// }
+function replaceRNVideo() {
+  const content = fs.readFileSync('./scripts/Video.js').toString();
+  fs.writeFileSync('./node_modules/react-native-video/Video.js', content);
+}
 
-// replaceRNCheckox();
+replaceRNVideo();
