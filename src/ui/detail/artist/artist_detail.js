@@ -291,7 +291,7 @@ export default class ArtistDetail extends Component {
             cls={`jcsb`}
             style={{ opacity: 0.9 }}
             resizeMode="cover"
-            source={Images.bNgEnd}>
+            source={Images.bNgEn}>
             <View cls="pa3">
               <View
                 cls="flx-row aic jcsb"

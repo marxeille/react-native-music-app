@@ -1,5 +1,6 @@
 const Images = {
   bAAlbum: require('./bAAlbum.png'),
+  bNgEn: require('./bNgEn.png'),
   bc_tabbottom: require('./bc_tabbottom.png'),
   bg: require('./bg.png'),
   bg2: require('./bg2.png'),
@@ -110,7 +111,6 @@ const Images = {
   sNg: require('./sNg.png'),
   setting: require('./setting.png'),
   wave: require('./wave.png'),
-  wave2: require('./wave2.png'),
-  bNgEnd: require('./bNgEn.png'),
-};
-export default Images;
+  wave2: require('./wave2.png')
+}
+export default Images

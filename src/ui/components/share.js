@@ -224,7 +224,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
           <ImageBackground
             cls="fullWidth"
             resizeMode="cover"
-            source={Images.bNgEnd}>
+            source={Images.bNgEn}>
             <View cls="fullWidth jcc">
               <View
                 cls="pv2 flx-row aic"
