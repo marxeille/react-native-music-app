@@ -98,7 +98,7 @@ export default class LibraryTabView extends React.Component {
                         text={route.title}
                         end={{ x: 0.8, y: 0 }}
                         styles={{
-                          fontSize: 20,
+                          fontSize: 23,
                           fontFamily: 'Averta-ExtraBold',
                         }}
                       />
@@ -116,7 +116,7 @@ export default class LibraryTabView extends React.Component {
                         : '',
                     ]}>
                     <View cls="widthFn-30 heightFn-35" />
-                    <Text cls="white fw7 avertaFont" style={{ fontSize: 20 }}>
+                    <Text cls="white fw7 avertaFont" style={{ fontSize: 23 }}>
                       {route.title}
                     </Text>
                   </View>
@@ -188,7 +188,7 @@ export default class LibraryTabView extends React.Component {
           end={{ x: 1, y: 1 }}>
           <ImageBackground
             cls={`${isSmallDevice() ? 'widthFn-180' : 'widthFn-250'}`}
-            source={Images.bg2}>
+            source={Images.default_wave_bg}>
             <FlatList
               data={this.filterItems}
               renderItem={this.renderFilterItem}

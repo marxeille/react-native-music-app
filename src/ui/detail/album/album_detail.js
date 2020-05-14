@@ -404,10 +404,12 @@ export default class AlbumDetail extends Component {
                 style={{ paddingTop: getStatusBarHeight() + 10 }}>
                 <TouchableWithoutFeedback
                   onPress={() => this.props.navigation.goBack()}>
-                  <Image
-                    cls="widthFn-10 heightFn-20"
-                    source={Images.ic_back_white}
-                  />
+                  <View cls="widthFn-50 heightFn-50 jcc">
+                    <Image
+                      cls="widthFn-10 heightFn-20"
+                      source={Images.ic_back_white}
+                    />
+                  </View>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={this._showModalPlaylist}>
                   <Image source={Images.ic_menu_white} />
@@ -661,7 +663,7 @@ export default class AlbumDetail extends Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
-          <ImageBackground cls="fullView" source={Images.bg2}>
+          <ImageBackground cls="fullView" source={Images.default_wave_bg}>
             <AlbumListItem
               _renderListHeaderContent={() =>
                 this._renderListHeaderContent(hasSong, item, name)

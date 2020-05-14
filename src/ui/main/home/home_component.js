@@ -45,7 +45,7 @@ export default class HomeComponent extends Component {
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
-          <ImageBackground cls="fullView aic jcc" source={Images.bg2}>
+          <ImageBackground cls="fullView aic jcc" source={Images.home_wave_bg}>
             <ActivityIndicator />
           </ImageBackground>
         </View>
@@ -59,7 +59,7 @@ export default class HomeComponent extends Component {
           <ImageBackground
             cls="fullView"
             style={{ zIndex: 1 }}
-            source={Images.bg3}>
+            source={Images.home_wave_bg}>
             <Animated.View
               style={{
                 opacity: scrollY.interpolate({

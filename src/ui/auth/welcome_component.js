@@ -40,7 +40,7 @@ export default class WelcomeComponent extends Component {
               cls={`${
                 isSmallDevice() ? 'pb2' : isMeidumDevice() ? 'pb3' : 'pb5'
               } fullView aic jcsb`}
-              source={Images.bg5}>
+              source={Images.default_wave_bg}>
               <View cls="fullWidth pt5 pl3">
                 {/* <Image
                   cls="aifs"

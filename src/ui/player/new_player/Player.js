@@ -116,7 +116,7 @@ export default class Player extends Component {
     return (
       <ImageBackground
         blurRadius={15}
-        source={Images.bg2}
+        source={Images.default_wave_bg}
         style={styles.container}>
         <StatusBar hidden={true} />
         <GestureRecognizer
@@ -188,13 +188,13 @@ export default class Player extends Component {
           ref={this.modalShare}
           title={'Chia sẻ'}
           // onModalShow={this._showModal}
+          // onModalHide={this._hideModal}
           justifyCenterModal
           forceInsetTop={'never'}
           forceInsetBottom={'never'}
           headerNone={true}
           closeBottomNone={!showPlayMenu}
           customGradient={['#1a0632', '#1a0632', '#000', '#13151A']}
-          // onModalHide={this._hideModal}
           containerCls="">
           {this._renderModalContent()}
         </BottomModal>

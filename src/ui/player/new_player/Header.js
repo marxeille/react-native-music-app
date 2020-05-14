@@ -8,7 +8,9 @@ import { wrap } from '../../../themes';
 const Header = wrap(({ message, onMessagePress }) => (
   <View style={styles.container} cls="aic jcsb">
     <TouchableOpacity onPress={pop}>
-      <Image style={styles.icon} source={Images.ic_down} />
+      <View cls="widthFn-50 heightFn-50 jcc">
+        <Image style={styles.icon} source={Images.ic_down} />
+      </View>
     </TouchableOpacity>
     <TouchableOpacity onPress={pop}>
       <Text onPress={onMessagePress} style={styles.message}>

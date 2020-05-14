@@ -14,10 +14,10 @@ export const AsyncStorageKey = {
 };
 
 export const scrollDownPosition = isSmallDevice()
-  ? -120
+  ? -105
   : isMeidumDevice()
-  ? -145
-  : -170;
+  ? -130
+  : -155;
 
 export const alphabetJson = [
   // '[#]',

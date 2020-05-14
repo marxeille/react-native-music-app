@@ -35,7 +35,7 @@ export default class LibraryComponent extends Component {
           start={{ x: 1, y: 0 }}
           end={{ x: 1, y: 1 }}>
           <View cls="fullView">
-            <ImageBackground cls="fullView pa3" source={Images.bg3}>
+            <ImageBackground cls="fullView pa3" source={Images.default_wave_bg}>
               <View cls="flx-i pt4">
                 <LibraryTopBar />
               </View>
