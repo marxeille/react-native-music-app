@@ -559,7 +559,7 @@ export default class AlbumDetail extends Component {
 
     const following =
       indexOf(
-        item?.getType() == 'playlist'
+        typeof item.getType == 'function' && item?.getType() == 'playlist'
           ? [...this.viewModel?.likedPlaylist]
           : [...this.viewModel?.likedAlbum],
         Number(item.id),
