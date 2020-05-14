@@ -18,7 +18,12 @@ const ActionGroup = wrap(
     const [following, setFollowing] = useState(false);
     useEffect(() => {
       setFollowing(
-        indexOf([...viewModel?.likedPlaylist], Number(item.id)) >= 0,
+        indexOf(
+          item?.getType() == 'playlist'
+            ? [...viewModel?.likedPlaylist]
+            : [...viewModel?.likedAlbum],
+          Number(item.id),
+        ) >= 0,
       );
     }, []);
 

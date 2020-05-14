@@ -38,8 +38,19 @@ export const LibraryStore = types
         self.playlists.push(plId);
       },
 
+      updateAlbum(alId) {
+        self.albums.push(alId);
+      },
+
       updateArtist(arId) {
         self.artists.push(arId);
+      },
+      removeAlbum(albumId) {
+        const alIndex = findIndex(
+          [...self.albums],
+          al => Number(al.id) == Number(albumId),
+        );
+        self.albums.splice(alIndex, 1);
       },
       removePlaylist(playlistId) {
         const plIndex = findIndex(

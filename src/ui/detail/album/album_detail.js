@@ -260,15 +260,26 @@ export default class AlbumDetail extends Component {
       [...this.viewModel?.likedPlaylist],
       Number(item.id),
     );
+
     if (type == 'like') {
       if (idExist < 0) {
-        this.viewModel?.addLikedAlbum(data);
-        rootStore?.libraryStore?.updatePlayList(data);
+        if (item?.getType() == 'playlist') {
+          this.viewModel?.addLikedPlaylist(data);
+          rootStore?.libraryStore?.updatePlayList(data);
+        } else {
+          this.viewModel?.addLikedAlbum(data);
+          rootStore?.libraryStore?.updateAlbum(data);
+        }
       }
     } else {
       if (idExist >= 0) {
-        this.viewModel?.removeLikedAlbum(data);
-        rootStore?.libraryStore?.removePlaylist(data);
+        if (item?.getType() == 'playlist') {
+          this.viewModel?.removeLikedPlaylist(data);
+          rootStore?.libraryStore?.removePlaylist(data);
+        } else {
+          this.viewModel?.removeLikedAlbum(data);
+          rootStore?.libraryStore?.removeAlbum(data);
+        }
       }
     }
   };
@@ -282,7 +293,7 @@ export default class AlbumDetail extends Component {
       item = this.state.article;
     }
     await likeHelper(
-      'article',
+      item?.getType(),
       item.id,
       this.onReactionSuccess,
       this.onReactionError,
@@ -296,7 +307,7 @@ export default class AlbumDetail extends Component {
       item = this.state.article;
     }
     await unlikeHelper(
-      'article',
+      item?.getType(),
       item.id,
       this.onReactionSuccess,
       this.onReactionError,

@@ -13,6 +13,7 @@ export const AlbumModel = types
     selectedSong: types.maybeNull(types.reference(Song)),
     stats: types.number,
     likedPlaylist: types.array(types.number),
+    likedAlbum: types.array(types.number),
     likedTracks: types.array(types.number),
   })
   .actions(self => {
@@ -46,19 +47,33 @@ export const AlbumModel = types
         remove(tmpLikedTracks, track => track == trackId);
         self.setLikedTracks([...tmpLikedTracks]);
       },
-      //Liked artist
+      //Liked playlist
       setLikedPlaylist(playlist) {
         self.likedPlaylist = playlist;
       },
-      addLikedAlbum(playlistId) {
+      addLikedPlaylist(playlistId) {
         const tmpLikedPlaylist = cloneDeep(self.likedPlaylist);
         tmpLikedPlaylist.push(playlistId);
         self.setLikedPlaylist([...tmpLikedPlaylist]);
       },
-      removeLikedAlbum(playlistId) {
+      removeLikedPlaylist(playlistId) {
         const tmpLikedPlaylist = cloneDeep(self.likedPlaylist);
         remove(tmpLikedPlaylist, p => p == playlistId);
         self.setLikedPlaylist([...tmpLikedPlaylist]);
+      },
+      //Liked album
+      setLikedAlbum(album) {
+        self.likedAlbum = album;
+      },
+      addLikedAlbum(playlistId) {
+        const tmpLikedPlaylist = cloneDeep(self.likedAlbum);
+        tmpLikedPlaylist.push(playlistId);
+        self.setLikedAlbum([...tmpLikedPlaylist]);
+      },
+      removeLikedAlbum(playlistId) {
+        const tmpLikedPlaylist = cloneDeep(self.likedAlbum);
+        remove(tmpLikedPlaylist, p => p == playlistId);
+        self.setLikedAlbum([...tmpLikedPlaylist]);
       },
       getItemDetail: flow(function* getItemDetail(id) {
         const article = yield apiService.commonApiService.getArticleInfo(id);
@@ -67,15 +82,23 @@ export const AlbumModel = types
         }
       }),
       getLikedPlaylist: flow(function* getLikedPlaylist(id) {
-        const likedPlaylists = yield apiService.libraryApiService.getLikedAlbums(
+        const likedPlaylists = yield apiService.libraryApiService.getLikedPlaylists(
+          id,
+        );
+        const likedAlbums = yield apiService.libraryApiService.getLikedAlbums(
           id,
         );
 
         if (likedPlaylists.status == 200) {
-          const preparedData = likedPlaylists.data.map(
-            track => track.entity_id,
-          );
-          self.setLikedPlaylist(preparedData);
+          if (likedPlaylists.data.length > 0) {
+            self.likedPlaylist.push(likedPlaylists.data[0].entity_id);
+          }
+        }
+
+        if (likedAlbums.status == 200) {
+          if (likedAlbums.data.length > 0) {
+            self.likedAlbum.push(likedAlbums.data[0].entity_id);
+          }
         }
       }),
       getAlbumTracks: flow(function* getAlbumTracks(ids) {
