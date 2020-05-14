@@ -4,7 +4,7 @@ import {
   Text,
   ImageBackground,
   Image,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import {
@@ -260,15 +260,26 @@ export default class AlbumDetail extends Component {
       [...this.viewModel?.likedPlaylist],
       Number(item.id),
     );
+
     if (type == 'like') {
       if (idExist < 0) {
-        this.viewModel?.addLikedAlbum(data);
-        rootStore?.libraryStore?.updatePlayList(data);
+        if (item?.getType() == 'playlist') {
+          this.viewModel?.addLikedPlaylist(data);
+          rootStore?.libraryStore?.updatePlayList(data);
+        } else {
+          this.viewModel?.addLikedAlbum(data);
+          rootStore?.libraryStore?.updateAlbum(data);
+        }
       }
     } else {
       if (idExist >= 0) {
-        this.viewModel?.removeLikedAlbum(data);
-        rootStore?.libraryStore?.removePlaylist(data);
+        if (item?.getType() == 'playlist') {
+          this.viewModel?.removeLikedPlaylist(data);
+          rootStore?.libraryStore?.removePlaylist(data);
+        } else {
+          this.viewModel?.removeLikedAlbum(data);
+          rootStore?.libraryStore?.removeAlbum(data);
+        }
       }
     }
   };
@@ -282,7 +293,7 @@ export default class AlbumDetail extends Component {
       item = this.state.article;
     }
     await likeHelper(
-      'article',
+      item?.getType(),
       item.id,
       this.onReactionSuccess,
       this.onReactionError,
@@ -296,7 +307,7 @@ export default class AlbumDetail extends Component {
       item = this.state.article;
     }
     await unlikeHelper(
-      'article',
+      item?.getType(),
       item.id,
       this.onReactionSuccess,
       this.onReactionError,
@@ -341,7 +352,7 @@ export default class AlbumDetail extends Component {
           navigate('player');
         } else {
           if (
-            Number(song.id) !== Number(rootStore?.playerStore?.currentSong?.id)
+            Number(song?.id) !== Number(rootStore?.playerStore?.currentSong?.id)
           ) {
             navigate('player', {
               trackId: song ? song.id : randomId,
@@ -391,16 +402,16 @@ export default class AlbumDetail extends Component {
               <View
                 cls="flx-row aic jcsb"
                 style={{ paddingTop: getStatusBarHeight() + 10 }}>
-                <TouchableOpacity
+                <TouchableWithoutFeedback
                   onPress={() => this.props.navigation.goBack()}>
                   <Image
                     cls="widthFn-10 heightFn-20"
                     source={Images.ic_back_white}
                   />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this._showModalPlaylist}>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this._showModalPlaylist}>
                   <Image source={Images.ic_menu_white} />
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
               </View>
               <Image
                 cls="squareFn-195 asc"

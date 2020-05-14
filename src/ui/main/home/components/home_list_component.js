@@ -41,7 +41,7 @@ export default class HomeListComponent extends Component {
   });
 
   render() {
-    const { type, title, cate, data } = this.props;
+    const { type, title, data } = this.props;
 
     return (
       <View cls="fullWidth">

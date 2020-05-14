@@ -20,7 +20,7 @@ const TrackDetails = wrap(({ title, artist, onSharePress, onArtistPress }) => {
 
   useEffect(() => {
     setLike(idExist >= 0);
-  }, [idExist]);
+  }, [rootStore?.likedTracks]);
 
   const onReactionSuccess = useCallback((type, data) => {
     if (type == 'like') {
@@ -90,29 +90,18 @@ const TrackDetails = wrap(({ title, artist, onSharePress, onArtistPress }) => {
       </View>
       <View style={styles.container}>
         <View style={styles.detailsWrapper}>
-          {title?.length < 20 ? (
-            <LinearGradientText
-              text={title}
-              end={{ x: 0.7, y: 0 }}
-              styles={{
-                justifyContent: 'center',
-                fontSize: 25,
-                fontFamily: 'Averta-ExtraBold',
-              }}
-            />
-          ) : (
-            <TextTicker
-              style={{ fontSize: 25 }}
-              duration={6000}
-              loop
-              bounce
-              repeatSpacer={150}
-              scrollSpeed={100}
-              bounceSpeed={400}
-              marqueeDelay={800}>
-              <Text style={styles.title}>{title}</Text>
-            </TextTicker>
-          )}
+          <TextTicker
+            style={{ fontSize: 25 }}
+            duration={6000}
+            loop
+            bounce
+            repeatSpacer={150}
+            scrollSpeed={100}
+            bounceSpeed={400}
+            marqueeDelay={800}>
+            <Text style={styles.title}>{title}</Text>
+          </TextTicker>
+
           <View cls="mt2">
             <TextTicker
               style={{ fontSize: 25 }}
@@ -150,7 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: '#daa3c9',
+    color: '#9166CC',
     fontSize: 25,
     fontFamily: 'Averta-ExtraBold',
   },

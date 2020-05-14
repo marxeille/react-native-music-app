@@ -4,7 +4,6 @@ import {
   Text,
   ImageBackground,
   Image,
-  TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -19,7 +18,12 @@ const ActionGroup = wrap(
     const [following, setFollowing] = useState(false);
     useEffect(() => {
       setFollowing(
-        indexOf([...viewModel?.likedPlaylist], Number(item.id)) >= 0,
+        indexOf(
+          item?.getType() == 'playlist'
+            ? [...viewModel?.likedPlaylist]
+            : [...viewModel?.likedAlbum],
+          Number(item.id),
+        ) >= 0,
       );
     }, []);
 
@@ -84,13 +88,13 @@ const ActionGroup = wrap(
                 </TouchableWithoutFeedback>
               </View>
               <View cls="pa3 pl0 pr0">
-                <TouchableOpacity onPress={() => playSong()}>
+                <TouchableWithoutFeedback onPress={() => playSong()}>
                   <Image
                     resizeMode="contain"
                     cls="widthFn-150 heightFn-50"
                     source={playing ? Images.ic_btn_pause : Images.ic_btn_play}
                   />
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
               </View>
               <View cls="pa3 pl0">
                 <TouchableWithoutFeedback onPress={() => {}}>

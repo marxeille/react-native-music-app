@@ -22,6 +22,7 @@ const SeekBar = observer(
     const currentPosition = rootStore?.playerStore?.position;
 
     const elapsed = minutesAndSeconds(currentPosition);
+
     const remaining = minutesAndSeconds(trackLength - currentPosition);
     return !slider ? (
       <View cls="flx-row fullWidth heightFn-2">
@@ -35,13 +36,33 @@ const SeekBar = observer(
           }}
         />
       </View>
-    ) : (
+    ) : trackLength && trackLength > 0 ? (
       <View style={styles.container}>
         <Slider
           maximumValue={Math.max(trackLength, 1, currentPosition + 1)}
           onSlidingStart={onSlidingStart}
           onSlidingComplete={onSeek}
           value={currentPosition ?? 0}
+          style={styles.slider}
+          minimumTrackTintColor="#d59fc7"
+          maximumTrackTintColor="#4b3277"
+          thumbStyle={styles.thumb}
+          trackStyle={styles.track}
+          thumbImage={Images.ic_circle}
+        />
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={styles.text}>{elapsed[0] + ':' + elapsed[1]}</Text>
+          <View style={{ flex: 1 }} />
+          <Text style={[styles.text, { width: 40, color: '#9166cc' }]}>
+            {trackLength > 1 && '-' + remaining[0] + ':' + remaining[1]}
+          </Text>
+        </View>
+      </View>
+    ) : (
+      <View style={[styles.container]}>
+        <Slider
+          maximumValue={1}
+          value={0}
           style={styles.slider}
           minimumTrackTintColor="#d59fc7"
           maximumTrackTintColor="#4b3277"

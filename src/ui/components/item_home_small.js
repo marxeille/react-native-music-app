@@ -37,22 +37,24 @@ export default class ItemHomeSmall extends Component {
                 : Images.bAAlbum
             }
           />
-          <TextTicker
-            style={{ fontSize: 13 }}
-            duration={6000}
-            loop
-            bounce
-            repeatSpacer={150}
-            scrollSpeed={100}
-            bounceSpeed={400}
-            marqueeDelay={800}>
-            <Text cls="white pt2 fw6 lightFont">
-              {item?.getName() ?? 'Default'}
+          <View cls="pt2">
+            <TextTicker
+              style={{ fontSize: 13 }}
+              duration={9000}
+              loop
+              bounce
+              repeatSpacer={150}
+              scrollSpeed={100}
+              bounceSpeed={400}
+              marqueeDelay={800}>
+              <Text cls="white pt2 fw6 lightFont">
+                {item?.getName() ?? 'Default'}
+              </Text>
+            </TextTicker>
+            <Text cls="primaryPurple pt1 lightFont f10">
+              {item?.getSubTitle() ?? 'Default'}
             </Text>
-          </TextTicker>
-          <Text cls="primaryPurple pt1 lightFont f10">
-            {item?.getSubTitle() ?? 'Default'}
-          </Text>
+          </View>
         </View>
       </TouchableOpacity>
     );

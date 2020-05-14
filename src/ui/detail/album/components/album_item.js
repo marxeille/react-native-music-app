@@ -66,7 +66,7 @@ const AlbumItem = observer(
     });
     return (
       <View
-        cls="flx-row aic pl3 pr3 pt2 pb2 br2"
+        cls="flx-row aic pl2 pr3 pt2 pb2 br2"
         style={{ backgroundColor: '#321a54' }}>
         <Image
           cls="squareFn-50"
