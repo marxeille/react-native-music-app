@@ -15,7 +15,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import { rootStore } from '../../../data/context/root_context';
 import { cloneDeep } from 'lodash';
 import CreatePlaylist from '../../components/add_playlist_modal';
-import { subLongStr, isSmallDevice, getStatusBarHeight } from '../../../utils';
+import {
+  subLongStr,
+  isSmallDevice,
+  getStatusBarHeight,
+  isMeidumDevice,
+} from '../../../utils';
 
 @observer
 @wrap
@@ -65,7 +70,10 @@ export default class AddPlayListModal extends Component {
         _hideModal={this.onClosePress}
       />
     ) : (
-      <View cls="pb7">
+      <View
+        style={{
+          paddingBottom: isMeidumDevice() ? 500 : isSmallDevice() ? 400 : 600,
+        }}>
         <View
           cls="pv2 flx-row aic bg-#280f46"
           style={{ paddingTop: getStatusBarHeight() + 10 }}>
@@ -108,7 +116,7 @@ export default class AddPlayListModal extends Component {
             data={[...rootStore?.homeStore?.popular]}
             showsVerticalScrollIndicator={false}
             renderItem={this._renderItem}
-            numColumns={4}
+            numColumns={3}
             horizontal={false}
             keyExtractor={(item, index) => index.toString()}
           />

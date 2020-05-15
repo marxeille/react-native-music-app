@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   Text,
   View,
@@ -37,6 +37,12 @@ const CreatePlaylistModal = observer(
     const [publicState, setPublic] = useState(viewModel.current.public);
     const [img, setImg] = useState('');
     const [path, setPathToImg] = useState('');
+
+    useEffect(() => {
+      if (props.withSongs && props.withSongs?.length > 0) {
+        viewModel.current.putSong(props.withSongs[0]);
+      }
+    }, []);
 
     const onSuccess = useCallback(response => {
       setImg(response.data);
@@ -98,15 +104,10 @@ const CreatePlaylistModal = observer(
 
         const playlistData = {
           cover: path,
+          description: description,
           name: name,
           private: !publicState,
-          tracks:
-            props.withSongs && props.withSongs?.length > 0
-              ? [
-                  ...tracks,
-                  { position: tracks.length, track_id: props.withSongs[0].id },
-                ]
-              : tracks,
+          tracks: tracks,
         };
 
         viewModel.current.createPlaylist(playlistData);
@@ -204,7 +205,10 @@ const CreatePlaylistModal = observer(
                     secureTextEntry={false}
                     placeholderTextColor="#9166cc"
                     placeholder={'Tên Playlist'}
-                    style={[styles.inputText]}
+                    style={[
+                      styles.inputText,
+                      isSmallDevice() ? styles.inputTextSmall : null,
+                    ]}
                     value={name}
                     textAlign={'center'}
                     onChangeText={txt => setPlName(txt)}
@@ -318,6 +322,9 @@ const styles = StyleSheet.create({
   inputGroup2: {
     height: isSmallDevice() ? 100 : 130,
     alignItems: 'flex-start',
+  },
+  inputTextSmall: {
+    height: 100,
   },
   inputText: {
     flex: 1,

@@ -95,7 +95,7 @@ export const PlayerStore = types
 
         // Play song
         if (track) {
-          self.addToLocalHistory(track);
+          // self.addToLocalHistory(track);
           self.playSong(track?.id);
         }
       },
@@ -148,7 +148,7 @@ export const PlayerStore = types
 
         //play song
         if (track) {
-          self.addToLocalHistory(track);
+          // self.addToLocalHistory(track);
           self.playSong(track?.id);
         }
       },

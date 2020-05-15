@@ -105,6 +105,7 @@ class Queue2 extends Component {
 
   removeSongs = async () => {
     const { checkedSongs } = this.state;
+    this.setState({ checkedSongs: [] });
     rootStore?.queueStore?.removeSongs(checkedSongs);
     rootStore?.historyStore?.removeSongs(checkedSongs);
     const localHistory = await AsyncStorage.getItem(AsyncStorageKey.HISTORY);
@@ -129,6 +130,7 @@ class Queue2 extends Component {
         rootStore.queueStore.addSong({ id: song });
       }
     });
+    this.setState({ checkedSongs: [] });
     Toast.showWithGravity('Thêm thành công', Toast.LONG, Toast.BOTTOM);
   };
 
@@ -203,8 +205,8 @@ class Queue2 extends Component {
               }}
             />
 
-            <View style={{ paddingTop: 2 }} cls="pa3 pr6">
-              <Text cls="primaryPurple fw7 f6 avertaFont">{item.subTitle}</Text>
+            <View style={{ paddingTop: 3 }} cls="pa3 pr6">
+              <Text cls="primaryPurple fw7 f5 avertaFont">{item.subTitle}</Text>
             </View>
           </View>
         </View>

@@ -1,6 +1,6 @@
 import { isSmallDevice, isMeidumDevice } from '../utils';
 
-export const BASE_API_URL = 'http://103.28.37.44:5000';
+export const BASE_API_URL = 'https://dev.diijam.net';
 
 export const AsyncStorageKey = {
   USERINFO: '@userinfo',

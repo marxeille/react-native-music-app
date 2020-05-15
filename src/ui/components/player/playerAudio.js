@@ -26,12 +26,14 @@ class PlayerAudio extends React.Component {
   }
 
   onEnd = () => {
+    rootStore?.playerStore?.addToLocalHistory(
+      rootStore.playerStore?.currentSong,
+    );
     if (rootStore?.playerStore?.repeatOne) {
       // If repeat one on, keep playing this song
       return;
     } else {
       // if repeat option on, or it's not the last track, keep playing songs
-
       if (
         (rootStore?.playerStore?.repeat &&
           rootStore.playerStore?.getQueueSize() > 1) ||
