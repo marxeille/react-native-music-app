@@ -465,11 +465,11 @@ export default class AlbumDetail extends Component {
                   </Text>
                   <Text cls="white f8 lightFont pt2 pb4">
                     {hasSong
-                      ? `Idol khÁ ${
+                      ? `${
                           typeof item.getSubTitle == 'function'
                             ? item.getDescription()
                             : '...'
-                        } bẢnH is on top of the Vinahey hey hey!`
+                        }`
                       : 'Hãy cùng tìm kiếm vài bài hát cho playlist của bạn'}
                   </Text>
                 </>
@@ -559,7 +559,7 @@ export default class AlbumDetail extends Component {
 
     const following =
       indexOf(
-        item?.getType() == 'playlist'
+        typeof item.getType == 'function' && item?.getType() == 'playlist'
           ? [...this.viewModel?.likedPlaylist]
           : [...this.viewModel?.likedAlbum],
         Number(item.id),

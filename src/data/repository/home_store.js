@@ -62,8 +62,6 @@ export const HomeStore = types
         self.popular.splice(plIndex, 1);
       },
 
-      setHistorySong(song) {},
-
       //#region Handle Fect Popular Success
       fetchHomeData: flow(function* fetchHomeData() {
         const homeTrackIds: Array = yield apiService.commonApiService.getHomeTrackIds();

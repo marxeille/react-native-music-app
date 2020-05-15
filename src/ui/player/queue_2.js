@@ -32,6 +32,7 @@ class Queue2 extends Component {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80,
     };
+    // this.flatListRef = React.createRef();
     this.state = {
       checkedSongs: [],
     };
@@ -104,6 +105,7 @@ class Queue2 extends Component {
 
   removeSongs = async () => {
     const { checkedSongs } = this.state;
+    this.setState({ checkedSongs: [] });
     rootStore?.queueStore?.removeSongs(checkedSongs);
     rootStore?.historyStore?.removeSongs(checkedSongs);
     const localHistory = await AsyncStorage.getItem(AsyncStorageKey.HISTORY);
@@ -128,6 +130,7 @@ class Queue2 extends Component {
         rootStore.queueStore.addSong({ id: song });
       }
     });
+    this.setState({ checkedSongs: [] });
     Toast.showWithGravity('Thêm thành công', Toast.LONG, Toast.BOTTOM);
   };
 
@@ -202,8 +205,8 @@ class Queue2 extends Component {
               }}
             />
 
-            <View style={{ paddingTop: 2 }} cls="pa3 pr6">
-              <Text cls="primaryPurple fw7 f6 avertaFont">{item.subTitle}</Text>
+            <View style={{ paddingTop: 3 }} cls="pa3 pr6">
+              <Text cls="primaryPurple fw7 f5 avertaFont">{item.subTitle}</Text>
             </View>
           </View>
         </View>
@@ -247,10 +250,42 @@ class Queue2 extends Component {
         <View style={{ height: D_HEIGHT - 112 }}>
           <DraggableFlatList
             data={data}
+            ref={ref => {
+              this.flatListRef = ref;
+            }}
             ListHeaderComponent={this.renderQueuePlayer()}
             showsVerticalScrollIndicator={false}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => `draggable-item-${index}`}
+            initialScrollIndex={
+              [...rootStore.historyStore.songs].length > 4 ? data.length - 1 : 0
+            }
+            onScrollToIndexFailed={error => {
+              if (
+                [...rootStore.historyStore.songs].length !== 0 &&
+                this.refs.flatListRef !== null &&
+                this.refs.flatListRef !== undefined
+              ) {
+                this.refs.flatListRef?.scrollToOffset({
+                  offset: error.averageItemLength * error.index,
+                  animated: true,
+                });
+              }
+
+              setTimeout(() => {
+                if (
+                  [...rootStore.historyStore.songs].length !== 0 &&
+                  this.refs.flatListRef !== null &&
+                  this.refs.flatListRef !== undefined
+                ) {
+                  console.log('failed 2', error);
+                  this.refs.flatListRef?.scrollToOffset({
+                    animated: true,
+                    offset: error.index,
+                  });
+                }
+              }, 100);
+            }}
             onDragEnd={({ data }) => {
               this.shuffeData(data);
             }}
