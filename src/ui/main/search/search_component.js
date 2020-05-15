@@ -100,6 +100,7 @@ export default class SearchComponent extends Component {
                 keyword={this.state.keyword}
                 onChangeKeyword={this.onChangeKeyword}
                 onFocus={this.onFocus}
+                autoFocus={true}
               />
               <Text cls="white fw6 f10 lightFont">
                 {this.state.keyword == '' || this.state.keyword == null

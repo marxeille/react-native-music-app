@@ -53,6 +53,7 @@ const PlaylistMenuConcept = observer(
         }
         return <ListItem item={item.item} />;
       });
+      const newTitle = '';
       const renderHeader = useCallback(
         wrap(() => {
           return (
@@ -103,7 +104,7 @@ const PlaylistMenuConcept = observer(
                         <TextInput
                           autoFocus={true}
                           selectTextOnFocus
-                          onChangeText={value => textTitleChange(value)}
+                          onChangeText={value => (this.newTitle = value)}
                           cls={`${
                             isSmallDevice() ? 'f6' : 'f4'
                           } avertaFont white`}
@@ -116,9 +117,9 @@ const PlaylistMenuConcept = observer(
                           onPress={() => {
                             showEditTitle(false);
                             changeTitle(
-                              newTitleChange != undefined &&
-                                !isTextEmpty(newTitleChange)
-                                ? newTitleChange
+                              this.newTitle != undefined &&
+                                !isTextEmpty(this.newTitle)
+                                ? this.newTitle
                                 : title,
                             );
                           }}>

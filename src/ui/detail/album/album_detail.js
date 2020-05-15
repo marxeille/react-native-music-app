@@ -53,7 +53,6 @@ export default class AlbumDetail extends Component {
       showShareModal: false,
       editTitle: false,
       playing: false,
-      newTitleChange: '',
       private: props.route?.params.item.private,
       cover: props.route?.params.item.thumb,
       name: props.route?.params.item.name,
@@ -159,10 +158,6 @@ export default class AlbumDetail extends Component {
       rootStore.updatePlayList(plCover.data);
       this.setState({ cover: BASE_API_URL + plCover.data.cover_path });
     }
-  };
-
-  textTitleChange = newTitle => {
-    this.setState({ newTitleChange: newTitle });
   };
 
   changeTitle = newTitle => {
@@ -438,8 +433,8 @@ export default class AlbumDetail extends Component {
                 bounceSpeed={400}
                 marqueeDelay={800}>
                 <Text cls="white fw8 f3 pb2 avertaFont">
-                  {typeof item.getName == 'function'
-                    ? item.getName().toUpperCase()
+                  {this.state.name != undefined && !isTextEmpty(this.state.name)
+                    ? this.state.name
                     : '...'}
                 </Text>
               </TextTicker>
@@ -551,7 +546,6 @@ export default class AlbumDetail extends Component {
       name,
       editTitle,
       showMenuEdit,
-      newTitleChange,
     } = this.state;
     if (typeof item == 'number') {
       item = this.state.article;
@@ -750,11 +744,9 @@ export default class AlbumDetail extends Component {
                   likeCount={this.viewModel.stats
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
-                  newTitleChange={newTitleChange}
                   editTitle={editTitle}
-                  textTitleChange={this.textTitleChange}
                   changeOrder={this.changeOrder}
-                  changeTitle={this.changeTitle}
+                  changeTitle={this.changeTitle.bind(this)}
                   settingItems={settingItems}
                   showMenuEdit={showMenuEdit}
                   showEditTitle={this.showEditTitle}
