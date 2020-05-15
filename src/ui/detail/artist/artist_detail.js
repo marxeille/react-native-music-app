@@ -140,6 +140,7 @@ export default class ArtistDetail extends Component {
     );
     if (type == 'like') {
       if (idExist < 0) {
+        rootStore?.updateArtist(artist);
         this.viewModel?.addLikedArtist(data);
         rootStore?.libraryStore?.updateArtist(data);
       }
