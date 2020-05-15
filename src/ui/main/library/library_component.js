@@ -35,8 +35,15 @@ export default class LibraryComponent extends Component {
           start={{ x: 1, y: 0 }}
           end={{ x: 1, y: 1 }}>
           <View cls="fullView">
-            <ImageBackground cls="fullView pa3" source={Images.default_wave_bg}>
-              <View cls="flx-i pt4">
+            <ImageBackground cls="fullView" source={Images.default_wave_bg}>
+              <LinearGradient
+                style={{ position: 'absolute' }}
+                cls="fullView heightFn-200"
+                colors={['#291047', '#1a0632', '#110926', '#110926']}
+                start={{ x: 1, y: 1 }}
+                end={{ x: 0, y: 0 }}
+              />
+              <View cls="flx-i pt4 pa3">
                 <LibraryTopBar />
               </View>
             </ImageBackground>
