@@ -92,11 +92,10 @@ export const PlayerStore = types
           //Case 4: Continue current track(in case user from another screen get into player screen)
           track = getParent(self).songs.get(self.selectedId);
         }
-
         // Play song
         if (track) {
           // self.addToLocalHistory(track);
-          self.playSong(track?.id);
+          self.playSong(track);
         }
       },
 
@@ -112,7 +111,7 @@ export const PlayerStore = types
             // add played song into history
             self.startNewSong(track?.id);
             //play song
-            if (track) self.playSong(track?.id);
+            if (track) self.playSong(track);
             return;
           } else {
             //Case 2: next track (with shuffle or not)
@@ -149,7 +148,7 @@ export const PlayerStore = types
         //play song
         if (track) {
           // self.addToLocalHistory(track);
-          self.playSong(track?.id);
+          self.playSong(track);
         }
       },
 
@@ -244,12 +243,7 @@ export const PlayerStore = types
       setCurrentSong(song) {
         self.currentSong = song;
       },
-      playSong(song) {
-        self.setCurrentSong(song);
-
-        if (self.position == 0 && self.currentSong?.url !== '') {
-          self.setState(true);
-        }
+      setMusicControl() {
         // Basic Controls
         MusicControl.enableControl('play', true);
         MusicControl.enableControl('pause', true);
@@ -301,6 +295,22 @@ export const PlayerStore = types
           rating: 84, // Android Only (Boolean or Number depending on the type)
           // notificationIcon: 'my_custom_icon', // Android Only (String), Android Drawable resource name for a custom notification icon
         });
+      },
+      playSong(song) {
+        if (getParent(self).songs.get(song.id)) {
+          self.setCurrentSong(song.id);
+          if (self.position == 0 && self.currentSong?.url !== '') {
+            self.setState(true);
+          }
+          self.setMusicControl();
+        } else {
+          getParent(self).createSongRef(song);
+          self.setCurrentSong(song.id);
+          if (self.position == 0 && self.currentSong?.url !== '') {
+            self.setState(true);
+          }
+          self.setMusicControl();
+        }
       },
     };
   });

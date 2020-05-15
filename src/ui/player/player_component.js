@@ -126,7 +126,7 @@ export default class PlayerComponent extends Component {
             config={config}>
             <TouchableWithoutFeedback
               onPress={() => {
-                navigate('player', { from: 'Home' });
+                navigate('player');
               }}>
               <View style={styles.container}>
                 <ImageBackground cls="fullWidth" source={Images.bg_mini_player}>
