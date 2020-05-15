@@ -49,7 +49,7 @@ class Queue2 extends Component {
         />
         <ImageBackground
           cls="fullWidth heightFn-72 flx-row aic jcsb pl3 pr3"
-          source={Images.bg_player}>
+          source={Images.bg_mini_player}>
           <View cls="flx-row aic">
             <Image
               source={
