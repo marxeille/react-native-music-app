@@ -101,6 +101,11 @@ export default class PlayerTabView extends React.Component {
                 }
               />
               <Image style={styles.bgWave} source={Images.default_wave_bg} />
+              <Image
+                style={styles.bg}
+                resizeMode="cover"
+                source={Images.bNgEn}
+              />
             </>
           ) : null}
           <TabView
