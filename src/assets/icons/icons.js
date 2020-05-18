@@ -111,6 +111,6 @@ const Images = {
   sNg: require('./sNg.png'),
   setting: require('./setting.png'),
   wave: require('./wave.png'),
-  wave2: require('./wave2.png')
-}
-export default Images
+  wave2: require('./wave2.png'),
+};
+export default Images;

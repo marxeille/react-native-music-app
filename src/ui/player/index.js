@@ -90,15 +90,23 @@ export default class PlayerTabView extends React.Component {
         }}>
         <View cls="fullView">
           {this.state.index == 0 ? (
-            <Image
-              blurRadius={30}
-              style={styles.bg}
-              source={
-                rootStore.playerStore?.currentSong?.artwork
-                  ? { uri: rootStore.playerStore?.currentSong?.artwork }
-                  : Images.bAAlbum
-              }
-            />
+            <>
+              <Image
+                blurRadius={30}
+                style={styles.bg}
+                source={
+                  rootStore.playerStore?.currentSong?.artwork
+                    ? { uri: rootStore.playerStore?.currentSong?.artwork }
+                    : Images.bAAlbum
+                }
+              />
+              <Image style={styles.bgWave} source={Images.default_wave_bg} />
+              <Image
+                style={styles.bg}
+                resizeMode="cover"
+                source={Images.bNgEn}
+              />
+            </>
           ) : null}
           <TabView
             navigationState={this.state}
@@ -121,6 +129,13 @@ const styles = StyleSheet.create({
     height: D_HEIGHT / 2 - 50,
     position: 'absolute',
     top: 0,
+    zIndex: -1,
+  },
+  bgWave: {
+    width: D_WIDTH,
+    height: D_HEIGHT / 2,
+    position: 'absolute',
+    top: D_HEIGHT / 2 - 50,
     zIndex: -1,
   },
   tabBar: {
