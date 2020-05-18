@@ -57,6 +57,14 @@ class Settings extends Component {
         action: () => {},
         icon: Images.ic_info,
       },
+      {
+        title: 'Đổi mật khẩu',
+        action: () => {
+          navigate('change_pass');
+        },
+        icon: Images.ic_lock,
+        imgStyle: 'widthFn-18 heightFn-20',
+      },
     ];
     this.state = {
       info: {},

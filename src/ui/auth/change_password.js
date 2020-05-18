@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Dimensions,
   Image,
   TextInput,
   StyleSheet,
@@ -14,28 +13,26 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { wrap } from '../../themes';
-import { RootContext } from '../../data/context/root_context';
+import { RootContext, rootStore } from '../../data/context/root_context';
 import Images from '../../assets/icons/icons';
-import CheckBox from 'react-native-check-box';
 import { observer } from 'mobx-react';
 import { pop } from '../../navigation/navigation_service';
 import { apiService } from '../../data/context/api_context';
 import { isSmallDevice } from '../../utils';
 import Toast from 'react-native-simple-toast';
+import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorageKey } from '../../constant/constant';
 
 @observer
 @wrap
-export default class SignUpComponent extends Component {
+export default class ChangePassComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
+      oldPass: '',
       pass: '',
       rePass: '',
-      sex: 'male',
     };
-    this.sex = ['male', 'female', 'none'];
-    this.sexText = { male: 'Nam', female: 'Nữ', none: 'Khác' };
   }
 
   static contextType = RootContext;
@@ -47,58 +44,46 @@ export default class SignUpComponent extends Component {
     this.setState(value);
   }
 
-  handleSignUp = async () => {
-    const { email, pass, rePass } = this.state;
+  handleChangePass = async () => {
+    const { oldPass, pass, rePass } = this.state;
+    if (rootStore.userStore?.social)
+      return Toast.showWithGravity(
+        'Không thể đổi mật khẩu nếu bạn đăng nhập bằng Facebook',
+        Toast.LONG,
+        Toast.BOTTOM,
+      );
     if (pass !== rePass)
       return Toast.showWithGravity(
         'Mật khẩu phải giống nhau',
         Toast.LONG,
         Toast.BOTTOM,
       );
-    const response = await apiService.commonApiService.register({
-      email,
-      password: pass,
-    });
+    const response = await apiService.commonApiService.changePass(
+      oldPass,
+      pass,
+      rootStore.userStore?.id,
+    );
+
     if (response.status == 201) {
       Toast.showWithGravity(
-        'Đăng ký thành công, bạn có thể đăng nhập',
+        'Đổi mật khẩu thành công, vui lòng đăng nhập lại',
         Toast.LONG,
         Toast.BOTTOM,
       );
-      pop();
+      AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(value => {
+        rootStore.userStore?.removeSuccess(value);
+      });
     } else {
       Toast.showWithGravity(
-        'Đăng ký thất bại, vui lòng thử lại',
+        'Đổi mật khẩu thất bại, vui lòng thử lại',
         Toast.LONG,
         Toast.BOTTOM,
       );
     }
   };
 
-  handleLoginWithFacebook = () => {};
-
-  renderCheckbox = sex => {
-    return (
-      <>
-        <CheckBox
-          style={styles.checkBoxStyle}
-          checkBoxColor={'#4b3277'}
-          onClick={() => {
-            this.setState({
-              sex: sex,
-            });
-          }}
-          isChecked={this.state.sex == sex}
-          rightText={this.sexText[sex]}
-          rightTextStyle={styles.rightTextStyle}
-          checkedImage={<Image source={Images.ic_checked} />}
-        />
-      </>
-    );
-  };
-
   render() {
-    const { pass, email, rePass, sex } = this.state;
+    const { pass, oldPass, rePass } = this.state;
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <LinearGradient
@@ -157,18 +142,20 @@ export default class SignUpComponent extends Component {
                       }}>
                       <View cls="pa3 bg-#2C184A" style={[styles.inputGroup]}>
                         <TextInput
-                          secureTextEntry={false}
+                          secureTextEntry={true}
                           placeholderTextColor="#fff"
-                          placeholder={'Email'}
+                          placeholder={'Mật khẩu cũ'}
                           cls={`${isSmallDevice() ? 'f10' : ''}`}
                           style={[styles.inputText]}
-                          value={email}
-                          onChange={event => this.onChangeText(event, 'email')}
+                          value={oldPass}
+                          onChange={event =>
+                            this.onChangeText(event, 'oldPass')
+                          }
                           autoCorrect={false}
                         />
                         <Image
                           cls="widthFn-25 heightFn-25"
-                          source={Images.ic_email}
+                          source={Images.pass}
                         />
                       </View>
                     </LinearGradient>
@@ -186,7 +173,7 @@ export default class SignUpComponent extends Component {
                         <TextInput
                           secureTextEntry={true}
                           placeholderTextColor="#fff"
-                          placeholder={'Mật khẩu'}
+                          placeholder={'Mật khẩu mới'}
                           cls={`${isSmallDevice() ? 'f10' : ''}`}
                           style={[styles.inputText]}
                           value={pass}
@@ -213,7 +200,7 @@ export default class SignUpComponent extends Component {
                         <TextInput
                           secureTextEntry={true}
                           placeholderTextColor="#fff"
-                          placeholder={'Nhập lại mật khẩu'}
+                          placeholder={'Nhập lại mật khẩu mới'}
                           cls={`${isSmallDevice() ? 'f10' : ''}`}
                           style={[styles.inputText]}
                           value={rePass}
@@ -228,11 +215,6 @@ export default class SignUpComponent extends Component {
                     </LinearGradient>
                   </View>
 
-                  {/* <View cls="flx-row aic jcsb pb3 pa4 pt2">
-                <Text cls="primaryPurple lightFont f8">Chọn giới tính</Text>
-                {this.sex.map(s => this.renderCheckbox(s))}
-              </View> */}
-
                   {/* Button Group */}
                   <View
                     cls={`${
@@ -240,7 +222,7 @@ export default class SignUpComponent extends Component {
                         ? 'fullWidth pa3 pt3 pb0 aic'
                         : 'fullWidth pa3 pt3 pb0 aic'
                     }`}>
-                    <TouchableOpacity onPress={this.handleSignUp}>
+                    <TouchableOpacity onPress={this.handleChangePass}>
                       <LinearGradient
                         cls={`ba br5 b--#321A54 ${
                           isSmallDevice()
@@ -254,54 +236,10 @@ export default class SignUpComponent extends Component {
                           cls={`white ${
                             isSmallDevice() ? 'f8' : 'f6'
                           } avertaFont`}>
-                          Đăng Ký
+                          Đổi mật khẩu
                         </Text>
                       </LinearGradient>
                     </TouchableOpacity>
-                  </View>
-
-                  <View cls="fullWidth flx-row mt3">
-                    <Image
-                      cls="aic asc"
-                      source={Images.sNg}
-                      style={{
-                        width: Dimensions.get('window').width / 2 - 25,
-                        height: 10,
-                      }}
-                    />
-                    <Text
-                      cls={`${isSmallDevice() ? 'f10' : 'f8'} asc aic ml2 mr2`}
-                      style={{ color: '#9166cc', fontFamily: 'lato-regular' }}>
-                      hoặc
-                    </Text>
-                    <Image
-                      cls="aic asc"
-                      source={Images.sNg}
-                      style={{
-                        width: Dimensions.get('window').width / 2,
-                        height: 10,
-                      }}
-                    />
-                  </View>
-
-                  <View cls="fullWidth pa3 pt0 mt1 aic">
-                    <View cls="pt3">
-                      <TouchableOpacity onPress={this.handleLoginWithFacebook}>
-                        <View
-                          cls={`ba b--#321A54 bg-#323277 br5 ${
-                            isSmallDevice()
-                              ? 'widthFn-160 heightFn-40'
-                              : 'widthFn-220 heightFn-50'
-                          } aic jcc`}>
-                          <Text
-                            cls={`${
-                              isSmallDevice() ? 'f8' : 'f6'
-                            } white avertaFont`}>
-                            Facebook
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
                   </View>
                 </View>
 
