@@ -165,12 +165,12 @@ export default class SearchComponent extends Component {
       keyword == '' || keyword == null || keyword == undefined
         ? [
             ...this.viewmodel.recentlySong.values(),
-            ...this.viewmodel.recentlyAlbum.values(),
+            ...this.viewmodel.resultPlaylists?.values(),
             ...this.viewmodel.recentlyArtist.values(),
           ]
         : [
             ...this.viewmodel.resultSongs.values(),
-            ...this.viewmodel.resultAlbums.values(),
+            ...this.viewmodel.resultPlaylists?.values(),
             ...this.viewmodel.resultArtists.values(),
           ];
 

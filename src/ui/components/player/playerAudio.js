@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { rootStore } from '../../../data/context/root_context';
 import { PlayerContext } from '../../../data/context/player_context';
 import Toast from 'react-native-simple-toast';
+import { isTextEmpty } from '../../../utils';
 @observer
 class PlayerAudio extends React.Component {
   static contextType = PlayerContext;
@@ -56,7 +57,8 @@ class PlayerAudio extends React.Component {
   render() {
     const { currentSong } = rootStore?.playerStore;
 
-    return rootStore?.playerStore?.currentSong ? (
+    return rootStore?.playerStore?.currentSong &&
+      !isTextEmpty(rootStore?.playerStore?.currentSong?.url) ? (
       <Video
         source={{ uri: currentSong.url }} // Can be a URL or a local file.
         ref={ref => {

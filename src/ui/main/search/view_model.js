@@ -1,28 +1,30 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { types, flow } from 'mobx-state-tree';
 import { Result } from '../../../data/repository/result';
-import {
-  Song,
-  createSongFromJsonApi,
-  createSongFromJson,
-} from '../../../data/model/song';
+import { Song, createSongFromJsonApi } from '../../../data/model/song';
 import { apiService } from '../../../data/context/api_context';
 import { Artist, createArtistFromApiJson } from '../../../data/model/artist';
-import { Album } from '../../../data/model/album';
 import { getTrackFullDetail } from '../../../data/datasource/api_helper';
 import { AsyncStorageKey } from '../../../constant/constant';
 import { remove } from 'lodash';
+import {
+  PlayList,
+  createPlaylistFromApiJson,
+} from '../../../data/model/playlist';
 
 export const SearchModel = types
   .model('SearchModel', {
     state: Result,
     recentlyKeyWord: types.maybeNull(types.array(types.string)),
     recentlySong: types.optional(types.map(Song), {}),
-    recentlyAlbum: types.optional(types.map(Album), {}),
+    recentlyPlaylist: types.optional(
+      types.array(types.reference(PlayList)),
+      [],
+    ),
     recentlyArtist: types.optional(types.map(Artist), {}),
     keyword: types.maybeNull(types.string),
     resultSongs: types.optional(types.map(Song), {}),
-    resultAlbums: types.optional(types.map(Album), {}),
+    resultPlaylists: types.optional(types.map(PlayList), {}),
     resultArtists: types.optional(types.map(Artist), {}),
   })
   .actions(self => {
@@ -70,6 +72,19 @@ export const SearchModel = types
           self.recentlyArtist.put(newArtist);
         }
       },
+      addRecentlyPlaylist(playlist) {
+        if (self.resultPlaylists.get(playlist.id)) {
+          self.resultPlaylists.get(playlist.id).update(playlist);
+        } else {
+          self.addToLocalStorage(
+            AsyncStorageKey.RECENTLYSEARCH.PLAYLISTS,
+            playlist,
+          );
+          const newPl = createPlaylistFromApiJson(playlist);
+          self.resultPlaylists.put(newPl);
+          self.recentlyPlaylist.push(newPl.id);
+        }
+      },
       removeRecentlySong(id) {
         self.recentlySong.delete(id);
       },
@@ -80,7 +95,7 @@ export const SearchModel = types
         } else if (type == 'artist') {
           self.recentlyArtist.delete(id);
         } else {
-          self.recentlyAlbum.delete(id);
+          self.recentlyPlaylist.delete(id);
         }
       },
 
@@ -90,7 +105,7 @@ export const SearchModel = types
             ? AsyncStorageKey.RECENTLYSEARCH.SONGS
             : type == 'artist'
             ? AsyncStorageKey.RECENTLYSEARCH.ARTISTS
-            : AsyncStorageKey.RECENTLYSEARCH.ALBUMS;
+            : AsyncStorageKey.RECENTLYSEARCH.PLAYLISTS;
         const localData = yield AsyncStorage.getItem(key);
         const localDataJson = JSON.parse(localData);
         remove(localDataJson, data => data.id == id);
@@ -101,15 +116,15 @@ export const SearchModel = types
       removeAllRecently: flow(function* removeAllRecently() {
         yield AsyncStorage.removeItem(AsyncStorageKey.RECENTLYSEARCH.SONGS);
         yield AsyncStorage.removeItem(AsyncStorageKey.RECENTLYSEARCH.ARTISTS);
-        yield AsyncStorage.removeItem(AsyncStorageKey.RECENTLYSEARCH.ALBUMS);
+        yield AsyncStorage.removeItem(AsyncStorageKey.RECENTLYSEARCH.PLAYLISTS);
         self.recentlySong.clear();
         self.recentlyArtist.clear();
-        self.recentlyAlbum.clear();
+        self.recentlyPlaylist.clear();
       }),
 
       removeAllSearchResult() {
         self.resultSongs.clear();
-        self.resultAlbums.clear();
+        self.resultPlaylists.clear();
         self.resultArtists.clear();
       },
 
@@ -119,6 +134,10 @@ export const SearchModel = types
 
       setResultArtist(artist) {
         self.resultArtists.put(artist);
+      },
+
+      setResultPlaylist(playlist) {
+        self.resultPlaylists.put(playlist);
       },
 
       getRecentlyResult: flow(function* getRecentlyResult() {
@@ -144,9 +163,14 @@ export const SearchModel = types
             self.recentlyArtist.put(newArtist);
           });
 
-        const albums = yield AsyncStorage.getItem(
-          AsyncStorageKey.RECENTLYSEARCH.ALBUMS,
+        const playlists = yield AsyncStorage.getItem(
+          AsyncStorageKey.RECENTLYSEARCH.PLAYLISTS,
         );
+        const playlistsJson = JSON.parse(playlists);
+        playlistsJson?.length > 0 &&
+          playlistsJson?.forEach(pl => {
+            self.addRecentlyPlaylist(pl);
+          });
 
         self.state = 'success';
       }),
@@ -161,6 +185,8 @@ export const SearchModel = types
           );
           self.removeAllSearchResult();
           if (result.status == 200) {
+            console.log('result.data.hits.', result.data.hits);
+
             if (result.data.hits.tracks.length > 0) {
               result.data.hits.tracks.forEach(async data => {
                 const trackDetail = await apiService.trackApiService.getTrackInfo(
@@ -186,6 +212,12 @@ export const SearchModel = types
               result.data.hits.artists.forEach(data => {
                 let artist = createArtistFromApiJson(data);
                 self.setResultArtist(artist);
+              });
+            }
+            if (result.data.hits.playlists.length > 0) {
+              result.data.hits.playlists.forEach(data => {
+                let playlist = createPlaylistFromApiJson(data);
+                self.setResultPlaylist(playlist);
               });
             }
           }
