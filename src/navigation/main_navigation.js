@@ -25,115 +25,123 @@ const Stack = createStackNavigator();
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
-    <View style={{ flexDirection: 'row', width: '100%' }}>
-      {state.routes.map((route, i) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+    <View style={{ width: '100%' }}>
+      <View
+        style={{
+          backgroundColor: '#835DB8',
+          height: 0.3,
+        }}
+      />
+      <View style={{ flexDirection: 'row', width: '100%' }}>
+        {state.routes.map((route, i) => {
+          const { options } = descriptors[route.key];
+          const label =
+            options.tabBarLabel !== undefined
+              ? options.tabBarLabel
+              : options.title !== undefined
+              ? options.title
+              : route.name;
 
-        const image =
-          i == 0
-            ? Images.ic_home
-            : i == 1
-            ? Images.ic_search
-            : i == 2
-            ? Images.ic_logo
-            : null;
+          const image =
+            i == 0
+              ? Images.ic_home
+              : i == 1
+              ? Images.ic_search
+              : i == 2
+              ? Images.ic_logo
+              : null;
 
-        const isFocused = state.index === i;
+          const isFocused = state.index === i;
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name);
+            }
+          };
 
-        return (
-          <TouchableOpacity
-            style={{
-              width: '100%',
-              flex: 1,
-              alignItems: 'flex-start',
-              height: isMeidumDevice() ? 50 : 70,
-              backgroundColor: '#1e0239',
-              paddingLeft: 20,
-              paddingRight: 20,
-              justifyContent: 'center',
-            }}
-            onPress={() => {
-              onPress();
-            }}
-            activeOpacity={1}
-            accessible={false}>
-            <View
+          return (
+            <TouchableOpacity
               style={{
                 width: '100%',
-              }}>
+                flex: 1,
+                alignItems: 'flex-start',
+                height: isMeidumDevice() ? 50 : 70,
+                backgroundColor: '#1e0239',
+                paddingLeft: 20,
+                paddingRight: 20,
+                justifyContent: 'center',
+              }}
+              onPress={() => {
+                onPress();
+              }}
+              activeOpacity={1}
+              accessible={false}>
               <View
                 style={{
-                  alignSelf:
-                    i == 0
-                      ? 'flex-start'
-                      : i == 1
-                      ? 'center'
-                      : i == 2
-                      ? 'flex-end'
-                      : '',
-                  justifyContent:
-                    i == 0
-                      ? 'flex-start'
-                      : i == 1
-                      ? 'center'
-                      : i == 2
-                      ? 'flex-end'
-                      : '',
-                  alignItems:
-                    i == 0
-                      ? 'flex-start'
-                      : i == 1
-                      ? 'center'
-                      : i == 2
-                      ? 'flex-end'
-                      : '',
+                  width: '100%',
                 }}>
                 <View
                   style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    alignSelf: 'center',
+                    alignSelf:
+                      i == 0
+                        ? 'flex-start'
+                        : i == 1
+                        ? 'center'
+                        : i == 2
+                        ? 'flex-end'
+                        : '',
+                    justifyContent:
+                      i == 0
+                        ? 'flex-start'
+                        : i == 1
+                        ? 'center'
+                        : i == 2
+                        ? 'flex-end'
+                        : '',
+                    alignItems:
+                      i == 0
+                        ? 'flex-start'
+                        : i == 1
+                        ? 'center'
+                        : i == 2
+                        ? 'flex-end'
+                        : '',
                   }}>
-                  <Image
-                    style={[
-                      Styles.icon,
-                      { tintColor: i == state.index ? '#FFF' : '#835db8' },
-                    ]}
-                    source={image}
-                  />
-
-                  <Text
+                  <View
                     style={{
-                      color: i == state.index ? '#FFF' : '#835db8',
-                      fontSize: 11,
-                      fontFamily: 'lato-heavy',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      alignSelf: 'center',
                     }}>
-                    {label}
-                  </Text>
+                    <Image
+                      style={[
+                        Styles.icon,
+                        { tintColor: i == state.index ? '#FFF' : '#835db8' },
+                      ]}
+                      source={image}
+                    />
+
+                    <Text
+                      style={{
+                        color: i == state.index ? '#FFF' : '#835db8',
+                        fontSize: 11,
+                        fontFamily: 'lato-heavy',
+                      }}>
+                      {label}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        );
-      })}
+            </TouchableOpacity>
+          );
+        })}
+      </View>
     </View>
   );
 }
