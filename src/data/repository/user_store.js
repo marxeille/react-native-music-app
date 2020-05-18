@@ -20,6 +20,7 @@ export const UserStore = types
     authState: AuthState,
     user_id: types.optional(types.number, 0),
     name: types.maybeNull(types.string),
+    social: types.optional(types.boolean, false),
     avatar: types.maybeNull(types.string),
     playlists: types.maybeNull(types.array(types.reference(PlayList))),
     artists: types.maybeNull(types.array(types.reference(Artist))),
@@ -90,6 +91,7 @@ export const UserStore = types
         self.name = user.fullname;
         self.avatar = user.avatar_path;
         self.id = user.id;
+        self.social = user.social_accounts.length > 0 ? true : false;
       },
 
       fetchUserData: flow(function* fetchUserData() {

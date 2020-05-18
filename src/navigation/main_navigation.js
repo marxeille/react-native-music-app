@@ -18,6 +18,7 @@ import searchContainer from './search_stack';
 import PlayerTabView from '../ui/player';
 import Settings from '../ui/main/home/settings';
 import { isMeidumDevice } from '../utils';
+import ChangePassComponent from '../ui/auth/change_password';
 
 const Tab = createBottomTabNavigationMusic();
 const Stack = createStackNavigator();
@@ -204,6 +205,7 @@ export default function mainContainer() {
       }}>
       <Stack.Screen name="bottomtab" component={getBottomTabNavigator} />
       <Stack.Screen name="setting" component={Settings} />
+      <Stack.Screen name="change_pass" component={ChangePassComponent} />
       <Stack.Screen
         name="player"
         component={PlayerTabView}

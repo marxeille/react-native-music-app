@@ -45,7 +45,7 @@ class PlayerAudio extends React.Component {
     }
   };
 
-  videoError = () => {
+  videoError = err => {
     Toast.showWithGravity(
       'Có lỗi xảy ra khi load bài hát, vui lòng thử lại sau.',
       Toast.LONG,

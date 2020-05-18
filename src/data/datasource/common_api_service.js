@@ -136,6 +136,19 @@ export default class CommonApiService {
     }
   }
 
+  async changePass(oldPass, newPass, user_id) {
+    try {
+      const path = `/api/users/${user_id}`;
+      const params = {
+        password: oldPass,
+        new_password: newPass,
+      };
+      return await privateRequest(BASE_URL.put, path, params);
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   async createPlaylist(playlist) {
     try {
       const path = `/api/playlists`;
