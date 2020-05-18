@@ -278,7 +278,6 @@ class Queue2 extends Component {
                   this.refs.flatListRef !== null &&
                   this.refs.flatListRef !== undefined
                 ) {
-                  console.log('failed 2', error);
                   this.refs.flatListRef?.scrollToOffset({
                     animated: true,
                     offset: error.index,

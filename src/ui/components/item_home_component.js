@@ -6,6 +6,7 @@ import { rootStore } from '../../data/context/root_context';
 import { navigate } from '../../navigation/navigation_service';
 import Images from '../../assets/icons/icons';
 import TextTicker from 'react-native-text-ticker';
+import { subLongStr } from '../../utils';
 
 @observer
 @wrap
@@ -28,19 +29,9 @@ export default class ItemHome extends Component {
           }
         />
         <View cls="pt2">
-          <TextTicker
-            style={{ fontSize: 15 }}
-            duration={12000}
-            loop
-            bounce
-            repeatSpacer={150}
-            scrollSpeed={100}
-            bounceSpeed={400}
-            marqueeDelay={800}>
-            <Text cls="white pt2 fw6 lightFont">
-              {rootStore.playlist.get(this.props.id).getName()}
-            </Text>
-          </TextTicker>
+          <Text cls="white pt2 fw6 lightFont">
+            {subLongStr(rootStore.playlist.get(this.props.id).getName(), 18)}
+          </Text>
           <Text cls="primaryPurple pt1 lightFont f11">
             {rootStore.playlist.get(this.props.id).getSubTitle() ??
               'Billie Erlish'}

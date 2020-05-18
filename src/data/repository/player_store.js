@@ -94,7 +94,7 @@ export const PlayerStore = types
         }
         // Play song
         if (track) {
-          // self.addToLocalHistory(track);
+          self.addCurrentSongToHistory(track);
           self.playSong(track);
         }
       },
@@ -147,14 +147,12 @@ export const PlayerStore = types
 
         //play song
         if (track) {
-          // self.addToLocalHistory(track);
+          self.addCurrentSongToHistory(track);
           self.playSong(track);
         }
       },
 
-      addToLocalHistory: flow(function* addToLocalHistory(track) {
-        // Save history
-        getParent(self).historyStore.addSong(track.id);
+      addCurrentSongToHistory(track) {
         const trackWithOwner = {
           ...track,
           owner_id: getParent(self).userStore.id,
@@ -165,6 +163,11 @@ export const PlayerStore = types
           AsyncStorageKey.SONG,
           JSON.stringify(trackWithOwner),
         );
+      },
+
+      addToLocalHistory: flow(function* addToLocalHistory(track) {
+        // Save history
+        getParent(self).historyStore.addSong(track.id);
         const localHistory = yield AsyncStorage.getItem(
           AsyncStorageKey.HISTORY,
         );

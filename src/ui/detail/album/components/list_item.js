@@ -16,15 +16,14 @@ const AlbumListItem = wrap(
     const _renderItem = useCallback(
       wrap(item => {
         return (
-          <TouchableOpacity onPress={() => playSong(item.item)}>
-            <View cls="pa3 pt0">
-              <AlbumItem
-                item={item.item}
-                openModal={_showModal}
-                model={viewModel}
-              />
-            </View>
-          </TouchableOpacity>
+          <View cls="pa3 pt0">
+            <AlbumItem
+              playSong={playSong}
+              item={item.item}
+              openModal={_showModal}
+              model={viewModel}
+            />
+          </View>
         );
       }),
     );

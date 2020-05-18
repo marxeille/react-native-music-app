@@ -206,6 +206,7 @@ const SearchItem = observer(
           <TouchableOpacity onPress={() => toggleAddSong()}>
             {props.isFavorite ? (
               <Image
+                cls="widthFn-24 heightFn-24"
                 source={
                   [...rootStore.likedTracks].includes(Number(props.item.id))
                     ? Images.ic_del_song
@@ -214,6 +215,7 @@ const SearchItem = observer(
               />
             ) : (
               <Image
+                cls="widthFn-24 heightFn-24"
                 source={props.checked ? Images.ic_del_song : Images.ic_plus}
               />
             )}

@@ -28,6 +28,7 @@ const QueueChild = observer(
           <View cls="flx-row jcc aic">
             <TouchableOpacity onPress={checkedSong}>
               <Image
+                cls="widthFn-24 heightFn-24"
                 source={checked ? Images.ic_checked_circle : Images.ic_uncheck}
               />
             </TouchableOpacity>

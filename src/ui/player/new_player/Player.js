@@ -124,7 +124,7 @@ export default class Player extends Component {
           onSwipeLeft={this.onSwipeLeft}
           config={config}>
           <Header
-            message={`Playing From ${rootStore?.playerStore?.playFrom.toUpperCase()}`}
+            message={`${rootStore?.playerStore?.playFrom.toUpperCase()}`}
           />
           <AlbumArt url={currentSong?.artwork} />
           <TrackDetails

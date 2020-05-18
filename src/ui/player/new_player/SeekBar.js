@@ -87,6 +87,7 @@ export default SeekBar;
 const styles = StyleSheet.create({
   slider: {},
   container: {
+    height: 70,
     paddingHorizontal: 16,
     paddingTop: 16,
   },

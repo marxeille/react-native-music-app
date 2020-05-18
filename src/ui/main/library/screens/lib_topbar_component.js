@@ -18,7 +18,6 @@ import Artist from './artist_component';
 import Album from './album_component';
 import Images from '../../../../assets/icons/icons';
 import Loading from '../../../components/loading';
-import { rootStore } from '../../../../data/context/root_context';
 import { observer } from 'mobx-react';
 import BottomModal from '../../../components/modal/BottomModal';
 import LinearGradient from 'react-native-linear-gradient';

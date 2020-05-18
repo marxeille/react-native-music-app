@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Images from '../../../assets/icons/icons';
 import { pop } from '../../../navigation/navigation_service';
 import { wrap } from '../../../themes';
+import TextTicker from 'react-native-text-ticker';
 
 const Header = wrap(({ message, onMessagePress }) => (
   <View style={styles.container} cls="aic jcsb">
@@ -16,9 +17,19 @@ const Header = wrap(({ message, onMessagePress }) => (
     </View>
     <View style={{ flex: 3 }}>
       <TouchableOpacity onPress={pop}>
-        <Text onPress={onMessagePress} style={styles.message}>
-          {message.toUpperCase()}
-        </Text>
+        <TextTicker
+          style={{ fontSize: 15 }}
+          duration={12000}
+          loop
+          bounce
+          repeatSpacer={150}
+          scrollSpeed={100}
+          bounceSpeed={400}
+          marqueeDelay={800}>
+          <Text onPress={onMessagePress} style={styles.message}>
+            {message.toUpperCase()}
+          </Text>
+        </TextTicker>
       </TouchableOpacity>
     </View>
     <View cls="flx-i" />

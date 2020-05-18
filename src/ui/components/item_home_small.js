@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { wrap } from '../../themes';
 import { rootStore } from '../../data/context/root_context';
 import Images from '../../assets/icons/icons';
-import TextTicker from 'react-native-text-ticker';
+import { subLongStr } from '../../utils';
 
 @observer
 @wrap
@@ -38,19 +38,9 @@ export default class ItemHomeSmall extends Component {
             }
           />
           <View cls="pt2">
-            <TextTicker
-              style={{ fontSize: 13 }}
-              duration={9000}
-              loop
-              bounce
-              repeatSpacer={150}
-              scrollSpeed={100}
-              bounceSpeed={400}
-              marqueeDelay={800}>
-              <Text cls="white pt2 fw6 lightFont">
-                {item?.getName() ?? 'Default'}
-              </Text>
-            </TextTicker>
+            <Text cls="white pt2 fw6 lightFont">
+              {subLongStr(item?.getName() ?? 'Default', 15)}
+            </Text>
             <Text cls="primaryPurple pt1 lightFont f10">
               {item?.getSubTitle() ?? 'Default'}
             </Text>
