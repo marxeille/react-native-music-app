@@ -27,6 +27,7 @@ export default class HomeListComponent extends Component {
   });
 
   renderLargeItem = wrap(item => {
+    if (item.item.tracks.length < 1) return null;
     return (
       <TouchableOpacity
         onPress={() =>

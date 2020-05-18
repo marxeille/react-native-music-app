@@ -343,7 +343,8 @@ export default class AlbumDetail extends Component {
       ]);
       if (!this.state.playing || song) {
         if (
-          Number(randomId) == Number(rootStore?.playerStore?.currentSong?.id)
+          Number(randomId) == Number(rootStore?.playerStore?.currentSong?.id) &&
+          !song
         ) {
           navigate('player');
         } else {
@@ -650,7 +651,7 @@ export default class AlbumDetail extends Component {
               action: () => {
                 this.setState({ showShareModal: true });
               },
-              hidden: rootStore.userStore?.id == item.owner_id,
+              hidden: false,
               icon: Images.ic_share_white,
               imgStyle: 'widthFn-20 heightFn-24',
             },

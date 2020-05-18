@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import { subLongStr, isTextEmpty, isSmallDevice } from '../../../../utils';
 import Images from '../../../../assets/icons/icons';
 import { rootStore } from '../../../../data/context/root_context';
+import { uniq } from 'lodash';
 
 @observer
 @wrap
@@ -39,7 +40,7 @@ export default class PlaylistItem extends Component {
             <Text
               cls={`${isSmallDevice() ? 'f12' : 'f10'} white fw7 lightFont`}>
               {item !== undefined
-                ? subLongStr(item.getName(), 17)
+                ? subLongStr(item.getName(), 15)
                 : 'Tạo playlist'}
             </Text>
             {item !== undefined ? (
@@ -48,7 +49,7 @@ export default class PlaylistItem extends Component {
                   isSmallDevice() ? 'f13' : 'f12'
                 } primaryPurple f12 pt1 lightFont`}>
                 {item?.id == 0
-                  ? `${item.tracks.length} bài hát`
+                  ? `${uniq([...rootStore.likedTracks]).length} bài hát`
                   : item?.owner_id == rootStore?.userStore.id
                   ? rootStore.userStore?.name
                   : item.getSubTitle()}

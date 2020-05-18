@@ -166,6 +166,10 @@ export const PlayerStore = types
       },
 
       addToLocalHistory: flow(function* addToLocalHistory(track) {
+        const trackWithOwner = {
+          ...track,
+          owner_id: getParent(self).userStore.id,
+        };
         // Save history
         getParent(self).historyStore.addSong(track.id);
         const localHistory = yield AsyncStorage.getItem(
