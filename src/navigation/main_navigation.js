@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions } from 'react-native';
+import { Image, Dimensions, View, TouchableOpacity, Text } from 'react-native';
 // import {
 //   createBottomTabNavigator,
 //   BottomTabView,
@@ -17,14 +17,131 @@ import libContainer from './library_stack';
 import searchContainer from './search_stack';
 import PlayerTabView from '../ui/player';
 import Settings from '../ui/main/home/settings';
+import { isMeidumDevice } from '../utils';
 import ChangePassComponent from '../ui/auth/change_password';
 
 const Tab = createBottomTabNavigationMusic();
 const Stack = createStackNavigator();
 
+function MyTabBar({ state, descriptors, navigation }) {
+  return (
+    <View style={{ flexDirection: 'row', width: '100%' }}>
+      {state.routes.map((route, i) => {
+        const { options } = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
+
+        const image =
+          i == 0
+            ? Images.ic_home
+            : i == 1
+            ? Images.ic_search
+            : i == 2
+            ? Images.ic_logo
+            : null;
+
+        const isFocused = state.index === i;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
+
+        return (
+          <TouchableOpacity
+            style={{
+              width: '100%',
+              flex: 1,
+              alignItems: 'flex-start',
+              height: isMeidumDevice() ? 50 : 70,
+              backgroundColor: '#1e0239',
+              paddingLeft: 20,
+              paddingRight: 20,
+              justifyContent: 'center',
+            }}
+            onPress={() => {
+              onPress();
+            }}
+            activeOpacity={1}
+            accessible={false}>
+            <View
+              style={{
+                width: '100%',
+              }}>
+              <View
+                style={{
+                  alignSelf:
+                    i == 0
+                      ? 'flex-start'
+                      : i == 1
+                      ? 'center'
+                      : i == 2
+                      ? 'flex-end'
+                      : '',
+                  justifyContent:
+                    i == 0
+                      ? 'flex-start'
+                      : i == 1
+                      ? 'center'
+                      : i == 2
+                      ? 'flex-end'
+                      : '',
+                  alignItems:
+                    i == 0
+                      ? 'flex-start'
+                      : i == 1
+                      ? 'center'
+                      : i == 2
+                      ? 'flex-end'
+                      : '',
+                }}>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                  }}>
+                  <Image
+                    style={[
+                      Styles.icon,
+                      { tintColor: i == state.index ? '#FFF' : '#835db8' },
+                    ]}
+                    source={image}
+                  />
+
+                  <Text
+                    style={{
+                      color: i == state.index ? '#FFF' : '#835db8',
+                      fontSize: 11,
+                      fontFamily: 'lato-heavy',
+                    }}>
+                    {label}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+}
+
 function getBottomTabNavigator() {
   return (
     <Tab.Navigator
+      tabBar={props => <MyTabBar {...props} />}
       tabBarOptions={{
         inactiveTintColor: '#835db8',
         activeTintColor: '#FFF',
@@ -49,13 +166,6 @@ function getBottomTabNavigator() {
         component={homeContainer}
         options={{
           tabBarLabel: 'Trang chủ',
-          tabBarIcon: props => (
-            <Image
-              style={[Styles.icon, { tintColor: props.color }]}
-              source={Images.ic_home}
-            />
-          ),
-          backgroundColor: '#00FFFFFFF',
         }}
       />
       <Tab.Screen
@@ -63,12 +173,6 @@ function getBottomTabNavigator() {
         component={searchContainer}
         options={{
           tabBarLabel: 'Tìm kiếm',
-          tabBarIcon: props => (
-            <Image
-              style={[Styles.icon, { tintColor: props.color }]}
-              source={Images.ic_search}
-            />
-          ),
         }}
       />
       <Tab.Screen
@@ -76,12 +180,6 @@ function getBottomTabNavigator() {
         component={libContainer}
         options={{
           tabBarLabel: 'Thư viện',
-          tabBarIcon: props => (
-            <Image
-              style={[Styles.icon, { tintColor: props.color }]}
-              source={Images.ic_logo}
-            />
-          ),
         }}
       />
     </Tab.Navigator>
