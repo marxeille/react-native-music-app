@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Linking,
   Clipboard,
+  TouchableHighlight,
 } from 'react-native';
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
@@ -25,6 +26,7 @@ import { ShareDialog } from 'react-native-fbsdk';
 import ZaloShare from 'react-native-zalo-share';
 import { scrollDownPosition } from '../../constant/constant';
 import TextTicker from 'react-native-text-ticker';
+import LinearGradient from 'react-native-linear-gradient';
 
 const ShareModal = wrap(({ _hideModal, item }) => {
   let link;
@@ -142,7 +144,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
       icon: Images.ic_mess,
       title: 'Tin nhắn',
       action: () => {
-        onShareSms();
+        // onShareSms();
       },
     },
     {
@@ -184,14 +186,18 @@ const ShareModal = wrap(({ _hideModal, item }) => {
     wrap(({ item, index }) => {
       return (
         <View cls={`${index == 0 ? 'pt4' : isSmallDevice() ? 'pt1' : 'pt2'}`}>
-          <TouchableOpacity
+          <TouchableHighlight
+            activeOpacity={1}
             onPress={() => item?.action()}
-            cls="jcc pv1 ph3 aic">
+            cls="jcc aic br5 ba ml3 mr3 mt2"
+            underlayColor="#7c5994">
             <View
               cls={`${
                 isSmallDevice() ? 'pa1' : 'pa2'
               } br5 ba fullWidth aic flx-row`}
-              style={{ borderColor: '#d29dc5' }}>
+              style={{
+                borderColor: '#d29dc5',
+              }}>
               <View cls="pl2">
                 <Image
                   cls="widthFn-18 heightFn-18"
@@ -201,7 +207,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
               </View>
               <Text cls="white lightFont pl3">{item?.title}</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableHighlight>
         </View>
       );
     }),
