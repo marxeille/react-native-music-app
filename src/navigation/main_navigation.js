@@ -80,8 +80,7 @@ function MyTabBar({ state, descriptors, navigation }) {
               onPress={() => {
                 onPress();
               }}
-              activeOpacity={1}
-              accessible={false}>
+              activeOpacity={1}>
               <View
                 style={{
                   width: '100%',
@@ -122,14 +121,14 @@ function MyTabBar({ state, descriptors, navigation }) {
                     <Image
                       style={[
                         Styles.icon,
-                        { tintColor: i == state.index ? '#FFF' : '#835db8' },
+                        { tintColor: isFocused ? '#FFF' : '#835db8' },
                       ]}
                       source={image}
                     />
 
                     <Text
                       style={{
-                        color: i == state.index ? '#FFF' : '#835db8',
+                        color: isFocused ? '#FFF' : '#835db8',
                         fontSize: 11,
                         fontFamily: 'lato-heavy',
                       }}>
@@ -170,6 +169,7 @@ function getBottomTabNavigator() {
         },
       }}>
       <Tab.Screen
+        key="home"
         name="home_stack"
         component={homeContainer}
         options={{
@@ -177,6 +177,7 @@ function getBottomTabNavigator() {
         }}
       />
       <Tab.Screen
+        key="search"
         name="search"
         component={searchContainer}
         options={{
@@ -184,6 +185,7 @@ function getBottomTabNavigator() {
         }}
       />
       <Tab.Screen
+        key="library"
         name="library"
         component={libContainer}
         options={{
