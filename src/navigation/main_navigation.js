@@ -148,40 +148,13 @@ function MyTabBar({ state, descriptors, navigation }) {
 
 function getBottomTabNavigator() {
   return (
-    <Tab.Navigator
-      // tabBar={props => <MyTabBar {...props} />}
-      tabBarOptions={{
-        inactiveTintColor: '#835db8',
-        activeTintColor: '#FFF',
-        labelStyle: {
-          fontSize: 11,
-          fontFamily: 'lato-heavy',
-          paddingTop: 3,
-        },
-        style: {
-          borderWidth: 0,
-          borderTopWidth: 0,
-          elevation: 4,
-          shadowOffset: {
-            width: 4,
-            height: 4,
-          },
-          backgroundColor: '#1e0239',
-        },
-      }}>
+    <Tab.Navigator tabBar={props => <MyTabBar {...props} />}>
       <Tab.Screen
         key="home"
         name="home_stack"
         component={homeContainer}
         options={{
           tabBarLabel: 'Trang chủ',
-          tabBarIcon: props => (
-            <Image
-              style={[Styles.icon, { tintColor: props.color }]}
-              source={Images.ic_home}
-            />
-          ),
-          backgroundColor: '#00FFFFFFF',
         }}
       />
       <Tab.Screen
@@ -190,12 +163,6 @@ function getBottomTabNavigator() {
         component={searchContainer}
         options={{
           tabBarLabel: 'Tìm kiếm',
-          tabBarIcon: props => (
-            <Image
-              style={[Styles.icon, { tintColor: props.color }]}
-              source={Images.ic_search}
-            />
-          ),
         }}
       />
       <Tab.Screen
@@ -205,12 +172,6 @@ function getBottomTabNavigator() {
         options={{
           tabBarLabel: 'Thư viện',
           tabBarLabel: 'Thư viện',
-          tabBarIcon: props => (
-            <Image
-              style={[Styles.icon, { tintColor: props.color }]}
-              source={Images.ic_logo}
-            />
-          ),
         }}
       />
     </Tab.Navigator>
