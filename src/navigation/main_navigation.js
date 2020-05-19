@@ -33,7 +33,7 @@ function MyTabBar({ state, descriptors, navigation }) {
         }}
       />
       <View style={{ flexDirection: 'row', width: '100%' }}>
-        {state.routes.map((route, i) => {
+        {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
           const label =
             options.tabBarLabel !== undefined
@@ -43,15 +43,15 @@ function MyTabBar({ state, descriptors, navigation }) {
               : route.name;
 
           const image =
-            i == 0
+            index == 0
               ? Images.ic_home
-              : i == 1
+              : index == 1
               ? Images.ic_search
-              : i == 2
+              : index == 2
               ? Images.ic_logo
               : null;
 
-          const isFocused = state.index === i;
+          const isFocused = state.index === index;
 
           const onPress = () => {
             const event = navigation.emit({
@@ -67,7 +67,7 @@ function MyTabBar({ state, descriptors, navigation }) {
 
           return (
             <TouchableOpacity
-              key={i}
+              key={index}
               style={{
                 width: '100%',
                 flex: 1,
@@ -89,27 +89,27 @@ function MyTabBar({ state, descriptors, navigation }) {
                 <View
                   style={{
                     alignSelf:
-                      i == 0
+                      index == 0
                         ? 'flex-start'
-                        : i == 1
+                        : index == 1
                         ? 'center'
-                        : i == 2
+                        : index == 2
                         ? 'flex-end'
                         : '',
                     justifyContent:
-                      i == 0
+                      index == 0
                         ? 'flex-start'
-                        : i == 1
+                        : index == 1
                         ? 'center'
-                        : i == 2
+                        : index == 2
                         ? 'flex-end'
                         : '',
                     alignItems:
-                      i == 0
+                      index == 0
                         ? 'flex-start'
-                        : i == 1
+                        : index == 1
                         ? 'center'
-                        : i == 2
+                        : index == 2
                         ? 'flex-end'
                         : '',
                   }}>
@@ -149,7 +149,7 @@ function MyTabBar({ state, descriptors, navigation }) {
 function getBottomTabNavigator() {
   return (
     <Tab.Navigator
-      tabBar={props => <MyTabBar {...props} />}
+      // tabBar={props => <MyTabBar {...props} />}
       tabBarOptions={{
         inactiveTintColor: '#835db8',
         activeTintColor: '#FFF',
@@ -175,6 +175,13 @@ function getBottomTabNavigator() {
         component={homeContainer}
         options={{
           tabBarLabel: 'Trang chủ',
+          tabBarIcon: props => (
+            <Image
+              style={[Styles.icon, { tintColor: props.color }]}
+              source={Images.ic_home}
+            />
+          ),
+          backgroundColor: '#00FFFFFFF',
         }}
       />
       <Tab.Screen
@@ -183,6 +190,12 @@ function getBottomTabNavigator() {
         component={searchContainer}
         options={{
           tabBarLabel: 'Tìm kiếm',
+          tabBarIcon: props => (
+            <Image
+              style={[Styles.icon, { tintColor: props.color }]}
+              source={Images.ic_search}
+            />
+          ),
         }}
       />
       <Tab.Screen
@@ -191,6 +204,13 @@ function getBottomTabNavigator() {
         component={libContainer}
         options={{
           tabBarLabel: 'Thư viện',
+          tabBarLabel: 'Thư viện',
+          tabBarIcon: props => (
+            <Image
+              style={[Styles.icon, { tintColor: props.color }]}
+              source={Images.ic_logo}
+            />
+          ),
         }}
       />
     </Tab.Navigator>
