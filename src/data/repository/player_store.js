@@ -61,7 +61,7 @@ export const PlayerStore = types
         // return getParent(self).songs.size;
       },
 
-      prepareSong(id) {
+      prepareSong(id, seek) {
         //Get list of songs
         const songs = self.getSongs();
         //Define track
@@ -94,12 +94,19 @@ export const PlayerStore = types
         }
         // Play song
         if (track) {
-          self.addCurrentSongToHistory(track);
-          self.playSong(track);
+          if (track?.id !== self.currentSong?.id) {
+            self.addCurrentSongToHistory(track);
+            self.playSong(track);
+          } else {
+            if (typeof seek == 'function') {
+              seek(0);
+              self.setPosition(0);
+            }
+          }
         }
       },
 
-      changeSong(trackStatus) {
+      changeSong(trackStatus, seek) {
         const songs = self.getSongs();
         let track;
         if (trackStatus == 'next') {
@@ -111,7 +118,16 @@ export const PlayerStore = types
             // add played song into history
             self.startNewSong(track?.id);
             //play song
-            if (track) self.playSong(track);
+            if (track) {
+              if (track?.id !== self.currentSong.id) {
+                self.playSong(track);
+              } else {
+                if (typeof seek == 'function') {
+                  seek(0);
+                  self.setPosition(0);
+                }
+              }
+            }
             return;
           } else {
             //Case 2: next track (with shuffle or not)
@@ -147,8 +163,15 @@ export const PlayerStore = types
 
         //play song
         if (track) {
-          self.addCurrentSongToHistory(track);
-          self.playSong(track);
+          if (track?.id !== self.currentSong.id) {
+            self.addCurrentSongToHistory(track);
+            self.playSong(track);
+          } else {
+            if (typeof seek == 'function') {
+              seek(0);
+              self.setPosition(0);
+            }
+          }
         }
       },
 

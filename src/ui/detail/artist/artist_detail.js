@@ -69,18 +69,18 @@ export default class ArtistDetail extends Component {
     this.setState({ artist: artist });
     this.cancelablePromise = makeCancelable(
       this.viewModel.getArtistTracks(
-        Number(typeof artist == 'number' ? artist : artist.id),
+        Number(typeof artist == 'number' ? artist : artist?.id),
       ),
     );
     this.cancelablePromise = makeCancelable(
       this.viewModel.getStats(
-        Number(typeof artist == 'number' ? artist : artist.id),
+        Number(typeof artist == 'number' ? artist : artist?.id),
       ),
     );
     this.cancelablePromise = makeCancelable(
       this.viewModel
         .getArtistTrackIds(
-          Number(typeof artist == 'number' ? artist : artist.id),
+          Number(typeof artist == 'number' ? artist : artist?.id),
         )
         .then(ids => {
           this.setState({

@@ -166,6 +166,8 @@ export const SearchModel = types
         const playlists = yield AsyncStorage.getItem(
           AsyncStorageKey.RECENTLYSEARCH.PLAYLISTS,
         );
+        console.log('playlists', playlists);
+
         const playlistsJson = JSON.parse(playlists);
         playlistsJson?.length > 0 &&
           playlistsJson?.forEach(pl => {
@@ -185,7 +187,7 @@ export const SearchModel = types
           );
           self.removeAllSearchResult();
           if (result.status == 200) {
-            console.log('result.data.hits.', result.data.hits);
+            console.log('result.data.hits', result.data.hits);
 
             if (result.data.hits.tracks.length > 0) {
               result.data.hits.tracks.forEach(async data => {

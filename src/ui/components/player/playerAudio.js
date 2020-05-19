@@ -41,7 +41,7 @@ class PlayerAudio extends React.Component {
         rootStore.playerStore?.trackIndex <
           rootStore.playerStore?.getQueueSize()
       ) {
-        rootStore.playerStore?.changeSong('next');
+        rootStore.playerStore?.changeSong('next', this.state.playerRef?.seek);
       }
     }
   };
