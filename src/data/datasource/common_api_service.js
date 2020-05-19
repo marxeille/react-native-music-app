@@ -136,6 +136,16 @@ export default class CommonApiService {
     }
   }
 
+  async getUserInfoById(id) {
+    try {
+      const path = `/api/users/${id}`;
+
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   async changePass(oldPass, newPass, user_id) {
     try {
       const path = `/api/users/${user_id}`;

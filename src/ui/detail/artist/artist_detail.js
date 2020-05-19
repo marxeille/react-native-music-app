@@ -136,7 +136,7 @@ export default class ArtistDetail extends Component {
     if (typeof artist == 'number') artist = this.state.artist;
     const idExist = indexOf(
       [...this.viewModel?.likedArtists],
-      Number(artist.id),
+      Number(artist?.id),
     );
     if (type == 'like') {
       if (idExist < 0) {
@@ -307,7 +307,9 @@ export default class ArtistDetail extends Component {
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this._showModalMenu}>
-                  <Image source={Images.ic_menu_white} />
+                  <View cls="widthFn-50 heightFn-50 aic jcc">
+                    <Image source={Images.ic_menu_white} />
+                  </View>
                 </TouchableOpacity>
               </View>
 
@@ -315,7 +317,7 @@ export default class ArtistDetail extends Component {
                 <Text cls="white fw8 f3 pb2 avertaFont">
                   {typeof artist?.getName == 'function'
                     ? artist?.getName().toUpperCase()
-                    : '...'}
+                    : 'Chưa xác định'}
                 </Text>
                 <Text cls="f8 white lightFont">
                   {`${this.viewModel.stats
