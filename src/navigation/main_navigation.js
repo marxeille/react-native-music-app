@@ -171,7 +171,6 @@ function getBottomTabNavigator() {
         component={libContainer}
         options={{
           tabBarLabel: 'Thư viện',
-          tabBarLabel: 'Thư viện',
         }}
       />
     </Tab.Navigator>
