@@ -155,7 +155,6 @@ export default class SearchComponent extends Component {
   ));
 
   clearRecently = () => {
-    // rootStore.playerStore.clearSong();
     this.viewmodel.removeAllRecently();
   };
 

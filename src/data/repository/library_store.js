@@ -133,6 +133,7 @@ export const LibraryStore = types
             const artistsData: Array = yield apiService.libraryApiService.getArtists(
               ids,
             );
+
             if (artistsData.status == 200) {
               artistsData.data.map(ar => {
                 getParent(self).updateArtist(ar);
