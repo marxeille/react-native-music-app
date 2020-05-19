@@ -62,6 +62,7 @@ function MyTabBar({ state, descriptors, navigation }) {
             });
 
             if (isFocused && index == 1) {
+              // reset when click current tab
               navigation.dispatch(
                 CommonActions.reset({
                   index: 1,
