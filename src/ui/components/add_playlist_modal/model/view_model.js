@@ -54,10 +54,13 @@ export const CreatePlaylistModel = types
           playlist,
         );
         if (createPl.status == 201) {
-          let cover = yield getPlaylistCover(
-            playlist.tracks,
-            !isTextEmpty(playlist.cover),
-          );
+          // let cover = yield getPlaylistCover(
+          //   playlist.tracks,
+          //   !isTextEmpty(playlist.cover),
+          // );
+          let cover = {
+            owner: rootStore.userStore?.name,
+          };
           if (!isTextEmpty(playlist.cover)) {
             const plCover = yield uploadImage(
               `/api/playlists/${createPl.data.id}/cover`,
@@ -65,9 +68,13 @@ export const CreatePlaylistModel = types
               'cover',
             );
             if (plCover.status == 201) {
-              cover = { ...cover, playlistCover: plCover.data.cover_path };
+              cover = {
+                ...cover,
+                playlistCover: plCover.data.cover_path,
+              };
             }
           }
+
           // like playlist after create
           yield apiService.commonApiService.like('playlist', createPl.data.id);
           const playlistFullInfo = { ...createPl.data, ...cover };

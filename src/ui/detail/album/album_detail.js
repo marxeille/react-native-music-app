@@ -83,7 +83,6 @@ export default class AlbumDetail extends Component {
       item = rootStore?.albums.get(nextId);
       this.setState({ article: item });
     }
-
     this.getTracks(item);
   }
 
@@ -409,7 +408,9 @@ export default class AlbumDetail extends Component {
                   </View>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={this._showModalPlaylist}>
-                  <Image source={Images.ic_menu_white} />
+                  <View cls="widthFn-50 heightFn-50 aic jcc">
+                    <Image source={Images.ic_menu_white} />
+                  </View>
                 </TouchableWithoutFeedback>
               </View>
               <Image

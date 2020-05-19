@@ -162,18 +162,29 @@ export const HomeStore = types
             );
 
             if (playlistInfo.status == 200 && playlistInfo.data) {
-              let cover;
-              cover = await getPlaylistCover(
-                playlistInfo?.data?.tracks,
-                playlistInfo.data.cover_path !== null,
+              // let cover;
+              // cover = await getPlaylistCover(
+              //   playlistInfo?.data?.tracks,
+              //   playlistInfo.data.cover_path !== null,
+              // );
+              // if (playlistInfo.data.cover_path !== null) {
+              //   cover = {
+              //     ...cover,
+              //     playlistCover: playlistInfo.data.cover_path,
+              //   };
+              // }
+              const cover = await apiService.commonApiService.getUserInfoById(
+                playlistInfo.data.owner_id,
               );
-              if (playlistInfo.data.cover_path !== null) {
-                cover = {
-                  ...cover,
+              let coverInfo = {};
+              if (cover.status == 200) {
+                coverInfo = {
+                  ...coverInfo,
+                  owner: cover.data.fullname,
                   playlistCover: playlistInfo.data.cover_path,
                 };
               }
-              const playlistFullInfo = { ...playlistInfo.data, ...cover };
+              const playlistFullInfo = { ...playlistInfo.data, ...coverInfo };
               getParent(self).updatePlayList(playlistFullInfo);
               self.addPopular(playlistFullInfo);
             } else {
