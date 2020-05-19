@@ -377,7 +377,7 @@ export default class AlbumDetail extends Component {
     this._showModalAddSong();
   };
 
-  renderHeaderSection = wrap((hasSong, item, name, following) => {
+  renderHeaderSection = wrap((hasSong, item, name, following, songs) => {
     return (
       <View cls="pb5">
         <ImageBackground
@@ -412,16 +412,84 @@ export default class AlbumDetail extends Component {
                   <Image source={Images.ic_menu_white} />
                 </TouchableWithoutFeedback>
               </View>
-              <Image
-                cls="squareFn-195 asc"
-                source={
-                  !isEmpty(item) && !isTextEmpty(item?.getThumb())
-                    ? { uri: item?.getThumb() }
-                    : item?.id == 0
-                    ? Images.ic_heart_cover
-                    : Images.bAAlbum
-                }
-              />
+              {item?.getType() != 'playlist' ? (
+                <Image
+                  cls="squareFn-197 asc"
+                  source={
+                    !isEmpty(item) && !isTextEmpty(item?.getThumb())
+                      ? { uri: item?.getThumb() }
+                      : item?.id == 0
+                      ? Images.ic_heart_cover
+                      : Images.bAAlbum
+                  }
+                />
+              ) : (
+                <View cls="asc">
+                  <View cls="flx-row">
+                    <Image
+                      cls="squareFn-98"
+                      source={
+                        !isTextEmpty(
+                          songs[0] && typeof songs[0]?.getThumb == 'function'
+                            ? songs[0]?.getThumb()
+                            : '',
+                        ) && hasSong
+                          ? {
+                              uri: songs[0]?.getThumb(),
+                            }
+                          : Images.bAAlbum
+                      }
+                    />
+                    <View cls="heightFn-98 widthFn-2 bg-#000" />
+                    <Image
+                      cls="squareFn-98"
+                      source={
+                        !isTextEmpty(
+                          songs[1] && typeof songs[1]?.getThumb == 'function'
+                            ? songs[1]?.getThumb()
+                            : '',
+                        ) && hasSong
+                          ? {
+                              uri: songs[1]?.getThumb(),
+                            }
+                          : Images.bAAlbum
+                      }
+                    />
+                  </View>
+                  <View cls="heightFn-2 widthFn-197 bg-#000" />
+                  <View cls="flx-row">
+                    <Image
+                      cls="squareFn-98"
+                      source={
+                        !isTextEmpty(
+                          songs[2] && typeof songs[2]?.getThumb == 'function'
+                            ? songs[2]?.getThumb()
+                            : '',
+                        ) && hasSong
+                          ? {
+                              uri: songs[2]?.getThumb(),
+                            }
+                          : Images.bAAlbum
+                      }
+                    />
+                    <View cls="heightFn-98 widthFn-2 bg-#000" />
+                    <Image
+                      cls="squareFn-98"
+                      source={
+                        !isTextEmpty(
+                          songs[3] && typeof songs[3]?.getThumb == 'function'
+                            ? songs[3]?.getThumb()
+                            : '',
+                        ) && hasSong
+                          ? {
+                              uri: songs[3]?.getThumb(),
+                            }
+                          : Images.bAAlbum
+                      }
+                    />
+                  </View>
+                </View>
+              )}
             </View>
             <View cls="aic jcc pa3 pt2">
               <TextTicker
@@ -489,8 +557,10 @@ export default class AlbumDetail extends Component {
     );
   });
 
-  _renderListHeaderContent = wrap((hasSong, item, name, following) => {
-    return <>{this.renderHeaderSection(hasSong, item, name, following)}</>;
+  _renderListHeaderContent = wrap((hasSong, item, name, following, songs) => {
+    return (
+      <>{this.renderHeaderSection(hasSong, item, name, following, songs)}</>
+    );
   });
 
   deletePlaylist = async () => {
@@ -682,7 +752,13 @@ export default class AlbumDetail extends Component {
           <ImageBackground cls="fullView" source={Images.default_wave_bg}>
             <AlbumListItem
               _renderListHeaderContent={() =>
-                this._renderListHeaderContent(hasSong, item, name, following)
+                this._renderListHeaderContent(
+                  hasSong,
+                  item,
+                  name,
+                  following,
+                  songs,
+                )
               }
               viewModel={this.viewModel}
               hasSong={hasSong}
