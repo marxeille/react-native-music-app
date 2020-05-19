@@ -66,7 +66,7 @@ export default class SearchItem extends Component {
 
     if (local) icon = Images.ic_delete;
     return (
-      <View cls="flx-row aic pt4 jcsb">
+      <View cls="flx-row aic pt4 jcsb pr2">
         <TouchableOpacity onPress={this.handleOnItemPress}>
           <View cls="flx-row aic">
             <Image
@@ -83,16 +83,18 @@ export default class SearchItem extends Component {
             />
             <View>
               <Text cls="white fw7 f6 pl2">
-                {subLongStr(item?.getName(), isSmallDevice() ? 12 : 20)}
+                {subLongStr(item?.getName(), isSmallDevice() ? 12 : 18)}
               </Text>
               <Text cls="primaryPurple f7 pl2 pt1">
-                {subLongStr(item?.getSubTitle(), isSmallDevice() ? 12 : 20)}
+                {subLongStr(item?.getSubTitle(), isSmallDevice() ? 12 : 18)}
               </Text>
             </View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={this.handleOnActionPress}>
-          <Image cls="widthFn-20 heightFn-20" source={icon} />
+          <View cls="widthFn-50 heightFn-50 jcc aife">
+            <Image cls="widthFn-20 heightFn-20" source={icon} />
+          </View>
         </TouchableOpacity>
       </View>
     );

@@ -225,7 +225,7 @@ export default class ArtistDetail extends Component {
             Number(song?.id) !== Number(rootStore?.playerStore?.currentSong?.id)
           ) {
             navigate('player', {
-              trackId: song ? song.id : randomId,
+              trackId: song?.id ?? randomId,
             });
           } else {
             navigate('player');
@@ -393,14 +393,16 @@ export default class ArtistDetail extends Component {
               onPress={() => {
                 this.reaction();
               }}>
-              <Image
-                cls="widthFn-25 heightFn-25"
-                resizeMode="contain"
-                source={!following ? Images.ic_like : Images.ic_like_on}
-              />
+              <View cls="widthFn-50 heightFn-50 aic jcc">
+                <Image
+                  cls="widthFn-25 heightFn-25"
+                  resizeMode="contain"
+                  source={!following ? Images.ic_like : Images.ic_like_on}
+                />
+              </View>
             </TouchableWithoutFeedback>
           </View>
-          <View cls="pa3 pl2 pr2">
+          <View cls="pa3 pl0 pr0">
             <TouchableWithoutFeedback onPress={() => this.playSong()}>
               <Image
                 resizeMode="contain"
@@ -416,10 +418,12 @@ export default class ArtistDetail extends Component {
               onPress={() => {
                 this._showModalShare();
               }}>
-              <Image
-                cls="widthFn-25 heightFn-25"
-                source={Images.ic_btn_share}
-              />
+              <View cls="widthFn-50 heightFn-50 aic jcc">
+                <Image
+                  cls="widthFn-25 heightFn-25"
+                  source={Images.ic_btn_share}
+                />
+              </View>
             </TouchableWithoutFeedback>
           </View>
         </View>

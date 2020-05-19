@@ -18,7 +18,6 @@ import DraggableFlatList from 'react-native-draggable-flatlist';
 import LinearGradientText from '../main/library/components/LinearGradientText';
 import * as _ from 'lodash';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import TextTicker from 'react-native-text-ticker';
 import { AsyncStorageKey } from '../../constant/constant';
 import AsyncStorage from '@react-native-community/async-storage';
 import Toast from 'react-native-simple-toast';
@@ -63,24 +62,14 @@ class Queue2 extends Component {
               cls="widthFn-52 heightFn-52 mr3"
             />
             <View>
-              <TextTicker
-                style={{ fontSize: 17 }}
-                duration={6000}
-                loop
-                bounce
-                repeatSpacer={150}
-                scrollSpeed={100}
-                bounceSpeed={400}
-                marqueeDelay={800}>
-                <Text cls="white fw7 f6 latoFont">
-                  {currentSong !== null
-                    ? subLongStr(
-                        currentSong?.getName() ?? '',
-                        isSmallDevice() ? 15 : 20,
-                      )
-                    : 'Dèfault Title'}
-                </Text>
-              </TextTicker>
+              <Text cls="white fw7 f6 latoFont">
+                {currentSong !== null
+                  ? subLongStr(
+                      currentSong?.getName() ?? '',
+                      isSmallDevice() ? 15 : 20,
+                    )
+                  : 'Dèfault Title'}
+              </Text>
               <Text cls="primaryPurple f9 pt1 latoFont">
                 {subLongStr(
                   currentSong?.getSubTitle(),
