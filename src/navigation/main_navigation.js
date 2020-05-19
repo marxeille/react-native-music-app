@@ -8,6 +8,7 @@ import {
   createStackNavigator,
   CardStyleInterpolators,
 } from '@react-navigation/stack';
+import { CommonActions } from '@react-navigation/native';
 
 import { Styles } from '../styles/stylesheets';
 import Images from '../assets/icons/icons';
@@ -60,8 +61,23 @@ function MyTabBar({ state, descriptors, navigation }) {
               canPreventDefault: true,
             });
 
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
+            if (isFocused && index == 1) {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [
+                    { name: 'home' },
+                    {
+                      name: 'search',
+                    },
+                    { name: 'library' },
+                  ],
+                }),
+              );
+            } else {
+              if (!isFocused && !event.defaultPrevented) {
+                navigation.navigate(route.name);
+              }
             }
           };
 

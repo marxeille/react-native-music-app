@@ -19,7 +19,6 @@ import SearchItem from './components/search_item';
 import { SearchModel } from './view_model';
 import Loading from '../../components/loading';
 import { observer } from 'mobx-react';
-import { rootStore } from '../../../data/context/root_context';
 import BottomModal from '../../../ui/components/modal/BottomModal';
 import SongMenu from '../../../ui/player/components/song_menu';
 import ShareModal from '../../components/share';
@@ -41,14 +40,7 @@ export default class SearchComponent extends Component {
 
   componentDidMount() {
     this.viewmodel.getRecentlyResult();
-    this.props.navigation.addListener('blur', this.onScreenFocus);
   }
-
-  onScreenFocus = () => {
-    this.setState({
-      keyword: null,
-    });
-  };
 
   _showModal = song => {
     this.setState({ song: song }, () => {
