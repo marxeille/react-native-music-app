@@ -63,7 +63,12 @@ export default class Player extends Component {
 
   onBack() {
     if (rootStore.playerStore?.trackIndex > 0) {
-      rootStore.playerStore?.changeSong('back');
+      if (rootStore.playerStore?.position > 3) {
+        this.context.playerRef?.seek(0);
+        rootStore.playerStore?.setPosition(0);
+      } else {
+        rootStore.playerStore?.changeSong('back', this.context.playerRef?.seek);
+      }
     } else {
       this.context.playerRef?.seek(0);
     }
@@ -73,7 +78,7 @@ export default class Player extends Component {
     if (
       rootStore.playerStore?.trackIndex < rootStore.playerStore?.getQueueSize()
     ) {
-      rootStore.playerStore?.changeSong('next');
+      rootStore.playerStore?.changeSong('next', this.context.playerRef?.seek);
     }
   }
 

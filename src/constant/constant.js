@@ -10,6 +10,7 @@ export const AsyncStorageKey = {
     SONGS: '@recentlysongs',
     ARTISTS: '@recentlyartists',
     ALBUMS: '@recentlyalbums',
+    PLAYLISTS: '@recentlyplaylists',
   },
 };
 

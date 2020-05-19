@@ -165,12 +165,12 @@ export default class SearchComponent extends Component {
       keyword == '' || keyword == null || keyword == undefined
         ? [
             ...this.viewmodel.recentlySong.values(),
-            ...this.viewmodel.recentlyAlbum.values(),
+            ...this.viewmodel.resultPlaylists?.values(),
             ...this.viewmodel.recentlyArtist.values(),
           ]
         : [
             ...this.viewmodel.resultSongs.values(),
-            ...this.viewmodel.resultAlbums.values(),
+            ...this.viewmodel.resultPlaylists?.values(),
             ...this.viewmodel.resultArtists.values(),
           ];
 
@@ -208,16 +208,7 @@ export default class SearchComponent extends Component {
                   </View>
                 ) : null}
               </View>
-            ) : (
-              <ScrollView contentContainerCls="pa3 pt1">
-                <View>{this.renderResultSection('Nghệ sĩ', [1, 2, 3])}</View>
-                <View>
-                  {this.renderResultSection('Bài hát', [
-                    ...rootStore?.homeStore?.popularSongs,
-                  ])}
-                </View>
-              </ScrollView>
-            )}
+            ) : null}
             <BottomModal
               forceInsetTop={'never'}
               forceInsetBottom={'never'}

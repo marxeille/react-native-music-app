@@ -17,19 +17,25 @@ const Header = wrap(({ message, onMessagePress }) => (
     </View>
     <View style={{ flex: 3 }}>
       <TouchableOpacity onPress={pop}>
-        <TextTicker
-          style={{ fontSize: 15 }}
-          duration={12000}
-          loop
-          bounce
-          repeatSpacer={150}
-          scrollSpeed={100}
-          bounceSpeed={400}
-          marqueeDelay={800}>
+        {message.length < 15 ? (
           <Text onPress={onMessagePress} style={styles.message}>
             {message.toUpperCase()}
           </Text>
-        </TextTicker>
+        ) : (
+          <TextTicker
+            style={{ textAlign: 'center', alignItems: 'center' }}
+            duration={12000}
+            loop
+            bounce
+            repeatSpacer={150}
+            scrollSpeed={100}
+            bounceSpeed={400}
+            marqueeDelay={800}>
+            <Text onPress={onMessagePress} style={styles.message}>
+              {message.toUpperCase()}
+            </Text>
+          </TextTicker>
+        )}
       </TouchableOpacity>
     </View>
     <View cls="flx-i" />

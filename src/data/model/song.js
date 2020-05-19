@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { BASE_API_URL } from '../../constant/constant';
-import { subLongStr } from '../../utils';
+import { subLongStr, isTextEmpty } from '../../utils';
 
 export const Song = types
   .model('Song', {
@@ -21,7 +21,11 @@ export const Song = types
         return self.title;
       },
       getSubTitle(limit = true) {
-        return limit ? subLongStr(self.artist, 25) : self.artist;
+        return !isTextEmpty(self.artist)
+          ? limit
+            ? subLongStr(self.artist, 25)
+            : self.artist
+          : 'Chưa xác định';
       },
       isFavorite() {
         return self.favorite == true; // for case undefine

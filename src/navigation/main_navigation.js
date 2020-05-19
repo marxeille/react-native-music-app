@@ -67,6 +67,7 @@ function MyTabBar({ state, descriptors, navigation }) {
 
           return (
             <TouchableOpacity
+              key={i}
               style={{
                 width: '100%',
                 flex: 1,
@@ -219,21 +220,19 @@ export default function mainContainer() {
       <Stack.Screen
         name="player"
         component={PlayerTabView}
-        options={
-          {
-            // headerTransparent: true,
-            // gestureEnabled: false,
-            // animationEnabled: true,
-            // animationTypeForReplace: 'pop',
-            // transitionConfig: () => ({
-            //   transitionSpec: {
-            //     duration: 0,
-            //     timing: Animated.timing,
-            //     easing: Easing.step0,
-            //   },
-            // }),
-          }
-        }
+        options={{
+          headerTransparent: true,
+          gestureEnabled: false,
+          animationEnabled: true,
+          // animationTypeForReplace: 'pop',
+          transitionConfig: () => ({
+            transitionSpec: {
+              duration: 10,
+              timing: Animated.timing,
+              easing: Easing.step0,
+            },
+          }),
+        }}
       />
     </Stack.Navigator>
   );

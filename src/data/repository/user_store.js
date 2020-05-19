@@ -1,9 +1,7 @@
 import { types, flow, getParent } from 'mobx-state-tree';
-
-import { observable, autorun } from 'mobx';
 import AsyncStorage from '@react-native-community/async-storage';
 import UserInfo from '../model/user_info';
-import { PlayList, createPlaylistFromJson } from '../model/playlist';
+import { PlayList } from '../model/playlist';
 import { Artist } from '../model/artist';
 import { Album } from '../model/album';
 import { apiService } from '../context/api_context';

@@ -24,6 +24,8 @@ export default class SearchItem extends Component {
       return;
     } else if (item.getType() == 'artist') {
       return navigate('artist_detail', { artist: item });
+    } else if (item.getType() == 'playlist') {
+      return navigate('album_detail', { item: item });
     } else {
       model.removeRecentlySong(item?.id);
     }
@@ -36,12 +38,17 @@ export default class SearchItem extends Component {
       model.addRecentlySong(item);
       rootStore?.playerStore?.setPlayFrom('Search');
       if (rootStore.playerStore?.currentSong?.id == item.id) {
-        return navigate('player');
+        rootStore.playerStore?.prepareSong(null);
+        return;
       }
-      return navigate('player', { trackId: item.id });
+      rootStore.playerStore?.prepareSong(item.id);
+      return;
     } else if (item.getType() == 'artist') {
       model.addRecentlyArtist(item);
       return navigate('artist_detail', { artist: item });
+    } else if (item.getType() == 'playlist') {
+      model.addRecentlyPlaylist(item);
+      return navigate('album_detail', { item: item });
     } else {
       model.removeRecentlySong(item?.id);
     }
@@ -53,7 +60,7 @@ export default class SearchItem extends Component {
     let icon =
       item.getType() == 'song'
         ? Images.ic_menu
-        : item.getType() == 'artist'
+        : item.getType() == 'artist' || item.getType() == 'playlist'
         ? Images.ic_more
         : Images.ic_delete;
 

@@ -39,7 +39,7 @@ export default class ItemHomeSmall extends Component {
           />
           <View cls="pt2">
             <Text cls="white pt2 fw6 lightFont">
-              {subLongStr(item?.getName() ?? 'Default', 15)}
+              {subLongStr(item?.getName() ?? 'Default', 14)}
             </Text>
             <Text cls="primaryPurple pt1 lightFont f10">
               {item?.getSubTitle() ?? 'Default'}

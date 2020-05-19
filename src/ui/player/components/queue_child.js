@@ -34,10 +34,20 @@ const QueueChild = observer(
             </TouchableOpacity>
             <View cls="pl3">
               <Text cls={`white fw6 f${onPlayItem ? '6' : '6'} latoFont`}>
-                {subLongStr(props.item?.getName(), 18) ?? 'Queue Child'}
+                {subLongStr(
+                  typeof props.item?.getName == 'function'
+                    ? props.item?.getName()
+                    : props.item?.title,
+                  18,
+                )}
               </Text>
               <Text cls={`primaryPurple pt1 ${onPlayItem ? '' : ''} latoFont`}>
-                {props.item?.getSubTitle() ?? 'Queue Child'}
+                {subLongStr(
+                  typeof props.item?.getSubTitle == 'function'
+                    ? props.item?.getSubTitle()
+                    : props.item?.artist,
+                  18,
+                )}
               </Text>
             </View>
           </View>

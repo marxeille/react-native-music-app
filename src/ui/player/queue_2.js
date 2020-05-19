@@ -35,18 +35,19 @@ class Queue2 extends Component {
     // this.flatListRef = React.createRef();
     this.state = {
       checkedSongs: [],
+      checkedHistories: [],
     };
   }
 
   renderQueuePlayer = wrap(() => {
     const { toggleStatus, currentSong } = rootStore.playerStore;
+    const historySongs = [...rootStore.historyStore.songs].map(song => {
+      return { ...song, history: true };
+    });
 
     return (
       <View cls="pb3">
-        <FlatList
-          data={[...rootStore.historyStore.songs]}
-          renderItem={this.renderItem}
-        />
+        <FlatList data={historySongs} renderItem={this.renderItem} />
         <ImageBackground
           cls="fullWidth heightFn-72 flx-row aic jcsb pl3 pr3"
           source={Images.bg_mini_player}>
@@ -104,23 +105,26 @@ class Queue2 extends Component {
   });
 
   removeSongs = async () => {
-    const { checkedSongs } = this.state;
+    const { checkedSongs, checkedHistories } = this.state;
     this.setState({ checkedSongs: [] });
     rootStore?.queueStore?.removeSongs(checkedSongs);
-    rootStore?.historyStore?.removeSongs(checkedSongs);
-    const localHistory = await AsyncStorage.getItem(AsyncStorageKey.HISTORY);
-    let localHistoryJson = JSON.parse(localHistory);
-    if (localHistoryJson !== null) {
-      _.remove(localHistoryJson, song => {
-        return (
-          _.indexOf(checkedSongs, song.id) >= 0 &&
-          song.owner_id == rootStore.userStore?.id
+    if (checkedHistories.length > 0) {
+      this.setState({ checkedHistories: [] });
+      rootStore?.historyStore?.removeSongs(checkedHistories);
+      const localHistory = await AsyncStorage.getItem(AsyncStorageKey.HISTORY);
+      let localHistoryJson = JSON.parse(localHistory);
+      if (localHistoryJson !== null) {
+        _.remove(localHistoryJson, song => {
+          return (
+            _.indexOf(checkedHistories, song.id) >= 0 &&
+            song.owner_id == rootStore.userStore?.id
+          );
+        });
+        AsyncStorage.setItem(
+          AsyncStorageKey.HISTORY,
+          JSON.stringify(localHistoryJson),
         );
-      });
-      AsyncStorage.setItem(
-        AsyncStorageKey.HISTORY,
-        JSON.stringify(localHistoryJson),
-      );
+      }
     }
   };
 
@@ -189,6 +193,17 @@ class Queue2 extends Component {
     this.setState({ checkedSongs: newCheckList });
   };
 
+  onHistoryCheck = id => {
+    const { checkedHistories } = this.state;
+    const newCheckList = _.cloneDeep(checkedHistories);
+    if (_.indexOf(checkedHistories, id) >= 0) {
+      newCheckList.splice(_.indexOf(checkedHistories, id), 1);
+    } else {
+      newCheckList.push(id);
+    }
+    this.setState({ checkedHistories: newCheckList });
+  };
+
   renderItem = wrap(({ item, index, drag, isActive }) => {
     return item.flag == 'header' ? (
       <GestureRecognizer onSwipeRight={this.onSwipeRight} config={this.config}>
@@ -206,7 +221,9 @@ class Queue2 extends Component {
             />
 
             <View style={{ paddingTop: 3 }} cls="pa3 pr6">
-              <Text cls="primaryPurple fw7 f5 avertaFont">{item.subTitle}</Text>
+              <Text cls="primaryPurple fw7 f5 avertaFont">
+                {subLongStr(item.subTitle, 16)}
+              </Text>
             </View>
           </View>
         </View>
@@ -215,8 +232,15 @@ class Queue2 extends Component {
       <QueueChild
         item={item}
         onSwipeRight={this.onSwipeRight}
-        onSongCheck={this.onSongCheck}
-        checked={_.indexOf(this.state.checkedSongs, item.id) >= 0}
+        onSongCheck={!item.history ? this.onSongCheck : this.onHistoryCheck}
+        checked={
+          _.indexOf(
+            !item.history
+              ? this.state.checkedSongs
+              : this.state.checkedHistories,
+            item.id,
+          ) >= 0
+        }
         drag={drag}
         config={this.config}
         isActive={isActive}
