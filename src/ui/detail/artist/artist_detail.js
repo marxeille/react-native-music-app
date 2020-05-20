@@ -281,85 +281,89 @@ export default class ArtistDetail extends Component {
     };
 
     return (
-      <View cls="pb4">
-        <ImageBackground
-          resizeMode="cover"
-          style={{ opacity: 0.9 }}
-          blurRadius={15}
-          cls={`jcsb`}
-          source={Images.nN}>
+      <>
+        <View cls="pb4">
           <ImageBackground
-            cls={`jcsb`}
-            style={{ opacity: 0.9 }}
             resizeMode="cover"
-            source={Images.bNgEn}>
-            <View cls="pa3">
-              <View
-                cls="flx-row aic jcsb"
-                style={{ paddingTop: getStatusBarHeight() + 10 }}>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.goBack()}>
-                  <View cls="widthFn-50 heightFn-50 jcc">
+            style={{ opacity: 0.9 }}
+            blurRadius={15}
+            cls={`jcsb`}
+            source={Images.nN}>
+            <ImageBackground
+              cls={`jcsb`}
+              style={{ opacity: 0.9 }}
+              resizeMode="cover"
+              source={Images.bNgEn}>
+              <View cls="pa3">
+                <View
+                  cls="flx-row aic jcsb"
+                  style={{ paddingTop: getStatusBarHeight() + 10 }}>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.goBack()}>
+                    <View cls="widthFn-50 heightFn-50 jcc">
+                      <Image
+                        cls="widthFn-10 heightFn-20"
+                        source={Images.ic_back_white}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={this._showModalMenu}>
+                    <View cls="widthFn-50 heightFn-50 aic jcc">
+                      <Image source={Images.ic_menu_white} />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+
+                <View cls="aic jcc pt3">
+                  <Text cls="white fw8 f3 pb2 avertaFont">
+                    {typeof artist?.getName == 'function'
+                      ? artist?.getName().toUpperCase()
+                      : 'Chưa xác định'}
+                  </Text>
+                  <Text cls="f8 white lightFont">
+                    {`${this.viewModel.stats
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} Fans`}
+                  </Text>
+                </View>
+              </View>
+              <View>
+                <ArtistTabView
+                  artist={artist}
+                  showArtistDetailCover={this.showArtistDetailCover}
+                  tabIndex={this.state.tabIndex}
+                  onSwipe={this.onSwipeLeft}
+                  onIndexChange={i => this.setState({ tabIndex: i })}
+                />
+              </View>
+              {showCover ? (
+                <View
+                  cls="asc"
+                  style={{ position: 'absolute', bottom: -40, zIndex: 1 }}>
+                  <GestureRecognizer
+                    onSwipeLeft={() => this.onSwipeLeft(1)}
+                    config={config}>
                     <Image
-                      cls="widthFn-10 heightFn-20"
-                      source={Images.ic_back_white}
+                      cls="squareFn-180 asc"
+                      source={
+                        typeof artist?.getThumb == 'function' &&
+                        artist?.getThumb() !== ''
+                          ? { uri: artist.getThumb() }
+                          : Images.bAAlbum
+                      }
                     />
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this._showModalMenu}>
-                  <View cls="widthFn-50 heightFn-50 aic jcc">
-                    <Image source={Images.ic_menu_white} />
-                  </View>
-                </TouchableOpacity>
-              </View>
+                  </GestureRecognizer>
+                </View>
+              ) : null}
 
-              <View cls="aic jcc pt3">
-                <Text cls="white fw8 f3 pb2 avertaFont">
-                  {typeof artist?.getName == 'function'
-                    ? artist?.getName().toUpperCase()
-                    : 'Chưa xác định'}
-                </Text>
-                <Text cls="f8 white lightFont">
-                  {`${this.viewModel.stats
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, '.')} Fans`}
-                </Text>
+              <View style={{ position: 'absolute', bottom: -23 }}>
+                {this.renderActionSection()}
               </View>
-            </View>
-            <View>
-              <ArtistTabView
-                artist={artist}
-                showArtistDetailCover={this.showArtistDetailCover}
-                tabIndex={this.state.tabIndex}
-                onSwipe={this.onSwipeLeft}
-              />
-            </View>
-            {showCover ? (
-              <View
-                cls="asc"
-                style={{ position: 'absolute', bottom: -40, zIndex: 1 }}>
-                <GestureRecognizer
-                  onSwipeLeft={() => this.onSwipeLeft(1)}
-                  config={config}>
-                  <Image
-                    cls="squareFn-180 asc"
-                    source={
-                      typeof artist?.getThumb == 'function' &&
-                      artist?.getThumb() !== ''
-                        ? { uri: artist.getThumb() }
-                        : Images.bAAlbum
-                    }
-                  />
-                </GestureRecognizer>
-              </View>
-            ) : null}
-
-            <View style={{ position: 'absolute', bottom: -23 }}>
-              {this.renderActionSection()}
-            </View>
+            </ImageBackground>
           </ImageBackground>
-        </ImageBackground>
-      </View>
+        </View>
+        {this.renderMiddleSection()}
+      </>
     );
   });
 
@@ -431,15 +435,6 @@ export default class ArtistDetail extends Component {
     );
   };
 
-  _renderListHeaderContent = wrap(() => {
-    return (
-      <View cls="pt0">
-        {this.renderHeaderSection()}
-        {this.renderMiddleSection()}
-      </View>
-    );
-  });
-
   _renderItem = wrap(item => {
     return (
       <TouchableOpacity onPress={() => this.playSong(item.item)}>
@@ -501,7 +496,7 @@ export default class ArtistDetail extends Component {
         <View cls="fullView">
           <ImageBackground cls="fullView" source={Images.default_wave_bg}>
             <FlatList
-              ListHeaderComponent={this._renderListHeaderContent()}
+              ListHeaderComponent={this.renderHeaderSection()}
               data={[...this.viewModel.songs.values()]}
               showsVerticalScrollIndicator={false}
               renderItem={this._renderItem}
