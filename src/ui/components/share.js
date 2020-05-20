@@ -26,7 +26,6 @@ import { ShareDialog } from 'react-native-fbsdk';
 import ZaloShare from 'react-native-zalo-share';
 import { scrollDownPosition } from '../../constant/constant';
 import TextTicker from 'react-native-text-ticker';
-import LinearGradient from 'react-native-linear-gradient';
 
 const ShareModal = wrap(({ _hideModal, item }) => {
   let link;
@@ -144,7 +143,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
       icon: Images.ic_mess,
       title: 'Tin nhắn',
       action: () => {
-        // onShareSms();
+        onShareSms();
       },
     },
     {
