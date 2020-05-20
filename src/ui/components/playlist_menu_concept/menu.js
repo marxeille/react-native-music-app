@@ -79,12 +79,13 @@ const PlaylistMenuConcept = observer(
                   style={{
                     zIndex: -1,
                     position: 'absolute',
-                    right: isSmallDevice() ? 45 : isMeidumDevice() ? 75 : 40,
+                    right: isSmallDevice() ? 45 : isMeidumDevice() ? 75 : 60,
                     bottom: -5,
                   }}
                   source={Images.e_cover}>
                   <Image
                     cls="circleFn-90 asc"
+                    style={{ transform: [{ rotate: '30deg' }] }}
                     source={
                       !isTextEmpty(item?.getThumb()) &&
                       item?.getThumb() != undefined

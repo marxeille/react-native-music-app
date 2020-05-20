@@ -78,7 +78,7 @@ export default class PlaylistComponent extends Component {
     const { _showModal, _hideModal } = this.props;
     return (
       <View style={{ marginBottom: 200 }}>
-        <View cls="pt3">
+        <View cls="pt3 pb2">
           <SearchComponent _showModal={_showModal} _hideModal={_hideModal} />
         </View>
         <View cls="pt3 fullHeight">

@@ -131,7 +131,7 @@ export default class ArtistComponent extends Component {
     const { _showModal, _hideModal } = this.props;
     return (
       <>
-        <View cls="pt3">
+        <View cls="pt3 pb2">
           <SearchComponent _showModal={_showModal} _hideModal={_hideModal} />
         </View>
 
