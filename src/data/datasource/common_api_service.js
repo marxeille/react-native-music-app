@@ -32,6 +32,15 @@ export default class CommonApiService {
     }
   }
 
+  async getRencentTrackIds() {
+    try {
+      const path = '/api/my/recent/tracks';
+      return await privateRequest(BASE_URL.get, path, {});
+    } catch (error) {
+      console.log('TCL: try -> error', error);
+    }
+  }
+
   async getTracks(ids) {
     try {
       const path = `/api/tracks?ids=${ids}`;
