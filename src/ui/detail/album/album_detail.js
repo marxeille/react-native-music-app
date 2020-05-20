@@ -490,10 +490,6 @@ export default class AlbumDetail extends Component {
     );
   });
 
-  _renderListHeaderContent = wrap((hasSong, item, name, following) => {
-    return <>{this.renderHeaderSection(hasSong, item, name, following)}</>;
-  });
-
   deletePlaylist = async () => {
     const { item } = this.props.route?.params;
 
@@ -683,7 +679,7 @@ export default class AlbumDetail extends Component {
           <ImageBackground cls="fullView" source={Images.default_wave_bg}>
             <AlbumListItem
               _renderListHeaderContent={() =>
-                this._renderListHeaderContent(hasSong, item, name, following)
+                this.renderHeaderSection(hasSong, item, name, following)
               }
               viewModel={this.viewModel}
               hasSong={hasSong}
