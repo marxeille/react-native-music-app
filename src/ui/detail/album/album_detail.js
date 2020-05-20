@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Image,
   TouchableWithoutFeedback,
+  FlatList,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import {
@@ -34,6 +35,7 @@ import ShareModal from '../../components/share';
 import { uploadImage } from '../../../data/datasource/api_config';
 import { BASE_API_URL } from '../../../constant/constant';
 import TextTicker from 'react-native-text-ticker';
+import AlbumItem from './components/album_item';
 
 @observer
 @wrap
@@ -558,12 +560,6 @@ export default class AlbumDetail extends Component {
     );
   });
 
-  _renderListHeaderContent = wrap((hasSong, item, name, following, songs) => {
-    return (
-      <>{this.renderHeaderSection(hasSong, item, name, following, songs)}</>
-    );
-  });
-
   deletePlaylist = async () => {
     const { item } = this.props.route?.params;
 
@@ -608,6 +604,19 @@ export default class AlbumDetail extends Component {
   handleLoadMore = () => {
     console.log('load moreeee');
   };
+
+  renderItem = wrap(item => {
+    return (
+      <View cls="pa3 pt0">
+        <AlbumItem
+          playSong={this.playSong}
+          item={item.item}
+          openModal={this._showModal}
+          model={this.viewModel}
+        />
+      </View>
+    );
+  });
 
   render() {
     let { item } = this.props.route?.params;
@@ -751,22 +760,21 @@ export default class AlbumDetail extends Component {
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
           <ImageBackground cls="fullView" source={Images.default_wave_bg}>
-            <AlbumListItem
-              _renderListHeaderContent={() =>
-                this._renderListHeaderContent(
-                  hasSong,
-                  item,
-                  name,
-                  following,
-                  songs,
-                )
-              }
-              viewModel={this.viewModel}
-              hasSong={hasSong}
-              playSong={this.playSong}
-              songs={songs}
-              _showModal={this._showModal}
-              _handleLoadMore={this.handleLoadMore}
+            <FlatList
+              ListHeaderComponent={this.renderHeaderSection(
+                hasSong,
+                item,
+                name,
+                following,
+                songs,
+              )}
+              data={songs}
+              showsVerticalScrollIndicator={false}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => index.toString()}
+              onEndReached={this.handleLoadMore}
+              onEndReachedThreshold={0.5}
+              initialNumToRender={10}
             />
             <BottomModal
               forceInsetTop={'never'}
