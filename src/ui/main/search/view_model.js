@@ -11,6 +11,7 @@ import {
   PlayList,
   createPlaylistFromApiJson,
 } from '../../../data/model/playlist';
+import Toast from 'react-native-simple-toast';
 
 export const SearchModel = types
   .model('SearchModel', {
@@ -187,8 +188,6 @@ export const SearchModel = types
           );
           self.removeAllSearchResult();
           if (result.status == 200) {
-            console.log('result.data.hits', result.data.hits);
-
             if (result.data.hits.tracks.length > 0) {
               result.data.hits.tracks.forEach(async data => {
                 const trackDetail = await apiService.trackApiService.getTrackInfo(
@@ -211,16 +210,41 @@ export const SearchModel = types
               });
             }
             if (result.data.hits.artists.length > 0) {
-              result.data.hits.artists.forEach(data => {
-                let artist = createArtistFromApiJson(data);
-                self.setResultArtist(artist);
-              });
+              const ids = result.data.hits.artists.map(a => a.id);
+              const artistsData: Array = yield apiService.libraryApiService.getArtists(
+                ids,
+              );
+              if (artistsData.status == 200) {
+                artistsData.data.map(ar => {
+                  let artist = createArtistFromApiJson(ar);
+                  self.setResultArtist(artist);
+                });
+              } else {
+                Toast.showWithGravity(
+                  artistsData.data.msg,
+                  Toast.LONG,
+                  Toast.BOTTOM,
+                );
+              }
             }
             if (result.data.hits.playlists.length > 0) {
-              result.data.hits.playlists.forEach(data => {
-                let playlist = createPlaylistFromApiJson(data);
-                self.setResultPlaylist(playlist);
-              });
+              const ids = result.data.hits.playlists.map(p => p.id);
+              const playlistData: Array = yield apiService.libraryApiService.getPlaylists(
+                ids,
+              );
+              if (playlistData.status == 200) {
+                playlistData.data.map(pl => {
+                  let playlist = createPlaylistFromApiJson(pl);
+                  self.setResultPlaylist(playlist);
+                  console.log('playlist', playlist);
+                });
+              } else {
+                Toast.showWithGravity(
+                  playlistData.data.msg,
+                  Toast.LONG,
+                  Toast.BOTTOM,
+                );
+              }
             }
           }
         } catch (err) {

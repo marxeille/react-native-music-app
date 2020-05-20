@@ -147,7 +147,6 @@ export default class SearchComponent extends Component {
   ));
 
   clearRecently = () => {
-    // rootStore.playerStore.clearSong();
     this.viewmodel.removeAllRecently();
   };
 
@@ -171,7 +170,7 @@ export default class SearchComponent extends Component {
         colors={['#291048', '#1a0732', '#130727', '#110426']}
         start={{ x: 1, y: 0 }}
         end={{ x: 1, y: 1 }}>
-        <View style={{ paddingBottom: 175 }}>
+        <View style={{ paddingBottom: 190 }}>
           <ImageBackground cls="fullView" source={Images.default_wave_bg}>
             {this.renderSearchSection()}
             {this.viewmodel.state == 'loading' ? (

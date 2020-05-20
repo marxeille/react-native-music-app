@@ -70,7 +70,7 @@ const ArtistItem = observer(
 
     return (
       <View
-        cls="jcsb flx-row aic pr3 br2"
+        cls="jcsb flx-row aic pr1 br2"
         style={{ backgroundColor: '#321a54' }}>
         <View cls="flx-i flx-wrap pa3 pb2 pt2">
           <View cls="jcc">
@@ -91,14 +91,18 @@ const ArtistItem = observer(
           </View>
         </View>
         <View cls="flx-row">
-          <TouchableOpacity cls="pr3" onPress={reaction}>
-            <Image
-              style={{ opacity: like ? 1 : 0.2 }}
-              source={like ? Images.ic_like_on : Images.ic_like_uncheck}
-            />
+          <TouchableOpacity onPress={reaction}>
+            <View cls="widthFn-50 heightFn-50 aic jcc">
+              <Image
+                style={{ opacity: like ? 1 : 0.2 }}
+                source={like ? Images.ic_like_on : Images.ic_like_uncheck}
+              />
+            </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => props.openModal(props.item)}>
-            <Image source={Images.ic_menu} />
+            <View cls="widthFn-50 heightFn-50 aic jcc">
+              <Image source={Images.ic_menu} />
+            </View>
           </TouchableOpacity>
         </View>
       </View>

@@ -66,7 +66,7 @@ const AlbumItem = observer(
     });
     return (
       <View
-        cls="flx-row aic pl2 pr3 pt2 pb2 br2 jcsb"
+        cls="flx-row aic pl2 pt2 pb2 br2 jcsb"
         style={{ backgroundColor: '#321a54' }}>
         <TouchableOpacity onPress={() => props.playSong(props.item)}>
           <View cls="flx-row">
@@ -85,7 +85,7 @@ const AlbumItem = observer(
               }
             />
 
-            <View cls="flx-wrap pl3 pr3 aic jcc">
+            <View cls="flx-wrap pl3 pr1 aic jcc">
               <View>
                 <Text
                   cls="white fw7 f6 lightFont"
@@ -108,14 +108,18 @@ const AlbumItem = observer(
           </View>
         </TouchableOpacity>
         <View cls="flx-row">
-          <TouchableOpacity cls="pr3" onPress={reaction}>
-            <Image
-              style={{ opacity: like ? 1 : 0.2 }}
-              source={like ? Images.ic_like_on : Images.ic_like_uncheck}
-            />
+          <TouchableOpacity onPress={reaction}>
+            <View cls="widthFn-35 heightFn-50 aic jcc">
+              <Image
+                style={{ opacity: like ? 1 : 0.2 }}
+                source={like ? Images.ic_like_on : Images.ic_like_uncheck}
+              />
+            </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => props.openModal(props.item)}>
-            <Image source={Images.ic_menu} />
+            <View cls="widthFn-50 heightFn-50 aic jcc">
+              <Image source={Images.ic_menu} />
+            </View>
           </TouchableOpacity>
         </View>
       </View>
