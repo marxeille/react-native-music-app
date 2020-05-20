@@ -163,7 +163,7 @@ export default class SongMenu extends Component {
         />
       </View>
     ) : (
-      <View cls="pa3">
+      <View cls={`${isSmallDevice() ? 'heightFn-530' : ''} pa3`}>
         <FlatList
           ListHeaderComponent={this.renderHeader}
           data={this.menuItems}
