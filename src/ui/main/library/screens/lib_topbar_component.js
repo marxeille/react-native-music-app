@@ -220,7 +220,7 @@ export default class LibraryTabView extends React.Component {
     //   );
     // }
     return (
-      <View cls="flx-i">
+      <View cls="flx-i pt3">
         <TabView
           navigationState={this.state}
           renderScene={this._renderScene}

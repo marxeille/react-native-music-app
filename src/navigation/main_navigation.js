@@ -8,6 +8,7 @@ import {
   createStackNavigator,
   CardStyleInterpolators,
 } from '@react-navigation/stack';
+import { CommonActions } from '@react-navigation/native';
 
 import { Styles } from '../styles/stylesheets';
 import Images from '../assets/icons/icons';
@@ -25,144 +26,148 @@ const Stack = createStackNavigator();
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
-    <View style={{ flexDirection: 'row', width: '100%' }}>
-      {state.routes.map((route, i) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+    <View style={{ width: '100%' }}>
+      <View
+        style={{
+          backgroundColor: '#835DB8',
+          height: 0.3,
+        }}
+      />
+      <View style={{ flexDirection: 'row', width: '100%' }}>
+        {state.routes.map((route, index) => {
+          const { options } = descriptors[route.key];
+          const label =
+            options.tabBarLabel !== undefined
+              ? options.tabBarLabel
+              : options.title !== undefined
+              ? options.title
+              : route.name;
 
-        const image =
-          i == 0
-            ? Images.ic_home
-            : i == 1
-            ? Images.ic_search
-            : i == 2
-            ? Images.ic_logo
-            : null;
+          const image =
+            index == 0
+              ? Images.ic_home
+              : index == 1
+              ? Images.ic_search
+              : index == 2
+              ? Images.ic_logo
+              : null;
 
-        const isFocused = state.index === i;
+          const isFocused = state.index === index;
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
+            if (isFocused && index == 1) {
+              // reset when click current tab
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [
+                    { name: 'home' },
+                    {
+                      name: 'search',
+                    },
+                    { name: 'library' },
+                  ],
+                }),
+              );
+            } else {
+              if (!isFocused && !event.defaultPrevented) {
+                navigation.navigate(route.name);
+              }
+            }
+          };
 
-        return (
-          <TouchableOpacity
-            key={i}
-            style={{
-              width: '100%',
-              flex: 1,
-              alignItems: 'flex-start',
-              height: isMeidumDevice() ? 50 : 70,
-              backgroundColor: '#1e0239',
-              paddingLeft: 20,
-              paddingRight: 20,
-              justifyContent: 'center',
-            }}
-            onPress={() => {
-              onPress();
-            }}
-            activeOpacity={1}
-            accessible={false}>
-            <View
+          return (
+            <TouchableOpacity
+              key={index}
               style={{
                 width: '100%',
-              }}>
+                flex: 1,
+                alignItems: 'flex-start',
+                height: isMeidumDevice() ? 50 : 70,
+                backgroundColor: '#1e0239',
+                paddingLeft: 20,
+                paddingRight: 20,
+                justifyContent: 'center',
+              }}
+              onPress={() => {
+                onPress();
+              }}
+              activeOpacity={1}>
               <View
                 style={{
-                  alignSelf:
-                    i == 0
-                      ? 'flex-start'
-                      : i == 1
-                      ? 'center'
-                      : i == 2
-                      ? 'flex-end'
-                      : '',
-                  justifyContent:
-                    i == 0
-                      ? 'flex-start'
-                      : i == 1
-                      ? 'center'
-                      : i == 2
-                      ? 'flex-end'
-                      : '',
-                  alignItems:
-                    i == 0
-                      ? 'flex-start'
-                      : i == 1
-                      ? 'center'
-                      : i == 2
-                      ? 'flex-end'
-                      : '',
+                  width: '100%',
                 }}>
                 <View
                   style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    alignSelf: 'center',
+                    alignSelf:
+                      index == 0
+                        ? 'flex-start'
+                        : index == 1
+                        ? 'center'
+                        : index == 2
+                        ? 'flex-end'
+                        : '',
+                    justifyContent:
+                      index == 0
+                        ? 'flex-start'
+                        : index == 1
+                        ? 'center'
+                        : index == 2
+                        ? 'flex-end'
+                        : '',
+                    alignItems:
+                      index == 0
+                        ? 'flex-start'
+                        : index == 1
+                        ? 'center'
+                        : index == 2
+                        ? 'flex-end'
+                        : '',
                   }}>
-                  <Image
-                    style={[
-                      Styles.icon,
-                      { tintColor: i == state.index ? '#FFF' : '#835db8' },
-                    ]}
-                    source={image}
-                  />
-
-                  <Text
+                  <View
                     style={{
-                      color: i == state.index ? '#FFF' : '#835db8',
-                      fontSize: 11,
-                      fontFamily: 'lato-heavy',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      alignSelf: 'center',
                     }}>
-                    {label}
-                  </Text>
+                    <Image
+                      style={[
+                        Styles.icon,
+                        { tintColor: isFocused ? '#FFF' : '#835db8' },
+                      ]}
+                      source={image}
+                    />
+
+                    <Text
+                      style={{
+                        color: isFocused ? '#FFF' : '#835db8',
+                        fontSize: 11,
+                        fontFamily: 'lato-heavy',
+                      }}>
+                      {label}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        );
-      })}
+            </TouchableOpacity>
+          );
+        })}
+      </View>
     </View>
   );
 }
 
 function getBottomTabNavigator() {
   return (
-    <Tab.Navigator
-      tabBar={props => <MyTabBar {...props} />}
-      tabBarOptions={{
-        inactiveTintColor: '#835db8',
-        activeTintColor: '#FFF',
-        labelStyle: {
-          fontSize: 11,
-          fontFamily: 'lato-heavy',
-          paddingTop: 3,
-        },
-        style: {
-          borderWidth: 0,
-          borderTopWidth: 0,
-          elevation: 4,
-          shadowOffset: {
-            width: 4,
-            height: 4,
-          },
-          backgroundColor: '#1e0239',
-        },
-      }}>
+    <Tab.Navigator tabBar={props => <MyTabBar {...props} />}>
       <Tab.Screen
+        key="home"
         name="home_stack"
         component={homeContainer}
         options={{
@@ -170,6 +175,7 @@ function getBottomTabNavigator() {
         }}
       />
       <Tab.Screen
+        key="search"
         name="search"
         component={searchContainer}
         options={{
@@ -177,6 +183,7 @@ function getBottomTabNavigator() {
         }}
       />
       <Tab.Screen
+        key="library"
         name="library"
         component={libContainer}
         options={{

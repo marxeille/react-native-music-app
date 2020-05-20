@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
+  TouchableHighlight,
   ImageBackground,
   Image,
   FlatList,
@@ -163,7 +163,7 @@ export default class SongMenu extends Component {
         />
       </View>
     ) : (
-      <View cls="pa3">
+      <View cls={`${isSmallDevice() ? 'heightFn-530' : ''} pa3`}>
         <FlatList
           ListHeaderComponent={this.renderHeader}
           data={this.menuItems}
@@ -184,7 +184,11 @@ export default class SongMenu extends Component {
 const ActionItem = wrap(props => {
   return (
     <>
-      <TouchableOpacity onPress={props.onPress} cls="mb3">
+      <TouchableHighlight
+        activeOpacity={1}
+        underlayColor="#7c5994"
+        onPress={props.onPress}
+        cls="mb3 br5 ba">
         <View
           cls={`${
             isSmallDevice() ? 'pa1' : 'pa2'
@@ -202,7 +206,7 @@ const ActionItem = wrap(props => {
           </View>
           <Text cls={`white lightFont pl3`}>{props.title}</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableHighlight>
     </>
   );
 });

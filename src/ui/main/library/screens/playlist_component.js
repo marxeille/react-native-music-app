@@ -9,6 +9,7 @@ import { observer } from 'mobx-react';
 import { navigate } from '../../../../navigation/navigation_service';
 import BottomModal from '../../../components/modal/BottomModal';
 import CreatePlayListModal from '../../../components/add_playlist_modal';
+import { uniqBy } from 'lodash';
 
 @observer
 @wrap
@@ -17,7 +18,7 @@ export default class PlaylistComponent extends Component {
     super(props);
     this.modalPlaylist = React.createRef();
     this.state = {
-      playlists: [{}, ...rootStore.libraryStore.playlists],
+      // playlists: [{}, ...rootStore.libraryStore.playlists],
     };
   }
 
@@ -76,6 +77,7 @@ export default class PlaylistComponent extends Component {
 
   render() {
     const { _showModal, _hideModal } = this.props;
+
     return (
       <View style={{ marginBottom: 200 }}>
         <View cls="pt3">
@@ -88,7 +90,7 @@ export default class PlaylistComponent extends Component {
             <FlatList
               keyboardDismissMode="on-drag"
               showsVerticalScrollIndicator={false}
-              data={[{}, ...rootStore.libraryStore.playlists]}
+              data={uniqBy([{}, ...rootStore.libraryStore.playlists], 'id')}
               onScrollBeginDrag={Keyboard.dismiss}
               keyExtractor={(item, index) => index.toString()}
               numColumns={3}

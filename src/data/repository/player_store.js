@@ -119,7 +119,7 @@ export const PlayerStore = types
             self.startNewSong(track?.id);
             //play song
             if (track) {
-              if (track?.id !== self.currentSong.id) {
+              if (Number(track?.id) !== Number(self.currentSong.id)) {
                 self.playSong(track);
               } else {
                 if (typeof seek == 'function') {
@@ -132,16 +132,23 @@ export const PlayerStore = types
           } else {
             //Case 2: next track (with shuffle or not)
             //Check if it's the last track of queue
-            if (self.trackIndex < songs.length - 1) {
+            if (self.trackIndex < songs.length - 1 || self.shuffle) {
+              let randomIndex = Math.floor(
+                Math.random() * Math.floor(self.getQueueSize()),
+              );
+              if (randomIndex == Number(self.trackIndex)) {
+                randomIndex = self.trackIndex + 1;
+              }
+
               self.setTrackIndex(
                 !self.shuffle
                   ? self.trackIndex + 1 // With no shuffle
-                  : Math.floor(Math.random() * Math.floor(self.getQueueSize())), // with shuffle on
+                  : randomIndex, // with shuffle on
               );
               track = songs[self.trackIndex];
               self.startNewSong(track?.id);
             } else {
-              //if this is the last track and no repeat, set state to pause
+              //if it is the last track and no repeat, set state to pause
               if (!self.repeat || songs.length == 1) {
                 self.setState('pause');
               } else {
@@ -163,7 +170,7 @@ export const PlayerStore = types
 
         //play song
         if (track) {
-          if (track?.id !== self.currentSong.id) {
+          if (Number(track?.id) !== Number(self.currentSong.id)) {
             self.addCurrentSongToHistory(track);
             self.playSong(track);
           } else {

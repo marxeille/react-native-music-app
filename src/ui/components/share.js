@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Linking,
   Clipboard,
+  TouchableHighlight,
 } from 'react-native';
 import { wrap } from '../../themes';
 import Images from '../../assets/icons/icons';
@@ -184,14 +185,18 @@ const ShareModal = wrap(({ _hideModal, item }) => {
     wrap(({ item, index }) => {
       return (
         <View cls={`${index == 0 ? 'pt4' : isSmallDevice() ? 'pt1' : 'pt2'}`}>
-          <TouchableOpacity
+          <TouchableHighlight
+            activeOpacity={1}
             onPress={() => item?.action()}
-            cls="jcc pv1 ph3 aic">
+            cls="jcc aic br5 ba ml3 mr3 mt2"
+            underlayColor="#7c5994">
             <View
               cls={`${
                 isSmallDevice() ? 'pa1' : 'pa2'
               } br5 ba fullWidth aic flx-row`}
-              style={{ borderColor: '#d29dc5' }}>
+              style={{
+                borderColor: '#d29dc5',
+              }}>
               <View cls="pl2">
                 <Image
                   cls="widthFn-18 heightFn-18"
@@ -201,7 +206,7 @@ const ShareModal = wrap(({ _hideModal, item }) => {
               </View>
               <Text cls="white lightFont pl3">{item?.title}</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableHighlight>
         </View>
       );
     }),
@@ -270,8 +275,8 @@ const ShareModal = wrap(({ _hideModal, item }) => {
                       } white fw7 pt2 asc avertaFont`}>
                       {typeof item?.getName == 'function' && item?.getName()
                         ? item?.getName()
-                        : item?.title() && typeof item?.title == 'function'
-                        ? item?.title()
+                        : item?.getName() && typeof item?.getName == 'function'
+                        ? item?.getName()
                         : rootStore.playerStore?.currentSong?.getName()}
                     </Text>
                   </TextTicker>
@@ -283,8 +288,9 @@ const ShareModal = wrap(({ _hideModal, item }) => {
                     {typeof item?.getSubTitle == 'function' &&
                     item?.getSubTitle()
                       ? item?.getSubTitle()
-                      : item?.subTitle() && typeof item?.subTitle == 'function'
-                      ? item?.subTitle()
+                      : item?.getSubTitle() &&
+                        typeof item?.getSubTitle == 'function'
+                      ? item?.getSubTitle()
                       : rootStore.playerStore?.currentSong?.getSubTitle()}
                   </Text>
                 </View>

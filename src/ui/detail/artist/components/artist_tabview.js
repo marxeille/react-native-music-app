@@ -31,6 +31,7 @@ export default class ArtistTabView extends Component {
       this.setState({ showCover: true, readMore: true });
       this.props.showArtistDetailCover(false);
     }
+    this.props.onIndexChange(index);
     this.setState({ index });
   };
 

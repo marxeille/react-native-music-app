@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Image,
   TouchableWithoutFeedback,
+  FlatList,
 } from 'react-native';
 import { observer } from 'mobx-react';
 import {
@@ -34,6 +35,7 @@ import ShareModal from '../../components/share';
 import { uploadImage } from '../../../data/datasource/api_config';
 import { BASE_API_URL } from '../../../constant/constant';
 import TextTicker from 'react-native-text-ticker';
+import AlbumItem from './components/album_item';
 
 @observer
 @wrap
@@ -289,7 +291,7 @@ export default class AlbumDetail extends Component {
     }
     await likeHelper(
       item?.getType(),
-      item.id,
+      item?.id,
       this.onReactionSuccess,
       this.onReactionError,
     );
@@ -303,7 +305,7 @@ export default class AlbumDetail extends Component {
     }
     await unlikeHelper(
       item?.getType(),
-      item.id,
+      item?.id,
       this.onReactionSuccess,
       this.onReactionError,
     );
@@ -376,7 +378,7 @@ export default class AlbumDetail extends Component {
     this._showModalAddSong();
   };
 
-  renderHeaderSection = wrap((hasSong, item, name, following) => {
+  renderHeaderSection = wrap((hasSong, item, name, following, songs) => {
     return (
       <View cls="pb5">
         <ImageBackground
@@ -413,16 +415,84 @@ export default class AlbumDetail extends Component {
                   </View>
                 </TouchableWithoutFeedback>
               </View>
-              <Image
-                cls="squareFn-195 asc"
-                source={
-                  !isEmpty(item) && !isTextEmpty(item?.getThumb())
-                    ? { uri: item?.getThumb() }
-                    : item?.id == 0
-                    ? Images.ic_heart_cover
-                    : Images.bAAlbum
-                }
-              />
+              {item?.getType() != 'playlist' ? (
+                <Image
+                  cls="squareFn-197 asc"
+                  source={
+                    !isEmpty(item) && !isTextEmpty(item?.getThumb())
+                      ? { uri: item?.getThumb() }
+                      : item?.id == 0
+                      ? Images.ic_heart_cover
+                      : Images.bAAlbum
+                  }
+                />
+              ) : (
+                <View cls="asc">
+                  <View cls="flx-row">
+                    <Image
+                      cls="squareFn-98"
+                      source={
+                        !isTextEmpty(
+                          songs[0] && typeof songs[0]?.getThumb == 'function'
+                            ? songs[0]?.getThumb()
+                            : '',
+                        ) && hasSong
+                          ? {
+                              uri: songs[0]?.getThumb(),
+                            }
+                          : Images.bAAlbum
+                      }
+                    />
+                    <View cls="heightFn-98 widthFn-2 bg-#000" />
+                    <Image
+                      cls="squareFn-98"
+                      source={
+                        !isTextEmpty(
+                          songs[1] && typeof songs[1]?.getThumb == 'function'
+                            ? songs[1]?.getThumb()
+                            : '',
+                        ) && hasSong
+                          ? {
+                              uri: songs[1]?.getThumb(),
+                            }
+                          : Images.bAAlbum
+                      }
+                    />
+                  </View>
+                  <View cls="heightFn-2 widthFn-197 bg-#000" />
+                  <View cls="flx-row">
+                    <Image
+                      cls="squareFn-98"
+                      source={
+                        !isTextEmpty(
+                          songs[2] && typeof songs[2]?.getThumb == 'function'
+                            ? songs[2]?.getThumb()
+                            : '',
+                        ) && hasSong
+                          ? {
+                              uri: songs[2]?.getThumb(),
+                            }
+                          : Images.bAAlbum
+                      }
+                    />
+                    <View cls="heightFn-98 widthFn-2 bg-#000" />
+                    <Image
+                      cls="squareFn-98"
+                      source={
+                        !isTextEmpty(
+                          songs[3] && typeof songs[3]?.getThumb == 'function'
+                            ? songs[3]?.getThumb()
+                            : '',
+                        ) && hasSong
+                          ? {
+                              uri: songs[3]?.getThumb(),
+                            }
+                          : Images.bAAlbum
+                      }
+                    />
+                  </View>
+                </View>
+              )}
             </View>
             <View cls="aic jcc pa3 pt2">
               <TextTicker
@@ -437,7 +507,7 @@ export default class AlbumDetail extends Component {
                 <Text cls="white fw8 f3 pb2 avertaFont">
                   {this.state.name != undefined && !isTextEmpty(this.state.name)
                     ? this.state.name
-                    : '...'}
+                    : item?.getName()}
                 </Text>
               </TextTicker>
 
@@ -463,7 +533,7 @@ export default class AlbumDetail extends Component {
                   <Text cls="white f8 lightFont pt2 pb4">
                     {hasSong
                       ? `${
-                          typeof item.getSubTitle == 'function'
+                          typeof item?.getDescription == 'function'
                             ? item.getDescription()
                             : '...'
                         }`
@@ -535,6 +605,19 @@ export default class AlbumDetail extends Component {
     console.log('load moreeee');
   };
 
+  renderItem = wrap(item => {
+    return (
+      <View cls="pa3 pt0">
+        <AlbumItem
+          playSong={this.playSong}
+          item={item.item}
+          openModal={this._showModal}
+          model={this.viewModel}
+        />
+      </View>
+    );
+  });
+
   render() {
     let { item } = this.props.route?.params;
     let {
@@ -551,13 +634,13 @@ export default class AlbumDetail extends Component {
 
     const following =
       indexOf(
-        typeof item.getType == 'function' && item?.getType() == 'playlist'
+        typeof item?.getType == 'function' && item?.getType() == 'playlist'
           ? [...this.viewModel?.likedPlaylist]
           : [...this.viewModel?.likedAlbum],
-        Number(item.id),
+        Number(item?.id),
       ) >= 0;
 
-    if (item.id == 0) {
+    if (item?.id == 0) {
       ids = [...rootStore?.likedTracks];
     }
 
@@ -574,7 +657,7 @@ export default class AlbumDetail extends Component {
     const hasSong = songs.length > 0;
 
     const settingItems =
-      item.id == 0
+      item?.id == 0
         ? []
         : [
             {
@@ -677,16 +760,21 @@ export default class AlbumDetail extends Component {
         end={{ x: 1, y: 1 }}>
         <View cls="fullView">
           <ImageBackground cls="fullView" source={Images.default_wave_bg}>
-            <AlbumListItem
-              _renderListHeaderContent={() =>
-                this.renderHeaderSection(hasSong, item, name, following)
-              }
-              viewModel={this.viewModel}
-              hasSong={hasSong}
-              playSong={this.playSong}
-              songs={songs}
-              _showModal={this._showModal}
-              _handleLoadMore={this.handleLoadMore}
+            <FlatList
+              ListHeaderComponent={this.renderHeaderSection(
+                hasSong,
+                item,
+                name,
+                following,
+                songs,
+              )}
+              data={songs}
+              showsVerticalScrollIndicator={false}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => index.toString()}
+              onEndReached={this.handleLoadMore}
+              onEndReachedThreshold={0.5}
+              initialNumToRender={10}
             />
             <BottomModal
               forceInsetTop={'never'}
