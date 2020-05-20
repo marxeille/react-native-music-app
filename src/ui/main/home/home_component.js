@@ -105,12 +105,15 @@ export default class HomeComponent extends Component {
               ])}
               scrollEventThrottle={16}
               showsVerticalScrollIndicator={false}>
-              <HomeListComponent
-                cate="1"
-                type={'small'}
-                data={[...rootStore?.homeStore?.popularSongs]}
-                title="Mới phát gần đây"
-              />
+              {[...rootStore?.homeStore?.recentlySongs].length > 0 ? (
+                <HomeListComponent
+                  cate="1"
+                  type={'small'}
+                  data={[...rootStore?.homeStore?.recentlySongs]}
+                  title="Mới phát gần đây"
+                />
+              ) : null}
+
               <View cls="pt3">
                 <HomeListComponent
                   cate="1"

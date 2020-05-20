@@ -15,6 +15,7 @@ export const HomeStore = types
     state: Result,
     recently: types.array(types.reference(Album)),
     popularSongs: types.array(types.reference(Song), []),
+    recentlySongs: types.array(types.reference(Song), []),
     popular: types.array(types.reference(PlayList), []),
     suggesst: types.array(types.reference(PlayList)),
   })
@@ -45,6 +46,15 @@ export const HomeStore = types
         }
       },
 
+      addRecentSong(song) {
+        const songExist = [...self.recentlySongs].find(
+          rencentlySong => rencentlySong.id == song.id,
+        );
+        if (!songExist) {
+          self.recentlySongs.push(song.id);
+        }
+      },
+
       addPopular(playlist) {
         const playlistExist = [...self.popular].find(
           popular => popular.id == playlist.id,
@@ -65,6 +75,7 @@ export const HomeStore = types
       //#region Handle Fect Popular Success
       fetchHomeData: flow(function* fetchHomeData() {
         const homeTrackIds: Array = yield apiService.commonApiService.getHomeTrackIds();
+        const rencentTrackIds: Array = yield apiService.commonApiService.getRencentTrackIds();
         const homePlaylist: Array = yield apiService.commonApiService.getHomePlaylists();
         // If there is a song in local storage, set it to current song
         const songPlaying = yield AsyncStorage.getItem(AsyncStorageKey.SONG);
@@ -149,6 +160,52 @@ export const HomeStore = types
           homeTrackIds?.data
             ? Toast.showWithGravity(
                 homeTrackIds?.data.msg,
+                Toast.LONG,
+                Toast.BOTTOM,
+              )
+            : null;
+        }
+
+        // Get rencently tracks
+
+        if (rencentTrackIds?.status == 200) {
+          const rencentIds = rencentTrackIds?.data.map(rt => rt.id).join(',');
+          const recentTracks: Array = yield apiService.commonApiService.getTracks(
+            rencentIds,
+          );
+
+          if (recentTracks?.status == 200) {
+            recentTracks?.data.forEach(async data => {
+              let fullTrack = await getTrackFullDetail(data.id);
+
+              fullTrack = { ...data, ...fullTrack };
+
+              fullTrack = {
+                ...fullTrack,
+                articleId:
+                  fullTrack.article !== null ? fullTrack.article.id : 0,
+                artistId: fullTrack.credit_info[0]?.artist.id ?? 0,
+                artists: fullTrack.credit_info.map(a => a.artist.name),
+              };
+
+              if (fullTrack?.track_url) {
+                getParent(self).createSongRef(fullTrack);
+                self.addRecentSong(fullTrack);
+              }
+            });
+          } else {
+            recentTracks?.data
+              ? Toast.showWithGravity(
+                  recentTracks?.data?.msg,
+                  Toast.LONG,
+                  Toast.BOTTOM,
+                )
+              : null;
+          }
+        } else {
+          rencentTrackIds?.data
+            ? Toast.showWithGravity(
+                rencentTrackIds?.data.msg,
                 Toast.LONG,
                 Toast.BOTTOM,
               )

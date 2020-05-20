@@ -216,7 +216,7 @@ export const SearchModel = types
               );
               if (artistsData.status == 200) {
                 artistsData.data.map(ar => {
-                  let artist = createArtistFromApiJson(ar);
+                  const artist = createArtistFromApiJson(ar);
                   self.setResultArtist(artist);
                 });
               } else {
@@ -234,9 +234,8 @@ export const SearchModel = types
               );
               if (playlistData.status == 200) {
                 playlistData.data.map(pl => {
-                  let playlist = createPlaylistFromApiJson(pl);
+                  const playlist = createPlaylistFromApiJson(pl);
                   self.setResultPlaylist(playlist);
-                  console.log('playlist', playlist);
                 });
               } else {
                 Toast.showWithGravity(
