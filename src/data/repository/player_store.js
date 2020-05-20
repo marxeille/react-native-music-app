@@ -172,6 +172,7 @@ export const PlayerStore = types
               self.setPosition(0);
             }
           }
+          self.addToLocalHistory(track);
         }
       },
 
