@@ -848,7 +848,7 @@ export default class AlbumDetail extends Component {
               containerCls=""
               ref={this.modalAddSong}>
               <AddSongPlaylist
-                isFavorite={item.id == 0}
+                isFavorite={item?.id == 0}
                 parentModel={this.viewModel}
                 toggleAddSong={this._hideModalAddSong}
                 handleRightAction={this.editPlaylist}
