@@ -415,7 +415,8 @@ export default class AlbumDetail extends Component {
                   </View>
                 </TouchableWithoutFeedback>
               </View>
-              {item?.getType() != 'playlist' ? (
+              {typeof item?.getType == 'function' &&
+              item?.getType() != 'playlist' ? (
                 <Image
                   cls="squareFn-197 asc"
                   source={
@@ -505,9 +506,12 @@ export default class AlbumDetail extends Component {
                 bounceSpeed={400}
                 marqueeDelay={800}>
                 <Text cls="white fw8 f3 pb2 avertaFont">
-                  {this.state.name != undefined && !isTextEmpty(this.state.name)
+                  {typeof item?.getName == 'function'
+                    ? item?.getName()
+                    : this.state.name != undefined &&
+                      !isTextEmpty(this.state.name)
                     ? this.state.name
-                    : item?.getName()}
+                    : 'Chưa xác định'}
                 </Text>
               </TextTicker>
 
