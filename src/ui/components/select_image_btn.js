@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableHighlight } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Toast from 'react-native-simple-toast';
 import { isTextEmpty } from '../../utils';
@@ -69,9 +69,19 @@ const SelectImageBtn = ({
 
   return (
     <View>
-      <TouchableOpacity onPress={_handleImagePickerOpen}>
+      <TouchableHighlight
+        activeOpacity={1}
+        underlayColor="#7c5994"
+        onPress={_handleImagePickerOpen}
+        style={{
+          borderWidth: 1,
+          borderRadius: 32,
+          marginLeft: 16,
+          marginRight: 16,
+          marginTop: 16,
+        }}>
         {children}
-      </TouchableOpacity>
+      </TouchableHighlight>
     </View>
   );
 };
