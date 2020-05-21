@@ -26,6 +26,7 @@ export default class PlayerTabView extends React.Component {
 
   _handleIndexChange = index => {
     this.setState({ index });
+    this.props.changeTab(index);
   };
 
   _renderTabBar = wrap(props => {
