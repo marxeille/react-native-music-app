@@ -38,10 +38,16 @@ export default class ItemHomeSmall extends Component {
             }
           />
           <View cls="pt2">
-            <Text cls="white pt2 fw6 lightFont">
-              {subLongStr(item?.getName() ?? 'Default', 14)}
+            <Text
+              cls="white pt2 fw6 lightFont"
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {subLongStr(item?.getName() ?? 'Default', 30)}
             </Text>
-            <Text cls="primaryPurple pt1 lightFont f10">
+            <Text
+              cls="primaryPurple pt1 lightFont f10"
+              numberOfLines={1}
+              ellipsizeMode="tail">
               {item?.getSubTitle() ?? 'Default'}
             </Text>
           </View>

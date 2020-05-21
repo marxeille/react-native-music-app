@@ -29,10 +29,16 @@ export default class ItemHome extends Component {
           }
         />
         <View cls="pt2">
-          <Text cls="white pt2 fw6 lightFont">
-            {subLongStr(rootStore.playlist.get(this.props.id).getName(), 17)}
+          <Text
+            cls="white pt2 fw6 lightFont"
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {subLongStr(rootStore.playlist.get(this.props.id).getName(), 30)}
           </Text>
-          <Text cls="primaryPurple pt1 lightFont f11">
+          <Text
+            cls="primaryPurple pt1 lightFont f11"
+            numberOfLines={1}
+            ellipsizeMode="tail">
             {rootStore.playlist.get(this.props.id).getSubTitle() ??
               'Billie Erlish'}
           </Text>

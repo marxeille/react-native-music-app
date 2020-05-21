@@ -60,7 +60,7 @@ export const createPlaylistFromApiJson = data => {
       ? data.owner
       : data.artists
       ? data.artists.map(a => a.name).join(', ')
-      : 'Chưa xác định',
+      : 'Playlist',
     owner_id: data.owner_id ?? 0,
     private: data.private ?? false,
     tracks: data.tracks ?? [],

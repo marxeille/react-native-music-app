@@ -38,13 +38,17 @@ export default class PlaylistItem extends Component {
 
           <View cls="pt2" style={{ width: width }}>
             <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
               cls={`${isSmallDevice() ? 'f12' : 'f10'} white fw7 lightFont`}>
               {item !== undefined
-                ? subLongStr(item.getName(), 15)
+                ? subLongStr(item.getName(), 30)
                 : 'Tạo playlist'}
             </Text>
             {item !== undefined ? (
               <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
                 cls={`${
                   isSmallDevice() ? 'f13' : 'f12'
                 } primaryPurple f12 pt1 lightFont`}>

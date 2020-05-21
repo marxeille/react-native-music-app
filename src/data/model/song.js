@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree';
 import { BASE_API_URL } from '../../constant/constant';
 import { subLongStr, isTextEmpty } from '../../utils';
+import { uniq } from 'lodash';
 
 export const Song = types
   .model('Song', {
@@ -81,7 +82,7 @@ export const createSongFromJsonApi = data => {
     id: data?.id?.toString(),
     title: data.title,
     artist: data.artists
-      ? data.artists.join(', ')
+      ? uniq(data.artists).join(', ')
       : data.artist
       ? data.artist
       : '',

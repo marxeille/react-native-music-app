@@ -41,7 +41,7 @@ export default class ArtistItem extends Component {
                 ellipsizeMode="tail"
                 numberOfLines={1}
                 cls={`${isSmallDevice() ? 'f8' : 'f10'} white fw7 lightFont`}>
-                {subLongStr(item?.getName(), 20) ?? ''}
+                {subLongStr(item?.getName(), 30) ?? ''}
               </Text>
             </View>
           </View>

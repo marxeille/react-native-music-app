@@ -39,14 +39,18 @@ export default class AlbumItem extends Component {
           />
           <View style={{ width: width }}>
             <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
               cls={`${isSmallDevice() ? 'f12' : 'f10'} white fw7 lightFont`}>
-              {subLongStr(item.getName(), 8)}
+              {subLongStr(item.getName(), 30)}
             </Text>
             <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
               cls={`${
                 isSmallDevice() ? 'f13' : 'f12'
               } primaryPurple f12 pt1 lightFont`}>
-              của {subLongStr(item.getSubTitle(), 6)}
+              {subLongStr(item.getSubTitle(), 30)}
             </Text>
           </View>
         </View>

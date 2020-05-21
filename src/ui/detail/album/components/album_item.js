@@ -111,6 +111,9 @@ const AlbumItem = observer(
           <TouchableOpacity onPress={reaction}>
             <View cls="widthFn-35 heightFn-50 aic jcc">
               <Image
+                cls={`${
+                  like ? 'widthFn-24 heightFn-24' : 'widthFn-26 heightFn-26'
+                }`}
                 style={{ opacity: like ? 1 : 0.2 }}
                 source={like ? Images.ic_like_on : Images.ic_like_uncheck}
               />
