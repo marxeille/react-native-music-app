@@ -275,8 +275,8 @@ const ShareModal = wrap(({ _hideModal, item }) => {
                       } white fw7 pt2 asc avertaFont`}>
                       {typeof item?.getName == 'function' && item?.getName()
                         ? item?.getName()
-                        : item?.title() && typeof item?.title == 'function'
-                        ? item?.title()
+                        : item?.getName() && typeof item?.getName == 'function'
+                        ? item?.getName()
                         : rootStore.playerStore?.currentSong?.getName()}
                     </Text>
                   </TextTicker>
@@ -288,8 +288,9 @@ const ShareModal = wrap(({ _hideModal, item }) => {
                     {typeof item?.getSubTitle == 'function' &&
                     item?.getSubTitle()
                       ? item?.getSubTitle()
-                      : item?.subTitle() && typeof item?.subTitle == 'function'
-                      ? item?.subTitle()
+                      : item?.getSubTitle() &&
+                        typeof item?.getSubTitle == 'function'
+                      ? item?.getSubTitle()
                       : rootStore.playerStore?.currentSong?.getSubTitle()}
                   </Text>
                 </View>

@@ -178,7 +178,7 @@ export default class SearchComponent extends Component {
                 <Loading />
               </View>
             ) : keyword || showHistory ? (
-              <View cls="pa3 pt0 fullView">
+              <View cls="pa3 pt0 fullView" style={{ paddingBottom: 60 }}>
                 <FlatList
                   data={data}
                   showsVerticalScrollIndicator={false}

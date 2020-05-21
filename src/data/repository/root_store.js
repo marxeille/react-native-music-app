@@ -1,7 +1,6 @@
 import { UserStore } from './user_store';
 import { PlayerStore } from './player_store';
 import { HomeStore } from './home_store';
-
 import { types, flow } from 'mobx-state-tree';
 import { PlayList, createPlaylistFromApiJson } from '../model/playlist';
 import { Artist, createArtistFromApiJson } from '../model/artist';

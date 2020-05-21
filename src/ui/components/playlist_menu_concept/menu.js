@@ -145,7 +145,9 @@ const PlaylistMenuConcept = observer(
                     bounceSpeed={400}
                     marqueeDelay={800}>
                     <Text cls="avertaFont white f4">
-                      {item?.getType() == 'artist' ? item?.getName() : title}
+                      {item?.getType() == 'artist'
+                        ? item?.getName()
+                        : item?.getName()}
                     </Text>
                   </TextTicker>
                 )}

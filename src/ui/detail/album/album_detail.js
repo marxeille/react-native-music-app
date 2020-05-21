@@ -291,7 +291,7 @@ export default class AlbumDetail extends Component {
     }
     await likeHelper(
       item?.getType(),
-      item.id,
+      item?.id,
       this.onReactionSuccess,
       this.onReactionError,
     );
@@ -305,7 +305,7 @@ export default class AlbumDetail extends Component {
     }
     await unlikeHelper(
       item?.getType(),
-      item.id,
+      item?.id,
       this.onReactionSuccess,
       this.onReactionError,
     );
@@ -415,7 +415,8 @@ export default class AlbumDetail extends Component {
                   </View>
                 </TouchableWithoutFeedback>
               </View>
-              {item?.getType() != 'playlist' ? (
+              {typeof item?.getType == 'function' &&
+              item?.getType() != 'playlist' ? (
                 <Image
                   cls="squareFn-197 asc"
                   source={
@@ -505,9 +506,12 @@ export default class AlbumDetail extends Component {
                 bounceSpeed={400}
                 marqueeDelay={800}>
                 <Text cls="white fw8 f3 pb2 avertaFont">
-                  {this.state.name != undefined && !isTextEmpty(this.state.name)
+                  {typeof item?.getName == 'function'
+                    ? item?.getName()
+                    : this.state.name != undefined &&
+                      !isTextEmpty(this.state.name)
                     ? this.state.name
-                    : '...'}
+                    : 'Chưa xác định'}
                 </Text>
               </TextTicker>
 
@@ -533,7 +537,7 @@ export default class AlbumDetail extends Component {
                   <Text cls="white f8 lightFont pt2 pb4">
                     {hasSong
                       ? `${
-                          typeof item.getSubTitle == 'function'
+                          typeof item?.getDescription == 'function'
                             ? item.getDescription()
                             : '...'
                         }`
@@ -634,13 +638,13 @@ export default class AlbumDetail extends Component {
 
     const following =
       indexOf(
-        typeof item.getType == 'function' && item?.getType() == 'playlist'
+        typeof item?.getType == 'function' && item?.getType() == 'playlist'
           ? [...this.viewModel?.likedPlaylist]
           : [...this.viewModel?.likedAlbum],
-        Number(item.id),
+        Number(item?.id),
       ) >= 0;
 
-    if (item.id == 0) {
+    if (item?.id == 0) {
       ids = [...rootStore?.likedTracks];
     }
 
@@ -657,7 +661,7 @@ export default class AlbumDetail extends Component {
     const hasSong = songs.length > 0;
 
     const settingItems =
-      item.id == 0
+      item?.id == 0
         ? []
         : [
             {
@@ -848,7 +852,7 @@ export default class AlbumDetail extends Component {
               containerCls=""
               ref={this.modalAddSong}>
               <AddSongPlaylist
-                isFavorite={item.id == 0}
+                isFavorite={item?.id == 0}
                 parentModel={this.viewModel}
                 toggleAddSong={this._hideModalAddSong}
                 handleRightAction={this.editPlaylist}
