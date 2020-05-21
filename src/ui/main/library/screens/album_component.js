@@ -37,7 +37,7 @@ export default class AlbumComponent extends Component {
 
     return (
       <>
-        <View cls="pt3">
+        <View cls="pt3 pb2">
           <SearchComponent _showModal={_showModal} _hideModal={_hideModal} />
         </View>
         <View cls="pt3" style={{ marginBottom: 95 }}>

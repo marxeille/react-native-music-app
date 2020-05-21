@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Image, Dimensions, View, TouchableOpacity, Text } from 'react-native';
 // import {
 //   createBottomTabNavigator,
@@ -195,6 +195,10 @@ function getBottomTabNavigator() {
 }
 
 export default function mainContainer() {
+  const [index, setIndex] = useState(0);
+  changeTab = index => {
+    setIndex(index);
+  };
   return (
     <Stack.Navigator
       headerMode="none"
@@ -216,10 +220,12 @@ export default function mainContainer() {
       <Stack.Screen name="change_pass" component={ChangePassComponent} />
       <Stack.Screen
         name="player"
-        component={PlayerTabView}
+        children={props => (
+          <PlayerTabView {...props} changeTab={this.changeTab} />
+        )}
         options={{
           headerTransparent: true,
-          gestureEnabled: false,
+          gestureEnabled: index == 0,
           animationEnabled: true,
           // animationTypeForReplace: 'pop',
           transitionConfig: () => ({

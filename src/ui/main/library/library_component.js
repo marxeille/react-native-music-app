@@ -38,7 +38,7 @@ export default class LibraryComponent extends Component {
             <ImageBackground cls="fullView" source={Images.default_wave_bg}>
               <LinearGradient
                 style={{ position: 'absolute' }}
-                cls="fullView heightFn-200"
+                cls="fullView heightFn-220"
                 colors={['#291047', '#1a0632', '#110926', '#110926']}
                 start={{ x: 1, y: 1 }}
                 end={{ x: 0, y: 0 }}
