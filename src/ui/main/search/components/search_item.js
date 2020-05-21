@@ -35,7 +35,7 @@ export default class SearchItem extends Component {
     const { item, model } = this.props;
     if (item.getType() == 'song') {
       rootStore.createSongRef(item);
-      model.addRecentlySong(item);
+      model.addRecentlySearch(item);
       rootStore?.playerStore?.setPlayFrom('Search');
       if (rootStore.playerStore?.currentSong?.id == item.id) {
         rootStore.playerStore?.prepareSong(null);
@@ -44,10 +44,10 @@ export default class SearchItem extends Component {
       rootStore.playerStore?.prepareSong(item.id);
       return;
     } else if (item.getType() == 'artist') {
-      model.addRecentlyArtist(item);
+      model.addRecentlySearch(item);
       return navigate('artist_detail', { artist: item });
     } else if (item.getType() == 'playlist') {
-      model.addRecentlyPlaylist(item);
+      model.addRecentlySearch(item);
       return navigate('album_detail', { item: item });
     } else {
       model.removeRecentlySong(item?.id);
@@ -82,7 +82,10 @@ export default class SearchItem extends Component {
               }
             />
             <View>
-              <Text cls="white fw7 f6 pl2">
+              <Text
+                cls="white fw7 f6 pl2"
+                numberOfLines={1}
+                ellipsizeMode="tail">
                 {subLongStr(item?.getName(), isSmallDevice() ? 12 : 18)}
               </Text>
               <Text cls="primaryPurple f7 pl2 pt1">

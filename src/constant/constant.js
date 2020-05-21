@@ -7,6 +7,7 @@ export const AsyncStorageKey = {
   SONG: 'song',
   HISTORY: 'history',
   RECENTLYSEARCH: {
+    ALL: '@recentlyall',
     SONGS: '@recentlysongs',
     ARTISTS: '@recentlyartists',
     ALBUMS: '@recentlyalbums',

@@ -63,9 +63,21 @@ export default class AlbumDetail extends Component {
 
   async componentDidMount() {
     let { item } = this.props.route?.params;
-    if (typeof item == 'number') {
-      await this.viewModel.getItemDetail(item);
-      item = rootStore?.albums.get(item);
+
+    if (typeof item == 'number' || (item && item?.tracks.length == 0)) {
+      const itemId = item.id;
+      await this.viewModel.getItemDetail(
+        typeof item == 'number' ? item : item.id,
+      );
+
+      item = rootStore?.albums.get(
+        typeof item == 'number' ? item : Number(itemId),
+      );
+
+      if (!item)
+        item = rootStore?.playlist.get(
+          typeof item == 'number' ? item : Number(itemId),
+        );
       this.setState({ article: item });
     }
 
@@ -79,10 +91,10 @@ export default class AlbumDetail extends Component {
   async UNSAFE_componentWillReceiveProps(nextProps) {
     let { item } = this.props.route?.params;
     const nextId = nextProps.route?.params.item;
-
     if ((typeof item == 'number' && item !== nextId) || item?.id !== nextId) {
       await this.viewModel.getItemDetail(nextId);
       item = rootStore?.albums.get(nextId);
+
       this.setState({ article: item });
     }
     this.getTracks(item);
@@ -194,20 +206,23 @@ export default class AlbumDetail extends Component {
   };
 
   getTracks = item => {
-    let ids = orderBy([...item.tracks.values()], ['position', 'asc']).map(
-      track => track.track_id,
-    );
+    console.log('ite', item);
+    if (item) {
+      let ids = orderBy([...item?.tracks.values()], ['position', 'asc']).map(
+        track => track.track_id,
+      );
 
-    this.cancelablePromise = makeCancelable(
-      this.viewModel.getStats(item?.getType(), item.id),
-      this.viewModel.getLikedPlaylist(item.id),
-      this.viewModel.getAlbumTracks(
-        //if item.id = 0, it's liked tracks playlist, so just get the list right in the rootStore. Otherwise, it's normal playlist
-        item.id == 0 ? [...rootStore?.likedTracks] : ids,
-      ),
-    );
+      this.cancelablePromise = makeCancelable(
+        this.viewModel.getStats(item?.getType(), item.id),
+        this.viewModel.getLikedPlaylist(item.id),
+        this.viewModel.getAlbumTracks(
+          //if item.id = 0, it's liked tracks playlist, so just get the list right in the rootStore. Otherwise, it's normal playlist
+          item.id == 0 ? [...rootStore?.likedTracks] : ids,
+        ),
+      );
 
-    this.setState({ ids: ids });
+      this.setState({ ids: ids });
+    }
   };
 
   _showModal = song => {
@@ -261,9 +276,11 @@ export default class AlbumDetail extends Component {
     if (type == 'like') {
       if (idExist < 0) {
         if (item?.getType() == 'playlist') {
+          rootStore?.updatePlayList({ ...item, tracks: [] });
           this.viewModel?.addLikedPlaylist(data);
           rootStore?.libraryStore?.updatePlayList(data);
         } else {
+          rootStore?.updateAlbum(item);
           this.viewModel?.addLikedAlbum(data);
           rootStore?.libraryStore?.updateAlbum(data);
         }
@@ -671,7 +688,7 @@ export default class AlbumDetail extends Component {
               },
               icon: Images.ic_pic,
               imgStyle: 'widthFn-20 heightFn-18',
-              hidden: rootStore.userStore?.id !== item.owner_id,
+              hidden: rootStore.userStore?.id !== item?.owner_id,
               picker: true,
             },
             {
@@ -680,7 +697,7 @@ export default class AlbumDetail extends Component {
                 this.showEditTitle(true);
               },
               icon: Images.ic_pen,
-              hidden: rootStore.userStore?.id !== item.owner_id,
+              hidden: rootStore.userStore?.id !== item?.owner_id,
             },
             {
               title: 'Sửa playlist',
@@ -688,14 +705,14 @@ export default class AlbumDetail extends Component {
                 this.setState({ showMenuEdit: true });
               },
               icon: Images.ic_list,
-              hidden: rootStore.userStore?.id !== item.owner_id,
+              hidden: rootStore.userStore?.id !== item?.owner_id,
             },
             {
               title: `${this.state.private ? 'Public' : 'Private'} playlist`,
               action: () => {
                 this.editPlaylist();
               },
-              hidden: rootStore.userStore?.id !== item.owner_id,
+              hidden: rootStore.userStore?.id !== item?.owner_id,
               icon: Images.ic_lock,
               imgStyle: 'widthFn-17 heightFn-20',
             },
@@ -717,7 +734,7 @@ export default class AlbumDetail extends Component {
               action: () => {
                 this.setState({ showMenuAddToPlaylist: true });
               },
-              hidden: rootStore.userStore?.id == item.owner_id,
+              hidden: rootStore.userStore?.id == item?.owner_id,
               icon: Images.ic_add_pl,
               imgStyle: 'widthFn-20 heightFn-24',
             },
@@ -726,7 +743,7 @@ export default class AlbumDetail extends Component {
               action: () => {
                 this.addToQueue(songs);
               },
-              hidden: rootStore.userStore?.id == item.owner_id,
+              hidden: rootStore.userStore?.id == item?.owner_id,
               icon: Images.ic_add_queue,
               imgStyle: 'widthFn-20 heightFn-20',
             },
@@ -742,7 +759,7 @@ export default class AlbumDetail extends Component {
             {
               title: 'Xem người tạo ra playlist',
               action: () => {},
-              hidden: rootStore.userStore?.id == item.owner_id,
+              hidden: rootStore.userStore?.id == item?.owner_id,
               icon: Images.ic_person,
               imgStyle: 'widthFn-20 heightFn-24',
             },

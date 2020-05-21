@@ -77,8 +77,14 @@ export const AlbumModel = types
       },
       getItemDetail: flow(function* getItemDetail(id) {
         const article = yield apiService.commonApiService.getArticleInfo(id);
+
         if (article.status == 200) {
           rootStore?.updateAlbum(article.data);
+        } else {
+          const playlist = yield apiService.trackApiService.getPlaylistInfo(id);
+          if (playlist.status == 200) {
+            rootStore?.updatePlayList(playlist.data);
+          }
         }
       }),
       getLikedPlaylist: flow(function* getLikedPlaylist(id) {

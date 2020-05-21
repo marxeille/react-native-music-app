@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Keyboard,
 } from 'react-native';
-
 import { wrap } from '../../../themes';
 import Images from '../../../assets/icons/icons';
 import LinearGradientText from '../library/components/LinearGradientText';
@@ -22,6 +21,8 @@ import { observer } from 'mobx-react';
 import BottomModal from '../../../ui/components/modal/BottomModal';
 import SongMenu from '../../../ui/player/components/song_menu';
 import ShareModal from '../../components/share';
+import { find } from 'lodash';
+
 @observer
 @wrap
 export default class SearchComponent extends Component {
@@ -152,11 +153,11 @@ export default class SearchComponent extends Component {
 
   render() {
     const { showHistory, keyword, song } = this.state;
-    const data =
+    let data =
       keyword == '' || keyword == null || keyword == undefined
         ? [
             ...this.viewmodel.recentlySong.values(),
-            ...this.viewmodel.resultPlaylists?.values(),
+            ...this.viewmodel.recentlyPlaylist?.values(),
             ...this.viewmodel.recentlyArtist.values(),
           ]
         : [
@@ -164,7 +165,14 @@ export default class SearchComponent extends Component {
             ...this.viewmodel.resultPlaylists?.values(),
             ...this.viewmodel.resultArtists.values(),
           ];
-
+    if (keyword == '' || keyword == null || keyword == undefined) {
+      const sortedData = [];
+      [...this.viewmodel.recentlyOrder].map(order => {
+        const searchItem = find(data, d => d.id == order);
+        sortedData.push(searchItem);
+      });
+      data = sortedData;
+    }
     return (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}
