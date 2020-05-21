@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useCallback } from 'react';
 import { Image, Dimensions, View, TouchableOpacity, Text } from 'react-native';
 // import {
 //   createBottomTabNavigator,
@@ -196,9 +196,9 @@ function getBottomTabNavigator() {
 
 export default function mainContainer() {
   const [index, setIndex] = useState(0);
-  changeTab = index => {
+  changeTab = useCallback(index => {
     setIndex(index);
-  };
+  });
   return (
     <Stack.Navigator
       headerMode="none"
@@ -220,9 +220,7 @@ export default function mainContainer() {
       <Stack.Screen name="change_pass" component={ChangePassComponent} />
       <Stack.Screen
         name="player"
-        children={props => (
-          <PlayerTabView {...props} changeTab={this.changeTab} />
-        )}
+        children={props => <PlayerTabView {...props} changeTab={changeTab} />}
         options={{
           headerTransparent: true,
           gestureEnabled: index == 0,
