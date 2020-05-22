@@ -68,48 +68,50 @@ const AlbumItem = observer(
       <View
         cls="flx-row aic pl2 pt2 pb2 br2 jcsb"
         style={{ backgroundColor: '#321a54' }}>
-        <TouchableOpacity onPress={() => props.playSong(props.item)}>
-          <View cls="flx-row">
-            <Image
-              cls="squareFn-50"
-              source={
-                !isTextEmpty(
-                  props.item && typeof props.item?.getThumb == 'function'
-                    ? props.item?.getThumb()
-                    : '',
-                )
-                  ? {
-                      uri: props.item?.getThumb(),
-                    }
-                  : Images.bAAlbum
-              }
-            />
+        <View style={{ flex: 2 }}>
+          <TouchableOpacity onPress={() => props.playSong(props.item)}>
+            <View cls="flx-row">
+              <Image
+                cls="squareFn-50"
+                source={
+                  !isTextEmpty(
+                    props.item && typeof props.item?.getThumb == 'function'
+                      ? props.item?.getThumb()
+                      : '',
+                  )
+                    ? {
+                        uri: props.item?.getThumb(),
+                      }
+                    : Images.bAAlbum
+                }
+              />
 
-            <View cls="flx-wrap pl3 pr1 aic jcc">
-              <View>
-                <Text
-                  cls="white fw7 f6 lightFont"
-                  numberOfLines={1}
-                  ellipsizeMode="tail">
-                  {props.item && typeof props.item?.getName == 'function'
-                    ? subLongStr(props.item?.getName(), 18)
-                    : ''}
-                </Text>
-                <Text
-                  cls="primaryPurple lightFont"
-                  numberOfLines={1}
-                  ellipsizeMode="tail">
-                  {props.item && typeof props.item?.getSubTitle == 'function'
-                    ? props.item.getSubTitle()
-                    : ''}
-                </Text>
+              <View cls="flx-wrap flx-i pl3 pr1 aic jcc">
+                <View>
+                  <Text
+                    cls="white fw7 f6 lightFont"
+                    numberOfLines={1}
+                    ellipsizeMode="tail">
+                    {props.item && typeof props.item?.getName == 'function'
+                      ? subLongStr(props.item?.getName(), 18)
+                      : ''}
+                  </Text>
+                  <Text
+                    cls="primaryPurple lightFont"
+                    numberOfLines={1}
+                    ellipsizeMode="tail">
+                    {props.item && typeof props.item?.getSubTitle == 'function'
+                      ? props.item.getSubTitle()
+                      : ''}
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
-        </TouchableOpacity>
-        <View cls="flx-row">
+          </TouchableOpacity>
+        </View>
+        <View cls="flx-row asfe flx-i">
           <TouchableOpacity onPress={reaction}>
-            <View cls="widthFn-35 heightFn-50 aic jcc">
+            <View cls="widthFn-30 heightFn-50 asfs jcc">
               <Image
                 cls={`${
                   like ? 'widthFn-24 heightFn-24' : 'widthFn-26 heightFn-26'

@@ -75,65 +75,73 @@ BASE_URL.addAsyncResponseTransform(async response => {
   if (status) {
     if (status && (status < 200 || status >= 300)) {
       if (status == 401) {
-        i++;
-        //If token expired, call to API to get a new token and refresh token
-        const user = await AsyncStorage.getItem(AsyncStorageKey.USERINFO);
-        const refreshToken = JSON.parse(user).refreshToken;
-        const accessToken = JSON.parse(user).accessToken;
-        const responseJson = await privateRequestWithToken(
-          BASE_URL.post,
-          '/api/token/refresh',
-          {},
-          refreshToken,
-        );
-        let rootStore = require('../context/root_context');
-        if (responseJson?.status == 200) {
-          rootStore?.rootStore?.userStore.storeUserInfo(
-            new UserInfo({
-              ...user,
-              access_token: responseJson.data.access_token,
-              refresh_token: responseJson.data.refresh_token,
-            }),
+        if (i <= 9) {
+          i++;
+          //If token expired, call to API to get a new token and refresh token
+          const user = await AsyncStorage.getItem(AsyncStorageKey.USERINFO);
+          const refreshToken = JSON.parse(user).refreshToken;
+          const accessToken = JSON.parse(user).accessToken;
+          const responseJson = await privateRequestWithToken(
+            BASE_URL.post,
+            '/api/token/refresh',
+            {},
+            refreshToken,
           );
+          let rootStore = require('../context/root_context');
+          if (responseJson?.status == 200) {
+            rootStore?.rootStore?.userStore.storeUserInfo(
+              new UserInfo({
+                ...user,
+                access_token: responseJson.data.access_token,
+                refresh_token: responseJson.data.refresh_token,
+              }),
+            );
 
-          const refreshResponse = await privateRequestWithToken(
-            BASE_URL[response.config.method],
-            response.config.url,
-            response.params,
-            responseJson.data.access_token,
-          );
-          //Re-assign expried response with new one
-          Object.assign(response, refreshResponse);
-        } else {
-          if (!response.config.url.includes('/api/token/refresh')) {
-            if (i < 9) {
-              const refreshResponse = await privateRequestWithToken(
-                BASE_URL[response.config.method],
-                response.config.url,
-                response.params,
-                accessToken,
-              );
-              //Re-assign expried response with new one
-              Object.assign(response, refreshResponse);
-            } else {
-              // This else is used in case refresh token api goes wrong, but (i hope) it will never happen
-              // If token expired, and can not get new refresh token, redirect user to the login screen
-              if (!response.config.url.includes('/api/token/refresh')) {
-                // DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native
-                // Link to this article: https://stackoverflow.com/questions/29807664/cyclic-dependency-returns-empty-object-in-react-native
-                // IT IS HAPPEN
-                const rootStore = require('../context/root_context');
-                AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(
-                  value => {
-                    rootStore.rootStore.userStore.removeSuccess(value);
-                  },
+            const refreshResponse = await privateRequestWithToken(
+              BASE_URL[response.config.method],
+              response.config.url,
+              response.params,
+              responseJson.data.access_token,
+            );
+            //Re-assign expried response with new one
+            Object.assign(response, refreshResponse);
+          } else {
+            if (!response.config.url.includes('/api/token/refresh')) {
+              if (i < 9) {
+                const refreshResponse = await privateRequestWithToken(
+                  BASE_URL[response.config.method],
+                  response.config.url,
+                  response.params,
+                  accessToken,
                 );
+                //Re-assign expried response with new one
+                Object.assign(response, refreshResponse);
+              } else {
+                // This else is used in case refresh token api goes wrong, but (i hope) it will never happen
+                // If token expired, and can not get new refresh token, redirect user to the login screen
+                if (!response.config.url.includes('/api/token/refresh')) {
+                  // DO NOT DELETE this require, it's for avoid Cyclic dependency returns empty object in React Native
+                  // Link to this article: https://stackoverflow.com/questions/29807664/cyclic-dependency-returns-empty-object-in-react-native
+                  // IT IS HAPPEN
+                  const rootStore = require('../context/root_context');
+                  AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(
+                    value => {
+                      rootStore.rootStore.userStore.removeSuccess(value);
+                    },
+                  );
+                }
               }
             }
           }
+        } else {
+          const rootStore = require('../context/root_context');
+          AsyncStorage.removeItem(AsyncStorageKey.USERINFO).then(value => {
+            rootStore.rootStore.userStore.removeSuccess(value);
+          });
         }
       }
     } else {
+      i = 0;
       return Promise.resolve({
         ...data,
       });

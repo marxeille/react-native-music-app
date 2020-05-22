@@ -165,11 +165,6 @@ export default class SearchComponent extends Component {
             ...this.viewmodel.resultPlaylists?.values(),
             ...this.viewmodel.resultArtists.values(),
           ];
-    console.log(
-      ' [...this.viewmodel.recentlyOrder]',
-      [...this.viewmodel.recentlyOrder],
-      data,
-    );
 
     if (keyword == '' || keyword == null || keyword == undefined) {
       const sortedData = [];

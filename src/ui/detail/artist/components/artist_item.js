@@ -92,7 +92,7 @@ const ArtistItem = observer(
         </View>
         <View cls="flx-row">
           <TouchableOpacity onPress={reaction}>
-            <View cls="widthFn-50 heightFn-50 aic jcc">
+            <View cls="widthFn-30 heightFn-50 asfs jcc">
               <Image
                 cls={`${
                   like ? 'widthFn-24 heightFn-24' : 'widthFn-26 heightFn-26'

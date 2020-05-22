@@ -76,12 +76,12 @@ class Settings extends Component {
   }
 
   handleLogout = async () => {
-    await logout();
     rootStore?.playerStore?.clearSong();
     rootStore?.homeStore?.clearHomeData();
     rootStore?.libraryStore?.clearLibraryData();
     rootStore?.historyStore.clearHistory();
     this.context.userStore.removeUserInfo();
+    logout();
   };
 
   renderHeader = wrap(() => {
