@@ -46,6 +46,7 @@ export const RootStore = types
           self.artist.get(artistJson.id).update(artistJson);
         } else {
           const artist = createArtistFromApiJson(artistJson);
+
           self.artist.put(artist);
         }
       },

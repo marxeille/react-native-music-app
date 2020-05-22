@@ -46,7 +46,9 @@ export const createArtistFromApiJson = data => {
   return Artist.create({
     id: data.id.toString(),
     name: data.name ?? '',
-    thumb: data.avatar_thumb_path ? BASE_API_URL + data.avatar_thumb_path : '',
+    thumb: data.avatar_thumb_path
+      ? BASE_API_URL + data.avatar_thumb_path
+      : data.thumb ?? '',
     short_biography: data.short_biography ?? '',
     bio: data.biography ?? '',
     type: 'artist',

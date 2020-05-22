@@ -129,6 +129,7 @@ export default class ArtistComponent extends Component {
       ['asc'],
     );
     const { _showModal, _hideModal } = this.props;
+
     return (
       <>
         <View cls="pt3 pb2">
@@ -166,7 +167,7 @@ export default class ArtistComponent extends Component {
               renderItem={this.renderItem}
               showsVerticalScrollIndicator={false}
               onScrollBeginDrag={Keyboard.dismiss}
-              numColumns={4}
+              numColumns={3}
               horizontal={false}
             />
           </View>
