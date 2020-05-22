@@ -18,6 +18,7 @@ import { isTextEmpty, isMeidumDevice } from '../../../utils';
 import { isSmallDevice } from '../../../utils';
 import { scrollDownPosition } from '../../../constant/constant';
 import Toast from 'react-native-simple-toast';
+import TextTicker from 'react-native-text-ticker';
 
 @observer
 @wrap
@@ -108,7 +109,7 @@ export default class SongMenu extends Component {
       <View
         cls={`aic jcc ${
           isSmallDevice() ? 'pt2' : isMeidumDevice() ? 'pt2' : 'pt4'
-        } pb2`}>
+        } pb3`}>
         <ImageBackground
           cls={`${
             isSmallDevice()
@@ -128,7 +129,7 @@ export default class SongMenu extends Component {
           />
         </ImageBackground>
         <View cls="aic jcc pb0 pa3">
-          <LinearGradientText
+          {/* <LinearGradientText
             text={song?.getName() ?? 'Chưa xác định'}
             end={{ x: 0.7, y: 0 }}
             styles={{
@@ -138,17 +139,45 @@ export default class SongMenu extends Component {
               fontSize: isSmallDevice() ? 20 : 25,
               fontFamily: 'Averta-ExtraBold',
             }}
-          />
-          <Text
-            style={{
-              fontSize: 16,
-              marginTop: 6,
-              fontWeight: '600',
-              color: '#fff',
-              fontFamily: 'lato-heavy',
-            }}>
-            {song?.getSubTitle() ?? 'Chưa rõ'}
-          </Text>
+          /> */}
+          <TextTicker
+            style={{ fontSize: 25 }}
+            duration={12000}
+            loop
+            bounce
+            repeatSpacer={150}
+            scrollSpeed={100}
+            bounceSpeed={400}
+            marqueeDelay={800}>
+            <Text
+              style={{
+                color: '#9166CC',
+                fontSize: 25,
+                fontFamily: 'Averta-ExtraBold',
+              }}>
+              {song?.getName() ?? 'Chưa xác định'}
+            </Text>
+          </TextTicker>
+          <TextTicker
+            style={{ fontSize: 16 }}
+            duration={12000}
+            loop
+            bounce
+            repeatSpacer={150}
+            scrollSpeed={100}
+            bounceSpeed={400}
+            marqueeDelay={800}>
+            <Text
+              style={{
+                fontSize: 16,
+                marginTop: 6,
+                fontWeight: '600',
+                color: '#fff',
+                fontFamily: 'lato-heavy',
+              }}>
+              {song?.getSubTitle(false) ?? 'Chưa rõ'}
+            </Text>
+          </TextTicker>
         </View>
       </View>
     );

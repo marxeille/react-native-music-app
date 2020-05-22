@@ -46,7 +46,7 @@ class Queue2 extends Component {
 
     return (
       <View cls="pb3">
-        <FlatList data={historySongs} renderItem={this.renderItem} />
+        <FlatList data={historySongs.reverse()} renderItem={this.renderItem} />
         <ImageBackground
           cls="fullWidth heightFn-72 flx-row aic jcsb pl3 pr3"
           source={Images.bg_mini_player}>
@@ -62,18 +62,24 @@ class Queue2 extends Component {
               cls="widthFn-52 heightFn-52 mr3"
             />
             <View>
-              <Text cls="white fw7 f6 latoFont">
+              <Text
+                cls="white fw7 f6 latoFont"
+                numberOfLines={1}
+                ellipsizeMode="tail">
                 {currentSong !== null
                   ? subLongStr(
                       currentSong?.getName() ?? '',
-                      isSmallDevice() ? 15 : 20,
+                      isSmallDevice() ? 15 : 25,
                     )
                   : 'Dèfault Title'}
               </Text>
-              <Text cls="primaryPurple f9 pt1 latoFont">
+              <Text
+                cls="primaryPurple f9 pt1 latoFont"
+                numberOfLines={1}
+                ellipsizeMode="tail">
                 {subLongStr(
                   currentSong?.getSubTitle(),
-                  isSmallDevice() ? 15 : 20,
+                  isSmallDevice() ? 15 : 25,
                 )}
               </Text>
             </View>
@@ -136,10 +142,17 @@ class Queue2 extends Component {
         <View cls="jcc pa3">
           <View cls="flx-row jcsb pl1 pr1 pb3">
             <TouchableOpacity onPress={this.addSongsToQueue}>
-              <Image cls="widthFn-24 heightFn-25" source={Images.ic_add_song} />
+              <View cls="widthFn-50 heightFn-50 aic jcc">
+                <Image
+                  cls="widthFn-24 heightFn-25"
+                  source={Images.ic_add_song}
+                />
+              </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.removeSongs}>
-              <Image cls="widthFn-24 heightFn-25" source={Images.ic_trash} />
+              <View cls="widthFn-50 heightFn-50 aic jcc">
+                <Image cls="widthFn-24 heightFn-25" source={Images.ic_trash} />
+              </View>
             </TouchableOpacity>
           </View>
         </View>

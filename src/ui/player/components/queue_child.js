@@ -33,15 +33,21 @@ const QueueChild = observer(
               />
             </TouchableOpacity>
             <View cls="pl3">
-              <Text cls={`white fw6 f${onPlayItem ? '6' : '6'} latoFont`}>
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                cls={`white fw6 f${onPlayItem ? '6' : '6'} latoFont`}>
                 {subLongStr(
                   typeof props.item?.getName == 'function'
                     ? props.item?.getName()
                     : props.item?.title,
-                  18,
+                  30,
                 )}
               </Text>
-              <Text cls={`primaryPurple pt1 ${onPlayItem ? '' : ''} latoFont`}>
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                cls={`primaryPurple pt1 ${onPlayItem ? '' : ''} latoFont`}>
                 {subLongStr(
                   typeof props.item?.getSubTitle == 'function'
                     ? props.item?.getSubTitle()

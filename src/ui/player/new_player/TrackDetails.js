@@ -104,7 +104,7 @@ const TrackDetails = wrap(({ title, artist, onSharePress, onArtistPress }) => {
 
           <View cls="mt2">
             <TextTicker
-              style={{ fontSize: 25 }}
+              style={{ fontSize: 16 }}
               duration={12000}
               loop
               bounce

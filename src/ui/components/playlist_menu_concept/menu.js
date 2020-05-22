@@ -167,7 +167,14 @@ const PlaylistMenuConcept = observer(
       );
       return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View cls={`jcc pb3 ${isSmallDevice() ? 'heightFn-530' : ''}`}>
+          <View
+            cls={`jcc pb3 ${
+              isSmallDevice()
+                ? 'heightFn-500'
+                : isMeidumDevice()
+                ? 'heightFn-520'
+                : ''
+            }`}>
             <View cls="fullWidth">
               <FlatList
                 ListHeaderComponent={renderHeader}

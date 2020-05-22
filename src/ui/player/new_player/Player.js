@@ -59,6 +59,7 @@ export default class Player extends Component {
   seek(time) {
     time = Math.round(time);
     this.context.playerRef.seek(time);
+    rootStore?.playerStore?.setState('play');
   }
 
   onBack() {
@@ -134,13 +135,13 @@ export default class Player extends Component {
           <AlbumArt url={currentSong?.artwork} />
           <TrackDetails
             title={currentSong?.getName() ?? 'Chưa xác định'}
-            artist={currentSong?.getSubTitle()}
+            artist={currentSong?.getSubTitle(false)}
             onSharePress={this._showModal}
           />
           <SeekBar
             onSeek={this.seek.bind(this)}
             trackLength={rootStore?.playerStore?.duration}
-            onSlidingStart={() => this.setState({ paused: true })}
+            onSlidingStart={() => rootStore?.playerStore?.setState('pause')}
           />
           <Controls
             onPressRepeat={() => {
