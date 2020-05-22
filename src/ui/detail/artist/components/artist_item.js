@@ -10,11 +10,12 @@ import {
 } from '../../../../data/datasource/api_helper';
 import { indexOf } from 'lodash';
 import { apiService } from '../../../../data/context/api_context';
+import { rootStore } from '../../../../data/context/root_context';
 
 const ArtistItem = observer(
   wrap(props => {
     const idExist = indexOf(
-      [...props.model?.likedTracks],
+      [...props.model?.likedTracks, ...rootStore.likedTracks],
       Number(props.item.id),
     );
     const [stats, setStats] = useState(0);

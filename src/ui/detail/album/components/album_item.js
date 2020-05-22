@@ -93,7 +93,7 @@ const AlbumItem = observer(
                     numberOfLines={1}
                     ellipsizeMode="tail">
                     {props.item && typeof props.item?.getName == 'function'
-                      ? subLongStr(props.item?.getName(), 18)
+                      ? subLongStr(props.item?.getName(), 40)
                       : ''}
                   </Text>
                   <Text

@@ -757,7 +757,10 @@ export default class AlbumDetail extends Component {
             {
               title: 'Xem người tạo ra playlist',
               action: () => {},
-              hidden: rootStore.userStore?.id == item?.owner_id,
+              hidden:
+                rootStore.userStore?.id == item?.owner_id ||
+                (typeof item?.getType == 'function' &&
+                  item?.getType() !== 'playlist'),
               icon: Images.ic_person,
               imgStyle: 'widthFn-20 heightFn-24',
             },
