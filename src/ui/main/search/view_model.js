@@ -6,7 +6,7 @@ import { apiService } from '../../../data/context/api_context';
 import { Artist, createArtistFromApiJson } from '../../../data/model/artist';
 import { getTrackFullDetail } from '../../../data/datasource/api_helper';
 import { AsyncStorageKey } from '../../../constant/constant';
-import { remove } from 'lodash';
+import { remove, cloneDeep } from 'lodash';
 import {
   PlayList,
   createPlaylistFromApiJson,
@@ -85,7 +85,7 @@ export const SearchModel = types
               self.recentlyArtist.put(newArtist);
             }
         }
-        self.recentlyOrder.shift(item.id);
+        self.recentlyOrder.unshift(item.id);
       },
 
       removeRecentlySong(id) {
@@ -108,7 +108,10 @@ export const SearchModel = types
         );
         let localDataJson = JSON.parse(localData);
         remove(localDataJson, item => Number(item.id) == Number(id));
+        let tempOrder = cloneDeep(self.recentlyOrder);
+        remove(tempOrder, trackId => Number(trackId) == Number(id));
         self.removeModelData(type, id);
+        self.setRencentlyOrder(tempOrder);
         AsyncStorage.setItem(
           AsyncStorageKey.RECENTLYSEARCH.ALL,
           JSON.stringify(localDataJson),
