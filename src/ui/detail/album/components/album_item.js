@@ -68,7 +68,7 @@ const AlbumItem = observer(
       <View
         cls="flx-row aic pl2 pt2 pb2 br2 jcsb"
         style={{ backgroundColor: '#321a54' }}>
-        <View style={{ flex: 2 }}>
+        <View style={{ flex: 3 }}>
           <TouchableOpacity onPress={() => props.playSong(props.item)}>
             <View cls="flx-row">
               <Image
