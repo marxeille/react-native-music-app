@@ -379,7 +379,7 @@ export default class AlbumDetail extends Component {
         rootStore.playerStore?.setState('play');
       } else {
         rootStore.playlistSongStore?.setPlaylist({});
-        rootStore.playerStore?.clearSong();
+        // rootStore.playerStore?.clearSong();
         rootStore.playerStore?.setState('pause');
       }
       if (!song) {
