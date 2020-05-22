@@ -85,6 +85,7 @@ export const SearchModel = types
               self.recentlyArtist.put(newArtist);
             }
         }
+        self.recentlyOrder.shift(item.id);
       },
 
       removeRecentlySong(id) {
@@ -119,6 +120,7 @@ export const SearchModel = types
         self.recentlySong.clear();
         self.recentlyArtist.clear();
         self.recentlyPlaylist.clear();
+        self.recentlyOrder.length = 0;
       }),
 
       removeAllSearchResult() {

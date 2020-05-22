@@ -206,7 +206,6 @@ export default class AlbumDetail extends Component {
   };
 
   getTracks = item => {
-    console.log('ite', item);
     if (item) {
       let ids = orderBy([...item?.tracks.values()], ['position', 'asc']).map(
         track => track.track_id,
@@ -531,7 +530,6 @@ export default class AlbumDetail extends Component {
                     : 'Chưa xác định'}
                 </Text>
               </TextTicker>
-
               {item?.id == 0 ? (
                 <View cls="pb4">
                   <Text cls="f9 primaryPurple lightFont">

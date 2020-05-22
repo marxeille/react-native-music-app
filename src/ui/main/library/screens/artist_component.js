@@ -12,7 +12,7 @@ import SearchComponent from '../components/search_component';
 import ArtistItem from '../components/artist_item_component';
 import AlphabetSectionList from 'react-native-alphabet-sectionlist';
 import { rootStore } from '../../../../data/context/root_context';
-import { orderBy } from 'lodash';
+import { orderBy, uniqBy } from 'lodash';
 import { observer } from 'mobx-react';
 import { sortByAlphabet } from '../../../../constant/constant';
 
@@ -161,7 +161,7 @@ export default class ArtistComponent extends Component {
             <FlatList
               onScroll={this._onScroll}
               keyboardDismissMode="on-drag"
-              data={sortedArtists}
+              data={uniqBy(sortedArtists, 'id')}
               keyExtractor={(item, index) => index.toString()}
               renderItem={this.renderItem}
               showsVerticalScrollIndicator={false}

@@ -271,7 +271,7 @@ class Queue2 extends Component {
             renderItem={this.renderItem}
             keyExtractor={(item, index) => `draggable-item-${index}`}
             initialScrollIndex={
-              [...rootStore.historyStore.songs].length > 4 ? data.length - 1 : 0
+              [...rootStore.historyStore.songs].length > 5 ? data.length - 2 : 0
             }
             onScrollToIndexFailed={error => {
               if (

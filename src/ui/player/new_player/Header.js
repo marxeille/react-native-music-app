@@ -17,7 +17,7 @@ const Header = wrap(({ message, onMessagePress }) => (
     </View>
     <View style={{ flex: 3 }}>
       <TouchableOpacity onPress={pop}>
-        {message.length < 15 ? (
+        {message.length < 18 ? (
           <Text onPress={onMessagePress} style={styles.message}>
             {message.toUpperCase()}
           </Text>

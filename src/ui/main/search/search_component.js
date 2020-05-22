@@ -21,7 +21,7 @@ import { observer } from 'mobx-react';
 import BottomModal from '../../../ui/components/modal/BottomModal';
 import SongMenu from '../../../ui/player/components/song_menu';
 import ShareModal from '../../components/share';
-import { find } from 'lodash';
+import { find, uniqBy } from 'lodash';
 
 @observer
 @wrap
@@ -165,14 +165,17 @@ export default class SearchComponent extends Component {
             ...this.viewmodel.resultPlaylists?.values(),
             ...this.viewmodel.resultArtists.values(),
           ];
+    const orders = [...this.viewmodel.recentlyOrder];
+
     if (keyword == '' || keyword == null || keyword == undefined) {
       const sortedData = [];
-      [...this.viewmodel.recentlyOrder].map(order => {
+      orders.map(order => {
         const searchItem = find(data, d => d.id == order);
         sortedData.push(searchItem);
       });
       data = sortedData;
     }
+
     return (
       <LinearGradient
         colors={['#291048', '#1a0732', '#130727', '#110426']}
@@ -188,7 +191,7 @@ export default class SearchComponent extends Component {
             ) : keyword || showHistory ? (
               <View cls="pa3 pt0 fullView" style={{ paddingBottom: 60 }}>
                 <FlatList
-                  data={data}
+                  data={uniqBy(data, 'id')}
                   showsVerticalScrollIndicator={false}
                   onScrollBeginDrag={Keyboard.dismiss}
                   renderItem={this.renderSearchItem}

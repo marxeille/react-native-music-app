@@ -16,13 +16,13 @@ export default class SearchItem extends Component {
   handleOnActionPress = () => {
     const { item, model, _showModal, local } = this.props;
     if (local) {
-      model.removeLocalData(item.getType(), item?.id);
+      model.removeLocalData(item?.getType(), item?.id);
       return;
     }
-    if (item.getType() == 'song') {
+    if (item?.getType() == 'song') {
       if (typeof _showModal == 'function') _showModal(item);
       return;
-    } else if (item.getType() == 'artist') {
+    } else if (item?.getType() == 'artist') {
       return navigate('artist_detail', { artist: item });
     } else if (item.getType() == 'playlist') {
       return navigate('album_detail', { item: item });

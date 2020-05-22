@@ -17,6 +17,7 @@ import { navigate } from '../../../navigation/navigation_service';
 import { isTextEmpty, isMeidumDevice } from '../../../utils';
 import { isSmallDevice } from '../../../utils';
 import { scrollDownPosition } from '../../../constant/constant';
+import Toast from 'react-native-simple-toast';
 
 @observer
 @wrap
@@ -74,6 +75,7 @@ export default class SongMenu extends Component {
     if (song.id !== rootStore?.playerStore?.currentSong?.id) {
       rootStore?.createSongRef(song);
       rootStore.queueStore.addSong(song);
+      Toast.showWithGravity('Thêm thành công', Toast.LONG, Toast.BOTTOM);
     }
     if (typeof _hideModal == 'function') _hideModal();
   };

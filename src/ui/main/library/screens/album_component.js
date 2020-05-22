@@ -5,6 +5,7 @@ import SearchComponent from '../components/search_component';
 import AlbumItem from '../components/album_item_component';
 import { rootStore } from '../../../../data/context/root_context';
 import { observer } from 'mobx-react';
+import { uniqBy } from 'lodash';
 
 @observer
 @wrap
@@ -43,7 +44,7 @@ export default class AlbumComponent extends Component {
         <View cls="pt3" style={{ marginBottom: 95 }}>
           <FlatList
             keyboardDismissMode="on-drag"
-            data={[...rootStore.libraryStore.albums]}
+            data={uniqBy([...rootStore.libraryStore.albums], 'id')}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this.renderPlaylist}
             showsVerticalScrollIndicator={false}

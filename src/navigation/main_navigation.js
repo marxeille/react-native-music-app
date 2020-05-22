@@ -60,26 +60,28 @@ function MyTabBar({ state, descriptors, navigation }) {
               target: route.key,
               canPreventDefault: true,
             });
-
-            if (isFocused && index == 1) {
-              // reset when click current tab
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 1,
-                  routes: [
-                    { name: 'home' },
-                    {
-                      name: 'search',
-                    },
-                    { name: 'library' },
-                  ],
-                }),
-              );
-            } else {
-              if (!isFocused && !event.defaultPrevented) {
-                navigation.navigate(route.name);
-              }
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name);
             }
+            // if (isFocused && index == 1) {
+            //   // reset when click current tab
+            //   navigation.dispatch(
+            //     CommonActions.reset({
+            //       index: 1,
+            //       routes: [
+            //         { name: 'home' },
+            //         {
+            //           name: 'search',
+            //         },
+            //         { name: 'library' },
+            //       ],
+            //     }),
+            //   );
+            // } else {
+            //   if (!isFocused && !event.defaultPrevented) {
+            //     navigation.navigate(route.name);
+            //   }
+            // }
           };
 
           return (
