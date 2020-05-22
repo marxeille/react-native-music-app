@@ -66,23 +66,26 @@ const TrackDetails = wrap(({ title, artist, onSharePress, onArtistPress }) => {
       <View style={styles.standardPadding} cls="flx-row jcsb aic pt3">
         <View>
           <TouchableOpacity onPress={reaction}>
-            <Image
-              cls="widthFn-24 heightFn-24"
-              source={like ? Images.ic_like_on : Images.ic_like}
-            />
+            <View cls="widthFn-50 heightFn-35 asfs jcc">
+              <Image
+                cls="widthFn-24 heightFn-24"
+                source={like ? Images.ic_like_on : Images.ic_like}
+              />
+            </View>
           </TouchableOpacity>
         </View>
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              onSharePress(true);
-            }}>
+
+        <TouchableOpacity
+          onPress={() => {
+            onSharePress(true);
+          }}>
+          <View cls="widthFn-50 heightFn-35 aic jcc">
             <Image source={Images.ic_menu} />
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
         <View>
           <TouchableOpacity onPress={() => onSharePress(false)}>
-            <View>
+            <View cls="widthFn-50 heightFn-35 aife jcc">
               <Image source={Images.ic_btn_share} />
             </View>
           </TouchableOpacity>
