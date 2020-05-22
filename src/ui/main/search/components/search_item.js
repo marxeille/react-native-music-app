@@ -24,7 +24,7 @@ export default class SearchItem extends Component {
       return;
     } else if (item?.getType() == 'artist') {
       return navigate('artist_detail', { artist: item });
-    } else if (item.getType() == 'playlist') {
+    } else if (item?.getType() == 'playlist') {
       return navigate('album_detail', { item: item });
     } else {
       model.removeRecentlySong(item?.id);
@@ -58,9 +58,9 @@ export default class SearchItem extends Component {
     const { item, local } = this.props;
 
     let icon =
-      item.getType() == 'song'
+      item?.getType() == 'song'
         ? Images.ic_menu
-        : item.getType() == 'artist' || item.getType() == 'playlist'
+        : item?.getType() == 'artist' || item?.getType() == 'playlist'
         ? Images.ic_more
         : Images.ic_delete;
 

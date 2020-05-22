@@ -165,11 +165,15 @@ export default class SearchComponent extends Component {
             ...this.viewmodel.resultPlaylists?.values(),
             ...this.viewmodel.resultArtists.values(),
           ];
-    const orders = [...this.viewmodel.recentlyOrder];
+    console.log(
+      ' [...this.viewmodel.recentlyOrder]',
+      [...this.viewmodel.recentlyOrder],
+      data,
+    );
 
     if (keyword == '' || keyword == null || keyword == undefined) {
       const sortedData = [];
-      orders.map(order => {
+      [...this.viewmodel.recentlyOrder].map(order => {
         const searchItem = find(data, d => d.id == order);
         sortedData.push(searchItem);
       });
