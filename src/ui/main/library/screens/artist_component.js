@@ -138,13 +138,14 @@ export default class ArtistComponent extends Component {
 
         <View cls="pt3" style={{ marginBottom: 95 }}>
           <View cls="fullHeight">
-            {this.state.isActionSettingVisible ? (
-              <View cls="ba br4 jcc asfe pa2 mb2 b--#4B3277">
-                <TouchableOpacity>
-                  <Text cls="white fw6">Chỉ hiện DJ</Text>
-                </TouchableOpacity>
-              </View>
-            ) : null}
+            {this.state.isActionSettingVisible
+              ? // <View cls="ba br4 jcc asfe pa2 mb2 b--#4B3277">
+                //   <TouchableOpacity>
+                //     <Text cls="white fw6">Chỉ hiện DJ</Text>
+                //   </TouchableOpacity>
+                // </View>
+                null
+              : null}
 
             {/* <AlphabetSectionList
               data={sortedArtists}
