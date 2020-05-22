@@ -567,7 +567,7 @@
 				CODE_SIGN_ENTITLEMENTS = PlayerProject/PlayerProject.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
@@ -598,7 +598,7 @@
 				CODE_SIGN_ENTITLEMENTS = PlayerProject/PlayerProject.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = EUKQS3744F;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PlayerProject/Info.plist;

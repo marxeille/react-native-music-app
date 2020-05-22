@@ -59,6 +59,7 @@ export default class Player extends Component {
   seek(time) {
     time = Math.round(time);
     this.context.playerRef.seek(time);
+    rootStore?.playerStore?.setPosition(time);
     rootStore?.playerStore?.setState('play');
   }
 
